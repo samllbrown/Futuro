@@ -75,55 +75,12 @@ public class Main extends Application {
         
         // Create button behavior
         circleButton.setOnAction(e -> {
-            createRandomCircle();
         });
         
         // Create button behavior
         rectangleButton.setOnAction(e -> {
-            createRandomRectange();
         });        
         
         return root;
-    }
-    
-    /*
-     * Draw a red circle at a random coordinate.
-     */
-    private void createRandomCircle() {
-        // Create a new random number generator
-        Random r = new Random();
-        
-        // Create a new coordinate
-        int x = r.nextInt(CANVAS_WIDTH);
-        int y = r.nextInt(CANVAS_HEIGHT);
-        
-        // Access the graphic context of the canvas
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        
-        // Set the fill color to Red
-        gc.setFill(Color.RED);
-        
-        // Draw a circle at the coordinates
-        gc.fillOval(x, y, SHAPE_SIZE, SHAPE_SIZE);
-    }
-    /**
-     * Draw a blue rectangle at a random coordinate.
-     */
-    private void createRandomRectange() {
-        // Create a new random number generator
-        Random r = new Random();
-        
-        // Create a new coordinate
-        int x = r.nextInt(CANVAS_WIDTH);
-        int y = r.nextInt(CANVAS_HEIGHT);
-        
-        // Access the graphic context of the canvas
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        
-        // Set the fill color to Red
-        gc.setFill(Color.BLUE);
-        
-        // Draw a circle at the coordinates
-        gc.fillRect(x, y, SHAPE_SIZE, SHAPE_SIZE);
-    }    
+    }   
 }
