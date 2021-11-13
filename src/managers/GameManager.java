@@ -1,6 +1,9 @@
-import java.util.Random;
+package managers;
+
 
 import javafx.application.Application;
+import java.util.Random;
+
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -12,9 +15,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-
-public class Main extends Application {
-    // The dimensions of the window
+public class GameManager extends Application {
+	
+	 // The dimensions of the window
     private static final int WINDOW_WIDTH = 600;
     private static final int WINDOW_HEIGHT = 400;
 
@@ -48,7 +51,7 @@ public class Main extends Application {
     
     /**
      * Create the GUI.
- * @return The panel that contains the created GUI.
+     * @return The panel that contains the created GUI.
      */
     private Pane buildGUI() {
         // Create top-level panel that will hold all GUI
