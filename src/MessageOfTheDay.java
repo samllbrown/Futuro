@@ -19,8 +19,8 @@ public class MessageOfTheDay {
 	
 	private static String getShiftedChar(int index, int direction, int shift) {
 		int shiftBy = direction * shift;
-		shiftBy = shiftBy < 0 ? shiftBy + 26 : shiftBy;
-		int alphaIndex = ((index + shiftBy)%26);
+		shiftBy = shiftBy < 0 ? shiftBy + ALPHA_LENGTH : shiftBy;
+		int alphaIndex = ((index + shiftBy)%ALPHA_LENGTH);
 		return String.valueOf(ALPHA[alphaIndex]);
 	}
 	
