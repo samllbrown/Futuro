@@ -2,6 +2,10 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class MessageOfTheDay {
+	/**
+	 * It ain't much but it's honest work.
+	 * author: Sam (qwoza)
+	 * */
 	private static final String CS_WEB_CAT_URL = "http://cswebcat.swansea.ac.uk/";
 	private static final String GET_MESSAGE_URL = "http://cswebcat.swansea.ac.uk/message?solution=";
 	
