@@ -62,24 +62,7 @@ public class Main extends Application {
         VBox sidebar = new VBox();
         sidebar.setSpacing(10);
         sidebar.setPadding(new Insets(10, 10, 10, 10)); 
-        root.setLeft(sidebar);
-        
-        // Create sidebar content
-        Button circleButton = new Button("Random Circle");
-        Button rectangleButton = new Button("Random Rectangle");
-        sidebar.getChildren().addAll(circleButton, rectangleButton);
-
-        // Allow the buttons to grow in width to fill the panel space
-        circleButton.setMaxWidth(Double.MAX_VALUE);
-        rectangleButton.setMaxWidth(Double.MAX_VALUE);
-        
-        // Create button behavior
-        circleButton.setOnAction(e -> {
-        });
-        
-        // Create button behavior
-        rectangleButton.setOnAction(e -> {
-        });        
+        root.setLeft(sidebar);     
         
         return root;
     }   

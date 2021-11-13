@@ -1,3 +1,9 @@
 /.classpath
 /.project
+/Game.class
+/Level.class
+/Network.class
+/Tile.class
+/iTEM.class
+/Item.class
 /Main.class

@@ -4,8 +4,10 @@ import java.io.InputStream;
 import java.io.IOException;
 
 public class Network {
-	// to-do:
-	// consider using httpclient
+	
+	// TODO: consider using httpclient
+	// TODO: NEED TO MAKE SURE WE USE TRY/CATCH WITH ANY NETWORKING + CLOSE THE SCANNER IN THE GET FUNCTION
+	
 	private static final String CS_WEB_CAT_URL = "http://cswebcat.swansea.ac.uk/puzzle";
 	private static final char[] ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
 
@@ -13,7 +15,7 @@ public class Network {
 		return (HttpURLConnection) (new URL(url)).openConnection();
 	}
 
-	// using a bytearrayoutputstream//reading it might be way better here
+	// using a bytearrayoutputstream // reading it might be way better here
 	private static String get(String url) throws IOException {
 		HttpURLConnection connection = connect(url);
 		connection.setRequestMethod("GET");
@@ -25,7 +27,7 @@ public class Network {
 	private static char getShift(int direction, int fromIndex, int shift) {
 		// remove magic number
 		return ALPHA[(fromIndex + (direction * shift)) % 26];
-//		return code[((maxIndex + (direction * shift))) % maxIndex];
+        // return code[((maxIndex + (direction * shift))) % maxIndex];
 	}
 
 	private static String solvePuzzle(String puzzleCode) {
