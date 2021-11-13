@@ -1,3 +1,4 @@
+package managers;
 public abstract class Tile {
 	// need to add tileType ++ tiles enumeration here (if we're doing it this way)
 	private int xPos;
