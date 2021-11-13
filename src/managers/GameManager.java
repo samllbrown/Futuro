@@ -72,8 +72,8 @@ public class GameManager extends Application {
         sidebar.getChildren().addAll(startGame);
         
         startGame.setOnAction(e -> {
-			FileManager reader = new FileManager();
-			reader.readFile("level1.txt");
+			FileManager levelReader = new FileManager();
+			levelReader.readLevel("level1.txt");
 		});
         
         return root;
