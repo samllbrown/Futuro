@@ -38,7 +38,8 @@ public class GameManager extends Application {
         Pane root = buildGUI();
         
         // Create a scene from the GUI
-        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);        
+        primaryStage.setTitle("Futuro");
         
         // Display the scene on the stage
         primaryStage.setScene(scene);
@@ -61,11 +62,18 @@ public class GameManager extends Application {
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         root.setCenter(canvas);
         
+        Button startGame = new Button("START NEW GAME");
+        
         // Create a siderbar with some nice padding and spacing
         VBox sidebar = new VBox();
         sidebar.setSpacing(10);
         sidebar.setPadding(new Insets(10, 10, 10, 10)); 
-        root.setLeft(sidebar);     
+        root.setLeft(sidebar);  
+        sidebar.getChildren().addAll(startGame);
+        
+        startGame.setOnAction(e -> {
+			new Game();
+		});
         
         return root;
     }   
