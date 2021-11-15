@@ -30,7 +30,6 @@ public class Level {
 		this.timeElapsed = timeElapsed;
 	}
 
-
 	public int getWidth() {
 		return width;
 	}
@@ -43,7 +42,6 @@ public class Level {
 		return loosingNumberOfMechs;
 	}
 
-
 	public int getCurrentScore() {
 		return currentScore;
 	}
@@ -51,7 +49,6 @@ public class Level {
 	public void setCurrentScore(int currentScore) {
 		this.currentScore = currentScore;
 	}
-
 
 	public int getExpectedSecondsToComplete() {
 		return expectedSecondsToComplete;
@@ -61,16 +58,13 @@ public class Level {
 		return timeElapsed;
 	}
 
-
 	public void setTimeElapsed(int timeElapsed) {
 		this.timeElapsed = timeElapsed;
 	}
 
-
 	public Inventory getInventory() {
 		return inventory;
 	}
-
 
 	public void setInventory(Inventory inventory) {
 		this.inventory = inventory;
