@@ -33,7 +33,7 @@ public class Player {
 	}
 
 	public void setPlayerName(String playerName) {
-		this.playerNamer = playerName;
+		this.playerName = playerName;
 	}
 	
 }
