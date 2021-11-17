@@ -1,6 +1,7 @@
 package board;
 
 import managers.Inventory;
+import board.Grid;
 
 public class Level {
 	
@@ -20,6 +21,52 @@ public class Level {
 	private int timeElapsed; // This might need to be in the game class, same with won/lost
 	
 	
-	public Level() {
+	public Level(int height, int width, Inventory inventory, int loosingNumberOfMechs, int currentScore, int expectedSecondsToComplete, int timeElapsed) {
+		this.height = height;
+		this.width = width;
+		this.inventory = inventory;
+		this.loosingNumberOfMechs = loosingNumberOfMechs;
+		this.currentScore = currentScore;
+		this.timeElapsed = timeElapsed;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public int getLoosingNumberOfMechs() {
+		return loosingNumberOfMechs;
+	}
+
+	public int getCurrentScore() {
+		return currentScore;
+	}
+
+	public void setCurrentScore(int currentScore) {
+		this.currentScore = currentScore;
+	}
+
+	public int getExpectedSecondsToComplete() {
+		return expectedSecondsToComplete;
+	}
+
+	public int getTimeElapsed() {
+		return timeElapsed;
+	}
+
+	public void setTimeElapsed(int timeElapsed) {
+		this.timeElapsed = timeElapsed;
+	}
+
+	public Inventory getInventory() {
+		return inventory;
+	}
+
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
 	}
 }

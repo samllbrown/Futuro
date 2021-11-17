@@ -2,11 +2,13 @@ package managers;
 
 import java.io.File;  
 import java.io.FileNotFoundException;  
-import java.util.Scanner; 
+import java.util.Scanner;
+
+import board.Level; 
 
 public class FileManager {
-
-	public static String readLevel(String levelName) {
+	
+	public static Level readLevel(String levelName) {
 		String out = null;
 		try {
 		      File level = new File(levelName);
@@ -19,7 +21,7 @@ public class FileManager {
 		      System.out.println("An error occurred.");
 		      e.printStackTrace();
 	    }
-		return out;
+		return new Level(0, 0, null, 0, 0, 0, 0);
 	}
 	
 	public static void writeFile() {

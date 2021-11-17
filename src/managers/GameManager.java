@@ -4,6 +4,7 @@ package managers;
 import javafx.application.Application;
 import java.util.Random;
 
+import board.Level;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -73,7 +74,9 @@ public class GameManager extends Application {
         
         startGame.setOnAction(e -> {
 			FileManager levelReader = new FileManager();
-			levelReader.readLevel("level1.txt");
+			//Level level = levelReader.readLevel("level1.txt");
+			Level level = new Level(10, 10, null, 10, 0, 10, 0);
+			Game game = new Game(level);
 		});
         
         return root;
