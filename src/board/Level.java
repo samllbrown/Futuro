@@ -21,13 +21,14 @@ public class Level {
 	private int timeElapsed; // This might need to be in the game class, same with won/lost
 	
 	
-	public Level(int height, int width, Inventory inventory, int loosingNumberOfMechs, int currentScore, int expectedSecondsToComplete, int timeElapsed) {
+	public Level(int height, int width, Inventory inventory, int loosingNumberOfMechs, int currentScore, int expectedSecondsToComplete, int timeElapsed, Grid grid) {
 		this.height = height;
 		this.width = width;
 		this.inventory = inventory;
 		this.loosingNumberOfMechs = loosingNumberOfMechs;
 		this.currentScore = currentScore;
 		this.timeElapsed = timeElapsed;
+		this.setGrid(grid);
 	}
 
 	public int getWidth() {
@@ -68,5 +69,13 @@ public class Level {
 
 	public void setInventory(Inventory inventory) {
 		this.inventory = inventory;
+	}
+
+	public Grid getGrid() {
+		return grid;
+	}
+
+	public void setGrid(Grid grid) {
+		this.grid = grid;
 	}
 }
