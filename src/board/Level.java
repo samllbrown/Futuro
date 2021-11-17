@@ -34,7 +34,7 @@ public class Level {
 		this.timeElapsed = timeElapsed;
 	}
 	
-	public boolean isCompelted() {
+	public boolean isCompleted() {
 		return (this.mechs.size() == this.losingNumberOfMechs || this.mechs.size() == this.WINNING_NUMBER_OF_MECHS);
 	}
 	
