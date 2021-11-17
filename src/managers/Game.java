@@ -14,7 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import services.MessageOfTheDay;
 
-public class Game extends Application{
+public class Game {
 	
 	private static final int WINDOW_WIDTH = 600;
     private static final int WINDOW_HEIGHT = 400;
@@ -36,7 +36,7 @@ public class Game extends Application{
 	
 	public Game(Level level) {	
 		setLevel(level);
-		launch();
+		showGame();
 	}
 
 	public Level getLevel() {
@@ -64,17 +64,17 @@ public class Game extends Application{
 		this.messageOfTheDay = messageOfTheDay;
 	}
 
-	@Override
-	public void start(Stage primaryStage) {
+
+	public void showGame() {
 		Pane root = buildGUI();
-	        
+	    Stage stage = new Stage();
         // Create a scene from the GUI
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);        
-        primaryStage.setTitle("Futuro");
+        stage.setTitle("Futuro");
         
         // Display the scene on the stage
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        stage.setScene(scene);
+        stage.show();
 		
 	}
 	
@@ -86,7 +86,7 @@ public class Game extends Application{
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         root.setCenter(canvas);
         
-        Button startGame = new Button("NEW GAME");
+        Button startGame = new Button("THIS IS THE NEW GAME");
         
         VBox sidebar = new VBox();
         sidebar.setSpacing(10);
