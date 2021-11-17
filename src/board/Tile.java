@@ -27,11 +27,13 @@ public class Tile {
 	public int getYPos() {
 		return this.yPos;
 	}
-
+	
+	// needed?
 	public void setXPos(int newXPos) {
 		this.xPos = newXPos;
 	}
 	
+	// needed?
 	public void setYPos(int newYPos) {
 		this.yPos = newYPos;
 	}

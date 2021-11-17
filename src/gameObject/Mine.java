@@ -1,8 +1,17 @@
 package gameObject;
 public class Mine extends Item {
-
-	public Mine() {
+	private static final int X_RANGE = 0;
+	private static final int Y_RANGE = 0;
+	
+	public Mine(int x, int y) {
+		super(x, y, X_RANGE, Y_RANGE);
+	}
+	
+	@Override
+	public void act(Mech someMech) {
+		// TODO Auto-generated method stub
 		
 	}
+	
 
 }

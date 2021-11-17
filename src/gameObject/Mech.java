@@ -1,6 +1,10 @@
 package gameObject;
 
 public class Mech extends Item {
+	// X_RANGE AND Y_RANGE should define where this item
+	// acts relative to its current x and y co-ord
+	private static final int X_RANGE = 0;
+	private static final int Y_RANGE = 0;
 	
 	// could be an int instead
 	private char type;
@@ -17,8 +21,8 @@ public class Mech extends Item {
 	private int yDir;
 	
 	// should itemId be a thing in the constructor for item?
-	public Mech(char type, int xPos, int yPos, int xRange, int yRange) {
-		super(xPos, yPos, xRange, yRange);
+	public Mech(char type, int xPos, int yPos) {
+		super(xPos, yPos, X_RANGE, Y_RANGE);
 	}
 	
 	public void move() {

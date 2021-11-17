@@ -25,6 +25,29 @@ public class GameObjectFactory {
 		}
 	}
 	
+	// public static Item
+	// possibly not the right way of going about things, as Item is an abstract class...
+	public static Item makeItemFromName(String name, int atX, int atY) throws Exception {
+		switch (name.toUpperCase()) {
+			case "ACID":
+				return new Acid(atX, atY);
+			case "EMP":
+				return new EMP(atX, atY);
+			case "LIGHTNING":
+				return new Lightning(atX, atY);
+			case "PUDDLE":
+				return new Puddle(atX, atY, 100);
+			case "REMODEL":
+				return new Remodel(atX, atY);
+			case "DEATHMECH":
+				return new DeathMech(atX, atY);
+			case "MINE":
+				return new Mine(atX, atY);
+			default:
+				throw new Exception(String.format("Invalid Item Type for Creation: %s", name));
+		}
+	}
+	
 	// try-catches instead of throwing??
 	public static Grid makeGrid(String tiles, int height, int width) throws Exception {
 		Grid grid = new Grid(height, width);

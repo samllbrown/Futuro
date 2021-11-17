@@ -5,6 +5,7 @@ public abstract class Item {
 	//private String itemID;
 	private int xPos;
 	private int yPos;
+	// ranges need looking at. they don't work as we expect them too.
 	private int xRange;
 	private int yRange;
 	
