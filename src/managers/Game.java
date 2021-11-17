@@ -3,7 +3,6 @@ package managers;
 import java.io.IOException;
 
 import board.Level;
-import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
