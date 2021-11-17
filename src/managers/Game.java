@@ -8,8 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import services.MessageOfTheDay;
@@ -69,26 +71,22 @@ public class Game {
 		Pane root = buildGUI();
 	    Stage stage = new Stage();
         // Create a scene from the GUI
+        GridPane gridpane = new GridPane();
+        for (int i = 0; i < 40; i++) {
+            ColumnConstraints column = new ColumnConstraints(40);
+            gridpane.getColumnConstraints().add(column);
+            RowConstraints row = new RowConstraints(40);
+            gridpane.getRowConstraints().add(row);
+        }
         
-        GridPane gridPane = new GridPane();
-        Button button1 = new Button("Button 1");
-        Button button2 = new Button("Button 2");
-        Button button3 = new Button("Button 3");
-        Button button4 = new Button("Button 4");
-        Button button5 = new Button("Button 5");
-        Button button6 = new Button("Button 6");
+        Button button = new Button("Hello");
+        gridpane.addRow(5, button);
+
         
-        gridPane.add(button1, 0, 0, 1, 1);
-        gridPane.add(button2, 1, 0, 1, 1);
-        gridPane.add(button3, 2, 0, 1, 1);
-        gridPane.add(button4, 0, 1, 1, 1);
-        gridPane.add(button5, 1, 1, 1, 1);
-        gridPane.add(button6, 2, 1, 1, 1);
         
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
         
-        Scene scene = new Scene(gridPane, WINDOW_WIDTH, WINDOW_HEIGHT);        
+        
+        Scene scene = new Scene(gridpane, WINDOW_WIDTH, WINDOW_HEIGHT);        
         stage.setTitle("Futuro");
         
         // Display the scene on the stage
