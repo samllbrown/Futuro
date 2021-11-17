@@ -29,6 +29,10 @@ public class Level {
 		this.currentScore = currentScore;
 		this.timeElapsed = timeElapsed;
 	}
+	
+	public void update() {
+		
+	}
 
 	public int getWidth() {
 		return width;
