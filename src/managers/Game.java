@@ -8,7 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import services.MessageOfTheDay;
@@ -68,7 +71,22 @@ public class Game {
 		Pane root = buildGUI();
 	    Stage stage = new Stage();
         // Create a scene from the GUI
-        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);        
+        GridPane gridpane = new GridPane();
+        for (int i = 0; i < 40; i++) {
+            ColumnConstraints column = new ColumnConstraints(40);
+            gridpane.getColumnConstraints().add(column);
+            RowConstraints row = new RowConstraints(40);
+            gridpane.getRowConstraints().add(row);
+        }
+        
+        Button button = new Button("Hello");
+        gridpane.addRow(5, button);
+
+        
+        
+        
+        
+        Scene scene = new Scene(gridpane, WINDOW_WIDTH, WINDOW_HEIGHT);        
         stage.setTitle("Futuro");
         
         // Display the scene on the stage

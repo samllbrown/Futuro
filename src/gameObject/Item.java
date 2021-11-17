@@ -8,7 +8,7 @@ public abstract class Item {
 	private int xRange;
 	private int yRange;
 	
-	public abstract Item(String itemID, int xPos, int yPos, int xRange, int yRange) {
+	public Item(String itemID, int xPos, int yPos, int xRange, int yRange) {
 		this.itemID = itemID;
 		this.xPos = xPos;
 		this.yPos = yPos;
