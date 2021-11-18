@@ -44,7 +44,23 @@ public class Level {
 		this.currentScore += MECH_KILL_SCORE;
 	}
 	
+	private void scoreKill(int points) {
+		this.currentScore += points;
+	}
+	
+	private void processDeadMech(Mech deadMech) {
+		if(deadMech.isPregnant()) {
+			scoreKill();
+		}
+	}
+	
 	private void updateMechs() {
+		for(Mech mech : this.currentMechs) {
+			if(mech.getHealth() < 0) {
+				this.currentMechs.remove(mech);
+			}
+		}
+
 	}
 	
 	public void update() {
