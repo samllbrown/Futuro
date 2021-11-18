@@ -8,10 +8,12 @@ import inventory.Inventory;
 
 public class Level {
 	
+	private final char[] mechTypes = ['', '', '']
+	
 	private final int MAX_ITEM_USES = 4;
 	private final int WINNING_NUMBER_OF_MECHS = 0;
 	private final int MECH_KILL_SCORE = 5;
-	private final int BABY_MECH_FROM_MOTHER = 5;
+	private final int BABY_MECHS_FROM_MOTHER = 5;
 	
 	private Grid grid;
 	private Inventory inventory;
@@ -36,28 +38,41 @@ public class Level {
 		this.currentMechs = currentMechs;
 	}
 	
+	private void birthMechs(Mech fromMech) {
+		for(int i = 0; i < 5; i++) {
+			
+		}
+	}
+
+	
 	public boolean isCompleted() {
 		return (this.currentMechs.size() == this.losingNumberOfMechs || this.currentMechs.size() == this.WINNING_NUMBER_OF_MECHS);
 	}
 	
-	private void scoreKill() {
-		this.currentScore += MECH_KILL_SCORE;
-	}
-	
-	private void scoreKill(int points) {
-		this.currentScore += points;
+	private void scoreKill(Mech mech) {
+		this.currentScore += (mech.isPregnant() ? (MECH_KILL_SCORE * BABY_MECHS_FROM_MOTHER) : MECH_KILL_SCORE);
 	}
 	
 	private void processDeadMech(Mech deadMech) {
-		if(deadMech.isPregnant()) {
-			scoreKill();
+		this.scoreKill(deadMech);
+		this.currentMechs.remove(deadMech);
+	}
+	
+	
+	private void updateMech(Mech mech) {
+		if(mech.getHealth() < 0) {
+			this.processDeadMech(mech);
+		} else if (mech.isPregnant() && (mech.getBirthTimer() == 0)) {
+			
 		}
 	}
 	
 	private void updateMechs() {
 		for(Mech mech : this.currentMechs) {
 			if(mech.getHealth() < 0) {
-				this.currentMechs.remove(mech);
+				this.processDeadMech(mech);
+			} else if (mech.isPregnant() && ) {
+				
 			}
 		}
 
