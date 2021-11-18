@@ -21,7 +21,7 @@ public class FileManager {
 		      System.out.println("An error occurred.");
 		      e.printStackTrace();
 	    }
-		return new Level(0, 0, null, 0, 0, 0, 0);
+		return new Level(0, 0, null, 0, 0, 0, 0, null);
 	}
 	
 	public static void writeFile() {

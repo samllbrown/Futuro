@@ -1,7 +1,10 @@
 package board;
 
-import managers.Inventory;
+import java.util.ArrayList;
+
 import board.Grid;
+import gameObject.Mech;
+import inventory.Inventory;
 
 public class Level {
 	
@@ -15,19 +18,33 @@ public class Level {
 	
 	private int width;
 	private int height;
-	private int loosingNumberOfMechs; 
+	private int losingNumberOfMechs; 
 	private int currentScore;
 	private int expectedSecondsToComplete;
 	private int timeElapsed; // This might need to be in the game class, same with won/lost
 	
+	private ArrayList<Mech> mechs;
 	
 	public Level(int height, int width, Inventory inventory, int loosingNumberOfMechs, int currentScore, int expectedSecondsToComplete, int timeElapsed) {
 		this.height = height;
 		this.width = width;
 		this.inventory = inventory;
-		this.loosingNumberOfMechs = loosingNumberOfMechs;
+		this.losingNumberOfMechs = loosingNumberOfMechs;
 		this.currentScore = currentScore;
 		this.timeElapsed = timeElapsed;
+	}
+	
+	public boolean isCompleted() {
+		return (this.mechs.size() == this.losingNumberOfMechs || this.mechs.size() == this.WINNING_NUMBER_OF_MECHS);
+	}
+	
+	public void update() {
+		// performs a tick
+		// every item should do "its thing" to whatever is on its tile
+		// every mech should move to a new tile after items have done "their thing"
+		// if a mech is ready to give birth, we should add new mechs accordingly and
+		// set the pregnant mech's isPregnant var to false.
+		// more is done
 	}
 
 	public int getWidth() {
@@ -38,8 +55,8 @@ public class Level {
 		return height;
 	}
 
-	public int getLoosingNumberOfMechs() {
-		return loosingNumberOfMechs;
+	public int getLosingNumberOfMechs() {
+		return losingNumberOfMechs;
 	}
 
 	public int getCurrentScore() {
