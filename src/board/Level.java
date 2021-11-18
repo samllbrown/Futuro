@@ -23,19 +23,28 @@ public class Level {
 	private int expectedSecondsToComplete;
 	private int timeElapsed; // This might need to be in the game class, same with won/lost
 	
-	private ArrayList<Mech> mechs;
+	private ArrayList<Mech> currentMechs;
 	
-	public Level(int height, int width, Inventory inventory, int loosingNumberOfMechs, int currentScore, int expectedSecondsToComplete, int timeElapsed) {
+	public Level(int height, int width, Inventory inventory, int loosingNumberOfMechs, int currentScore, int expectedSecondsToComplete, int timeElapsed,
+			ArrayList<Mech> currentMechs) {
 		this.height = height;
 		this.width = width;
 		this.inventory = inventory;
 		this.losingNumberOfMechs = loosingNumberOfMechs;
 		this.currentScore = currentScore;
 		this.timeElapsed = timeElapsed;
+		this.currentMechs = currentMechs;
 	}
 	
 	public boolean isCompleted() {
-		return (this.mechs.size() == this.losingNumberOfMechs || this.mechs.size() == this.WINNING_NUMBER_OF_MECHS);
+		return (this.currentMechs.size() == this.losingNumberOfMechs || this.currentMechs.size() == this.WINNING_NUMBER_OF_MECHS);
+	}
+	
+	private void scoreKill() {
+		this.currentScore += MECH_KILL_SCORE;
+	}
+	
+	private void updateMechs() {
 	}
 	
 	public void update() {
