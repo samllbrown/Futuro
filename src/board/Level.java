@@ -100,9 +100,11 @@ public class Level {
 		// THERE ARE A FEW WAYS OF DOING IT
 	}
 	
-	
 	private void updateItem(Item item) {
-		
+		// if item.timer() == 0 then act?
+		// if item.getClass == puddle and puddle.health == 0 then die?
+		// if item is spreadable, spread?
+		// if item is on the same tile as a mech, actOn the mech?
 	}
 	
 	private void updateMechs() {
@@ -110,12 +112,21 @@ public class Level {
 	}
 	
 	private void updateItems() {
-		
+		this.currentItemsInPlay.forEach(item -> updateItem(item));
 	}
-
+	
+	private void updateScene() {
+		// ?
+	}
 	
 	public void update() {
-		
+		if(this.isCompleted()) {
+			// end the level
+		} else {
+			updateItems();
+			updateMechs();
+			updateScene();
+		}
 		// performs a tick
 		// every item should do "its thing" to whatever is on its tile
 		// every mech should move to a new tile after items have done "their thing"
