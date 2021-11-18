@@ -8,6 +8,10 @@ import board.Wall;
 
 public class GameObjectFactory {
 	
+	public static Mech makeMech(char type, int x, int y) {
+		return new Mech(type, x, y);
+	}
+	
 	// might be better to use a custom Exception for this
 	public static Tile makeTile(char type, int x, int y) throws Exception {
 		type = Character.toUpperCase(type);

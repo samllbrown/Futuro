@@ -21,12 +21,24 @@ public class Mech extends Item {
 	private int yDir;
 	
 	// should itemId be a thing in the constructor for item?
+	// need to update this constructor
 	public Mech(char type, int xPos, int yPos) {
 		super(xPos, yPos, X_RANGE, Y_RANGE);
 	}
 	
+	// assert type is female/production mech?
+	public void giveBirth() {
+		// ??
+	}
+	
 	public void move() {
 		
+	}
+	
+	
+	public boolean readyToBirth() {
+		// ???
+		return true; 
 	}
 	
 	// check validity somewhere else
@@ -67,7 +79,7 @@ public class Mech extends Item {
 	public boolean isPregnant() {
 		return isPregnant;
 	}
-
+	
 	public void setPregnant(boolean isPregnant) {
 		this.isPregnant = isPregnant;
 	}
