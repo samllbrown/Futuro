@@ -82,16 +82,14 @@ public class Level {
 		this.scoreKill(deadMech);
 		this.currentMechs.remove(deadMech);
 	}
-	
-	
+
 	private void updateMech(Mech mech) {
 		if(mech.getHealth() < 0) {
 			this.processDeadMech(mech);
 		} else if (mech.isPregnant() && mech.readyToBirth()) {
 			this.birthMechs(mech);
 		}
-		
-		
+
 		mech.move();
 		
 		// TO KEEP THINGS LINEAR, WE SHOULD UPDATE THE POSITION OF TH MECH RELATIVE TO THE GRID OR SOMETHING HERE

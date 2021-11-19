@@ -5,7 +5,7 @@ public class Mech extends Item {
 	// acts relative to its current x and y co-ord
 	private static final int X_RANGE = 0;
 	private static final int Y_RANGE = 0;
-	
+
 	// could be an int instead
 	private char type;
 	private char age;
@@ -25,14 +25,22 @@ public class Mech extends Item {
 	public Mech(char type, int xPos, int yPos) {
 		super(xPos, yPos, X_RANGE, Y_RANGE);
 	}
-	
-	// assert type is female/production mech?
-	public void giveBirth() {
-		// ??
+
+	private void switchDirection() {
+		this.xDir *= -1;
+		this.yDir *= -1;
 	}
-	
-	public void move() {
-		
+	public void move(Grid grid) {
+		int nextXPos = (this.currentXPos + (this.xDir * speed));
+		int nextYPos = (this.currentYPos + (this.yDir * speed));
+
+		if(grid.getTileAt(nextXPos, nextYPos).isWalkable()) {
+			this.currentXPos = nextXPos;
+			this.currentYPos = nextYPos;
+		} else {
+
+		}
+
 	}
 	
 	
