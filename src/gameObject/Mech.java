@@ -38,9 +38,9 @@ public class Mech extends Item {
 			this.currentXPos = nextXPos;
 			this.currentYPos = nextYPos;
 		} else {
-
+			this.switchDirection();
+			this.move(grid);
 		}
-
 	}
 	
 	
