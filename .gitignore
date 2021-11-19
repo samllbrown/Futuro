@@ -1,0 +1,9 @@
+
+.idea/libraries/JavaFX.xml
+*.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+production/production/Futuro/.classpath
+production/production/Futuro/.project
+src/test.fxml

@@ -1,4 +1,5 @@
 package gameObject;
+import board.Grid;
 
 public class Mech extends Item {
 	// X_RANGE AND Y_RANGE should define where this item
@@ -19,6 +20,8 @@ public class Mech extends Item {
 	private int xDir;
 	private int currentYPos;
 	private int yDir;
+
+	private int speed = 1;
 	
 	// should itemId be a thing in the constructor for item?
 	// need to update this constructor
