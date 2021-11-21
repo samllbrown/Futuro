@@ -11,7 +11,7 @@ import gameObject.Mech;
 import inventory.Inventory;
 
 public class Level {
-	
+
 	private final char[] mechTypes = {'R', 'P'};
 	
 	private final int MAX_ITEM_USES = 4;
@@ -28,6 +28,8 @@ public class Level {
 	private int currentScore;
 	private int expectedSecondsToComplete;
 	private int timeElapsed; // This might need to be in the game class, same with won/lost
+	private int levelID;
+	private static int nextLevelID = 1;
 	
 	private ArrayList<Mech> currentMechs;
 	private ArrayList<Item> currentItemsInPlay;
@@ -47,6 +49,8 @@ public class Level {
 		this.currentScore = currentScore;
 		this.timeElapsed = timeElapsed;
 		this.currentMechs = currentMechs;
+		this.levelID = Level.nextLevelID;
+		Level.nextLevelID++;
 	}
 	
 	private void initMechs() {
@@ -167,6 +171,10 @@ public class Level {
 
 	public Inventory getInventory() {
 		return inventory;
+	}
+
+	public int getLevelID() {
+		return levelID;
 	}
 
 	public void setInventory(Inventory inventory) {

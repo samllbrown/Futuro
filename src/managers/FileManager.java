@@ -1,13 +1,28 @@
 package managers;
 
 import java.io.File;  
-import java.io.FileNotFoundException;  
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
-import board.Level; 
+import board.Level;
+
+/**
+ * FileManager.java
+ * @author David Terence-Abanulo, ...
+ * @version 1.0
+ * Last Mod Date: 21/11/2021
+ */
 
 public class FileManager {
-	
+	public static final File PLAYER_FILE = new File ("C:\\Users\\ultim\\Documents\\GitHub\\Futuro\\Players.txt");
+	public static final File LEADERBOARD_FILE = new File ("");
+
+	/**
+	 *
+	 * @param levelName
+	 * @return
+	 */
 	public static Level readLevel(String levelName) {
 		String out = null;
 		try {
@@ -28,6 +43,49 @@ public class FileManager {
 		
 	}
 
+	/**
+	 * Given a playerID checks if that player exists within the player file, if so then returns that player
+	 * @param playerID
+	 * @return
+	 * @throws FileNotFoundException
+	 */
+	public static Player readPlayerFile (int playerID) throws FileNotFoundException {
+		Player selectedPlayer = null;
+		Scanner in = new Scanner(PLAYER_FILE);
+		ArrayList<Player> playersFromFile = new ArrayList<>();
+		ArrayList<Integer> playerIDsFromFile = new ArrayList<>();
+		while (in.hasNextLine()) {
+			String curLine = in.nextLine();
+			Scanner line = new Scanner(curLine).useDelimiter(",");
+			playersFromFile.add(new Player(line.nextInt(), line.next(), line.nextInt()));
+		}
+		for (Player p : playersFromFile) {
+			if (p.getPlayerID() == playerID) {
+				selectedPlayer = p;
+			}
+		}
+		/*try {
+			return selectedPlayer;
+		} catch (NullPointerException e){
+			System.out.println("Player doesn't exist!");
+		}*/
+		return selectedPlayer;
+	}
+
+	/**
+	 * Testing reading and writing stuff
+	 * @param args
+	 * @throws FileNotFoundException
+	 */
+	public static void main(String[]args) throws FileNotFoundException {
+		//should return player 1 info
+		System.out.println(FileManager.readPlayerFile(1));
+		//player 3 doesn't exist so should return null
+		System.out.println(FileManager.readPlayerFile(3));
+	}
+
+
+	// IGNORE THE MESS BELOW USING IT LATER - DAVID
 	public static void readLevelFile(String filename) throws FileNotFoundException {
 		String levelID;
 		int score;
@@ -39,11 +97,11 @@ public class FileManager {
 		int mechsToLose;
 		String inventory;
 		/*boardlayout, mech spawn, items in play - not sure how they're being stored but basically
-		 create a temp variable for it to be stored in e.g an Array thats 
+		 create a temp variable for it to be stored in e.g an Array thats
 		 passed into Board b = new Board (BoardArray) or something like that maybe*/
 
 		File levelFile = new File (filename);
- 		Scanner in = new Scanner (levelFile);
+		Scanner in = new Scanner (levelFile);
 		while (in.hasNextLine()){
 			String curLine = in.nextLine();
 			Scanner line = new Scanner(curLine).useDelimiter(",/n,"); //depends on what delimiter we use for now leaving it as ",/n,"
@@ -76,17 +134,5 @@ public class FileManager {
 		  for(Item i: itemsList){
 		  	I1.items.add(i)
 		  	}*/
-	}
-
-	public static void readPlayerFile (String filename, Player p) throws FileNotFoundException {
-		File playerFile = new File (filename);
-		Scanner in = new Scanner (playerFile);
-		while(in.hasNextInt()){
-			if (in.equals(p.getPlayerID())){
-				/*load the level from the player if they exist...idk how we're doing that right now but yeah*/
-			} else {
-				//return error player doesn't exist -> must create a new player
-			}
-		}
 	}
 }

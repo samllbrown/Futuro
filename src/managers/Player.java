@@ -1,15 +1,19 @@
 package managers;
 
+import board.Level;
+
 public class Player {
 	private int playerID;
 	private int maxLevelID;
 	private String playerName;
 	private String playerRecord;
+	private static int nextPlayerID;
 
 	public Player(int playerID, String playerName, int maxLevelID) {
-		this.playerID = playerID;
 		this.playerName = playerName;
 		this.maxLevelID = maxLevelID;
+		this.playerID = Player.nextPlayerID;
+		Player.nextPlayerID++;
 	}
 
 	public int getPlayerID() {
