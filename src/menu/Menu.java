@@ -18,7 +18,7 @@ public class Menu extends Application {
         
         // Create a new button
         Button button = new Button("Play game!");
-        
+       
         root.getChildren().add(intro);
         root.getChildren().add(button);
 
