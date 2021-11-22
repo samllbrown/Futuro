@@ -5,10 +5,10 @@ package board;
 public class Tile {
 	// need to add tileType ++ tiles enumeration here (if we're doing it this way)
 	// xPos and yPos -- make these final?
-	protected int xPos;
-	protected int yPos;
-	protected boolean walkable;
-	protected boolean visible;
+	final protected int xPos;
+	final protected int yPos;
+	final protected boolean walkable;
+	final protected boolean visible;
 	
 	public Tile(int xPos, int yPos) {
 		this.xPos = xPos;
