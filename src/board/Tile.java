@@ -16,7 +16,7 @@ public abstract class Tile {
 	final protected boolean placeable;
 
 	protected ArrayList<Item> itemsOnTile;
-  
+
 	public Tile(int xPos, int yPos, boolean walkable, boolean visible, boolean placeable) {
 		this.xPos = xPos;
 		this.yPos = yPos;
@@ -27,7 +27,6 @@ public abstract class Tile {
 
 	public ArrayList<Item> getItemsOnTile() {
 		return this.itemsOnTile;
-
 	}
     
 	public void addItemToTile(Item item) {
@@ -37,9 +36,7 @@ public abstract class Tile {
 	public void removeItemFromTile(Item item) {
 		this.itemsOnTile.remove(item);
 	}
-	
 
-	
 	public int getXPos() {
 		return this.xPos;
 	}

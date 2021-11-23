@@ -8,6 +8,6 @@ public class Inventory {
 	private ArrayList<Item> items;
 	
 	public Inventory() {
-		
+		this.items = new ArrayList<>();
 	}
 }
