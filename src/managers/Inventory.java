@@ -22,7 +22,6 @@ public class Inventory {
 			inventoryItems.get(name).reduceUses();
 			//GameObjectFactory.makeItemFromName(name, atX, atY, );
 		}
-		return null;
 	}
 
 }
