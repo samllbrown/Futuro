@@ -22,7 +22,7 @@ public class GameObjectFactory {
 				return new Path(x,y);
 			case 'T':
 				return new Tunnel(x,y);
-			case 'X':
+			case ' ':
 				throw new Exception("Generic tile passed to makeTile...check the formatting of the tiles in file?");
 			default:
 				throw new Exception(String.format("Tile type %c does not exist", type));
