@@ -60,8 +60,8 @@ public class Level {
 		this.levelID = levelId;
 		this.nextLevelID = this.levelID+1;
 		this.grid = grid;
-		this.initMechs();
-		this.initItems();
+		//this.initMechs();
+		//this.initItems();
 	}
 
 	private void initItems() {

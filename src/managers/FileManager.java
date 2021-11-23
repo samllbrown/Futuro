@@ -2,6 +2,8 @@ package managers;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import board.Level;
@@ -16,7 +18,6 @@ import board.Level;
 public class FileManager {
 	public static final File PLAYER_FILE = new File ("C:\\Users\\ultim\\Documents\\GitHub\\Futuro\\Players.txt");
 	public static final File LEADERBOARD_FILE = new File ("");
-
 	/**
 	 *
 	 * @param levelName
@@ -38,11 +39,16 @@ public class FileManager {
 		return new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
 	}
 
-	public static void writeObjectToFile(String fileName, Object object) throws IOException, FileNotFoundException {
-		// find the filename or something
-		BufferedWriter bw = new BufferedWriter(new FileWriter(new File(fileName)));
-		bw.write(object.toString());
+	public static void writeRecord(String record) {
+
 	}
+
+//	public static void writeObjectToFile(String fileName, Object object) throws IOException, FileNotFoundException {
+//		// find the filename or something
+//		BufferedWriter bw = new BufferedWriter(new FileWriter(new File(fileName)));
+//		bw.write(object.toString());
+//		bw.close();
+//	}
 
 	public static void writeToPlayerFile(Player player) throws FileNotFoundException {
 		Scanner in = new Scanner(PLAYER_FILE);

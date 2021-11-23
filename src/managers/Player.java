@@ -6,7 +6,6 @@ public class Player {
 	private int playerID;
 	private int maxLevelID;
 	private String playerName;
-	private String playerRecord;
 	private static int nextPlayerID;
 
 	public Player(int playerID, String playerName, int maxLevelID) {
@@ -14,6 +13,10 @@ public class Player {
 		this.maxLevelID = maxLevelID;
 		this.playerID = Player.nextPlayerID;
 		Player.nextPlayerID++;
+	}
+
+	public String getRecord() {
+		return this.getPlayerID() + "," + this.getPlayerName() + "," + this.getMaxLevelID();
 	}
 
 	public int getPlayerID() {
