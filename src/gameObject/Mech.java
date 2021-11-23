@@ -1,7 +1,7 @@
 package gameObject;
 import board.Grid;
-import board.Pair;
 import board.Tile;
+import board.Pair;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
