@@ -35,7 +35,7 @@ public class Mech extends Item {
 	// should itemId be a thing in the constructor for item?
 	// need to update this constructor
 	public Mech(char type, int xPos, int yPos, int xDir, int yDir) {
-		super(xPos, yPos, X_RANGE, Y_RANGE);
+		super(xPos, yPos);
 		this.currentXPos = xPos;
 		this.currentYPos = yPos;
 		this.xDir = xDir;

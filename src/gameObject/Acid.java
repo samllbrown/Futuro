@@ -7,7 +7,7 @@ public class Acid extends Item {
 	private static final int Y_RANGE = 1;
 	
 	public Acid(int atX, int atY) {
-		super(atX, atY, X_RANGE, Y_RANGE);
+		super(atX, atY);
 	}
 	
 	@Override
