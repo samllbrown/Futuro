@@ -1,7 +1,6 @@
 package managers;
 
 
-
 import javafx.application.Application;
 
 import java.util.ArrayList;
@@ -51,6 +50,7 @@ public class GameManager extends Application {
     }
 
     public static void main(String[] args) throws Exception {
+
 
         launch(args);
     }
