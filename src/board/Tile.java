@@ -25,7 +25,10 @@ public abstract class Tile {
 		this.placeable = placeable;
 	}
 
+	public ArrayList<Item> getItemsOnTile() {
+		return this.itemsOnTile;
 
+	}
     
 	public void addItemToTile(Item item) {
 		this.itemsOnTile.add(item);
@@ -35,9 +38,7 @@ public abstract class Tile {
 		this.itemsOnTile.remove(item);
 	}
 	
-	public ArrayList<Item> getItemsOnTile() {
-		return itemsOnTile;
-	}
+
 	
 	public int getXPos() {
 		return this.xPos;
