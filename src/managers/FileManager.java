@@ -1,7 +1,6 @@
 package managers;
 
-import java.io.File;  
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -38,10 +37,15 @@ public class FileManager {
 	    }
 		return new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
 	}
-	
-	public static void writeToPlayerFile(int playerID) throws FileNotFoundException {
-		Scanner in = new Scanner(PLAYER_FILE);
 
+	public static void writeObjectToFile(String fileName, Object object) throws IOException, FileNotFoundException {
+		// find the filename or something
+		BufferedWriter bw = new BufferedWriter(new FileWriter(new File(fileName)));
+		bw.write(object.toString());
+	}
+
+	public static void writeToPlayerFile(Player player) throws FileNotFoundException {
+		Scanner in = new Scanner(PLAYER_FILE);
 	}
 
 	public static void writeToLeaderboardFile(){}
