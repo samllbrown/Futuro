@@ -20,9 +20,8 @@ public class Inventory {
 			throw new Exception("Item has been used too many times to use it again");
 		} else {
 			inventoryItems.get(name).reduceUses();
-			GameObjectFactory.makeItemFromName(name, atX, atY, )
+			//GameObjectFactory.makeItemFromName(name, atX, atY, );
 		}
-
 	}
 
 }

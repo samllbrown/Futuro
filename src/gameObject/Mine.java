@@ -4,7 +4,7 @@ public class Mine extends Item {
 	private static final int Y_RANGE = 0;
 	
 	public Mine(int x, int y) {
-		super(x, y, X_RANGE, Y_RANGE);
+		super(x, y);
 	}
 	
 	@Override

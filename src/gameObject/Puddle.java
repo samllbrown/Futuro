@@ -7,7 +7,7 @@ public class Puddle extends Item {
 	private int health;
 	
 	public Puddle(int x, int y, int health) {
-		super(x, y, X_RANGE, Y_RANGE);
+		super(x, y);
 		this.health = 100;
 	}
 
