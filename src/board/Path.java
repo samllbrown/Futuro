@@ -6,7 +6,7 @@ public class Path extends Tile {
 	private static final boolean IS_PLACEABLE = true;
 	// maybe these should be final constants instead?
 	public Path(int xPos, int yPos) {
-		super(xPos, yPos, true, true, true);
+		super(xPos, yPos, IS_WALKABLE, IS_VISIBLE, IS_PLACEABLE);
 	}
 	
 	public String toString() {

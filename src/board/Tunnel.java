@@ -10,7 +10,7 @@ public class Tunnel extends Tile {
 	
 	//maybe these should be final constants instead?
 	public Tunnel(int xPos, int yPos) {
-		super(xPos, yPos, true, IS_VISIBLE, true);
+		super(xPos, yPos, IS_WALKABLE, IS_VISIBLE, IS_VISIBLE);
 	}
 	
 	public String toString() {
