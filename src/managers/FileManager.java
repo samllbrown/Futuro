@@ -39,9 +39,12 @@ public class FileManager {
 		return new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
 	}
 	
-	public static void writeFile() {
-		
+	public static void writeToPlayerFile(int playerID) throws FileNotFoundException {
+		Scanner in = new Scanner(PLAYER_FILE);
+
 	}
+
+	public static void writeToLeaderboardFile(){}
 
 	/**
 	 * Given a playerID checks if that player exists within the player file, if so then returns that player
