@@ -29,7 +29,10 @@ public class Level {
 	private int expectedSecondsToComplete;
 	private int timeElapsed; // This might need to be in the game class, same with won/lost
 	private int levelID;
-	private static int nextLevelID = 1;
+	// this shouldn't be static because it could be a different level (i think)
+	// basically, if you load up a level which is level, say, 3 then you're saying that the next level
+	// id is 2
+	private int nextLevelID;
 	
 	private ArrayList<Mech> currentMechs;
 	private ArrayList<Item> currentItemsInPlay;
@@ -40,8 +43,8 @@ public class Level {
 	// if every item has access to the grid, then they have access to all the tiles
 	// every tile should hold the thing on it???
 	
-	public Level(int height, int width, Inventory inventory, int loosingNumberOfMechs, int currentScore, int expectedSecondsToComplete, int timeElapsed,
-			ArrayList<Mech> currentMechs) {
+	public Level(int levelId, int height, int width, Inventory inventory, int loosingNumberOfMechs, int currentScore, int expectedSecondsToComplete, int timeElapsed,
+			ArrayList<Mech> currentMechs, Grid grid) {
 		this.height = height;
 		this.width = width;
 		this.inventory = inventory;
@@ -49,12 +52,27 @@ public class Level {
 		this.currentScore = currentScore;
 		this.timeElapsed = timeElapsed;
 		this.currentMechs = currentMechs;
-		this.levelID = Level.nextLevelID;
-		Level.nextLevelID++;
+		this.levelID = levelId;
+		this.nextLevelID = this.levelID+1;
+		this.grid = grid;
+		this.initMechs();
+		this.initItems();
 	}
-	
+
+	private void initItems() {
+		Tile[][] gridTiles = grid.getGrid();
+		for(Item item : currentItemsInPlay) {
+			gridTiles[item.getxPos()][item.getyPos()].getItemsOnTile().add(item);
+		}
+	}
+
+	// ideally, this could be done in the initItems() method, so check this later on;
 	private void initMechs() {
 		// initialise mechs and their positions, etc
+		Tile[][] gridTiles = grid.getGrid();
+		for(Mech mech : currentMechs) {
+			gridTiles[mech.getCurrentXPos()][mech.getCurrentYPos()].addItemToTile(mech);
+		}
 	}
 	
 	private void birthMechs(Mech fromMech) {
@@ -63,7 +81,8 @@ public class Level {
 			// this code, obviously, is incomplete and serves only to show how the functionality
 			// of the actual game *might* work.
 			Random rand = new Random();
-			Mech babyMech = GameObjectFactory.makeMech(mechTypes[rand.nextInt(2)], fromMech.getCurrentXPos(), fromMech.getCurrentYPos());
+			// X DIR AND Y DIR NEEDS TO BE CHANGED;
+			Mech babyMech = GameObjectFactory.makeMech(mechTypes[rand.nextInt(2)], fromMech.getCurrentXPos(), fromMech.getCurrentYPos(), 0, 1);
 			this.addMech(babyMech);
 		}
 		// allow for a new pregnancy timer?

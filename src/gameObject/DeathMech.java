@@ -3,8 +3,8 @@ package gameObject;
 public class DeathMech extends Mech {
 	private static final int DAMAGE = 100;
 	
-	public DeathMech(int x, int y) {
-		super('D', x, y);
+	public DeathMech(int x, int y, int xDir, int yDir) {
+		super('D', x, y, xDir, yDir);
 	}
 	
 	public void move() {

@@ -1,5 +1,11 @@
 package gameObject;
 import board.Grid;
+import board.Pair;
+import board.Tile;
+
+import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class Mech extends Item {
 	// X_RANGE AND Y_RANGE should define where this item
@@ -22,27 +28,53 @@ public class Mech extends Item {
 	private int yDir;
 
 	private int speed = 1;
-	
+
+
+	private Tile[] neighbourTiles;
+
 	// should itemId be a thing in the constructor for item?
 	// need to update this constructor
-	public Mech(char type, int xPos, int yPos) {
+	public Mech(char type, int xPos, int yPos, int xDir, int yDir) {
 		super(xPos, yPos, X_RANGE, Y_RANGE);
+		this.currentXPos = xPos;
+		this.currentYPos = yPos;
+		this.xDir = xDir;
+		this.yDir = yDir;
 	}
 
-	private void switchDirection() {
-		this.xDir *= -1;
-		this.yDir *= -1;
+	@Override
+	public String toString() {
+		return String.format("\nMech x pos: %d\nMech Y pos: %d", this.currentXPos, this.currentYPos);
 	}
+
+	private void switchDirection(Grid grid) {
+		Pair[] pairs = {new Pair(this.currentXPos, this.currentYPos+1), new Pair(this.currentXPos+1, this.currentYPos),
+	new Pair(this.currentXPos, this.currentYPos-1), new Pair(this.currentXPos-1, this.currentYPos)};
+		Random rand = new Random();
+		int choice = rand.nextInt(4);
+		while(!grid.getTileAt(pairs[choice].x, pairs[choice].y).isWalkable()) {
+			choice = rand.nextInt(4);
+			System.out.println(choice);
+		}
+		System.out.println("Found x and y: " + pairs[choice].x + "," + pairs[choice].y);
+		setXAndY(pairs[choice]);
+	}
+
+	public void setXAndY(Pair pair) {
+		this.currentXPos = pair.x;
+		this.currentYPos = pair.y;
+	}
+
 	public void move(Grid grid) {
 		int nextXPos = (this.currentXPos + (this.xDir * speed));
 		int nextYPos = (this.currentYPos + (this.yDir * speed));
-
-		if(grid.getTileAt(nextXPos, nextYPos).isWalkable()) {
+		System.out.println("Next x pos : " + nextXPos);
+		System.out.println("Next y pos : " + nextYPos);
+		if(!grid.getTileAt(nextXPos, nextYPos).isWalkable()) {
+			switchDirection(grid);
+		} else {
 			this.currentXPos = nextXPos;
 			this.currentYPos = nextYPos;
-		} else {
-			this.switchDirection();
-			this.move(grid);
 		}
 	}
 	
@@ -112,7 +144,7 @@ public class Mech extends Item {
 	}
 
 	public int getCurrentXPos() {
-		return currentXPos;
+		return this.currentXPos;
 	}
 
 	public void setCurrentXPos(int currentXPos) {
@@ -128,7 +160,7 @@ public class Mech extends Item {
 	}
 
 	public int getCurrentYPos() {
-		return currentYPos;
+		return this.currentYPos;
 	}
 
 	public void setCurrentYPos(int currentYPos) {
@@ -136,7 +168,7 @@ public class Mech extends Item {
 	}
 
 	public int getyDir() {
-		return yDir;
+		return this.yDir;
 	}
 
 	public void setyDir(int yDir) {

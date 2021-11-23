@@ -8,8 +8,8 @@ import board.Wall;
 
 public class GameObjectFactory {
 	
-	public static Mech makeMech(char type, int x, int y) {
-		return new Mech(type, x, y);
+	public static Mech makeMech(char type, int x, int y, int xDir, int yDir) {
+		return new Mech(type, x, y, xDir, yDir);
 	}
 	
 	// might be better to use a custom Exception for this
@@ -31,7 +31,7 @@ public class GameObjectFactory {
 	
 	// public static Item
 	// possibly not the right way of going about things, as Item is an abstract class...
-	public static Item makeItemFromName(String name, int atX, int atY) throws Exception {
+	public static Item makeItemFromName(String name, int atX, int atY, int xDir, int yDir) throws Exception {
 		switch (name.toUpperCase()) {
 			case "ACID":
 				return new Acid(atX, atY);
@@ -44,7 +44,7 @@ public class GameObjectFactory {
 			case "REMODEL":
 				return new Remodel(atX, atY);
 			case "DEATHMECH":
-				return new DeathMech(atX, atY);
+				return new DeathMech(atX, atY, xDir, yDir);
 			case "MINE":
 				return new Mine(atX, atY);
 			default:

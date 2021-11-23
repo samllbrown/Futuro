@@ -11,7 +11,10 @@ public class Grid {
 	private final int height;
 	
 	private Tile[][] grid;
-	
+	/*
+	* PLEASE BE AWARE THAT THIS READS IN THE TILES AND CONSTRUCTS THE ARRAY TOP TO BOTTOM
+	* I.E. THE ORIGIN OF X,Y IS TOP LEFT, NOT BOTTOM LEFT
+	* */
 	public Grid(int width, int height) {
 		this.width = width;
 		this.height = height;
@@ -44,7 +47,7 @@ public class Grid {
 		for(int i = 0; i < rows.length; i++) {
 			String[] rowTiles = rows[i].split("");
 			for(int j = 0; j < rowTiles.length; j++) {
-				this.grid[j][i] = GameObjectFactory.makeTile(rowTiles[j].charAt(0), i, j);
+				this.grid[j][i] = GameObjectFactory.makeTile(rowTiles[j].charAt(0), j, i);
 			}
 		}
 	}

@@ -36,7 +36,7 @@ public class FileManager {
 		      System.out.println("An error occurred.");
 		      e.printStackTrace();
 	    }
-		return new Level(0, 0, null, 0, 0, 0, 0, null);
+		return new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
 	}
 	
 	public static void writeFile() {

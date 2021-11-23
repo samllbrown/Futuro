@@ -14,7 +14,7 @@ public class Tunnel extends Path {
 	}
 	
 	public String toString() {
-		return (String.format("Path tile at x:%d, y:%d", this.getXPos(), this.getYPos()));
+		return (String.format("Tunnel tile at x:%d, y:%d", this.getXPos(), this.getYPos()));
 	}
 	
 }

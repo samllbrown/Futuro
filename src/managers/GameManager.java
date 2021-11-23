@@ -1,7 +1,11 @@
 package managers;
 
 
+import board.Grid;
+import gameObject.Mech;
 import javafx.application.Application;
+
+import java.util.ArrayList;
 import java.util.Random;
 
 import board.Level;
@@ -46,8 +50,25 @@ public class GameManager extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-    
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws Exception {
+        Mech m = new Mech('R', 1, 2, 1, 0);
+        Grid grid = new Grid(8, 10);
+        grid.populateGrid(
+                "WWWWWWWW\n" +
+                     "WTPPWPWW\n" +
+                     "WTWPWPPW\n" +
+                     "WTPPPWPW\n" +
+                     "WTPWPPPW\n" +
+                     "WWWPPPPW\n" +
+                     "WPWPPPWW\n" +
+                     "WPPPWPWW\n" +
+                     "WPPPWPPW\n" +
+                     "WWWWWWWW");
+        do {
+            m.move(grid);
+        } while (!((m.getCurrentXPos() == 6) && (m.getCurrentYPos() == 8)));
+        System.out.println(m.getCurrentXPos() + " and " + m.getCurrentYPos());
         launch(args);
     }
     
@@ -78,7 +99,7 @@ public class GameManager extends Application {
         startGame.setOnAction(e -> {
 			FileManager levelReader = new FileManager();
 			//Level level = levelReader.readLevel("level1.txt");
-			Level level = new Level(10, 10, null, 10, 0, 10, 0, null);
+			Level level = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
 			Game game = new Game(level);
 		});
 
