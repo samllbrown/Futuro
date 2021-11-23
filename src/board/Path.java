@@ -1,6 +1,9 @@
 package board;
 
 public class Path extends Tile {
+	private static final boolean IS_WALKABLE = false;
+	private static final boolean IS_VISIBLE = true;
+	private static final boolean IS_PLACEABLE = true;
 	// maybe these should be final constants instead?
 	public Path(int xPos, int yPos) {
 		super(xPos, yPos, true, true, true);
