@@ -2,20 +2,25 @@ package board;
 
 // Tile<T> instead of subclassing each individual type of tile?
 
-public class Tile {
+public abstract class Tile {
 	// need to add tileType ++ tiles enumeration here (if we're doing it this way)
 	// xPos and yPos -- make these final?
-	protected int xPos;
-	protected int yPos;
-	protected boolean walkable;
-	protected boolean visible;
+	final protected int xPos;
+	final protected int yPos;
+	final protected boolean walkable;
+	final protected boolean visible;
+	final protected boolean placeable;
 	
-	public Tile(int xPos, int yPos) {
+	public Tile(int xPos, int yPos, boolean walkable, boolean visible, boolean placeable) {
 		this.xPos = xPos;
 		this.yPos = yPos;
+		this.walkable = walkable;
+		this.visible = visible;
+		this.placeable = placeable;
 	}
 	
 	@Override
+	//X means it's just a tile, not a path, not a tunnel, not a wall, a tile
 	public String toString() {
 		return String.format("X");
 	}
@@ -28,30 +33,12 @@ public class Tile {
 		return this.yPos;
 	}
 	
-	// needed?
-	public void setXPos(int newXPos) {
-		this.xPos = newXPos;
-	}
-	
-	// needed?
-	public void setYPos(int newYPos) {
-		this.yPos = newYPos;
-	}
-	
 	public boolean isWalkable() {
 		return this.walkable;
 	}
 	
 	public boolean isVisible() {
 		return this.visible;
-	}
-	
-	public void setWalkable(boolean walkable) {
-		this.walkable = walkable;
-	}
-	
-	public void setVisible(boolean visible) {
-		this.visible = visible;
 	}
 	
 }
