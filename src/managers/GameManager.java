@@ -1,8 +1,7 @@
 package managers;
 
 
-import board.Grid;
-import gameObject.Mech;
+
 import javafx.application.Application;
 
 import java.util.ArrayList;
@@ -52,23 +51,7 @@ public class GameManager extends Application {
     }
 
     public static void main(String[] args) throws Exception {
-        Mech m = new Mech('R', 1, 2, 1, 0);
-        Grid grid = new Grid(8, 10);
-        grid.populateGrid(
-                "WWWWWWWW\n" +
-                     "WTPPWPWW\n" +
-                     "WTWPWPPW\n" +
-                     "WTPPPWPW\n" +
-                     "WTPWPPPW\n" +
-                     "WWWPPPPW\n" +
-                     "WPWPPPWW\n" +
-                     "WPPPWPWW\n" +
-                     "WPPPWPPW\n" +
-                     "WWWWWWWW");
-        do {
-            m.move(grid);
-        } while (!((m.getCurrentXPos() == 6) && (m.getCurrentYPos() == 8)));
-        System.out.println(m.getCurrentXPos() + " and " + m.getCurrentYPos());
+
         launch(args);
     }
     
