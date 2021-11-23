@@ -64,13 +64,16 @@ public class GameManager extends Application {
         root.setCenter(canvas);
         
         Button startGame = new Button("START NEW GAME");
+        Button selectPlayer = new Button("SELECT PLAYER");
+        Button createPlayer = new Button("CREATE PLAYER");
+        Button deletePlayer = new Button("DELETE PLAYER");
         
-        // Create a siderbar with some nice padding and spacing
+        // Create a sidebar with some nice padding and spacing
         VBox sidebar = new VBox();
         sidebar.setSpacing(10);
         sidebar.setPadding(new Insets(10, 10, 10, 10)); 
         root.setLeft(sidebar);  
-        sidebar.getChildren().addAll(startGame);
+        sidebar.getChildren().addAll(startGame,selectPlayer,createPlayer,deletePlayer);
         
         startGame.setOnAction(e -> {
 			FileManager levelReader = new FileManager();
@@ -78,6 +81,27 @@ public class GameManager extends Application {
 			Level level = new Level(10, 10, null, 10, 0, 10, 0, null);
 			Game game = new Game(level);
 		});
+
+//      selectPlayer.setOnAction(e -> {
+//          FileManager playerReader = new FileManager();
+//          //Level level = levelReader.readLevel("Players.txt");
+//          Player player = new Player(1,"Player1",2);
+//          Game game = new Game(player);
+//        });
+       
+//      createPlayer.setOnAction(e -> {
+//            FileManager playerReader = new FileManager();
+//            //Level level = levelReader.readLevel("Players.txt");
+//            Player player = new Player(1,"Player1",2);
+//            Game game = new Game(player);
+//        });
+        
+//      deletePlayer.setOnAction(e -> {
+//      FileManager playerReader = new FileManager();
+//      //Level level = levelReader.readLevel("Players.txt");
+//      Player player = new Player(1,"Player1",2);
+//      Game game = new Game(player);
+//  });
         
         return root;
     }   
