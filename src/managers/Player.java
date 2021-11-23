@@ -15,7 +15,7 @@ public class Player {
 		Player.nextPlayerID++;
 	}
 
-	public String getRecord() {
+	public String getPlayerRecord() {
 		return this.getPlayerID() + "," + this.getPlayerName() + "," + this.getMaxLevelID();
 	}
 
@@ -42,5 +42,9 @@ public class Player {
 	public void setPlayerName(String playerName) {
 		this.playerName = playerName;
 	}
-	
+
+	@Override
+	public String toString() {
+		return (playerID+','+playerName+','+maxLevelID);
+	}
 }

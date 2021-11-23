@@ -16,8 +16,9 @@ import board.Level;
  */
 
 public class FileManager {
-	public static final File PLAYER_FILE = new File ("C:\\Users\\ultim\\Documents\\GitHub\\Futuro\\Players.txt");
-	public static final File LEADERBOARD_FILE = new File ("");
+	public static final File PLAYER_FILE = new File ("C:\\Users\\ultim\\Documents\\GitHub\\Futuro\\src\\gameFiles\\Players.txt");
+	public static final File LEADERBOARD_FILE = new File ("C:\\Users\\ultim\\Documents\\GitHub\\Futuro\\src\\gameFiles\\Leaderboard.txt");
+
 	/**
 	 *
 	 * @param levelName
@@ -39,10 +40,6 @@ public class FileManager {
 		return new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
 	}
 
-	public static void writeRecord(String record) {
-
-	}
-
 //	public static void writeObjectToFile(String fileName, Object object) throws IOException, FileNotFoundException {
 //		// find the filename or something
 //		BufferedWriter bw = new BufferedWriter(new FileWriter(new File(fileName)));
@@ -50,11 +47,34 @@ public class FileManager {
 //		bw.close();
 //	}
 
-	public static void writeToPlayerFile(Player player) throws FileNotFoundException {
-		Scanner in = new Scanner(PLAYER_FILE);
+	public static void writeToPlayerFile(Player player){
+		try {
+			FileWriter fw = new FileWriter(PLAYER_FILE, true);
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.write("\n"+player.getPlayerRecord());
+			bw.newLine();
+			bw.close();
+		} catch(IOException e){
+			System.out.println("File doesn't exist");
+			e.printStackTrace();
+		}
 	}
 
-	public static void writeToLeaderboardFile(){}
+	public static void writeToLeaderboardFile(Player player, int playerScore, int rank) throws IOException {
+		try {
+			FileWriter fw = new FileWriter(LEADERBOARD_FILE, true);
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.write(player.getPlayerID());
+			bw.newLine();
+			bw.write(playerScore);
+			bw.newLine();
+			bw.write(rank);
+			bw.close();
+		} catch(IOException e){
+			System.out.println("File doesn't exist");
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Given a playerID checks if that player exists within the player file, if so then returns that player
@@ -66,7 +86,6 @@ public class FileManager {
 		Player selectedPlayer = null;
 		Scanner in = new Scanner(PLAYER_FILE);
 		ArrayList<Player> playersFromFile = new ArrayList<>();
-		ArrayList<Integer> playerIDsFromFile = new ArrayList<>();
 		while (in.hasNextLine()) {
 			String curLine = in.nextLine();
 			Scanner line = new Scanner(curLine).useDelimiter(",");
@@ -90,11 +109,17 @@ public class FileManager {
 	 * @param args
 	 * @throws FileNotFoundException
 	 */
-	public static void main(String[]args) throws FileNotFoundException {
+	public static void main(String[]args) throws IOException {
+		Player David = new Player(2,"David",2);
+		Player Illia = new Player(3,"Illia",3);
+		Player Sam = new Player(1,"Sam",5);
 		//should return player 1 info
-		System.out.println(FileManager.readPlayerFile(1));
+		System.out.println(FileManager.readPlayerFile(Illia.getPlayerID()));
 		//player 3 doesn't exist so should return null
-		System.out.println(FileManager.readPlayerFile(3));
+		System.out.println(FileManager.readPlayerFile(Sam.getPlayerID()));
+
+		FileManager.writeToLeaderboardFile(David,100,5);
+		FileManager.writeToPlayerFile(David);
 	}
 
 
