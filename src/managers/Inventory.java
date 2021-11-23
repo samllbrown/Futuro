@@ -14,7 +14,7 @@ public class Inventory {
 		this.inventoryItems = new HashMap<>();
 	}
 
-	public Item useItem(String name, int atX, int atY) throws Exception {
+	public void useItem(String name, int atX, int atY) throws Exception {
 		if(inventoryItems.get(name).getRemainingUses() == 0) {
 			// make an exceptions class plz
 			throw new Exception("Item has been used too many times to use it again");
