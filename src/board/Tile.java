@@ -1,7 +1,9 @@
 package board;
-import gameObject.Item;
 
 import java.util.ArrayList;
+
+import gameObject.Item;
+
 // Tile<T> instead of subclassing each individual type of tile?
 
 public abstract class Tile {
@@ -12,8 +14,9 @@ public abstract class Tile {
 	final protected boolean walkable;
 	final protected boolean visible;
 	final protected boolean placeable;
-	protected ArrayList<Item> itemsOnTile;
 
+	protected ArrayList<Item> itemsOnTile;
+  
 	public Tile(int xPos, int yPos, boolean walkable, boolean visible, boolean placeable) {
 		this.xPos = xPos;
 		this.yPos = yPos;
@@ -22,21 +25,18 @@ public abstract class Tile {
 		this.placeable = placeable;
 	}
 
-	public ArrayList<Item> getItemsOnTile() {
-		return this.itemsOnTile;
-	}
 
+    
 	public void addItemToTile(Item item) {
 		this.itemsOnTile.add(item);
 	}
 
 	public void removeItemFromTile(Item item) {
-		this.itemsOnTile.remove(item);}
-
-	@Override
-	//X means it's just a tile, not a path, not a tunnel, not a wall, a tile
-	public String toString() {
-		return String.format("X");
+		this.itemsOnTile.remove(item);
+	}
+	
+	public ArrayList<Item> getItemsOnTile() {
+		return itemsOnTile;
 	}
 	
 	public int getXPos() {
@@ -55,4 +55,9 @@ public abstract class Tile {
 		return this.visible;
 	}
 	
+	public boolean isPlaceable() {
+		return this.placeable;
+	}
+
+	abstract public String toString();
 }
