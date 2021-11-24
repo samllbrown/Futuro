@@ -64,22 +64,18 @@ public class Level {
 		//this.initItems();
 	}
 
-	private void initItems() {
+	private void initItemsInPlay() {
 		Tile[][] gridTiles = grid.getGrid();
-		for(Item item : currentItemsInPlay) {
-			gridTiles[item.getxPos()][item.getyPos()].getItemsOnTile().add(item);
+		this.currentItemsInPlay.forEach(i -> gridTiles[i.getxPos()][i.getyPos()].addItemToTile(i));
+		this.currentMechs.forEach(m -> gridTiles[m.getxPos()][m.getyPos()].addItemToTile(i));
+	}
+
+	private void placeFromInventory(String name, int atX, int atY) {
+		try {
+			this.inventory.useItem;
 		}
 	}
 
-	// ideally, this could be done in the initItems() method, so check this later on;
-	private void initMechs() {
-		// initialise mechs and their positions, etc
-		Tile[][] gridTiles = grid.getGrid();
-		for(Mech mech : currentMechs) {
-			gridTiles[mech.getCurrentXPos()][mech.getCurrentYPos()].addItemToTile(mech);
-		}
-	}
-	
 	private void birthMechs(Mech fromMech) {
 		for(int i = 0; i < 5; i++) {
 			// need to update mech class to make sure that we can add baby mechs, etc
@@ -93,7 +89,12 @@ public class Level {
 		// allow for a new pregnancy timer?
 		fromMech.setPregnant(false);
 	}
-	
+
+	private void addItem(Item item) {
+		Tile[][] gridTiles = grid.getGrid();
+		gridTiles[item.getxPos()][item.getxPos()].addItemToTile(item);
+	}
+
 	private void addMech(Mech mech) {
 		this.currentMechs.add(mech);
 	}

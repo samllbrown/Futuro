@@ -14,3 +14,4 @@ production/production/Futuro/board/Pair.class
 production/production/Futuro/board/Path.class
 production/production/Futuro/board/Tunnel.class
 *.class
+.idea/uiDesigner.xml

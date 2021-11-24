@@ -31,7 +31,7 @@ public class GameObjectFactory {
 	
 	// public static Item
 	// possibly not the right way of going about things, as Item is an abstract class...
-	public static Item makeItemFromName(String name, int atX, int atY, int xDir, int yDir) throws Exception {
+	public static Item makeItemFromName(String name, int atX, int atY) throws Exception {
 		switch (name.toUpperCase()) {
 			case "ACID":
 				return new Acid(atX, atY);
@@ -44,6 +44,9 @@ public class GameObjectFactory {
 			case "REMODEL":
 				return new Remodel(atX, atY);
 			case "DEATHMECH":
+				// xdir and ydir should be random or something
+				int xDir = 1;
+				int yDir = 0;
 				return new DeathMech(atX, atY, xDir, yDir);
 			case "MINE":
 				return new Mine(atX, atY);
