@@ -37,6 +37,12 @@ public abstract class Tile {
 
 	public ArrayList<Mech> getCurrentMechs() {
 		ArrayList<Mech> mechs = new ArrayList<>();
+		for(Item i : this.itemsOnTile) {
+			if(i.getClass().getCanonicalName() == "gameObject.Mech") {
+				mechs.add((Mech) i);
+			}
+		}
+		return mechs;
 	}
 
 	public ArrayList<Item> getItemsOnTile() {

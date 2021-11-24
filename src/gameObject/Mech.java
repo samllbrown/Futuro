@@ -86,7 +86,7 @@ public class Mech extends Item {
 	
 	// check validity somewhere else
 	public void mate(Mech otherMech) {
-		if(this.type != otherMech.getType()) {
+		if(this.type != otherMech.getType() && (!otherMech.isPregnant())) {
 			switch (otherMech.getType()) {
 				case 'R':
 					this.isPregnant = true;

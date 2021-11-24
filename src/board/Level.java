@@ -121,18 +121,23 @@ public class Level {
 		} else if (mech.isPregnant() && mech.readyToBirth()) {
 			this.birthMechs(mech);
 		} else if(this.grid.getTileAt(mech.getCurrentXPos(), mech.getCurrentYPos()).hasMech()){
-
+			// not efficient will be dealt with later cba
+			ArrayList<Mech> occupyingMechs = this.grid.getTileAt(mech.getCurrentXPos(), mech.getCurrentYPos()).getCurrentMechs();
+			for(Mech m : occupyingMechs) {
+				mech.mate(m);
+			}
 		}
-
 		mech.move(this.grid);
-		
-		// TO KEEP THINGS LINEAR, WE SHOULD UPDATE THE POSITION OF TH MECH RELATIVE TO THE GRID OR SOMETHING HERE
-		// THE MOVE METHOD WILL UPDATE THE MECH'S CURRENT X AND Y SO WE DON'T NEED TO WORRY ABOUT THAT (FOR THE MECH)
-		// WE JUST NEED TO FIGURE OUT THE BEST WAY TO UPDATE POSITIONS OF THE MECHS RELATIVE TO THE BOARD
-		// THERE ARE A FEW WAYS OF DOING IT
 	}
 	
 	private void updateItem(Item item) {
+		// won't work for puddles so ye
+		if(this.grid.getTileAt(item.getxPos(), item.getyPos()).hasMech()) {
+			ArrayList<Mech> mechs = this.grid.getTileAt(item.getxPos(), item.getyPos()).getCurrentMechs();
+			for(Mech m : mechs) {
+				item.act(m);
+			}
+		}
 		// if item.timer() == 0 then act?
 		// if item.getClass == puddle and puddle.health == 0 then die?
 		// if item is spreadable, spread?
