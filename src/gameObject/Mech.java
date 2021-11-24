@@ -86,6 +86,16 @@ public class Mech extends Item {
 	
 	// check validity somewhere else
 	public void mate(Mech otherMech) {
+		if(this.type != otherMech.getType()) {
+			switch (otherMech.getType()) {
+				case 'R':
+					this.isPregnant = true;
+				default:
+					otherMech.setPregnant(true);
+			}
+		} else {
+
+		}
 		// what happens when they mate?
 		// they both stay on the same tile for a few moments
 		// one of them becomes pregnant
@@ -93,11 +103,11 @@ public class Mech extends Item {
 	}
 	
 	public void dealWithPuddle(Puddle puddle) {
+
 	}
 
 	@Override
 	public void act(Mech someMech) {
-		// TODO Auto-generated method stub
 		this.mate(someMech);
 	}
 	

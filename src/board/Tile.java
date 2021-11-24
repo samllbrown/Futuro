@@ -3,6 +3,7 @@ package board;
 import java.util.ArrayList;
 
 import gameObject.Item;
+import gameObject.Mech;
 
 // Tile<T> instead of subclassing each individual type of tile?
 
@@ -23,6 +24,19 @@ public abstract class Tile {
 		this.walkable = walkable;
 		this.visible = visible;
 		this.placeable = placeable;
+	}
+
+	public boolean hasMech() {
+		for(Item i : itemsOnTile) {
+			if(i.getClass().getCanonicalName().equals("gameObject.Mech")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public ArrayList<Mech> getCurrentMechs() {
+		ArrayList<Mech> mechs = new ArrayList<>();
 	}
 
 	public ArrayList<Item> getItemsOnTile() {

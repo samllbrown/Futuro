@@ -67,12 +67,15 @@ public class Level {
 	private void initItemsInPlay() {
 		Tile[][] gridTiles = grid.getGrid();
 		this.currentItemsInPlay.forEach(i -> gridTiles[i.getxPos()][i.getyPos()].addItemToTile(i));
-		this.currentMechs.forEach(m -> gridTiles[m.getxPos()][m.getyPos()].addItemToTile(i));
+		this.currentMechs.forEach(m -> gridTiles[m.getxPos()][m.getyPos()].addItemToTile(m));
 	}
 
 	private void placeFromInventory(String name, int atX, int atY) {
 		try {
-			this.inventory.useItem;
+			this.inventory.useItem(name, atX, atY);
+		} catch(Exception e) {
+			// somehow mention the fact that they're trying to use an item that they can't use
+			System.err.println("Cannot use item. Used maximum amount of times already");
 		}
 	}
 
@@ -117,6 +120,8 @@ public class Level {
 			this.processDeadMech(mech);
 		} else if (mech.isPregnant() && mech.readyToBirth()) {
 			this.birthMechs(mech);
+		} else if(this.grid.getTileAt(mech.getCurrentXPos(), mech.getCurrentYPos()).hasMech()){
+
 		}
 
 		mech.move(this.grid);
@@ -143,7 +148,7 @@ public class Level {
 	}
 	
 	private void updateScene() {
-		// ?
+		// ???
 	}
 	
 	public void update() {
