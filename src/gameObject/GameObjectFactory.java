@@ -5,9 +5,24 @@ import board.Path;
 import board.Tile;
 import board.Tunnel;
 import board.Wall;
+import inventory.InventoryItem;
 
 public class GameObjectFactory {
-	
+	// needs to be done
+	public static Mech readMech(String id) {
+		return null;
+	}
+
+	// needs to be done
+	public static Item readItem(String id) {
+		return null;
+	}
+
+	// needs to be done
+	public static InventoryItem readInventoryItem(String id) {
+		return null;
+	}
+
 	public static Mech makeMech(char type, int x, int y, int xDir, int yDir) {
 		return new Mech(type, x, y, xDir, yDir);
 	}

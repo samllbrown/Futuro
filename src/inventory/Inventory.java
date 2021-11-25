@@ -23,4 +23,8 @@ public class Inventory {
 		}
 	}
 
+	public void addItem(InventoryItem invItem) {
+		this.inventoryItems.put(invItem.getName(), invItem);
+	}
+
 }

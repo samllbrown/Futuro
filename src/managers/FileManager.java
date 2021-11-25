@@ -6,7 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import board.Grid;
 import board.Level;
+import gameObject.GameObjectFactory;
+import gameObject.Item;
+import gameObject.Mech;
+import inventory.Inventory;
 
 /**
  * FileManager.java
@@ -19,26 +24,7 @@ public class FileManager {
 	public static final File PLAYER_FILE = new File ("C:\\Users\\ultim\\Documents\\GitHub\\Futuro\\src\\gameFiles\\Players.txt");
 	public static final File LEADERBOARD_FILE = new File ("C:\\Users\\ultim\\Documents\\GitHub\\Futuro\\src\\gameFiles\\Leaderboard.txt");
 
-	/**
-	 *
-	 * @param levelName
-	 * @return
-	 */
-	public static Level readLevel(String levelName) {
-		String out = null;
-		try {
-		      File level = new File(levelName);
-		      Scanner reader = new Scanner(level);
-		      while (reader.hasNextLine()) {
-		    	  out = out + reader.nextLine();
-		      }
-	    reader.close();
-	    } catch (FileNotFoundException e) {
-		      System.out.println("An error occurred.");
-		      e.printStackTrace();
-	    }
-		return new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
-	}
+
 
 //	public static void writeObjectToFile(String fileName, Object object) throws IOException, FileNotFoundException {
 //		// find the filename or something
@@ -121,8 +107,85 @@ public class FileManager {
 		FileManager.writeToLeaderboardFile(David,100,5);
 		FileManager.writeToPlayerFile(David);
 	}
+	/*
+	* LEVEL FILE FORMAT ONCE AND FOR ALL:
+	* LEVELID
+	* WIDTH
+	* HEIGHT
+	* TILEROW_1
+	* TILEROW_2
+	* ........
+	* TILEROW_HEIGHT
+	* NUMBEROFMECHS
+	* MECHID_1
+	* MECHID_2
+	* ......
+	* MECHID_NUMBEROFMECHS
+	* NUMBEROFITEMSINPLAY
+	* ITEMID_1
+	* ITEMID_2
+	* .....
+	* ITEMID_NUMBEROFITEMSINPLAY
+	* NUMBEROFITEMSININVENTORY
+	* INV_ITEM_1
+	* INV_ITEM_2
+	* .......
+	* CURRENTSCORE
+	* ELAPSEDTIME
+	* EXPECTEDTIME
+	* NUMBEROFMECHSTOLOSE
+	* */
+	public static Level readLevel(String fileName) throws Exception {
+		BufferedReader br = new BufferedReader(new FileReader(new File(fileName)));
+		String currentLine;
+		int levelid, width, height, numberOfMechs, numberOfItemsInPlay, numberOfItemsInInventory, currentScore, elapsedTime, numberOfMechsToLose, expectedSecondsToComplete;
+		//ArrayList<String> rowsOfTiles = new ArrayList<>();
+		String tiles = "";
+		ArrayList<Mech> mechs = new ArrayList<>();
+		ArrayList<Item> itemsInPlay = new ArrayList<>();
+		Inventory inventory = new Inventory();
+		levelid = Integer.valueOf(br.readLine());
+		width = Integer.valueOf(br.readLine());
+		height = Integer.valueOf(br.readLine());
+		Grid grid = new Grid(width, height);
+		for(int i = 0; i < height; i++) {
+			tiles += br.readLine() + "\n";
+			//rowsOfTiles.add(br.readLine());
+		}
+
+		numberOfMechs = Integer.valueOf(br.readLine());
+
+		for(int i = 0; i < numberOfMechs; i++) {
+			mechs.add(GameObjectFactory.readMech(br.readLine()));
+		}
+
+		numberOfItemsInPlay = Integer.valueOf(br.readLine());
+		for(int i = 0; i < numberOfItemsInPlay; i++) {
+			itemsInPlay.add(GameObjectFactory.readItem(br.readLine()));
+		}
+
+		numberOfItemsInInventory = Integer.valueOf(br.readLine());
+		for(int i = 0; i < numberOfItemsInInventory; i++) {
+			inventory.addItem(GameObjectFactory.readInventoryItem(br.readLine()));
+		}
+		currentScore = Integer.valueOf(br.readLine());
+		elapsedTime = Integer.valueOf(br.readLine());
+		expectedSecondsToComplete = Integer.valueOf(br.readLine());
+		numberOfMechsToLose = Integer.valueOf(br.readLine());
+		grid.populateGrid(tiles);
+		return new Level(levelid, height, width, inventory, numberOfMechsToLose, currentScore, expectedSecondsToComplete, elapsedTime, mechs, grid);
+	}
 
 
+
+	// HELLO DAVID THIS IS SAM
+	// I DIDN'T KNOW WHETHER OR NOT YOU NEEDED HELP WITH THIS
+	// SO I HAVE MADE A NEW METHOD FOR IT ABOVE
+	// PLEASE REFER TO THE METHOD AND SEE WHAT IT IS DOING
+	// DECIDE WHICH ONE YOU'D PREFER TO KEEP
+	// PLEASE NOTE THAT THE ABOVE METHOD SHOULD WORK.
+	// MANY THANKS
+	// SAM
 	// IGNORE THE MESS BELOW USING IT LATER - DAVID
 	public static void readLevelFile(String filename) throws FileNotFoundException {
 		String levelID;
@@ -173,4 +236,25 @@ public class FileManager {
 		  	I1.items.add(i)
 		  	}*/
 	}
+
+//	/**
+//	 *
+//	 * @param levelName
+//	 * @return
+//	 */
+//	public static Level readLevel(String levelName) {
+//		String out = null;
+//		try {
+//			File level = new File(levelName);
+//			Scanner reader = new Scanner(level);
+//			while (reader.hasNextLine()) {
+//				out = out + reader.nextLine();
+//			}
+//			reader.close();
+//		} catch (FileNotFoundException e) {
+//			System.out.println("An error occurred.");
+//			e.printStackTrace();
+//		}
+//		return new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
+//	}
 }
