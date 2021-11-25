@@ -68,26 +68,43 @@ public class FileManager {
 	 * @return
 	 * @throws FileNotFoundException
 	 */
-	public static Player readPlayerFile (int playerID) throws FileNotFoundException {
-		Player selectedPlayer = null;
-		Scanner in = new Scanner(PLAYER_FILE);
-		ArrayList<Player> playersFromFile = new ArrayList<>();
-		while (in.hasNextLine()) {
-			String curLine = in.nextLine();
-			Scanner line = new Scanner(curLine).useDelimiter(",");
-			playersFromFile.add(new Player(line.nextInt(), line.next(), line.nextInt()));
-		}
-		for (Player p : playersFromFile) {
-			if (p.getPlayerID() == playerID) {
-				selectedPlayer = p;
+	public static Player readPlayerFile (int playerID) throws IOException {
+		String currentLine;
+		String playerRecord = null;
+		BufferedReader br = new BufferedReader(new FileReader(PLAYER_FILE));
+		boolean found = false;
+		int currentPlayerID;
+		while((currentLine = br.readLine()) != null && (!found)) {
+			if (Integer.valueOf(currentLine.split(",")[0]) == playerID) {
+				playerRecord = currentLine;
+				found = true;
 			}
 		}
+		// HELLO DAVID
+		// PLEASE COULD YOU WRITE SOME VALIDATION STUFF FOR THIS METHOD
+		// THANK YOU
+		// SAM
+		Player player = new Player(playerRecord);
+		return player;
+//		Player selectedPlayer = null;
+//		Scanner in = new Scanner(PLAYER_FILE);
+//		ArrayList<Player> playersFromFile = new ArrayList<>();
+//		while (in.hasNextLine()) {
+//			String curLine = in.nextLine();
+//			Scanner line = new Scanner(curLine).useDelimiter(",");
+//			playersFromFile.add(new Player(line.nextInt(), line.next(), line.nextInt()));
+//		}
+//		for (Player p : playersFromFile) {
+//			if (p.getPlayerID() == playerID) {
+//				selectedPlayer = p;
+//			}
+//		}
 		/*try {
 			return selectedPlayer;
 		} catch (NullPointerException e){
 			System.out.println("Player doesn't exist!");
 		}*/
-		return selectedPlayer;
+//		return selectedPlayer;
 	}
 
 	/**
