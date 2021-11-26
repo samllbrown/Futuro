@@ -1,13 +1,19 @@
 package managers;
 
 import javafx.application.Application;
+
+import java.io.FileNotFoundException;
+
 import board.Level;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -25,6 +31,8 @@ public class GameManager extends Application {
 
     // The size to draw the shapes
     private static final int SHAPE_SIZE = 30;
+    
+    public static Stage mainMenu;
 
     // The canvas in the GUI. This needs to be a global variable
     // (in this setup) as we need to access it in different methods.
@@ -38,10 +46,11 @@ public class GameManager extends Application {
         // Create a scene from the GUI
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         primaryStage.setTitle("Futuro");
-
+        
         // Display the scene on the stage
         primaryStage.setScene(scene);
-        primaryStage.show();
+        mainMenu = primaryStage;
+        mainMenu.show();
     }
 
     public static void main(String[] args) throws Exception {
@@ -51,8 +60,6 @@ public class GameManager extends Application {
 
     /**
      * Create the GUI.
-     * 
-     * @return The panel that contains the created GUI.
      */
     private Pane buildGUI() {
         // Create top-level panel that will hold all GUI
@@ -71,45 +78,42 @@ public class GameManager extends Application {
         VBox sidebar = new VBox();
         sidebar.setSpacing(10);
         sidebar.setPadding(new Insets(10, 10, 10, 10));
+
+        
+        Label playerID = new Label("ID of player: ");
+        TextField playerIDInput = new TextField ();
+
         root.setLeft(sidebar);
-        sidebar.getChildren().addAll(startGame, selectPlayer, createPlayer, deletePlayer);
-
+        sidebar.getChildren().addAll(startGame, selectPlayer, createPlayer, deletePlayer, playerID, playerIDInput);
         startGame.setOnAction(e -> {
-            FileManager readLevel = new FileManager();            
-//            trying to add exception incase it can't find the file 
-//            Level level;
-//            try {
-//                level = FileManager.readLevel("level1.txt");
-//            } catch (FileNotFoundException e) {
-//                System.out.println("An error occurred.");
-//                e.printStackTrace();
-//            }
-			Level level = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
+        	Level level = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
             Game game = new Game(level);
+            mainMenu.close();
         });
-
-//      
-//      selectPlayer.setOnAction(e -> {
-//          FileManager playerReader = new FileManager();
-//          //Level level = levelReader.readLevel("Players.txt");
-//          Player player = new Player(1,"Player1",2);
-//          Game game = new Game(player);
-//        });
-
-//      createPlayer.setOnAction(e -> {
-//            FileManager playerReader = new FileManager();
-//            //Level level = levelReader.readLevel("Players.txt");
-//            Player player = new Player(1,"Player1",2);
-//            Game game = new Game(player);
-//        });
-
-//      deletePlayer.setOnAction(e -> {
-//      FileManager playerReader = new FileManager();
-//      //Level level = levelReader.readLevel("Players.txt");
-//      Player player = new Player(1,"Player1",2);
-//      Game game = new Game(player);
-//  });
-
+        
+        selectPlayer.setOnAction(e -> {
+        	if(playerIDInput.getText() != null) {
+        		FileManager playerReader = new FileManager();
+                //Player player = playerReader.readPlayerFile(Integer.parseInt(playerIDInput.getText()));
+            	Player player = new Player(1,"Player1",2);
+                System.out.println(Integer.parseInt(playerIDInput.getText()));
+        	}
+        });
         return root;
     }
 }
+
+
+//  createPlayer.setOnAction(e -> {
+//        FileManager playerReader = new FileManager();
+//        //Level level = levelReader.readLevel("Players.txt");
+//        Player player = new Player(1,"Player1",2);
+//        Game game = new Game(player);
+//    });
+
+//  deletePlayer.setOnAction(e -> {
+//  FileManager playerReader = new FileManager();
+//  //Level level = levelReader.readLevel("Players.txt");
+//  Player player = new Player(1,"Player1",2);
+//  Game game = new Game(player);
+//});

@@ -33,7 +33,7 @@ public class Game {
 
     private Level level;
     private Player currentPlayer;
-//    private Leaderboard leaderboard;
+    //private Leaderboard leaderboard;
     private String messageOfTheDay;
     private Boolean isPaused;
 
@@ -67,71 +67,55 @@ public class Game {
     }
 
     public void showGame() {
-//        Pane root = buildGUI();
+//      Pane root = buildGUI();
         Stage stage = new Stage();
-//        // Create a scene from the GUI
-//        GridPane gridpane = new GridPane();
-//        for (int i = 0; i < 40; i++) {
-//            ColumnConstraints column = new ColumnConstraints(40);
-//            gridpane.getColumnConstraints().add(column);
-//            RowConstraints row = new RowConstraints(40);
-//            gridpane.getRowConstraints().add(row);
-//        }
-
         Button loadLevel = new Button("LOAD LEVEL");
         Button showLeaderboard = new Button("SHOW LEADERBOARD");
         Button exitGame = new Button("EXIT GAME");
         
-////        gridpane.addRow(5, button);
+        ////ridpane.addRow(5, button);
         VBox sidebar = new VBox();
         sidebar.setSpacing(10);
         sidebar.setPadding(new Insets(10, 10, 10, 10));
         sidebar.getChildren().addAll(loadLevel, showLeaderboard, exitGame);
         
-        loadLevel.setOnAction(e -> {
-            FileManager readLevel = new FileManager();            
-            Level level = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
-            Game game = new Game(level);
-        });
-        
-//        showLeaderboard.setOnAction(e -> {
-//            FileManager readLeaderboard = new FileManager();            
-//            Leaderboard leaderboard = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
-//            Game game = new Game(level);
-//        });
-        
+      
         exitGame.setOnAction(e -> {
-            
-        });
+            stage.hide();
+            GameManager.mainMenu.show();
+        });	
         
-//        Scene scene = new Scene(gridpane, WINDOW_WIDTH, WINDOW_HEIGHT);  
+        // Scene scene = new Scene(gridpane, WINDOW_WIDTH, WINDOW_HEIGHT);  
         Scene scene = new Scene(sidebar, WINDOW_WIDTH, WINDOW_HEIGHT);
         stage.setTitle("Futuro");
         
         // Display the scene on the stage
         stage.setScene(scene);
-        stage.show();
-		
+        stage.show();	
     }
-
-//    private Pane buildGUI() {
-//        // Create top-level panel that will hold all GUI
-//        BorderPane root = new BorderPane();
-//
-//        // Create canvas
-//        canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-//        root.setCenter(canvas);
-//
-//        Button startGame = new Button("THIS IS THE NEW GAME");
-//
-//        
-//        VBox sidebar = new VBox();
-//        sidebar.setSpacing(10);
-//        sidebar.setPadding(new Insets(10, 10, 10, 10)); 
-//        root.setLeft(sidebar);  
-//        sidebar.getChildren().addAll(startGame);
-//        
-//
-//        return root;
-//    }
 }
+
+/*
+loadLevel.setOnAction(e -> {
+    FileManager readLevel = new FileManager();            
+    Level level = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
+    Game game = new Game(level);
+});
+*/
+/*
+showLeaderboard.setOnAction(e -> {
+FileManager readLeaderboard = new FileManager();            
+Leaderboard leaderboard = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
+Game game = new Game(level);
+});
+*/
+
+
+//// Create a scene from the GUI
+//GridPane gridpane = new GridPane();
+//for (int i = 0; i < 40; i++) {
+//  ColumnConstraints column = new ColumnConstraints(40);
+//  gridpane.getColumnConstraints().add(column);
+//  RowConstraints row = new RowConstraints(40);
+//  gridpane.getRowConstraints().add(row);
+//}
