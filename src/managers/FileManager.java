@@ -31,21 +31,28 @@ public class FileManager {
 //		bw.close();
 //	}
 
+	private static void writeRecordToFile(String record, File file) throws IOException {
+		BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
+		bw.write(record + "\n");
+		bw.flush();
+		bw.close();
+	}
+
 	// if the player already exists but the player record is now different from that which is in the file,
 	// we need to delete the record from the file and add in the new record
 	// this isn't being done here yet as far as i can tell
 	// editing a file is simple - we delete and write again
 	public static void writeToPlayerFile(Player player) throws IOException {
-		BufferedWriter bw = new BufferedWriter(new FileWriter(PLAYER_FILE, true));
-		bw.write(player.getPlayerRecord() + "\n");
-		bw.close();
+		writeRecordToFile(player.getPlayerRecord(), PLAYER_FILE);
+//		BufferedWriter bw = new BufferedWriter(new FileWriter(PLAYER_FILE, true));
+//		bw.write(player.getPlayerRecord() + "\n");
+//		bw.close();
 	}
 
 	public static void writeToLeaderboardFile(Player player, int playerScore, int rank) throws IOException {
+		// put this into a method plz
 		String record = player.getPlayerID() + "," + playerScore + "," + rank;
-		BufferedWriter bw = new BufferedWriter(new FileWriter(LEADERBOARD_FILE, true));
-		bw.write(record + "\n");
-		bw.close();
+		writeRecordToFile(record, LEADERBOARD_FILE);
 	}
 
 	/**
