@@ -37,7 +37,6 @@ public class Level {
 	// this shouldn't be static because it could be a different level (i think)
 	// basically, if you load up a level which is level, say, 3 then you're saying that the next level
 	// id is 2
-	private int nextLevelID;
 	
 	private ArrayList<Mech> currentMechs;
 	private ArrayList<Item> currentItemsInPlay;
@@ -58,7 +57,6 @@ public class Level {
 		this.timeElapsed = timeElapsed;
 		this.currentMechs = currentMechs;
 		this.levelID = levelId;
-		this.nextLevelID = this.levelID+1;
 		this.grid = grid;
 		//this.initMechs();
 		//this.initItems();

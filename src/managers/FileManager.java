@@ -15,21 +15,14 @@ import inventory.Inventory;
 
 /**
  * FileManager.java
- * @author David Terence-Abanulo, ...
- * @version 1.0
- * Last Mod Date: 21/11/2021
+ * @author David Terence-Abanulo, Sam R
+ * @version 1.5
+ * Last Mod Date: 26/11/2021
  */
 
 public class FileManager {
 	public static final File PLAYER_FILE = new File ("Players.txt");
 	public static final File LEADERBOARD_FILE = new File ("Leaderboard.txt");
-
-//	public static void writeObjectToFile(String fileName, Object object) throws IOException, FileNotFoundException {
-//		// find the filename or something
-//		BufferedWriter bw = new BufferedWriter(new FileWriter(new File(fileName)));
-//		bw.write(object.toString());
-//		bw.close();
-//	}
 
 	private static void writeRecordToFile(String record, File file) throws IOException {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));

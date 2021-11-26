@@ -6,13 +6,11 @@ public class Player {
 	private int playerID;
 	private int maxLevelID;
 	private String playerName;
-	private static int nextPlayerID;
 
 	public Player(int playerID, String playerName, int maxLevelID) {
 		this.playerName = playerName;
 		this.maxLevelID = maxLevelID;
-		this.playerID = Player.nextPlayerID;
-		Player.nextPlayerID++; // WHAT DO YOU MEAN WHY IS THIS HERE
+		this.playerID = playerID;
 	}
 
 
@@ -60,6 +58,6 @@ public class Player {
 
 	@Override
 	public String toString() {
-		return (playerID+','+playerName+','+maxLevelID);
+		return (this.playerID+","+this.playerName+","+this.maxLevelID);
 	}
 }
