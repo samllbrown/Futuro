@@ -38,6 +38,20 @@ public class FileManager {
 		bw.close();
 	}
 
+	public String getRecordWithIDFromFile(int givenID, File file) throws IOException {
+		// search algo might be useful here, probs best to store the records in a sorted order.
+		String currentLine;
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		while((currentLine = br.readLine()) != null) {
+			int currentID = Integer.valueOf(currentLine.split(",")[0]);
+			if (currentID == givenID) {
+				return currentLine;
+			}
+		}
+		// shouldn't be doing this throw an exception or something instead.
+		return null;
+	}
+
 	// if the player already exists but the player record is now different from that which is in the file,
 	// we need to delete the record from the file and add in the new record
 	// this isn't being done here yet as far as i can tell
