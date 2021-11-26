@@ -21,7 +21,7 @@ import inventory.Inventory;
  */
 
 public class FileManager {
-	public static final File PLAYER_FILE = new File ("Players.txt");
+	public static final File PLAYER_FILE = new File (getCurrentWorkingDirectory() + "\\src\\txtfiles\\" + "Players.txt");
 	public static final File LEADERBOARD_FILE = new File ("Leaderboard.txt");
 
 	private static void writeRecordToFile(String record, File file) throws IOException {
@@ -30,9 +30,14 @@ public class FileManager {
 		bw.flush(); 
 		bw.close();
 	}
+	
+	private static String getCurrentWorkingDirectory() {
+        String userDirectory = System.getProperty("user.dir");
+        return userDirectory;
+    }
 
 	// probably needs validation
-	public static String getRecordWithIDFromFile(int givenID, File file) throws IOException {
+	public static String getPlayerInfoFromFile(int givenID, File file) throws IOException {
 		// search algo might be useful here, probs best to store the records in a sorted order.
 		String currentLine;
 		BufferedReader br = new BufferedReader(new FileReader(file));
@@ -43,18 +48,33 @@ public class FileManager {
 			}
 		}
 		// shouldn't be doing this throw an exception or something instead.
-		return null;
+		return currentLine;
 	}
-
-	// if the player already exists but the player record is now different from that which is in the file,
-	// we need to delete the record from the file and add in the new record
-	// this isn't being done here yet as far as i can tell
-	// editing a file is simple - we delete and write again
+	
 	public static void writeToPlayerFile(Player player) throws IOException {
-		writeRecordToFile(player.getPlayerRecord(), PLAYER_FILE);
-//		BufferedWriter bw = new BufferedWriter(new FileWriter(PLAYER_FILE, true));
-//		bw.write(player.getPlayerRecord() + "\n");
-//		bw.close();
+		boolean found = false;
+		try {
+		    Scanner scanner = new Scanner(PLAYER_FILE);
+		    BufferedWriter bw = new BufferedWriter(new FileWriter(PLAYER_FILE));
+		    int lineNum = 0;
+		    
+		    
+		    while (scanner.hasNextLine() && found == false) {
+		        String line = scanner.nextLine();
+		        lineNum++;
+		        if (line.contains(Integer.toString(player.getPlayerID()))) {
+		        	System.out.println("Logged once");
+		        	bw.write(line + System.getProperty("line.separator"));
+		        	writeRecordToFile(player.getPlayerInfo(), PLAYER_FILE);
+		        	found = true;
+		        }
+		    }
+		} catch(FileNotFoundException e) { 
+		    //handle this
+		}
+		if(found == false) {
+			writeRecordToFile(player.getPlayerInfo(), PLAYER_FILE);
+		}
 	}
 
 	public static void writeToLeaderboardFile(Player player, int playerScore, int rank) throws IOException {
@@ -62,27 +82,30 @@ public class FileManager {
 		String record = player.getPlayerID() + "," + playerScore + "," + rank;
 		writeRecordToFile(record, LEADERBOARD_FILE);
 	}
-
+	
 	/**
 	 * Given a playerID checks if that player exists within the player file, if so then returns that player
 	 * @param playerID
 	 * @return
 	 * @throws FileNotFoundException
 	 */
-	public static Player readPlayerFile (int playerID) throws Exception {
-		String playerRecord = getRecordWithIDFromFile(playerID, PLAYER_FILE);
+	/*
+	public static Player checkIfPlayerExists (int playerID) throws Exception {
+		String playerRecord = getPlayerInfoFromFile(playerID, PLAYER_FILE);
 		if(playerRecord == null) {
 			throw new Exception("Could not find PlayerID: " + playerID);
 		} else {
 			return new Player(playerRecord);
 		}
 	}
-
+	*/
+	
 	/**
 	 * Testing reading and writing stuff
 	 * @param args
 	 * @throws FileNotFoundException
 	 */
+	/*
 	public static void main(String[]args) throws Exception {
 		Player David = new Player(2,"David",2);
 		Player Illia = new Player(3,"Illia",3);
@@ -95,6 +118,8 @@ public class FileManager {
 		FileManager.writeToLeaderboardFile(David,100,5);
 		FileManager.writeToPlayerFile(David);
 	}
+	*/
+	
 	/*
 	* LEVEL FILE FORMAT ONCE AND FOR ALL:
 	* LEVELID
@@ -211,19 +236,21 @@ public class FileManager {
 			cos respawnRate = 20,25,15,15,15,5,5
 			 */
 		}
-		/*Additional code for making an instance of a level from this file and Items in the inventory
-		Level l1 = new Level (LevelID)
-		  ArrayList<String> itemsFromFile = inventory.split(" ")
-		  ArrayList<Items> itemsList;
-		  for (String item:itemFromFile){
-		  	new Item (item);
-		  	itemsList.add(item)
-		  	}
-		  Inventory I1 = new Inventory()
-		  for(Item i: itemsList){
-		  	I1.items.add(i)
-		  	}*/
 	}
+}
+	
+	/*Additional code for making an instance of a level from this file and Items in the inventory
+	Level l1 = new Level (LevelID)
+	  ArrayList<String> itemsFromFile = inventory.split(" ")
+	  ArrayList<Items> itemsList;
+	  for (String item:itemFromFile){
+	  	new Item (item);
+	  	itemsList.add(item)
+	  	}
+	  Inventory I1 = new Inventory()
+	  for(Item i: itemsList){
+	  	I1.items.add(i)
+	  	}*/
 
 //	/**
 //	 *
@@ -245,4 +272,3 @@ public class FileManager {
 //		}
 //		return new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
 //	}
-}

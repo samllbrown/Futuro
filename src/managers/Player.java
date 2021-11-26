@@ -25,10 +25,10 @@ public class Player {
 		String[] fields = playerRecord.split(",");
 		this.playerID = Integer.valueOf(fields[0]);
 		this.playerName = fields[1];
-		this.maxLevelID = Integer.valueOf(fields[2]);
+		//this.maxLevelID = Integer.valueOf(fields[2]);
 	}
 
-	public String getPlayerRecord() {
+	public String getPlayerInfo() {
 		return this.getPlayerID() + "," + this.getPlayerName() + "," + this.getMaxLevelID();
 	}
 

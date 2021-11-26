@@ -3,6 +3,7 @@ package managers;
 import javafx.application.Application;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import board.Level;
 import javafx.geometry.Insets;
@@ -82,9 +83,12 @@ public class GameManager extends Application {
         
         Label playerID = new Label("ID of player: ");
         TextField playerIDInput = new TextField ();
+        
+        Label playerName= new Label("Name of player: ");
+        TextField playerNameInput = new TextField ();
 
         root.setLeft(sidebar);
-        sidebar.getChildren().addAll(startGame, selectPlayer, createPlayer, deletePlayer, playerID, playerIDInput);
+        sidebar.getChildren().addAll(startGame, selectPlayer, createPlayer, deletePlayer, playerID, playerIDInput, playerName, playerNameInput);
         startGame.setOnAction(e -> {
         	Level level = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
             Game game = new Game(level);
@@ -95,21 +99,24 @@ public class GameManager extends Application {
         	if(playerIDInput.getText() != null) {
         		FileManager playerReader = new FileManager();
                 //Player player = playerReader.readPlayerFile(Integer.parseInt(playerIDInput.getText()));
-            	Player player = new Player(1,"Player1",2);
                 System.out.println(Integer.parseInt(playerIDInput.getText()));
         	}
+        });
+        
+        createPlayer.setOnAction(e -> {
+        	FileManager playerCreator = new FileManager();
+        	try {
+        		Player player = new Player(playerIDInput.getText() + "," +playerNameInput.getText());
+				playerCreator.writeToPlayerFile(player);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
         });
         return root;
     }
 }
 
-
-//  createPlayer.setOnAction(e -> {
-//        FileManager playerReader = new FileManager();
-//        //Level level = levelReader.readLevel("Players.txt");
-//        Player player = new Player(1,"Player1",2);
-//        Game game = new Game(player);
-//    });
 
 //  deletePlayer.setOnAction(e -> {
 //  FileManager playerReader = new FileManager();

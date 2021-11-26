@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -74,10 +75,12 @@ public class Game {
         Button exitGame = new Button("EXIT GAME");
         
         ////ridpane.addRow(5, button);
+        
+        Label messageOfDay = new Label(getMessageOfTheDay());
         VBox sidebar = new VBox();
         sidebar.setSpacing(10);
         sidebar.setPadding(new Insets(10, 10, 10, 10));
-        sidebar.getChildren().addAll(loadLevel, showLeaderboard, exitGame);
+        sidebar.getChildren().addAll(loadLevel, showLeaderboard, exitGame, messageOfDay);
         
       
         exitGame.setOnAction(e -> {
@@ -93,6 +96,8 @@ public class Game {
         stage.setScene(scene);
         stage.show();	
     }
+    
+    
 }
 
 /*
