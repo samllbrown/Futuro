@@ -33,33 +33,21 @@ public class FileManager {
 //		bw.close();
 //	}
 
-	public static void writeToPlayerFile(Player player){
-		try {
-			FileWriter fw = new FileWriter(PLAYER_FILE, true);
-			BufferedWriter bw = new BufferedWriter(fw);
-			bw.write("\n"+player.getPlayerRecord());
-			bw.newLine();
-			bw.close();
-		} catch(IOException e){
-			System.out.println("File doesn't exist");
-			e.printStackTrace();
-		}
+	// if the player already exists but the player record is now different from that which is in the file,
+	// we need to delete the record from the file and add in the new record
+	// this isn't being done here yet as far as i can tell
+	// editing a file is simple - we delete and write again
+	public static void writeToPlayerFile(Player player) throws IOException {
+		BufferedWriter bw = new BufferedWriter(new FileWriter(PLAYER_FILE, true));
+		bw.write(player.getPlayerRecord() + "\n");
+		bw.close();
 	}
 
 	public static void writeToLeaderboardFile(Player player, int playerScore, int rank) throws IOException {
-		try {
-			FileWriter fw = new FileWriter(LEADERBOARD_FILE, true);
-			BufferedWriter bw = new BufferedWriter(fw);
-			bw.write(player.getPlayerID());
-			bw.newLine();
-			bw.write(playerScore);
-			bw.newLine();
-			bw.write(rank);
-			bw.close();
-		} catch(IOException e){
-			System.out.println("File doesn't exist");
-			e.printStackTrace();
-		}
+		String record = player.getPlayerID() + "," + playerScore + "," + rank;
+		BufferedWriter bw = new BufferedWriter(new FileWriter(LEADERBOARD_FILE, true));
+		bw.write(record + "\n");
+		bw.close();
 	}
 
 	/**
