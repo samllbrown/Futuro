@@ -13,12 +13,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import services.MessageOfTheDay;
 
 public class Game {
-	
-	private static final int WINDOW_WIDTH = 600;
+
+    private static final int WINDOW_WIDTH = 600;
     private static final int WINDOW_HEIGHT = 400;
 
     // The dimensions of the canvas
@@ -27,90 +28,110 @@ public class Game {
 
     // The size to draw the shapes
     private static final int SHAPE_SIZE = 30;
-    
+
     private Canvas canvas;
-	    
-	private Level level;
-	private Player currentPlayer;
-	private String messageOfTheDay;
-	private Boolean isPaused;
-	
-	
-	public Game(Level level) {	
-		setLevel(level);
-		showGame();
-	}
 
-	public Level getLevel() {
-		return level;
-	}
+    private Level level;
+    private Player currentPlayer;
+//    private Leaderboard leaderboard;
+    private String messageOfTheDay;
+    private Boolean isPaused;
 
-	public void setLevel(Level level) {
-		this.level = level;
-	}
+    public Game(Level level) {
+        setLevel(level);
+        showGame();
+    }
 
-	
-	//BAD IMPLEMENTATION
-	public String getMessageOfTheDay() {
-		String message;
-		try {
-			message = MessageOfTheDay.getMessageOfTheDay();
-		} catch (IOException e) {
-			message = "Error" + e;
-		}
-		setMessageOfTheDay(message);
-		return messageOfTheDay;
-	}
+    public Level getLevel() {
+        return level;
+    }
 
-	public void setMessageOfTheDay(String messageOfTheDay) {
-		this.messageOfTheDay = messageOfTheDay;
-	}
+    public void setLevel(Level level) {
+        this.level = level;
+    }
 
-
-	public void showGame() {
-		Pane root = buildGUI();
-	    Stage stage = new Stage();
-        // Create a scene from the GUI
-        GridPane gridpane = new GridPane();
-        for (int i = 0; i < 40; i++) {
-            ColumnConstraints column = new ColumnConstraints(40);
-            gridpane.getColumnConstraints().add(column);
-            RowConstraints row = new RowConstraints(40);
-            gridpane.getRowConstraints().add(row);
+    // BAD IMPLEMENTATION
+    public String getMessageOfTheDay() {
+        String message;
+        try {
+            message = MessageOfTheDay.getMessageOfTheDay();
+        } catch (IOException e) {
+            message = "Error" + e;
         }
-        
-        Button button = new Button("Hello");
-        gridpane.addRow(5, button);
+        setMessageOfTheDay(message);
+        return messageOfTheDay;
+    }
 
+    public void setMessageOfTheDay(String messageOfTheDay) {
+        this.messageOfTheDay = messageOfTheDay;
+    }
+
+    public void showGame() {
+//        Pane root = buildGUI();
+        Stage stage = new Stage();
+//        // Create a scene from the GUI
+//        GridPane gridpane = new GridPane();
+//        for (int i = 0; i < 40; i++) {
+//            ColumnConstraints column = new ColumnConstraints(40);
+//            gridpane.getColumnConstraints().add(column);
+//            RowConstraints row = new RowConstraints(40);
+//            gridpane.getRowConstraints().add(row);
+//        }
+
+        Button loadLevel = new Button("LOAD LEVEL");
+        Button showLeaderboard = new Button("SHOW LEADERBOARD");
+        Button exitGame = new Button("EXIT GAME");
         
+////        gridpane.addRow(5, button);
+        VBox sidebar = new VBox();
+        sidebar.setSpacing(10);
+        sidebar.setPadding(new Insets(10, 10, 10, 10));
+        sidebar.getChildren().addAll(loadLevel, showLeaderboard, exitGame);
         
+        loadLevel.setOnAction(e -> {
+            FileManager readLevel = new FileManager();            
+            Level level = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
+            Game game = new Game(level);
+        });
         
+//        showLeaderboard.setOnAction(e -> {
+//            FileManager readLeaderboard = new FileManager();            
+//            Leaderboard leaderboard = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
+//            Game game = new Game(level);
+//        });
         
-        Scene scene = new Scene(gridpane, WINDOW_WIDTH, WINDOW_HEIGHT);        
+        exitGame.setOnAction(e -> {
+            
+        });
+        
+//        Scene scene = new Scene(gridpane, WINDOW_WIDTH, WINDOW_HEIGHT);  
+        Scene scene = new Scene(sidebar, WINDOW_WIDTH, WINDOW_HEIGHT);
         stage.setTitle("Futuro");
         
         // Display the scene on the stage
         stage.setScene(scene);
         stage.show();
 		
-	}
-	
-	 private Pane buildGUI() {
-        // Create top-level panel that will hold all GUI
-        BorderPane root = new BorderPane();
-                
-        // Create canvas
-        canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-        root.setCenter(canvas);
-        
-        Button startGame = new Button("THIS IS THE NEW GAME");
-        
-        VBox sidebar = new VBox();
-        sidebar.setSpacing(10);
-        sidebar.setPadding(new Insets(10, 10, 10, 10)); 
-        root.setLeft(sidebar);  
-        sidebar.getChildren().addAll(startGame);
-        
-        return root;
-    }   
+    }
+
+//    private Pane buildGUI() {
+//        // Create top-level panel that will hold all GUI
+//        BorderPane root = new BorderPane();
+//
+//        // Create canvas
+//        canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+//        root.setCenter(canvas);
+//
+//        Button startGame = new Button("THIS IS THE NEW GAME");
+//
+//        
+//        VBox sidebar = new VBox();
+//        sidebar.setSpacing(10);
+//        sidebar.setPadding(new Insets(10, 10, 10, 10)); 
+//        root.setLeft(sidebar);  
+//        sidebar.getChildren().addAll(startGame);
+//        
+//
+//        return root;
+//    }
 }
