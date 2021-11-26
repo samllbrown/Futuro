@@ -38,7 +38,8 @@ public class FileManager {
 		bw.close();
 	}
 
-	public String getRecordWithIDFromFile(int givenID, File file) throws IOException {
+	// probably needs validation
+	public static String getRecordWithIDFromFile(int givenID, File file) throws IOException {
 		// search algo might be useful here, probs best to store the records in a sorted order.
 		String currentLine;
 		BufferedReader br = new BufferedReader(new FileReader(file));
@@ -76,23 +77,9 @@ public class FileManager {
 	 * @throws FileNotFoundException
 	 */
 	public static Player readPlayerFile (int playerID) throws Exception {
-		String currentLine;
-		String playerRecord = null;
-		BufferedReader br = new BufferedReader(new FileReader(PLAYER_FILE));
-		boolean found = false;
-		int currentPlayerID;
-		while((currentLine = br.readLine()) != null && (!found)) {
-			if (Integer.valueOf(currentLine.split(",")[0]) == playerID) {
-				playerRecord = currentLine;
-				found = true;
-			}
-		}
-		// HELLO DAVID
-		// PLEASE COULD YOU WRITE SOME VALIDATION STUFF FOR THIS METHOD
-		// THANK YOU
-		// SAM
+		String playerRecord = getRecordWithIDFromFile(playerID, PLAYER_FILE);
 		if(playerRecord == null) {
-			throw new Exception("Could not find playerID: " + playerID);
+			throw new Exception("Could not find PlayerID: " + playerID);
 		} else {
 			return new Player(playerRecord);
 		}
