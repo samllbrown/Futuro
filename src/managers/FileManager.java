@@ -27,7 +27,7 @@ public class FileManager {
 	private static void writeRecordToFile(String record, File file) throws IOException {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
 		bw.write(record + "\n");
-		bw.flush();
+		bw.flush(); 
 		bw.close();
 	}
 
