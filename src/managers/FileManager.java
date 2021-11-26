@@ -21,10 +21,8 @@ import inventory.Inventory;
  */
 
 public class FileManager {
-	public static final File PLAYER_FILE = new File ("C:\\Users\\ultim\\Documents\\GitHub\\Futuro\\src\\gameFiles\\Players.txt");
-	public static final File LEADERBOARD_FILE = new File ("C:\\Users\\ultim\\Documents\\GitHub\\Futuro\\src\\gameFiles\\Leaderboard.txt");
-
-
+	public static final File PLAYER_FILE = new File ("Players.txt");
+	public static final File LEADERBOARD_FILE = new File ("Leaderboard.txt");
 
 //	public static void writeObjectToFile(String fileName, Object object) throws IOException, FileNotFoundException {
 //		// find the filename or something
