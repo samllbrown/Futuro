@@ -90,7 +90,7 @@ public class FileManager {
 	 * @param args
 	 * @throws FileNotFoundException
 	 */
-	public static void main(String[]args) throws IOException {
+	public static void main(String[]args) throws Exception {
 		Player David = new Player(2,"David",2);
 		Player Illia = new Player(3,"Illia",3);
 		Player Sam = new Player(1,"Sam",5);
