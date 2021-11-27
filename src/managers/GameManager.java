@@ -105,31 +105,11 @@ public class GameManager extends Application {
         
         // Select which player profile to play the game as
         selectPlayer.setOnAction(e -> {
-//              if(playerIDInput.getText() != null) {
-//        		FileManager playerReader = new FileManager();
-//                try {
 //					Player player = new Player(FileManager.getPlayerInfo(Integer.parseInt(playerIDInput.getText())));
-//				} catch (NumberFormatException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				} catch (IOException e1) {
-//					e1.printStackTrace();
-//				} catch (Exception e2) {
-//					Alert alert = new Alert(AlertType.INFORMATION);
-//					alert.setTitle("INFORMATION");
-//					alert.setHeaderText("No player found");
-//					alert.setContentText("Please try again");
-//					alert.showAndWait().ifPresent(rs -> {
-//					    if (rs == ButtonType.OK) {
-//					        System.out.println("Pressed OK.");
-//					    }
-//					});
-//				}
-//                System.out.println(Integer.parseInt(playerIDInput.getText()));
-//        	}
             if(playerIDInput.getText() != null) {
                 try {
                     this.currentPlayer = FileManager.getPlayer(Integer.valueOf(playerIDInput.getText()));
+//                    System.out.println(currentPlayer);
                 } catch (Exception exception) {
                     Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("INFORMATION");
