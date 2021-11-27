@@ -53,18 +53,40 @@ public class FileManager {
 //	}
 
 	public static String getRecordWithID(int id, File file) throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader(file));
-		String currentLine;
-		String[] lineSplit;
-		while((currentLine = br.readLine()) != null) {
-			lineSplit = currentLine.split(",");
-			if(Integer.valueOf(lineSplit[0]) == id) {
+		BufferedReader br = null;
+		String returnLine = null;
+		try {
+			br = new BufferedReader(new FileReader(file));
+			String currentLine;
+			String[] currentLineSplit;
+			while((currentLine = br.readLine()) != null) {
+				currentLineSplit = currentLine.split(",");
+				if(Integer.valueOf(currentLineSplit[0]) == id) {
+					returnLine = currentLine;
+				}
+			}
+		} catch(IOException e) {
+			System.err.println("");
+		} finally {
+			try {
+				return returnLine;
 				br.close();
-				return currentLine;
+			} catch(IOException e) {
+				System.err.println("There was an error closing the BufferedReader whilst retrieving a record");
 			}
 		}
-		br.close();
-		return null;
+//		BufferedReader br = new BufferedReader(new FileReader(file));
+//		String currentLine;
+//		String[] lineSplit;
+//		while((currentLine = br.readLine()) != null) {
+//			lineSplit = currentLine.split(",");
+//			if(Integer.valueOf(lineSplit[0]) == id) {
+//				br.close();
+//				return currentLine;
+//			}
+//		}
+//		br.close();
+//		return null;
 	}
 
 	public static void deleteRecordWithID(int id, File file) throws Exception {
