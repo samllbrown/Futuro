@@ -102,7 +102,18 @@ public class GameManager extends Application {
             Game game = new Game(level);
             mainMenu.close();
         });
-        
+
+        deletePlayer.setOnAction(e -> {
+            try {
+                FileManager.deleteRecordWithID(Integer.valueOf(playerIDInput.getText()), FileManager.PLAYER_FILE);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+
+        });
+
         // Select which player profile to play the game as
         selectPlayer.setOnAction(e -> {
 //					Player player = new Player(FileManager.getPlayerInfo(Integer.parseInt(playerIDInput.getText())));
