@@ -2,6 +2,7 @@ package managers;
 
 import java.io.IOException;
 
+import board.Grid;
 import board.Level;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -17,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import services.MessageOfTheDay;
+import javafx.scene
 
 public class Game {
 
@@ -68,19 +70,20 @@ public class Game {
     }
 
     public void showGame() {
-//      Pane root = buildGUI();
+    	int gridHeight = level.getHeight();
+    	int gridWidth = level.getWidth();
+    	
+    	GridPane grid = new GridPane(gridWidth, gridHeight); 
+    	
         Stage stage = new Stage();
-        Button loadLevel = new Button("LOAD LEVEL");
         Button showLeaderboard = new Button("SHOW LEADERBOARD");
         Button exitGame = new Button("EXIT GAME");
-        
-        ////ridpane.addRow(5, button);
-        
+           
         Label messageOfDay = new Label(getMessageOfTheDay());
         VBox sidebar = new VBox();
         sidebar.setSpacing(10);
         sidebar.setPadding(new Insets(10, 10, 10, 10));
-        sidebar.getChildren().addAll(loadLevel, showLeaderboard, exitGame, messageOfDay);
+        sidebar.getChildren().addAll(showLeaderboard, exitGame, messageOfDay);
         
       
         exitGame.setOnAction(e -> {
@@ -88,17 +91,29 @@ public class Game {
             GameManager.mainMenu.show();
         });	
         
-        // Scene scene = new Scene(gridpane, WINDOW_WIDTH, WINDOW_HEIGHT);  
         Scene scene = new Scene(sidebar, WINDOW_WIDTH, WINDOW_HEIGHT);
         stage.setTitle("Futuro");
         
-        // Display the scene on the stage
         stage.setScene(scene);
         stage.show();	
     }
-    
-    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 loadLevel.setOnAction(e -> {
