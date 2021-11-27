@@ -17,7 +17,7 @@ import inventory.Inventory;
  * FileManager.java
  * @author David Terence-Abanulo, Sam R
  * @version 1.5
- * Last Mod Date: 26/11/2021
+ * Last Mod Date: 27/11/2021
  */
 
 public class FileManager {
@@ -52,50 +52,104 @@ public class FileManager {
 //		bw.close();
 //	}
 
-	public static String getRecordWithID(int id, File file) throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader(file));
-		String currentLine;
-		String[] lineSplit;
-		while((currentLine = br.readLine()) != null) {
-			lineSplit = currentLine.split(",");
-			if(Integer.valueOf(lineSplit[0]) == id) {
+	public static String getRecordWithID(int id, File file) {
+		BufferedReader br = null;
+		String returnLine = null;
+		boolean found = false;
+		try {
+			br = new BufferedReader(new FileReader(file));
+			String currentLine;
+			String[] currentLineSplit;
+			while((currentLine = br.readLine()) != null && !found) {
+				currentLineSplit = currentLine.split(",");
+				if(Integer.valueOf(currentLineSplit[0]) == id) {
+					found = true;
+					returnLine = currentLine;
+				}
+			}
+		} catch(IOException e) {
+			System.err.println("");
+		} finally {
+			try {
 				br.close();
-				return currentLine;
+			} catch(IOException e) {
+				System.err.println("There was an error closing the BufferedReader whilst retrieving a record");
 			}
 		}
-		br.close();
-		return null;
+		return returnLine;
 	}
+//		BufferedReader br = new BufferedReader(new FileReader(file));
+//		String currentLine;
+//		String[] lineSplit;
+//		while((currentLine = br.readLine()) != null) {
+//			lineSplit = currentLine.split(",");
+//			if(Integer.valueOf(lineSplit[0]) == id) {
+//				br.close();
+//				return currentLine;
+//			}
+//		}
+//		br.close();
+//		return null;
 
-	public static void deleteRecordWithID(int id, File file) throws Exception {
-		System.err.println("Attempting to delete record with ID: " + id);
+	public static void deleteRecordWithID(int id, File file) {
+		BufferedReader br = null;
+		BufferedWriter wr = null;
 		File newFile = new File("temp.txt");
-		BufferedReader br = new BufferedReader(new FileReader(file));
-		BufferedWriter wr = new BufferedWriter(new FileWriter(newFile));
-		String currentLine;
+		try {
+			br = new BufferedReader(new FileReader(file));
+			wr = new BufferedWriter(new FileWriter(newFile));
+			String currentLine;
+			while((currentLine = br.readLine()) != null) {
+				int currentID = Integer.valueOf(currentLine.split(",")[0]);
+				if(!(id == currentID)) {
+					wr.write(currentLine + "\n");
+				}
+			}
+		} catch(IOException e) {
+			System.err.println(String.format("Error deleting record with id: %d in file: %s", id, file.getName()));
+			System.err.println(e.toString());
+		} finally {
+			try {
+				br.close();
+				wr.flush();
+				if(file.delete()) {
+					newFile.renameTo(file);
+				} else {
+					throw new IOException("Could not delete original file");
+				}
 
-		while((currentLine = br.readLine()) != null) {
-			if(!(id == Integer.valueOf(currentLine.split(",")[0]))) {
-				wr.write(currentLine + "\n");
+			} catch(IOException e) {
+				System.err.println("Error flushing and closing readers and/or writers whilst deleting record");
 			}
 		}
-		br.close();
-		wr.flush();
-		wr.close();
-		file.delete();
-		newFile.renameTo(file);
+//		System.err.println("Attempting to delete record with ID: " + id);
+//		File newFile = new File("temp.txt");
+//		BufferedReader br = new BufferedReader(new FileReader(file));
+//		BufferedWriter wr = new BufferedWriter(new FileWriter(newFile));
+//		String currentLine;
+//
+//		while((currentLine = br.readLine()) != null) {
+//			if(!(id == Integer.valueOf(currentLine.split(",")[0]))) {
+//				wr.write(currentLine + "\n");
+//			}
+//		}
+//		br.close();
+//		wr.flush();
+//		wr.close();
+//		file.delete();
+//		newFile.renameTo(file);
 	}
 
 	// probably needs validation
-	public static String getPlayerInfo(int playerID) throws IOException {
+	public static String getPlayerInfo(int playerID) {
 		return getRecordWithID(playerID, PLAYER_FILE);
 	}
 
-	public static Player getPlayer(int playerID) throws Exception {
+	public static Player getPlayer(int playerID) {
 		return new Player(getPlayerInfo(playerID));
 	}
 
-	public static void writeToPlayerFile(Player player) throws Exception {
+	public static void writeToPlayerFile(Player player) {
 		writeRecordToFile(player.toString(), PLAYER_FILE);
 	}
 //
@@ -194,6 +248,7 @@ public class FileManager {
 	* EXPECTEDTIME
 	* NUMBEROFMECHSTOLOSE
 	* */
+	// need to do try-catches in here
 	public static Level readLevel(String fileName) throws Exception {
 		BufferedReader br = new BufferedReader(new FileReader(new File(fileName)));
 		String currentLine;

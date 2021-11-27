@@ -107,14 +107,7 @@ public class GameManager extends Application {
         sidebar.getChildren().addAll(choosePlayer, playerID, playerIDInput, newPlayer, deletePlayer, exitMainMenu);
 
         deletePlayer.setOnAction(e -> {
-            try {
-                FileManager.deleteRecordWithID(Integer.valueOf(playerIDInput.getText()), FileManager.PLAYER_FILE);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-
+            FileManager.deleteRecordWithID(Integer.valueOf(playerIDInput.getText()), FileManager.PLAYER_FILE);
         });
 
         // Create a new profile to play the game as
@@ -125,6 +118,10 @@ public class GameManager extends Application {
             newPlayerStage.setScene(newPlayerScene);
             newPlayerStage.setTitle("New player");
             newPlayerStage.show();
+
+        createPlayer.setOnAction(e -> {
+        	FileManager playerCreator = new FileManager();
+            playerCreator.writeToPlayerFile(new Player(playerIDInput.getText() + "," +playerNameInput.getText()));
         });
         
         // Close the main menu
