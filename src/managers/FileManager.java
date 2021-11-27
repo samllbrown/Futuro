@@ -51,9 +51,9 @@ public class FileManager {
 		return getRecordWithID(playerID, PLAYER_FILE);
 	}
 
-//	public static void writeToPlayerFile(Player player) throws Exception {
-//
-//	}
+	public static void writeToPlayerFile(Player player) throws Exception {
+		writeRecordToFile(player.toString(), PLAYER_FILE);
+	}
 //
 //	public static void writeToPlayerFile(Player player) throws IOException {
 //		boolean found = false;

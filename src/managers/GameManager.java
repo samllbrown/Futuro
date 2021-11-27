@@ -133,7 +133,9 @@ public class GameManager extends Application {
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			}
+			} catch (Exception exception) {
+                exception.printStackTrace();
+            }
         });
         return root;
     }
