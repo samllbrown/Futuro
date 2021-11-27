@@ -21,7 +21,7 @@ import inventory.Inventory;
  */
 
 public class FileManager {
-	public static final File PLAYER_FILE = new File (getCurrentWorkingDirectory() + "\\src\\txtfiles\\" + "Players.txt");
+	public static final File PLAYER_FILE = new File ( "Players.txt");
 	public static final File LEADERBOARD_FILE = new File ("Leaderboard.txt");
 
 	private static void writeRecordToFile(String record, File file) throws IOException {
@@ -30,57 +30,62 @@ public class FileManager {
 		bw.flush(); 
 		bw.close();
 	}
-	
-	private static String getCurrentWorkingDirectory() {
-        String userDirectory = System.getProperty("user.dir");
-        return userDirectory;
-    }
 
-	// probably needs validation
-	public static String getPlayerInfoFromFile(int playerID) throws IOException {
-		// search algo might be useful here, probs best to store the records in a sorted order.
+	public static String getRecordWithID(int id, File file) throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(file));
 		String currentLine;
-		BufferedReader br = new BufferedReader(new FileReader(PLAYER_FILE));
+		String[] lineSplit;
 		while((currentLine = br.readLine()) != null) {
-			int currentID = Integer.valueOf(currentLine.split(",")[0]);
-			if (currentID == playerID) {
+			lineSplit = currentLine.split(",");
+			if(Integer.valueOf(lineSplit[0]) == id) {
+				br.close();
 				return currentLine;
 			}
 		}
-		// shouldn't be doing this throw an exception or something instead.
-		return currentLine;
-	}
-	
-	public static void writeToPlayerFile(Player player) throws IOException {
-		boolean found = false;
-		try {
-		    Scanner scanner = new Scanner(PLAYER_FILE);
-		    BufferedWriter bw = new BufferedWriter(new FileWriter(PLAYER_FILE));
-		    int lineNum = 0;
-		    
-		    
-		    while (scanner.hasNextLine() && found == false) {
-		        String line = scanner.nextLine();
-		        lineNum++;
-		        if (line.contains(Integer.toString(player.getPlayerID()))) {
-		        	System.out.println(line);
-		        	bw.write(line + System.getProperty("line.separator"));
-		        	found = true;
-		        }
-		    }
-		} catch(FileNotFoundException e) { 
-		    //handle this
-		}
-		if(found == false) {
-			writeRecordToFile(player.getPlayerInfo(), PLAYER_FILE);
-		}
+		br.close();
+		return null;
 	}
 
-	public static void writeToLeaderboardFile(Player player, int playerScore, int rank) throws IOException {
-		// put this into a method plz
-		String record = player.getPlayerID() + "," + playerScore + "," + rank;
-		writeRecordToFile(record, LEADERBOARD_FILE);
+	// probably needs validation
+	public static String getPlayerInfo(int playerID) throws IOException {
+		return getRecordWithID(playerID, PLAYER_FILE);
 	}
+
+//	public static void writeToPlayerFile(Player player) throws Exception {
+//
+//	}
+//
+//	public static void writeToPlayerFile(Player player) throws IOException {
+//		boolean found = false;
+//		try {
+//		    Scanner scanner = new Scanner(PLAYER_FILE);
+//		    BufferedWriter bw = new BufferedWriter(new FileWriter(PLAYER_FILE));
+//		    int lineNum = 0;
+//
+//		    while (scanner.hasNextLine() && found == false) {
+//		        String line = scanner.nextLine();
+//		        lineNum++;
+//		        if (line.contains(Integer.toString(player.getPlayerID()))) {
+//		        	System.out.println(line);
+//		        	bw.write(line + System.getProperty("line.separator"));
+//		        	found = true;
+//		        }
+//		    }
+//		    bw.flush();
+//		    bw.close();
+//		} catch(FileNotFoundException e) {
+//		    //handle this
+//		}
+//		if(found == false) {
+//			writeRecordToFile(player.getPlayerInfo(), PLAYER_FILE);
+//		}
+//	}
+
+//	public static void writeToLeaderboardFile(Player player, int playerScore, int rank) throws IOException {
+//		// put this into a method plz
+//		String record = player.getPlayerID() + "," + playerScore + "," + rank;
+//		writeRecordToFile(record, LEADERBOARD_FILE);
+//	}
 	
 	/**
 	 * Given a playerID checks if that player exists within the player file, if so then returns that player
@@ -88,16 +93,14 @@ public class FileManager {
 	 * @return
 	 * @throws FileNotFoundException
 	 */
-	/*
-	public static Player checkIfPlayerExists (int playerID) throws Exception {
-		String playerRecord = getPlayerInfoFromFile(playerID, PLAYER_FILE);
-		if(playerRecord == null) {
-			throw new Exception("Could not find PlayerID: " + playerID);
-		} else {
-			return new Player(playerRecord);
-		}
-	}
-	*/
+//	public static Player checkIfPlayerExists (int playerID) throws Exception {
+//		String playerRecord = getPlayerInfoFromFile(playerID, PLAYER_FILE);
+//		if(playerRecord == null) {
+//			throw new Exception("Could not find PlayerID: " + playerID);
+//		} else {
+//			return new Player(playerRecord);
+//		}
+//	}
 	
 	/**
 	 * Testing reading and writing stuff
@@ -185,6 +188,7 @@ public class FileManager {
 		expectedSecondsToComplete = Integer.valueOf(br.readLine());
 		numberOfMechsToLose = Integer.valueOf(br.readLine());
 		grid.populateGrid(tiles);
+		br.close();
 		return new Level(levelid, height, width, inventory, numberOfMechsToLose, currentScore, expectedSecondsToComplete, elapsedTime, mechs, grid);
 	}
 
@@ -199,43 +203,43 @@ public class FileManager {
 	// MANY THANKS
 	// SAM
 	// IGNORE THE MESS BELOW USING IT LATER - DAVID
-	public static void readLevelFile(String filename) throws FileNotFoundException {
-		String levelID;
-		int score;
-		int width;
-		int height;
-		int timeElasped;
-		int completionTime;
-		int respawnRate;
-		int mechsToLose;
-		String inventory;
-		/*boardlayout, mech spawn, items in play - not sure how they're being stored but basically
-		 create a temp variable for it to be stored in e.g an Array thats
-		 passed into Board b = new Board (BoardArray) or something like that maybe*/
-
-		File levelFile = new File (filename);
-		Scanner in = new Scanner (levelFile);
-		while (in.hasNextLine()){
-			String curLine = in.nextLine();
-			Scanner line = new Scanner(curLine).useDelimiter(",/n,"); //depends on what delimiter we use for now leaving it as ",/n,"
-			levelID = line.next();
-			score = line.nextInt();
-			width = line.nextInt();
-			height = line.nextInt();
-			//board layout = ....
-			//mech spawn = ....
-			//items in play =....
-			timeElasped = line.nextInt();
-			completionTime = line.nextInt();
-			respawnRate = line.nextInt();
-			mechsToLose = line.nextInt();
-			inventory = line.next();
-			/*or for items like respawnRate, board etc, could make a method e.g getRespawnRateFromFile(Scanner in)
-			where Scanner in would be in, then do the String curLine thing where line = new Scanner(curLine).useDelimiter(",")
-			cos respawnRate = 20,25,15,15,15,5,5
-			 */
-		}
-	}
+//	public static void readLevelFile(String filename) throws FileNotFoundException {
+//		String levelID;
+//		int score;
+//		int width;
+//		int height;
+//		int timeElasped;
+//		int completionTime;
+//		int respawnRate;
+//		int mechsToLose;
+//		String inventory;
+//		/*boardlayout, mech spawn, items in play - not sure how they're being stored but basically
+//		 create a temp variable for it to be stored in e.g an Array thats
+//		 passed into Board b = new Board (BoardArray) or something like that maybe*/
+//
+//		File levelFile = new File (filename);
+//		Scanner in = new Scanner (levelFile);
+//		while (in.hasNextLine()){
+//			String curLine = in.nextLine();
+//			Scanner line = new Scanner(curLine).useDelimiter(",/n,"); //depends on what delimiter we use for now leaving it as ",/n,"
+//			levelID = line.next();
+//			score = line.nextInt();
+//			width = line.nextInt();
+//			height = line.nextInt();
+//			//board layout = ....
+//			//mech spawn = ....
+//			//items in play =....
+//			timeElasped = line.nextInt();
+//			completionTime = line.nextInt();
+//			respawnRate = line.nextInt();
+//			mechsToLose = line.nextInt();
+//			inventory = line.next();
+//			/*or for items like respawnRate, board etc, could make a method e.g getRespawnRateFromFile(Scanner in)
+//			where Scanner in would be in, then do the String curLine thing where line = new Scanner(curLine).useDelimiter(",")
+//			cos respawnRate = 20,25,15,15,15,5,5
+//			 */
+//		}
+//	}
 }
 	
 	/*Additional code for making an instance of a level from this file and Items in the inventory
