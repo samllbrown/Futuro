@@ -24,12 +24,33 @@ public class FileManager {
 	public static final File PLAYER_FILE = new File ( "Players.txt");
 	public static final File LEADERBOARD_FILE = new File ("Leaderboard.txt");
 
-	private static void writeRecordToFile(String record, File file) throws IOException {
-		BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
-		bw.write(record + "\n");
-		bw.flush(); 
-		bw.close();
+	private static void writeRecordToFile(String record, File file) {
+		BufferedWriter bw = null;
+		try {
+			bw = new BufferedWriter(new FileWriter(file, true));
+			bw.write(record + "\n");
+			bw.flush();
+			bw.close();
+		} catch(IOException e) {
+			System.err.println(String.format("Could not write record: %s to file: %s", record, file.getName()));
+		} finally {
+			if(bw != null ) {
+				try {
+					bw.flush();
+					bw.close();
+				} catch(IOException e) {
+					System.err.println("Error flushing and closing BufferedWriter");
+				}
+			}
+		}
 	}
+
+//	private static void writeRecordToFile(String record, File file) throws IOException {
+//		BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
+//		bw.write(record + "\n");
+//		bw.flush();
+//		bw.close();
+//	}
 
 	public static String getRecordWithID(int id, File file) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(file));
@@ -47,6 +68,7 @@ public class FileManager {
 	}
 
 	public static void deleteRecordWithID(int id, File file) throws Exception {
+		System.err.println("Attempting to delete record with ID: " + id);
 		File newFile = new File("temp.txt");
 		BufferedReader br = new BufferedReader(new FileReader(file));
 		BufferedWriter wr = new BufferedWriter(new FileWriter(newFile));
