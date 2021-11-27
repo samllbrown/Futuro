@@ -39,7 +39,7 @@ public class Game {
 
     private Level level;
     private Player currentPlayer;
-    //private Leaderboard leaderboard;
+    // private Leaderboard leaderboard;
     private String messageOfTheDay;
     private Boolean isPaused;
 
@@ -73,87 +73,65 @@ public class Game {
     }
 
     public void showGame() {
-    	int gridHeight = level.getHeight();
-    	int gridWidth = level.getWidth();
-    	
-    	
-    	
-    	GridPane grid = new GridPane();
-    	int i = 0;
-    	while (i < 10) {
-    		grid.getColumnConstraints().add(new ColumnConstraints(10)); 
-    		i++;
-    	}
-    	
-    	FileInputStream imageStream = null;
-		try {
-		    // no Sam
-			imageStream = new FileInputStream("C:\\Users\\Sam\\Pictures\\FUTURO\\res\\Sprites\\tileW.png");
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		Image image = new Image(imageStream);
-		grid.add(new ImageView(image), 0, 0);
-    	
+        int gridHeight = level.getHeight();
+        int gridWidth = level.getWidth();
+
+        GridPane grid = new GridPane();
+        int i = 0;
+        while (i < 10) {
+            grid.getColumnConstraints().add(new ColumnConstraints(10));
+            i++;
+        }
+
+        FileInputStream imageStream = null;
+        try {
+            // no Sam
+            imageStream = new FileInputStream("C:\\Users\\Sam\\Pictures\\FUTURO\\res\\Sprites\\tileW.png");
+        } catch (FileNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        Image image = new Image(imageStream);
+        grid.add(new ImageView(image), 0, 0);
+
         Stage stage = new Stage();
+        Label playerName = new Label();
         Button showLeaderboard = new Button("SHOW LEADERBOARD");
         Button exitGame = new Button("EXIT GAME");
-           
+
         Label messageOfDay = new Label(getMessageOfTheDay());
         VBox sidebar = new VBox();
         sidebar.setSpacing(10);
         sidebar.setPadding(new Insets(10, 10, 10, 10));
         sidebar.getChildren().addAll(showLeaderboard, exitGame, messageOfDay, grid);
-        
+
         HBox gridBox = new HBox();
         gridBox.setSpacing(10);
         gridBox.getChildren().addAll(grid);
-      
+
         exitGame.setOnAction(e -> {
             stage.hide();
             GameManager.mainMenu.show();
-        });	
-        
+        });
+
         Scene scene = new Scene(sidebar, WINDOW_WIDTH, WINDOW_HEIGHT);
         stage.setTitle("Futuro");
-        
+
         stage.setScene(scene);
-        stage.show();	
+        stage.show();
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
-loadLevel.setOnAction(e -> {
-    FileManager readLevel = new FileManager();            
-    Level level = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
-    Game game = new Game(level);
-});
-*/
+ * loadLevel.setOnAction(e -> { FileManager readLevel = new FileManager(); Level
+ * level = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null); Game game = new
+ * Game(level); });
+ */
 /*
-showLeaderboard.setOnAction(e -> {
-FileManager readLeaderboard = new FileManager();            
-Leaderboard leaderboard = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
-Game game = new Game(level);
-});
-*/
-
+ * showLeaderboard.setOnAction(e -> { FileManager readLeaderboard = new
+ * FileManager(); Leaderboard leaderboard = new Level(10, 10, 10, null, 0, 10,
+ * 0, 0, null, null); Game game = new Game(level); });
+ */
 
 //// Create a scene from the GUI
 //GridPane gridpane = new GridPane();
