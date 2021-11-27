@@ -61,7 +61,7 @@ public class GameManager extends Application {
         System.out.println(bip);
         Media hit = new Media(new File(bip).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(hit);
-        //mediaPlayer.play();
+        mediaPlayer.play();
         mainMenu.show();
     }
     
@@ -79,29 +79,30 @@ public class GameManager extends Application {
      */
     private Pane buildMainMenu() {
         // Create top-level panel that will hold all GUI
-        BorderPane root = new BorderPane();
+    	BorderPane root = new BorderPane();
         Player player;
         // Create canvas
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         root.setCenter(canvas);
         // Create the main buttons for navigating the main menu
-        
         Button choosePlayer = new Button("CHOOSE PLAYER");        
         Button newPlayer = new Button("CREATE PLAYER");
         Button deletePlayer = new Button("DELETE PLAYER");
         
         Label playerID = new Label("ID of player: ");
         TextField playerIDInput = new TextField ();
-
         
         Button exitMainMenu = new Button("EXIT GAME");
+        
+        
+        
+        
+        
         // Create a sidebar with some nice padding and spacing
         VBox sidebar = new VBox();
         sidebar.setSpacing(10);
         sidebar.setPadding(new Insets(10, 10, 10, 10));
-
-
-
+        
         // Add the elements on the canvas onto the sidebar
         root.setLeft(sidebar);
         sidebar.getChildren().addAll(choosePlayer, playerID, playerIDInput, newPlayer, deletePlayer, exitMainMenu);
@@ -109,7 +110,7 @@ public class GameManager extends Application {
         deletePlayer.setOnAction(e -> {
             FileManager.deleteRecordWithID(Integer.valueOf(playerIDInput.getText()), FileManager.PLAYER_FILE);
         });
-
+        
         // Create a new profile to play the game as
         newPlayer.setOnAction(e -> {
         	Pane newPlayerPane = buildNewPlayer();
@@ -118,10 +119,6 @@ public class GameManager extends Application {
             newPlayerStage.setScene(newPlayerScene);
             newPlayerStage.setTitle("New player");
             newPlayerStage.show();
-
-        createPlayer.setOnAction(e -> {
-        	FileManager playerCreator = new FileManager();
-            playerCreator.writeToPlayerFile(new Player(playerIDInput.getText() + "," +playerNameInput.getText()));
         });
         
         // Close the main menu
@@ -147,9 +144,6 @@ public class GameManager extends Application {
         sidebar.setSpacing(10);
         sidebar.setPadding(new Insets(10, 10, 10, 10));
         
-     
-        
-        
         Label playerID = new Label("ID of player: ");
         TextField playerIDInput = new TextField ();
         Label playerName = new Label("Name of player: ");
@@ -162,8 +156,6 @@ public class GameManager extends Application {
         newPlayerButton.setOnAction(e -> { 
     	try {
         	playerCreator.writeToPlayerFile(new Player(playerIDInput.getText() + "," + playerNameInput.getText()));
-		} catch (IOException e1) {
-			e1.printStackTrace();
 		} catch (Exception exception) {
             exception.printStackTrace();
         }
