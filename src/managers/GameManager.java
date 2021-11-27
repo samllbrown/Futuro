@@ -89,9 +89,11 @@ public class GameManager extends Application {
         
         Label playerName= new Label("Name of player: ");
         TextField playerNameInput = new TextField ();
+        
+        Button exitMainMenu = new Button("EXIT GAME");
 
         root.setLeft(sidebar);
-        sidebar.getChildren().addAll(startGame, selectPlayer, createPlayer, deletePlayer, playerID, playerIDInput, playerName, playerNameInput);
+        sidebar.getChildren().addAll(startGame, selectPlayer, createPlayer, deletePlayer, playerID, playerIDInput, playerName, playerNameInput, exitMainMenu);
         
         
         startGame.setOnAction(e -> {
@@ -151,6 +153,11 @@ public class GameManager extends Application {
                 exception.printStackTrace();
             }
         });
+        
+        exitMainMenu.setOnAction(e -> {
+            GameManager.mainMenu.hide();
+        });
+        
         return root;
     }
 }
