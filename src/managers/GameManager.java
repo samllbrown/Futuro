@@ -104,7 +104,7 @@ public class GameManager extends Application {
         	if(playerIDInput.getText() != null) {
         		FileManager playerReader = new FileManager();
                 try {
-					Player player = new Player(FileManager.getPlayerInfoFromFile(Integer.parseInt(playerIDInput.getText())));
+					Player player = new Player(FileManager.getPlayerInfo(Integer.parseInt(playerIDInput.getText())));
 				} catch (NumberFormatException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
