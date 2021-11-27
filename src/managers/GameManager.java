@@ -61,7 +61,7 @@ public class GameManager extends Application {
         System.out.println(bip);
         Media hit = new Media(new File(bip).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(hit);
-        mediaPlayer.play();
+        //mediaPlayer.play();
         mainMenu.show();
     }
     
