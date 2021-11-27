@@ -156,11 +156,3 @@ public class GameManager extends Application {
         return root;
     }
 }
-
-
-//  deletePlayer.setOnAction(e -> {
-//  FileManager playerReader = new FileManager();
-//  //Level level = levelReader.readLevel("Players.txt");
-//  Player player = new Player(1,"Player1",2);
-//  Game game = new Game(player);
-//});
