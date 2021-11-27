@@ -55,13 +55,15 @@ public class FileManager {
 	public static String getRecordWithID(int id, File file) throws IOException {
 		BufferedReader br = null;
 		String returnLine = null;
+		boolean found = false;
 		try {
 			br = new BufferedReader(new FileReader(file));
 			String currentLine;
 			String[] currentLineSplit;
-			while((currentLine = br.readLine()) != null) {
+			while((currentLine = br.readLine()) != null && !found) {
 				currentLineSplit = currentLine.split(",");
 				if(Integer.valueOf(currentLineSplit[0]) == id) {
+					found = true;
 					returnLine = currentLine;
 				}
 			}
@@ -69,12 +71,13 @@ public class FileManager {
 			System.err.println("");
 		} finally {
 			try {
-				return returnLine;
 				br.close();
 			} catch(IOException e) {
 				System.err.println("There was an error closing the BufferedReader whilst retrieving a record");
 			}
 		}
+		return returnLine;
+	}
 //		BufferedReader br = new BufferedReader(new FileReader(file));
 //		String currentLine;
 //		String[] lineSplit;
@@ -87,7 +90,6 @@ public class FileManager {
 //		}
 //		br.close();
 //		return null;
-	}
 
 	public static void deleteRecordWithID(int id, File file) throws Exception {
 		System.err.println("Attempting to delete record with ID: " + id);
