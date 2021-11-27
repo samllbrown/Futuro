@@ -29,8 +29,8 @@ public class FileManager {
 		try {
 			bw = new BufferedWriter(new FileWriter(file, true));
 			bw.write(record + "\n");
-			bw.flush();
-			bw.close();
+//			bw.flush();
+//			bw.close();
 		} catch(IOException e) {
 			System.err.println(String.format("Could not write record: %s to file: %s", record, file.getName()));
 		} finally {
