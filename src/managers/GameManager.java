@@ -71,7 +71,6 @@ public class GameManager extends Application {
     }
 
     public static void main(String[] args) throws Exception {
-
         launch(args);
     }
 
@@ -87,15 +86,13 @@ public class GameManager extends Application {
         root.setCenter(canvas);
         // Create the main buttons for navigating the main menu
         
-        Button choosePlayer = new Button("Choose PLAYER");        
+        Button choosePlayer = new Button("CHOOSE PLAYER");        
         Button newPlayer = new Button("CREATE PLAYER");
         Button deletePlayer = new Button("DELETE PLAYER");
         
         Label playerID = new Label("ID of player: ");
         TextField playerIDInput = new TextField ();
-        
-        Label playerName= new Label("Name of player: ");
-        TextField playerNameInput = new TextField ();
+
         
         Button exitMainMenu = new Button("EXIT GAME");
         // Create a sidebar with some nice padding and spacing
@@ -107,7 +104,7 @@ public class GameManager extends Application {
 
         // Add the elements on the canvas onto the sidebar
         root.setLeft(sidebar);
-        sidebar.getChildren().addAll(choosePlayer, playerID, playerIDInput, playerName, playerNameInput, newPlayer, deletePlayer, exitMainMenu);
+        sidebar.getChildren().addAll(choosePlayer, playerID, playerIDInput, newPlayer, deletePlayer, exitMainMenu);
 
         deletePlayer.setOnAction(e -> {
             try {
@@ -120,27 +117,14 @@ public class GameManager extends Application {
 
         });
 
-        
-        
-        
-
-      
-        
-        
-        
-        
-        
         // Create a new profile to play the game as
         newPlayer.setOnAction(e -> {
-        	FileManager playerCreator = new FileManager();
-        	try {
-				playerCreator.writeToPlayerFile(new Player(playerIDInput.getText() + "," +playerNameInput.getText()));
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (Exception exception) {
-                exception.printStackTrace();
-            }
+        	Pane newPlayerPane = buildNewPlayer();
+            Scene newPlayerScene = new Scene(newPlayerPane, 300, 200);
+            Stage newPlayerStage = new Stage();
+            newPlayerStage.setScene(newPlayerScene);
+            newPlayerStage.setTitle("New player");
+            newPlayerStage.show();
         });
         
         // Close the main menu
@@ -166,8 +150,29 @@ public class GameManager extends Application {
         sidebar.setSpacing(10);
         sidebar.setPadding(new Insets(10, 10, 10, 10));
         
+     
+        
+        
+        Label playerID = new Label("ID of player: ");
+        TextField playerIDInput = new TextField ();
+        Label playerName = new Label("Name of player: ");
+        TextField playerNameInput = new TextField ();
+        Button newPlayerButton = new Button("CREATE PLAYER");
         root.setLeft(sidebar);
-        sidebar.getChildren().addAll();
+        sidebar.getChildren().addAll(playerID, playerIDInput, playerName, playerNameInput, newPlayerButton);
+        
+        FileManager playerCreator = new FileManager();
+        newPlayerButton.setOnAction(e -> { 
+    	try {
+        	playerCreator.writeToPlayerFile(new Player(playerIDInput.getText() + "," + playerNameInput.getText()));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        	
+        	
+        });
     	return root;
     }
     
