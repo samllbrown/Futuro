@@ -37,13 +37,13 @@ public class FileManager {
     }
 
 	// probably needs validation
-	public static String getPlayerInfoFromFile(int givenID, File file) throws IOException {
+	public static String getPlayerInfoFromFile(int playerID) throws IOException {
 		// search algo might be useful here, probs best to store the records in a sorted order.
 		String currentLine;
-		BufferedReader br = new BufferedReader(new FileReader(file));
+		BufferedReader br = new BufferedReader(new FileReader(PLAYER_FILE));
 		while((currentLine = br.readLine()) != null) {
 			int currentID = Integer.valueOf(currentLine.split(",")[0]);
-			if (currentID == givenID) {
+			if (currentID == playerID) {
 				return currentLine;
 			}
 		}
@@ -63,9 +63,8 @@ public class FileManager {
 		        String line = scanner.nextLine();
 		        lineNum++;
 		        if (line.contains(Integer.toString(player.getPlayerID()))) {
-		        	System.out.println("Logged once");
+		        	System.out.println(line);
 		        	bw.write(line + System.getProperty("line.separator"));
-		        	writeRecordToFile(player.getPlayerInfo(), PLAYER_FILE);
 		        	found = true;
 		        }
 		    }

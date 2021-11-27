@@ -10,7 +10,10 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -98,7 +101,24 @@ public class GameManager extends Application {
         selectPlayer.setOnAction(e -> {
         	if(playerIDInput.getText() != null) {
         		FileManager playerReader = new FileManager();
-                //Player player = playerReader.readPlayerFile(Integer.parseInt(playerIDInput.getText()));
+                try {
+					Player player = new Player(playerReader.getPlayerInfoFromFile(Integer.parseInt(playerIDInput.getText())));
+				} catch (NumberFormatException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				} catch (Exception e2) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("INFORMATION");
+					alert.setHeaderText("No player found");
+					alert.setContentText("Please try again");
+					alert.showAndWait().ifPresent(rs -> {
+					    if (rs == ButtonType.OK) {
+					        System.out.println("Pressed OK.");
+					    }
+					});
+				}
                 System.out.println(Integer.parseInt(playerIDInput.getText()));
         	}
         });
