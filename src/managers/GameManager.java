@@ -37,7 +37,7 @@ public class GameManager extends Application {
     private static final int SHAPE_SIZE = 30;
     
     public static Stage mainMenu;
-
+    public Player currentPlayer;
     // The canvas in the GUI. This needs to be a global variable
     // (in this setup) as we need to access it in different methods.
     // We could use FXML to place code in the controller instead.
@@ -68,7 +68,7 @@ public class GameManager extends Application {
     private Pane buildGUI() {
         // Create top-level panel that will hold all GUI
         BorderPane root = new BorderPane();
-
+        Player player;
         // Create canvas
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         root.setCenter(canvas);
@@ -101,17 +101,33 @@ public class GameManager extends Application {
         });
         
         selectPlayer.setOnAction(e -> {
-        	if(playerIDInput.getText() != null) {
-        		FileManager playerReader = new FileManager();
+            //if(playerIDInput.getText() != null) {
+//        		FileManager playerReader = new FileManager();
+//                try {
+//					Player player = new Player(FileManager.getPlayerInfo(Integer.parseInt(playerIDInput.getText())));
+//				} catch (NumberFormatException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				} catch (IOException e1) {
+//					e1.printStackTrace();
+//				} catch (Exception e2) {
+//					Alert alert = new Alert(AlertType.INFORMATION);
+//					alert.setTitle("INFORMATION");
+//					alert.setHeaderText("No player found");
+//					alert.setContentText("Please try again");
+//					alert.showAndWait().ifPresent(rs -> {
+//					    if (rs == ButtonType.OK) {
+//					        System.out.println("Pressed OK.");
+//					    }
+//					});
+//				}
+//                System.out.println(Integer.parseInt(playerIDInput.getText()));
+//        	}
+            if(playerIDInput.getText() != null) {
                 try {
-					Player player = new Player(FileManager.getPlayerInfo(Integer.parseInt(playerIDInput.getText())));
-				} catch (NumberFormatException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				} catch (Exception e2) {
-					Alert alert = new Alert(AlertType.INFORMATION);
+                    this.currentPlayer = FileManager.getPlayer(Integer.valueOf(playerIDInput.getText()));
+                } catch (Exception exception) {
+                    Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("INFORMATION");
 					alert.setHeaderText("No player found");
 					alert.setContentText("Please try again");
@@ -120,16 +136,14 @@ public class GameManager extends Application {
 					        System.out.println("Pressed OK.");
 					    }
 					});
-				}
-                System.out.println(Integer.parseInt(playerIDInput.getText()));
-        	}
+                }
+            }
         });
         
         createPlayer.setOnAction(e -> {
         	FileManager playerCreator = new FileManager();
         	try {
-        		Player player = new Player(playerIDInput.getText() + "," +playerNameInput.getText());
-				playerCreator.writeToPlayerFile(player);
+				playerCreator.writeToPlayerFile(new Player(playerIDInput.getText() + "," +playerNameInput.getText()););
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

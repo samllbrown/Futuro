@@ -51,6 +51,10 @@ public class FileManager {
 		return getRecordWithID(playerID, PLAYER_FILE);
 	}
 
+	public static Player getPlayer(int playerID) throws Exception {
+		return new Player(getPlayerInfo(playerID));
+	}
+
 	public static void writeToPlayerFile(Player player) throws Exception {
 		writeRecordToFile(player.toString(), PLAYER_FILE);
 	}

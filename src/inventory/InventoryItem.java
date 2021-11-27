@@ -16,6 +16,14 @@ public abstract class InventoryItem {
         this.remainingUses = MAX_ITEM_USES;
     }
 
+    public InventoryItem(String name, int remainingUses) {
+        this.itemName = name;
+        // this needs to be changed
+        this.itemSprite = null;
+        // NEED TO CHECK IF GREATER THAN MAX, LESS THAN 0 FOR REMAINING USES
+        this.remainingUses = remainingUses;
+    }
+
     public int getRemainingUses() {
         return this.remainingUses;
     }
