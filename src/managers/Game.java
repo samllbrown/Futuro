@@ -87,6 +87,7 @@ public class Game {
     	
     	FileInputStream imageStream = null;
 		try {
+		    // no Sam
 			imageStream = new FileInputStream("C:\\Users\\Sam\\Pictures\\FUTURO\\res\\Sprites\\tileW.png");
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
