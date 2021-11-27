@@ -92,6 +92,8 @@ public class GameManager extends Application {
 
         root.setLeft(sidebar);
         sidebar.getChildren().addAll(startGame, selectPlayer, createPlayer, deletePlayer, playerID, playerIDInput, playerName, playerNameInput);
+        
+        
         startGame.setOnAction(e -> {
         	Level level = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
             Game game = new Game(level);
@@ -102,7 +104,7 @@ public class GameManager extends Application {
         	if(playerIDInput.getText() != null) {
         		FileManager playerReader = new FileManager();
                 try {
-					Player player = new Player(playerReader.getPlayerInfoFromFile(Integer.parseInt(playerIDInput.getText())));
+					Player player = new Player(FileManager.getPlayerInfoFromFile(Integer.parseInt(playerIDInput.getText())));
 				} catch (NumberFormatException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

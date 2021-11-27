@@ -1,5 +1,7 @@
 package managers;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import board.Grid;
@@ -9,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -18,7 +22,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import services.MessageOfTheDay;
-import javafx.scene
 
 public class Game {
 
@@ -73,7 +76,24 @@ public class Game {
     	int gridHeight = level.getHeight();
     	int gridWidth = level.getWidth();
     	
-    	GridPane grid = new GridPane(gridWidth, gridHeight); 
+    	
+    	
+    	GridPane grid = new GridPane();
+    	int i = 0;
+    	while (i < 10) {
+    		grid.getColumnConstraints().add(new ColumnConstraints(10)); 
+    		i++;
+    	}
+    	
+    	FileInputStream imageStream = null;
+		try {
+			imageStream = new FileInputStream("C:\\Users\\Sam\\Pictures\\FUTURO\\res\\Sprites\\tileW.png");
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Image image = new Image(imageStream);
+		grid.add(new ImageView(image), 0, 0);
     	
         Stage stage = new Stage();
         Button showLeaderboard = new Button("SHOW LEADERBOARD");
@@ -83,8 +103,11 @@ public class Game {
         VBox sidebar = new VBox();
         sidebar.setSpacing(10);
         sidebar.setPadding(new Insets(10, 10, 10, 10));
-        sidebar.getChildren().addAll(showLeaderboard, exitGame, messageOfDay);
+        sidebar.getChildren().addAll(showLeaderboard, exitGame, messageOfDay, grid);
         
+        HBox gridBox = new HBox();
+        gridBox.setSpacing(10);
+        gridBox.getChildren().addAll(grid);
       
         exitGame.setOnAction(e -> {
             stage.hide();
