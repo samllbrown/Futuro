@@ -143,7 +143,7 @@ public class GameManager extends Application {
         createPlayer.setOnAction(e -> {
         	FileManager playerCreator = new FileManager();
         	try {
-				playerCreator.writeToPlayerFile(new Player(playerIDInput.getText() + "," +playerNameInput.getText()););
+				playerCreator.writeToPlayerFile(new Player(playerIDInput.getText() + "," +playerNameInput.getText()));
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
