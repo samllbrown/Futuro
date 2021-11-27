@@ -98,7 +98,13 @@ public class GameManager extends Application {
         
         // Start the game
         startGame.setOnAction(e -> {
-        	Level level = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
+        	//Level level = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
+            Level level = null;
+            try {
+                level = FileManager.readLevel("LEVEL_1.txt");
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
             Game game = new Game(level);
             mainMenu.close();
         });

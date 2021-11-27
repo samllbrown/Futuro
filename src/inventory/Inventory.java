@@ -19,12 +19,13 @@ public class Inventory {
 			throw new Exception("Item has been used too many times to use it again");
 		} else {
 			inventoryItems.get(name).reduceUses();
-			return GameObjectFactory.makeItemFromName(name, atX, atY);
+			//return GameObjectFactory.makeItemFromName(name, atX, atY);
+			return null;
 		}
 	}
 
 	public void addItem(InventoryItem invItem) {
-		this.inventoryItems.put(invItem.getName(), invItem);
+		//this.inventoryItems.put(invItem.getName(), invItem);
 	}
 
 }
