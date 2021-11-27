@@ -104,14 +104,7 @@ public class GameManager extends Application {
         });
 
         deletePlayer.setOnAction(e -> {
-            try {
-                FileManager.deleteRecordWithID(Integer.valueOf(playerIDInput.getText()), FileManager.PLAYER_FILE);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-
+            FileManager.deleteRecordWithID(Integer.valueOf(playerIDInput.getText()), FileManager.PLAYER_FILE);
         });
 
         // Select which player profile to play the game as
@@ -138,14 +131,7 @@ public class GameManager extends Application {
         // Create a new profile to play the game as
         createPlayer.setOnAction(e -> {
         	FileManager playerCreator = new FileManager();
-        	try {
-				playerCreator.writeToPlayerFile(new Player(playerIDInput.getText() + "," +playerNameInput.getText()));
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (Exception exception) {
-                exception.printStackTrace();
-            }
+            playerCreator.writeToPlayerFile(new Player(playerIDInput.getText() + "," +playerNameInput.getText()));
         });
         
         // Close the main menu
