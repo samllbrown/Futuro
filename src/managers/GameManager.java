@@ -72,17 +72,11 @@ public class GameManager extends Application {
         // Create canvas
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         root.setCenter(canvas);
-
+        // Create the main buttons for navigating the main menu
         Button startGame = new Button("START NEW GAME");
-        Button selectPlayer = new Button("SELECT PLAYER");
+        Button selectPlayer = new Button("SELECT PLAYER");        
         Button createPlayer = new Button("CREATE PLAYER");
         Button deletePlayer = new Button("DELETE PLAYER");
-
-        // Create a sidebar with some nice padding and spacing
-        VBox sidebar = new VBox();
-        sidebar.setSpacing(10);
-        sidebar.setPadding(new Insets(10, 10, 10, 10));
-
         
         Label playerID = new Label("ID of player: ");
         TextField playerIDInput = new TextField ();
@@ -91,19 +85,27 @@ public class GameManager extends Application {
         TextField playerNameInput = new TextField ();
         
         Button exitMainMenu = new Button("EXIT GAME");
+        // Create a sidebar with some nice padding and spacing
+        VBox sidebar = new VBox();
+        sidebar.setSpacing(10);
+        sidebar.setPadding(new Insets(10, 10, 10, 10));
 
+
+
+        // Add the elements on the canvas onto the sidebar
         root.setLeft(sidebar);
-        sidebar.getChildren().addAll(startGame, selectPlayer, createPlayer, deletePlayer, playerID, playerIDInput, playerName, playerNameInput, exitMainMenu);
+        sidebar.getChildren().addAll(startGame, selectPlayer, playerID, playerIDInput, playerName, playerNameInput, createPlayer, deletePlayer, exitMainMenu);
         
-        
+        // Start the game
         startGame.setOnAction(e -> {
         	Level level = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
             Game game = new Game(level);
             mainMenu.close();
         });
         
+        // Select which player profile to play the game as
         selectPlayer.setOnAction(e -> {
-            //if(playerIDInput.getText() != null) {
+//              if(playerIDInput.getText() != null) {
 //        		FileManager playerReader = new FileManager();
 //                try {
 //					Player player = new Player(FileManager.getPlayerInfo(Integer.parseInt(playerIDInput.getText())));
@@ -142,6 +144,7 @@ public class GameManager extends Application {
             }
         });
         
+        // Create a new profile to play the game as
         createPlayer.setOnAction(e -> {
         	FileManager playerCreator = new FileManager();
         	try {
@@ -154,6 +157,7 @@ public class GameManager extends Application {
             }
         });
         
+        // Close the main menu
         exitMainMenu.setOnAction(e -> {
             GameManager.mainMenu.hide();
         });
