@@ -1,8 +1,12 @@
 package managers;
 
 
+<<<<<<< Updated upstream
 import javafx.application.Application;
 import java.util.Random;
+=======
+import java.io.*;
+>>>>>>> Stashed changes
 
 import board.Level;
 import javafx.geometry.Insets;
@@ -29,6 +33,12 @@ public class GameManager extends Application {
     // The size to draw the shapes
     private static final int SHAPE_SIZE = 30;
     
+<<<<<<< Updated upstream
+=======
+    public static Stage mainMenu;
+
+
+>>>>>>> Stashed changes
     // The canvas in the GUI. This needs to be a global variable
     // (in this setup) as we need to access it in different methods.
     // We could use FXML to place code in the controller instead.
@@ -73,12 +83,55 @@ public class GameManager extends Application {
         sidebar.getChildren().addAll(startGame);
         
         startGame.setOnAction(e -> {
+<<<<<<< Updated upstream
 			FileManager levelReader = new FileManager();
 			//Level level = levelReader.readLevel("level1.txt");
 			Level level = new Level(10, 10, null, 10, 0, 10, 0, null);
 			Game game = new Game(level);
 		});
         
+=======
+        	Level level = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
+            Game game = new Game(level);
+            mainMenu.close();
+        });
+        
+        selectPlayer.setOnAction(e -> {
+        	if(playerIDInput.getText() != null) {
+        		FileManager playerReader = MANAGER;
+                try {
+					Player player = new Player(FileManager.getPlayerInfoFromFile(Integer.parseInt(playerIDInput.getText())));
+				} catch (NumberFormatException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				} catch (Exception e2) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("INFORMATION");
+					alert.setHeaderText("No player found");
+					alert.setContentText("Please try again");
+					alert.showAndWait().ifPresent(rs -> {
+					    if (rs == ButtonType.OK) {
+					        System.out.println("Pressed OK.");
+					    }
+					});
+				}
+                System.out.println(Integer.parseInt(playerIDInput.getText()));
+        	}
+        });
+        
+        createPlayer.setOnAction(e -> {
+        	FileManager playerCreator = MANAGER;
+        	try {
+        		Player player = new Player(playerIDInput.getText() + "," +playerNameInput.getText());
+				playerCreator.writeToPlayerFile(player);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+        });
+>>>>>>> Stashed changes
         return root;
     }   
 }
