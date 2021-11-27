@@ -46,6 +46,24 @@ public class FileManager {
 		return null;
 	}
 
+	public static void deleteRecordWithID(int id, File file) throws Exception {
+		File newFile = new File("temp.txt");
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		BufferedWriter wr = new BufferedWriter(new FileWriter(newFile));
+		String currentLine;
+
+		while((currentLine = br.readLine()) != null) {
+			if(!(id == Integer.valueOf(currentLine.split(",")[0]))) {
+				wr.write(currentLine + "\n");
+			}
+		}
+		br.close();
+		wr.flush();
+		wr.close();
+		file.delete();
+		newFile.renameTo(file);
+	}
+
 	// probably needs validation
 	public static String getPlayerInfo(int playerID) throws IOException {
 		return getRecordWithID(playerID, PLAYER_FILE);
