@@ -113,7 +113,7 @@ public class Game {
 //    }
 
     public void showGame() throws Exception {
-        
+
 //        int gridHeight = level.getHeight();
 //        int gridWidth = level.getWidth();
 //
