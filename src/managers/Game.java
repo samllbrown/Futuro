@@ -91,6 +91,8 @@ public class Game {
 
     private Parent makeContent() throws Exception {
         Pane root = new Pane();
+        root.setPrefSize(this.CURRENT_WIDTH * TILE_SIZE, this.CURRENT_HEIGHT * TILE_SIZE);
+        root.getChildren().addAll(tileGroup, mechGroup);
         for(Mech m : this.level.getMechs()) {
             this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).addMech(m);
             mechGroup.setVisible(this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).isVisibleTile());

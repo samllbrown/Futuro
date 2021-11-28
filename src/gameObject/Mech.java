@@ -70,15 +70,15 @@ public class Mech extends Rectangle {
 		switch (type) {
 			case RESOURCE:
 				System.err.println("IS RESOURCE AND ADDING FOR THIS");
-				img = new Image("file:res/mechR.png");
+				img = new Image("file:res/Sprites/mechR.png");
 				break;
 			case PRODUCTION:
 				System.err.println("IS PRODUCTION AND ADDING FOR THIS");
-				img = new Image("file:res/mechP.png");
+				img = new Image("file:res/Sprites/mechP.png");
 				break;
 			case DEATH:
 				System.err.println("IS death AND ADDING FOR THIS");
-				img = new Image("file:res/mechD.png");
+				img = new Image("file:res/Sprites/mechD.png");
 				break;
 		}
 		return img;

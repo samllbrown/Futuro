@@ -38,9 +38,9 @@ public class Tile extends Rectangle {
 	public static Image getImageForType(TileType tileType) {
 		switch(tileType) {
 			case PATH:
-				return new Image("file:res/grassMid.png");
+				return new Image("file:res/Sprites/grassMid.png");
 			default:
-				return new Image("file:res/tileW.png");
+				return new Image("file:res/Sprites/tileW.png");
 		}
 	}
 
