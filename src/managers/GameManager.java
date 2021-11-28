@@ -105,7 +105,29 @@ public class GameManager extends Application {
         
         // Add the elements on the canvas onto the sidebar
         root.setLeft(sidebar);
+        /*
+        sidebar.getChildren().addAll(startGame, selectPlayer, playerID, playerIDInput, playerName, playerNameInput, createPlayer, deletePlayer, exitMainMenu);
+        
+        // Start the game
+        startGame.setOnAction(e -> {
+        	//Level level = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
+            Level level = null;
+            try {
+                level = FileManager.readLevel("LEVEL_1.txt");
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            Game game = new Game(level);
+            mainMenu.close();
+            try {
+                game.showGame();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
+        */
         sidebar.getChildren().addAll(choosePlayer, playerID, playerIDInput, newPlayer, deletePlayer, exitMainMenu);
+
 
         deletePlayer.setOnAction(e -> {
             FileManager.deleteRecordWithID(Integer.valueOf(playerIDInput.getText()), FileManager.PLAYER_FILE);

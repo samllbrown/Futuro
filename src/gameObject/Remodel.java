@@ -12,7 +12,7 @@ public class Remodel extends Item {
 	
 	private void remodelMech(Mech mech) {
 		// figure out how to deal with possible pregnant mech
-		mech.setType((mech.getType() == 'P' ? 'R' : 'P'));
+		//mech.setType((mech.getType() == 'P' ? 'R' : 'P'));
 	}
 
 	@Override
