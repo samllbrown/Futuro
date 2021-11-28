@@ -61,7 +61,7 @@ public class GameManager extends Application {
         System.out.println(bip);
         Media hit = new Media(new File(bip).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(hit);
-        mediaPlayer.play();
+        //mediaPlayer.play();
         mainMenu.show();
     }
     
@@ -87,16 +87,9 @@ public class GameManager extends Application {
         // Create the main buttons for navigating the main menu
         Button choosePlayer = new Button("CHOOSE PLAYER");        
         Button newPlayer = new Button("CREATE PLAYER");
-        Button deletePlayer = new Button("DELETE PLAYER");
+        Button deletePlayer = new Button("DELETE PLAYER");      
         
-        Label playerID = new Label("ID of player: ");
-        TextField playerIDInput = new TextField ();
-        
-        Button exitMainMenu = new Button("EXIT GAME");
-        
-        
-        
-        
+        Button exitMainMenu = new Button("EXIT GAME");       
         
         // Create a sidebar with some nice padding and spacing
         VBox sidebar = new VBox();
@@ -105,11 +98,10 @@ public class GameManager extends Application {
         
         // Add the elements on the canvas onto the sidebar
         root.setLeft(sidebar);
-        /*
-        sidebar.getChildren().addAll(startGame, selectPlayer, playerID, playerIDInput, playerName, playerNameInput, createPlayer, deletePlayer, exitMainMenu);
-        
-        // Start the game
-        startGame.setOnAction(e -> {
+        sidebar.getChildren().addAll(choosePlayer, newPlayer, deletePlayer, exitMainMenu);
+
+
+        deletePlayer.setOnAction(e -> {
         	//Level level = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
             Level level = null;
             try {
@@ -124,13 +116,6 @@ public class GameManager extends Application {
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
-        });
-        */
-        sidebar.getChildren().addAll(choosePlayer, playerID, playerIDInput, newPlayer, deletePlayer, exitMainMenu);
-
-
-        deletePlayer.setOnAction(e -> {
-            FileManager.deleteRecordWithID(Integer.valueOf(playerIDInput.getText()), FileManager.PLAYER_FILE);
         });
         
         // Create a new profile to play the game as
