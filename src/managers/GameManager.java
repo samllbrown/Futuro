@@ -2,6 +2,7 @@ package managers;
 
 import javafx.application.Application;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -20,6 +21,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -45,7 +48,7 @@ public class GameManager extends Application {
 
     public void start(Stage primaryStage) {
         // Build the GUI
-        Pane root = buildGUI();
+        Pane root = buildMainMenu();
 
         // Create a scene from the GUI
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -54,46 +57,55 @@ public class GameManager extends Application {
         // Display the scene on the stage
         primaryStage.setScene(scene);
         mainMenu = primaryStage;
+        String bip = getCurrentWorkingDirectory() + "\\src\\music\\ratmusic.mp3";
+        System.out.println(bip);
+        Media hit = new Media(new File(bip).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(hit);
+        mediaPlayer.play();
         mainMenu.show();
+    }
+    
+    private static String getCurrentWorkingDirectory() {
+        String userDirectory = System.getProperty("user.dir");
+        return userDirectory;
     }
 
     public static void main(String[] args) throws Exception {
-
         launch(args);
     }
 
     /**
      * Create the GUI.
      */
-    private Pane buildGUI() {
+    private Pane buildMainMenu() {
         // Create top-level panel that will hold all GUI
-        BorderPane root = new BorderPane();
+    	BorderPane root = new BorderPane();
         Player player;
         // Create canvas
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         root.setCenter(canvas);
         // Create the main buttons for navigating the main menu
-        Button startGame = new Button("START NEW GAME");
-        Button selectPlayer = new Button("SELECT PLAYER");        
-        Button createPlayer = new Button("CREATE PLAYER");
+        Button choosePlayer = new Button("CHOOSE PLAYER");        
+        Button newPlayer = new Button("CREATE PLAYER");
         Button deletePlayer = new Button("DELETE PLAYER");
         
         Label playerID = new Label("ID of player: ");
         TextField playerIDInput = new TextField ();
         
-        Label playerName= new Label("Name of player: ");
-        TextField playerNameInput = new TextField ();
-        
         Button exitMainMenu = new Button("EXIT GAME");
+        
+        
+        
+        
+        
         // Create a sidebar with some nice padding and spacing
         VBox sidebar = new VBox();
         sidebar.setSpacing(10);
         sidebar.setPadding(new Insets(10, 10, 10, 10));
-
-
-
+        
         // Add the elements on the canvas onto the sidebar
         root.setLeft(sidebar);
+        /*
         sidebar.getChildren().addAll(startGame, selectPlayer, playerID, playerIDInput, playerName, playerNameInput, createPlayer, deletePlayer, exitMainMenu);
         
         // Start the game
@@ -113,36 +125,22 @@ public class GameManager extends Application {
                 exception.printStackTrace();
             }
         });
+        */
+        sidebar.getChildren().addAll(choosePlayer, playerID, playerIDInput, newPlayer, deletePlayer, exitMainMenu);
+
 
         deletePlayer.setOnAction(e -> {
             FileManager.deleteRecordWithID(Integer.valueOf(playerIDInput.getText()), FileManager.PLAYER_FILE);
         });
-
-        // Select which player profile to play the game as
-        selectPlayer.setOnAction(e -> {
-//					Player player = new Player(FileManager.getPlayerInfo(Integer.parseInt(playerIDInput.getText())));
-            if(playerIDInput.getText() != null) {
-                try {
-                    this.currentPlayer = FileManager.getPlayer(Integer.valueOf(playerIDInput.getText()));
-//                    System.out.println(currentPlayer);
-                } catch (Exception exception) {
-                    Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("INFORMATION");
-					alert.setHeaderText("No player found");
-					alert.setContentText("Please try again");
-					alert.showAndWait().ifPresent(rs -> {
-					    if (rs == ButtonType.OK) {
-					        System.out.println("Pressed OK.");
-					    }
-					});
-                }
-            }
-        });
         
         // Create a new profile to play the game as
-        createPlayer.setOnAction(e -> {
-        	FileManager playerCreator = new FileManager();
-            playerCreator.writeToPlayerFile(new Player(playerIDInput.getText() + "," +playerNameInput.getText()));
+        newPlayer.setOnAction(e -> {
+        	Pane newPlayerPane = buildNewPlayer();
+            Scene newPlayerScene = new Scene(newPlayerPane, 300, 200);
+            Stage newPlayerStage = new Stage();
+            newPlayerStage.setScene(newPlayerScene);
+            newPlayerStage.setTitle("New player");
+            newPlayerStage.show();
         });
         
         // Close the main menu
@@ -150,6 +148,103 @@ public class GameManager extends Application {
             GameManager.mainMenu.hide();
         });
         
+        choosePlayer.setOnAction(e -> {
+        	Pane choosePlayerPane = buildChoosePlayer();
+            Scene choosePlayerScene = new Scene(choosePlayerPane, 300, 200);
+            Stage choosePlayerStage = new Stage();
+            choosePlayerStage.setScene(choosePlayerScene);
+            choosePlayerStage.setTitle("Choose player");
+            choosePlayerStage.show();
+        });
+        
         return root;
     }
+    
+    private Pane buildNewPlayer() {
+    	BorderPane root = new BorderPane();
+    	VBox sidebar = new VBox();
+        sidebar.setSpacing(10);
+        sidebar.setPadding(new Insets(10, 10, 10, 10));
+        
+        Label playerID = new Label("ID of player: ");
+        TextField playerIDInput = new TextField ();
+        Label playerName = new Label("Name of player: ");
+        TextField playerNameInput = new TextField ();
+        Button newPlayerButton = new Button("CREATE PLAYER");
+        root.setLeft(sidebar);
+        sidebar.getChildren().addAll(playerID, playerIDInput, playerName, playerNameInput, newPlayerButton);
+        
+        FileManager playerCreator = new FileManager();
+        newPlayerButton.setOnAction(e -> { 
+    	try {
+        	playerCreator.writeToPlayerFile(new Player(playerIDInput.getText() + "," + playerNameInput.getText()));
+		} catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        	
+        	
+        });
+    	return root;
+    }
+    
+    private Pane buildDeletePlayer() {
+    	BorderPane root = new BorderPane();
+    	VBox sidebar = new VBox();
+        sidebar.setSpacing(10);
+        sidebar.setPadding(new Insets(10, 10, 10, 10));
+        
+        root.setLeft(sidebar);
+        sidebar.getChildren().addAll();
+    	return root;
+    }
+    
+    private Pane buildChoosePlayer() {
+    	BorderPane root = new BorderPane();
+    	VBox sidebar = new VBox();
+        sidebar.setSpacing(10);
+        sidebar.setPadding(new Insets(10, 10, 10, 10));
+        
+        
+        Label playerID = new Label("ID of player: ");
+        TextField playerIDInput = new TextField ();
+        Button choosePlayerButton = new Button("Choose player");
+        
+        
+        root.setLeft(sidebar);
+        sidebar.getChildren().addAll(playerID, playerIDInput, choosePlayerButton);
+        choosePlayerButton.setOnAction(e -> {
+        	if(playerIDInput.getText() != null) {
+                try {
+                    this.currentPlayer = FileManager.getPlayer(Integer.valueOf(playerIDInput.getText()));
+                } catch (Exception exception) {
+                    Alert alert = new Alert(AlertType.INFORMATION);
+    				alert.setTitle("INFORMATION");
+    				alert.setHeaderText("No player found");
+    				alert.setContentText("Please try again");
+    				alert.showAndWait().ifPresent(rs -> {
+    				    if (rs == ButtonType.OK) {
+    				        System.out.println("Pressed OK.");
+    				    }
+    				});
+                }
+            }
+        });
+    	return root;
+    }
 }
+
+
+
+
+/*
+ * Button startGame = new Button("START NEW GAME");
+ * 
+ * 
+ *         // Start the game
+        startGame.setOnAction(e -> {
+        	Level level = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
+            Game game = new Game(level);
+            mainMenu.close();
+        });
+ * 
+*/
