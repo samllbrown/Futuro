@@ -47,9 +47,9 @@ public class Level {
 	// this shouldn't be static because it could be a different level (i think)
 	// basically, if you load up a level which is level, say, 3 then you're saying that the next level
 	// id is 2
-	
-	private ArrayList<Mech> currentMechs;
-	private ArrayList<Item> currentItemsInPlay;
+//
+//	private ArrayList<Mech> currentMechs;
+//	private ArrayList<Item> currentItemsInPlay;
 	
 	// maybe it's a good idea to let every mech access the grid?
 	// it sounds a bit off tbh but idk
@@ -76,7 +76,7 @@ public class Level {
 	}
 
 	public ArrayList<Mech> getMechs() {
-		return this.currentMechs;
+		return this.mechs;
 	}
 
 //	private void initItemsInPlay() {

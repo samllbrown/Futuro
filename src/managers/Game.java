@@ -54,13 +54,13 @@ public class Game {
     private Boolean isPaused;
 
     public Game(Level level) {
-        setLevel(level);
+        this.level = level;
         this.CURRENT_WIDTH = level.getGrid().getWidth();
         this.CURRENT_HEIGHT = level.getGrid().getHeight();
     }
 
     public Game(String levelFile) throws Exception {
-        this.setLevel(FileManager.readLevel(levelFile));
+        this.level = FileManager.readLevel(levelFile);
         this.CURRENT_WIDTH = level.getGrid().getWidth();
         this.CURRENT_HEIGHT = level.getGrid().getHeight();
     }
@@ -136,18 +136,22 @@ public class Game {
 //        grid.add(new ImageView(image), 0, 0);
 
         Stage stage = new Stage();
-        Label playerName = new Label();
+        Scene scene = new Scene(makeContent());
+        stage.setTitle("Futuro Testing");
+        stage.setScene(scene);
+        stage.show();
+        //Label playerName = new Label();
 //        Button showLeaderboard = new Button("SHOW LEADERBOARD");
 //        Button exitGame = new Button("EXIT GAME");
 //
 //        Label messageOfDay = new Label(getMessageOfTheDay());
-        VBox sidebar = new VBox();
-        sidebar.setSpacing(10);
-        sidebar.setPadding(new Insets(10, 10, 10, 10));
+        //VBox sidebar = new VBox();
+        //sidebar.setSpacing(10);
+        //sidebar.setPadding(new Insets(10, 10, 10, 10));
         //sidebar.getChildren().addAll(showLeaderboard, exitGame, messageOfDay, grid);
-
-        HBox gridBox = new HBox();
-        gridBox.setSpacing(10);
+//
+//        HBox gridBox = new HBox();
+//        gridBox.setSpacing(10);
         //gridBox.getChildren().addAll(grid);
 
 //        exitGame.setOnAction(e -> {
@@ -159,7 +163,7 @@ public class Game {
 //        stage.setTitle("Futuro");
 //        stage.setScene(scene);
 //        stage.show();
-        start(stage);
+        //start(stage);
     }
 
 }

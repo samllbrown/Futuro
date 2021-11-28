@@ -107,6 +107,11 @@ public class GameManager extends Application {
             }
             Game game = new Game(level);
             mainMenu.close();
+            try {
+                game.showGame();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         });
 
         deletePlayer.setOnAction(e -> {
