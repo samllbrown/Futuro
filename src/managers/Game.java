@@ -13,6 +13,7 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -24,6 +25,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import services.MessageOfTheDay;
 
@@ -35,15 +37,16 @@ public class Game {
     private Group tileGroup = new Group();
     private Group mechGroup = new Group();
 
-    private static final int WINDOW_WIDTH = 600;
-    private static final int WINDOW_HEIGHT = 400;
+    private static final int WINDOW_WIDTH = 1800;
+    private static final int WINDOW_HEIGHT = 908;
 
     // The dimensions of the canvas
-    private static final int CANVAS_WIDTH = 400;
-    private static final int CANVAS_HEIGHT = 400;
+    private static final int CANVAS_WIDTH = 1800;
+    private static final int CANVAS_HEIGHT = 908;
 
-    // The size to draw the shapes
-    private static final int SHAPE_SIZE = 30;
+    //pixels
+    private static final int TILE_SIZE_WIDTH = 50;
+    private static final int TILE_SIZE_HEIGHT = 50;
 
     private Canvas canvas;
 
@@ -63,6 +66,10 @@ public class Game {
         this.level = FileManager.readLevel(levelFile);
         this.CURRENT_WIDTH = level.getGrid().getWidth();
         this.CURRENT_HEIGHT = level.getGrid().getHeight();
+    }
+
+    private void tick() {
+        moveMechs();
     }
 
     public Level getLevel() {
@@ -87,6 +94,53 @@ public class Game {
 
     public void setMessageOfTheDay(String messageOfTheDay) {
         this.messageOfTheDay = messageOfTheDay;
+    }
+
+
+    private void moveMechs() {
+        for(Mech m : this.level.getMechs()) {
+            m.move(1, 0);
+            if(m.getGridX() > this.level.getGrid().getWidth()) {
+                m.move(-2, 0);
+            }
+        }
+    }
+
+
+
+    private Pane buildGUI() {
+        BorderPane root = new BorderPane();
+        canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+        root.setCenter(canvas);
+        HBox toolbar = new HBox();
+        toolbar.setSpacing(10);
+        toolbar.setPadding(new Insets(10, 10, 10, 10));
+        root.setTop(toolbar);
+
+        Button mechMoveBtn = new Button("Move mechs");
+        toolbar.getChildren().add(mechMoveBtn);
+
+        mechMoveBtn.setOnAction(e -> {
+            moveMechs();
+            drawGame();
+        });
+
+        return root;
+    }
+
+    public void drawGame() {
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.clearRect(0,0, canvas.getWidth(), canvas.getHeight());
+        gc.setFill(Color.GRAY);
+        gc.fillRect(0,0,canvas.getWidth(), canvas.getHeight());
+        for(int i = 0; i < this.CURRENT_WIDTH; i++) {
+            for(int j = 0; j < this.CURRENT_HEIGHT; j++) {
+                gc.drawImage(this.level.getGrid().getTileAt(i, j).getImage(), i*TILE_SIZE, j*TILE_SIZE);
+            }
+        }
+        for(Mech m : this.level.getMechs()) {
+            gc.drawImage(m.getImage(), m.getGridX() * TILE_SIZE, m.getGridY() * TILE_SIZE);
+        }
     }
 
     private Parent makeContent() throws Exception {
@@ -136,12 +190,17 @@ public class Game {
 //        }
 //        Image image = new Image(imageStream);
 //        grid.add(new ImageView(image), 0, 0);
-
+        Pane root = buildGUI();
         Stage stage = new Stage();
-        Scene scene = new Scene(makeContent());
-        stage.setTitle("Futuro Testing");
+        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        drawGame();
         stage.setScene(scene);
         stage.show();
+//        Stage stage = new Stage();
+//        Scene scene = new Scene(new Stage(makeContent());
+//        stage.setTitle("Futuro Testing");
+//        stage.setScene(scene);
+//        stage.show();
         //Label playerName = new Label();
 //        Button showLeaderboard = new Button("SHOW LEADERBOARD");
 //        Button exitGame = new Button("EXIT GAME");

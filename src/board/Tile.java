@@ -28,6 +28,10 @@ public class Tile extends Rectangle {
 		setFill(new ImagePattern(this.img));
 	}
 
+	public Image getImage() {
+		return this.img;
+	}
+
 	public boolean isVisibleTile() {
 		return this.visibleTile;
 	}
@@ -38,9 +42,9 @@ public class Tile extends Rectangle {
 	public static Image getImageForType(TileType tileType) {
 		switch(tileType) {
 			case PATH:
-				return new Image("file:res/Sprites/grassMid.png");
+				return new Image("file:res/Sprites/grassMid.png",50, 50, false, false);
 			default:
-				return new Image("file:res/Sprites/tileW.png");
+				return new Image("file:res/Sprites/tileW.png",50, 50, false, false);
 		}
 	}
 

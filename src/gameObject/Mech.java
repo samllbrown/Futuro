@@ -57,6 +57,9 @@ public class Mech extends Rectangle {
 		setFill(new ImagePattern(this.img));
 	}
 
+	public Image getImage(){
+		return this.img;
+	}
 	public int getGridX() {
 		return this.x;
 	}
@@ -70,22 +73,23 @@ public class Mech extends Rectangle {
 		switch (type) {
 			case RESOURCE:
 				System.err.println("IS RESOURCE AND ADDING FOR THIS");
-				img = new Image("file:res/Sprites/mechR.png");
+				img = new Image("file:res/Sprites/mechR.png",50, 50, false, false);
 				break;
 			case PRODUCTION:
 				System.err.println("IS PRODUCTION AND ADDING FOR THIS");
-				img = new Image("file:res/Sprites/mechP.png");
+				img = new Image("file:res/Sprites/mechP.png",50, 50, false, false);
 				break;
 			case DEATH:
 				System.err.println("IS death AND ADDING FOR THIS");
-				img = new Image("file:res/Sprites/mechD.png");
+				img = new Image("file:res/Sprites/mechD.png", 50, 50, false, false);
 				break;
 		}
 		return img;
 	}
 
 	public void move(int x, int y) {
-
+		this.x += x;
+		this.y += y;
 	}
 
 	public MechType getType() {
