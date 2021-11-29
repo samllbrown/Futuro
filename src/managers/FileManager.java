@@ -24,6 +24,8 @@ public class FileManager {
 	public static final File PLAYER_FILE = new File ( "Players.txt");
 	public static final File LEADERBOARD_FILE = new File ("Leaderboard.txt");
 
+	// need to do leaderboard reading and writing or something
+
 	private static void writeRecordToFile(String record, File file) {
 		BufferedWriter bw = null;
 		try {
@@ -199,26 +201,7 @@ public class FileManager {
 //			return new Player(playerRecord);
 //		}
 //	}
-	
-	/**
-	 * Testing reading and writing stuff
-	 * @param args
-	 * @throws FileNotFoundException
-	 */
-	/*
-	public static void main(String[]args) throws Exception {
-		Player David = new Player(2,"David",2);
-		Player Illia = new Player(3,"Illia",3);
-		Player Sam = new Player(1,"Sam",5);
-		//should return player 1 info
-		System.out.println(FileManager.readPlayerFile(Illia.getPlayerID()));
-		//player 3 doesn't exist so should return null
-		System.out.println(FileManager.readPlayerFile(Sam.getPlayerID()));
 
-		FileManager.writeToLeaderboardFile(David,100,5);
-		FileManager.writeToPlayerFile(David);
-	}
-	*/
 
 	public static Level readLevel(String fileName) throws Exception {
 		BufferedReader br = new BufferedReader(new FileReader(new File(fileName)));

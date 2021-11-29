@@ -163,6 +163,15 @@ public class GameManager extends Application {
         newPlayerButton.setOnAction(e -> { 
     	try {
         	playerCreator.writeToPlayerFile(new Player(playerIDInput.getText() + "," + playerNameInput.getText()));
+        	Alert alert  = new Alert(AlertType.CONFIRMATION);
+        	alert.setTitle("SUCCESS");
+        	alert.setHeaderText("Player created");
+        	alert.setContentText("Huzzah! You have created a Player.");
+            alert.showAndWait().ifPresent(rs -> {
+                if (rs == ButtonType.OK) {
+                    System.out.println("Pressed OK.");
+                }
+            });
 		} catch (Exception exception) {
             exception.printStackTrace();
         }
@@ -181,6 +190,11 @@ public class GameManager extends Application {
         root.setLeft(sidebar);
         sidebar.getChildren().addAll();
     	return root;
+    }
+
+    private Pane buildChooseLevel() {
+        // needs to be done
+        return null;
     }
     
     private Pane buildChoosePlayer() {
