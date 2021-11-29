@@ -164,7 +164,6 @@ public class Game {
                 gc.drawImage(m.getImage(), m.getGridX() * TILE_SIZE, m.getGridY() * TILE_SIZE);
             }
         }
-        /*
         for(Item i : this.level.getItems()) {
         	if(i.getXRange() > 0) {
         		int q = 0;
@@ -175,10 +174,6 @@ public class Game {
         			else {
         				q = 1000;
         			}
-        			q++;
-        		}
-        		q = 0;
-        		while(q < i.getXRange()) {
         			if(this.level.getGrid().getTileAt((i.getGridX() - q), i.getGridY()).getTileType() != TileType.WALL) {
         				gc.drawImage(i.getImage(), (i.getGridX() - q) * TILE_SIZE, i.getGridY() * TILE_SIZE);
         			}
@@ -195,10 +190,6 @@ public class Game {
         			else {
         				q = 1000;
         			}
-        			q++;
-        		}
-        		q = 0;
-        		while(q < i.getYRange()) {
         			if(this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() - q).getTileType() != TileType.WALL) {
         				gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, (i.getGridY() - q) * TILE_SIZE);
         			}
@@ -211,7 +202,6 @@ public class Game {
         	
         	gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
         }
-        */
     }
 
     private Parent makeContent() throws Exception {
@@ -265,7 +255,7 @@ public class Game {
         Stage stage = new Stage();
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         ArrayList<Item> itemTest = new ArrayList<Item>();
-        itemTest.add(new Acid(3, 3));
+        itemTest.add(new Acid(6, 3));
         this.level.setItems(itemTest);
         drawGame();
         stage.setScene(scene);
