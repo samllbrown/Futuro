@@ -1,27 +1,27 @@
 package gameObject;
 
+import javafx.scene.image.Image;
 
 public abstract class Item {
 	//private String itemID;
-	private int xPos;
-	private int yPos;
+	private int x, y;
 
 	
 //	protected Item(String itemID, int xPos, int yPos, int xRange, int yRange) {
-	protected Item(int xPos, int yPos) {
-		this.xPos = xPos;
-		this.yPos = yPos;
+	protected Item(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+	
+	public int getGridX() {
+		return this.x;
 	}
 
-
-	public int getxPos() {
-		return this.xPos;
+	public int getGridY() {
+		return this.y;
 	}
-
-	public int getyPos() {
-		return this.yPos;
-	}
-
+	public abstract Image getImage();
+	
 	// every item will act on some mech
 	public abstract void act(Mech someMech);
 }

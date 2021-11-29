@@ -1,6 +1,7 @@
 package gameObject;
 
 import board.Grid;
+import javafx.scene.image.Image;
 
 public class EMP extends Item {
 	private static final int X_RANGE = 1;
@@ -16,6 +17,12 @@ public class EMP extends Item {
 	public void act(Mech someMech) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Image getImage() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 //	private void spread(Grid grid) {

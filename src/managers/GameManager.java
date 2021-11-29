@@ -87,7 +87,7 @@ public class GameManager extends Application {
         // Create the main buttons for navigating the main menu
         Button choosePlayer = new Button("CHOOSE PLAYER");        
         Button newPlayer = new Button("CREATE PLAYER");
-        Button deletePlayer = new Button("DELETE PLAYER");      
+        Button deletePlayer = new Button("(START GAME (testing)- WILL BE DELETE PLAYER)");      
         
         Button exitMainMenu = new Button("EXIT GAME");       
         

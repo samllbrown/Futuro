@@ -24,6 +24,8 @@ public class Level {
 	private int expectedSecs;
 	private int elapsedTime;
 	private Inventory inventory;
+	
+	private ArrayList<Item> items;
 	private ArrayList<Mech> mechs;
 	private Grid grid;
 
@@ -229,5 +231,13 @@ public class Level {
 
 	public void setInventory(Inventory inventory) {
 		this.inventory = inventory;
+	}
+
+	public ArrayList<Item> getItems() {
+		return items;
+	}
+	
+	public void setItems(ArrayList<Item> items) {
+		this.items = items;
 	}
 }

@@ -1,5 +1,7 @@
 package gameObject;
 
+import javafx.scene.image.Image;
+
 public class Remodel extends Item {
 	// could make these final ints in abstract item class instead (maybe?)
 	// is 0 x and y range because it acts on the tile it is on
@@ -18,6 +20,12 @@ public class Remodel extends Item {
 	@Override
 	public void act(Mech someMech) {
 		this.remodelMech(someMech);
+	}
+
+	@Override
+	public Image getImage() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

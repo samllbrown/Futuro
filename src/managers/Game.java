@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import board.Grid;
 import board.Level;
+import gameObject.Item;
 import gameObject.Mech;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -118,17 +119,23 @@ public class Game {
         root.setTop(toolbar);
 
         Button mechMoveBtn = new Button("Move mechs");
-        toolbar.getChildren().add(mechMoveBtn);
+        Button addItemBtn = new Button("Add item");
+        toolbar.getChildren().addAll(mechMoveBtn, addItemBtn);
 
         mechMoveBtn.setOnAction(e -> {
             moveMechs();
             drawGame();
         });
+        
+        addItemBtn.setOnAction(e -> {
+            drawGame();
+        });
+
 
         return root;
     }
 
-    public void drawGame() {
+	public void drawGame() {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0,0, canvas.getWidth(), canvas.getHeight());
         gc.setFill(Color.GRAY);
@@ -140,6 +147,9 @@ public class Game {
         }
         for(Mech m : this.level.getMechs()) {
             gc.drawImage(m.getImage(), m.getGridX() * TILE_SIZE, m.getGridY() * TILE_SIZE);
+        }
+        for(Item i : this.level.getItems()) {
+        	gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
         }
     }
 
