@@ -123,7 +123,28 @@ public class FileManager {
 			} catch(IOException e) {
 				System.err.println("Error flushing and closing readers and/or writers whilst deleting record");
 			}
-		}
+		  }
+		
+	}
+
+	
+	private static boolean recordRepeatedInFile(int record, File file) {
+		Scanner sc = null;
+		boolean recorded = false;
+		try {
+			 sc = new Scanner(PLAYER_FILE);
+			 while (sc.hasNextLine() && recorded == false) {
+				 String[] line = (sc.nextLine()).split(",");
+				 recorded = (Integer.valueOf(line[0]) == record);
+			 }
+			 
+		   	 sc.close();
+		} catch(IOException e) {
+			System.err.println(String.format("Could not write record: %s to file: %s", record, file.getName()));
+		} 
+		return recorded;
+	}
+	
 //		System.err.println("Attempting to delete record with ID: " + id);
 //		File newFile = new File("temp.txt");
 //		BufferedReader br = new BufferedReader(new FileReader(file));
@@ -140,7 +161,7 @@ public class FileManager {
 //		wr.close();
 //		file.delete();
 //		newFile.renameTo(file);
-	}
+	
 
 	// probably needs validation
 	public static String getPlayerInfo(int playerID) {
@@ -152,7 +173,9 @@ public class FileManager {
 	}
 
 	public static void writeToPlayerFile(Player player) {
-		writeRecordToFile(player.toString(), PLAYER_FILE);
+		if(recordRepeatedInFile(player.getPlayerID(), PLAYER_FILE) == false) {
+			writeRecordToFile(player.toString(), PLAYER_FILE);
+		}
 	}
 //
 //	public static void writeToPlayerFile(Player player) throws IOException {
