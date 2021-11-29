@@ -154,6 +154,16 @@ public class FileManager {
 		}
 		return written;
 	}
+	public static boolean deleteFromPlayerFile(Player player) {
+		boolean deleted = false;
+		HashSet<Integer> playerids = getAllIdsInFile(PLAYER_FILE);
+		System.out.println(playerids.contains(player.getPlayerID()));
+		if(!(playerids.contains(player.getPlayerID()))) {
+			deleteRecordWithID(player.getPlayerID(), PLAYER_FILE);
+			deleted = true;
+		}
+		return deleted;
+	}
 
 	// probably needs validation
 	public static String getPlayerInfo(int playerID) {
