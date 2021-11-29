@@ -3,18 +3,21 @@ package gameObject;
 import javafx.scene.image.Image;
 
 public class Remodel extends Item {
-	// could make these final ints in abstract item class instead (maybe?)
-	// is 0 x and y range because it acts on the tile it is on
-	private static final int X_RANGE = 0;
-	private static final int Y_RANGE = 0;
 	
-	public Remodel(int x, int y) {
+	private boolean isMaleRemodel;
+	
+	public Remodel(int x, int y, boolean isMaleRemodel) {
 		super(x, y);
+		this.isMaleRemodel = isMaleRemodel;
 	}
 	
 	private void remodelMech(Mech mech) {
-		// figure out how to deal with possible pregnant mech
-		//mech.setType((mech.getType() == 'P' ? 'R' : 'P'));
+		if(isMaleRemodel && mech.getType() == MechType.PRODUCTION) {
+			mech.setType(MechType.RESOURCE);
+		}
+		if(isMaleRemodel == false && mech.getType() == MechType.RESOURCE) {
+			mech.setType(MechType.PRODUCTION);
+		}
 	}
 
 	@Override
@@ -24,8 +27,14 @@ public class Remodel extends Item {
 
 	@Override
 	public Image getImage() {
-		// TODO Auto-generated method stub
-		return null;
+		Image img = null;
+		if(isMaleRemodel) {
+			img = new Image("file:res/Sprites/RtoP.png",50, 50, false, false);
+		}
+		else {
+			img = new Image("file:res/Sprites/PtoR.png",50, 50, false, false);
+		}	
+		return img;
 	}
 
 }

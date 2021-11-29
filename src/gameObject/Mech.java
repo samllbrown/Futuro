@@ -95,6 +95,10 @@ public class Mech extends Rectangle {
 	public MechType getType() {
 		return this.type;
 	}
+	
+	public void setType(MechType type) {
+		this.type = type;
+	}
 	// should itemId be a thing in the constructor for item?
 	// need to update this constructor
 //	public Mech(char type, int xPos, int yPos, int xDir, int yDir) {

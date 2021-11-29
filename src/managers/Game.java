@@ -131,7 +131,6 @@ public class Game {
             drawGame();
         });
 
-
         return root;
     }
 
