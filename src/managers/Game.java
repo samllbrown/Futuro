@@ -152,6 +152,7 @@ public class Game {
         for(Mech m : this.level.getMechs()) {
             gc.drawImage(m.getImage(), m.getGridX() * TILE_SIZE, m.getGridY() * TILE_SIZE);
         }
+        /*
         for(Item i : this.level.getItems()) {
         	if(i.getXRange() > 0) {
         		int q = 0;
@@ -185,7 +186,11 @@ public class Game {
         			q++;
         		}
         		q = 0;
+<<<<<<< HEAD
         		while(q < i.getXRange()) {
+=======
+        		while(q < i.getYRange()) {
+>>>>>>> parent of ae2bed8 (Fix but broke)
         			if(this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() - q).getTileType() != TileType.WALL) {
         				gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, (i.getGridY() - q) * TILE_SIZE);
         			}
@@ -198,6 +203,7 @@ public class Game {
         	
         	gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
         }
+        */
     }
 
     private Parent makeContent() throws Exception {
@@ -251,7 +257,11 @@ public class Game {
         Stage stage = new Stage();
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         ArrayList<Item> itemTest = new ArrayList<Item>();
+
         itemTest.add(new Acid(5, 5));
+
+        itemTest.add(new Acid(3, 3));
+
         this.level.setItems(itemTest);
         drawGame();
         stage.setScene(scene);
