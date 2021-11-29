@@ -18,10 +18,10 @@ public class Acid extends Item {
 	}
 	
 	@Override
-	public void act(Mech someMech) {
-		// TODO Auto-generated method stub
-		// spreads itself over the grid?
-		// damages mech in its range?
+	public void act(Mech mech) {
+		if(mech.getType() == MechType.BABY) {
+			
+		}
 	}
 
 	@Override
