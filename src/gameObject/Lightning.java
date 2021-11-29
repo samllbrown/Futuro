@@ -3,14 +3,19 @@ package gameObject;
 import javafx.scene.image.Image;
 
 public class Lightning extends Item {
-	private static final int X_RANGE = 1;
-	private static final int Y_RANGE = 1;
+	private static final int X_RANGE = 2;
+	private static final int Y_RANGE = 2;
+	
+	private int DURATION = 3; //3 ticks or seconds
+	
 	public Lightning(int atX, int atY) {
 		super(atX, atY);
+		setXRange(X_RANGE);
+		setYRange(Y_RANGE);
 	}
 	@Override
-	public void act(Mech someMech) {
-		// TODO Auto-generated method stub
+	public void act(Mech mech) {
+		mech.setSterile(true);
 		
 	}
 	@Override

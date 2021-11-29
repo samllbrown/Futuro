@@ -8,21 +8,29 @@ public class Puddle extends Item {
 	
 	private int health;
 	
-	public Puddle(int x, int y, int health) {
+	public Puddle(int x, int y) {
 		super(x, y);
-		this.health = 100;
+		setXRange(X_RANGE);
+		setYRange(Y_RANGE);
 	}
 
 	@Override
-	public void act(Mech someMech) {
-		// TODO Auto-generated method stub
-		// changes the direction of a mech
+	public void act(Mech mech) {
+
 	}
 
 	@Override
 	public Image getImage() {
-		Image img = new Image("file:res/Sprites/puddle.png",50, 50, false, false);
+		Image img = new Image("file:res/Sprites/tileP.png",50, 50, false, false);
 		return img;
+	}
+
+	public int getHealth() {
+		return health;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
 	}
 
 }

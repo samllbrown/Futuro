@@ -1,5 +1,6 @@
 package managers;
 
+import java.io.Console;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -9,9 +10,13 @@ import board.Grid;
 import board.Level;
 import board.Tile;
 import gameObject.Acid;
+import gameObject.EMP;
 import gameObject.Item;
-import board.Pair;
+import gameObject.Lightning;
 import gameObject.Mech;
+import gameObject.Mine;
+import gameObject.Puddle;
+import gameObject.Remodel;
 import gameObject.TileType;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -43,8 +48,8 @@ public class Game {
     private Group tileGroup = new Group();
     private Group mechGroup = new Group();
 
-    private static final int WINDOW_WIDTH = 1200;
-    private static final int WINDOW_HEIGHT = 700;
+    private static final int WINDOW_WIDTH = 1800;
+    private static final int WINDOW_HEIGHT = 908;
 
     // The dimensions of the canvas
     private static final int CANVAS_WIDTH = 1800;
@@ -74,9 +79,14 @@ public class Game {
         this.CURRENT_HEIGHT = level.getGrid().getHeight();
     }
 
-    //private void tick() {
-      //  moveMechs();
-    //}
+    private void tick() {
+        try {
+			moveMechs();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
     public Level getLevel() {
         return level;
@@ -101,6 +111,7 @@ public class Game {
     public void setMessageOfTheDay(String messageOfTheDay) {
         this.messageOfTheDay = messageOfTheDay;
     }
+
 
 
     private void moveMechs() throws Exception {
@@ -134,10 +145,11 @@ public class Game {
 
         mechMoveBtn.setOnAction(e -> {
             try {
-                moveMechs();
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
+				moveMechs();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
             drawGame();
         });
         
@@ -158,18 +170,17 @@ public class Game {
                 gc.drawImage(this.level.getGrid().getTileAt(i, j).getImage(), i*TILE_SIZE, j*TILE_SIZE);
             }
         }
-
         for(Mech m : this.level.getMechs()) {
-            if(this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).isVisibleTile()) {
-                gc.drawImage(m.getImage(), m.getGridX() * TILE_SIZE, m.getGridY() * TILE_SIZE);
-            }
+            gc.drawImage(m.getImage(), m.getGridX() * TILE_SIZE, m.getGridY() * TILE_SIZE);
         }
-        /*
+        
         for(Item i : this.level.getItems()) {
         	if(i.getXRange() > 0) {
         		int q = 0;
         		while(q < i.getXRange()) {
-        			if(this.level.getGrid().getTileAt((i.getGridX() + q), i.getGridY()).getTileType() != TileType.WALL) {
+        			System.out.println(this.level.getGrid().getTileAt((i.getGridX() + q), i.getGridY()).getTileType());
+        			if(this.level.getGrid().getTileAt((i.getGridX() + q), i.getGridY()).getTileType() == TileType.PATH) {
+        				
         				gc.drawImage(i.getImage(), (i.getGridX() + q) * TILE_SIZE, i.getGridY() * TILE_SIZE);
         			}
         			else {
@@ -179,7 +190,8 @@ public class Game {
         		}
         		q = 0;
         		while(q < i.getXRange()) {
-        			if(this.level.getGrid().getTileAt((i.getGridX() - q), i.getGridY()).getTileType() != TileType.WALL) {
+        			System.out.println(this.level.getGrid().getTileAt((i.getGridX() - q), i.getGridY()).getTileType());
+        			if(this.level.getGrid().getTileAt((i.getGridX() - q), i.getGridY()).getTileType() == TileType.PATH) {
         				gc.drawImage(i.getImage(), (i.getGridX() - q) * TILE_SIZE, i.getGridY() * TILE_SIZE);
         			}
         			else {
@@ -189,7 +201,8 @@ public class Game {
         		}
         		q = 0;
         		while(q < i.getYRange()) {
-        			if(this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() + q).getTileType() != TileType.WALL) {
+        			System.out.println(this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() + q).getTileType());
+        			if(this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() + q).getTileType() == TileType.PATH) {    				
         				gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, (i.getGridY() + q) * TILE_SIZE);
         			}
         			else {
@@ -199,7 +212,8 @@ public class Game {
         		}
         		q = 0;
         		while(q < i.getYRange()) {
-        			if(this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() - q).getTileType() != TileType.WALL) {
+        			System.out.println(this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() - q).getTileType());
+        			if(this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() - q).getTileType() == TileType.PATH) {
         				gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, (i.getGridY() - q) * TILE_SIZE);
         			}
         			else {
@@ -208,10 +222,10 @@ public class Game {
         			q++;
         		}	
         	}
-        	
-        	gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
+        	else {
+        		gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
+        	}
         }
-        */
     }
 
     private Parent makeContent() throws Exception {
@@ -265,7 +279,14 @@ public class Game {
         Stage stage = new Stage();
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         ArrayList<Item> itemTest = new ArrayList<Item>();
-        itemTest.add(new Acid(3, 3));
+
+        itemTest.add(new Acid(2, 10));
+        itemTest.add(new EMP(4, 4));
+        itemTest.add(new Mine(1, 4));
+        itemTest.add(new Lightning(3, 2));
+        itemTest.add(new Remodel(8, 2, true));
+        itemTest.add(new Remodel(8, 4, false));
+
         this.level.setItems(itemTest);
         drawGame();
         stage.setScene(scene);

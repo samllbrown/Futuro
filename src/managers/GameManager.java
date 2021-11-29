@@ -25,6 +25,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import services.audioPlayer;
 
 public class GameManager extends Application {
 
@@ -57,6 +58,7 @@ public class GameManager extends Application {
         // Display the scene on the stage
         primaryStage.setScene(scene);
         mainMenu = primaryStage;
+        //audioPlayer.playMainMenu();
         mainMenu.show();
     }
 
