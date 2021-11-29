@@ -85,9 +85,11 @@ public class GameManager extends Application {
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         root.setCenter(canvas);
         // Create the main buttons for navigating the main menu
+        Button createPlayer = new Button("(START GAME (testing)");   
         Button choosePlayer = new Button("CHOOSE PLAYER");        
         Button newPlayer = new Button("CREATE PLAYER");
-        Button deletePlayer = new Button("(START GAME (testing)- WILL BE DELETE PLAYER)");      
+        Button deletePlayer = new Button("DELETE PLAYER");   
+        
         
         Button exitMainMenu = new Button("EXIT GAME");       
         
@@ -98,10 +100,10 @@ public class GameManager extends Application {
         
         // Add the elements on the canvas onto the sidebar
         root.setLeft(sidebar);
-        sidebar.getChildren().addAll(choosePlayer, newPlayer, deletePlayer, exitMainMenu);
+        sidebar.getChildren().addAll(createPlayer, choosePlayer, newPlayer, deletePlayer, exitMainMenu);
 
 
-        deletePlayer.setOnAction(e -> {
+        createPlayer.setOnAction(e -> {
         	//Level level = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
             Level level = null;
             try {
