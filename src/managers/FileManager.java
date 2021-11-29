@@ -159,7 +159,7 @@ public class FileManager {
 		HashSet<Integer> playerids = getAllIdsInFile(PLAYER_FILE);
 		System.out.println(playerids.contains(player.getPlayerID()));
 		if(!(playerids.contains(player.getPlayerID()))) {
-			deleteRecordWithID(player.getPlayerID(), PLAYER_FILE);
+			//deletes statement here
 			deleted = true;
 		}
 		return deleted;
