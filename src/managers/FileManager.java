@@ -151,8 +151,15 @@ public class FileManager {
 		return new Player(getPlayerInfo(playerID));
 	}
 
+<<<<<<< Updated upstream
 	public static void writeToPlayerFile(Player player) {
 		writeRecordToFile(player.toString(), PLAYER_FILE);
+=======
+	public void writeToPlayerFile(Player player) {
+		if(recordRepeatedInFile(player.getPlayerID(), PLAYER_FILE) == false) {
+			writeRecordToFile(player.toString(), PLAYER_FILE);
+		}
+>>>>>>> Stashed changes
 	}
 //
 //	public static void writeToPlayerFile(Player player) throws IOException {
