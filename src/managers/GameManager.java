@@ -57,10 +57,10 @@ public class GameManager extends Application {
         // Display the scene on the stage
         primaryStage.setScene(scene);
         mainMenu = primaryStage;
-        String bip = getCurrentWorkingDirectory() + "\\src\\music\\ratmusic.mp3";
-        System.out.println(bip);
-        Media hit = new Media(new File(bip).toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(hit);
+     //   String bip = getCurrentWorkingDirectory() + "\\src\\music\\ratmusic.mp3";
+     //   System.out.println(bip);
+     //   Media hit = new Media(new File(bip).toURI().toString());
+     //   MediaPlayer mediaPlayer = new MediaPlayer(hit);
         //mediaPlayer.play();
         mainMenu.show();
     }
@@ -162,16 +162,28 @@ public class GameManager extends Application {
         FileManager playerCreator = new FileManager();
         newPlayerButton.setOnAction(e -> { 
     	try {
-        	playerCreator.writeToPlayerFile(new Player(playerIDInput.getText() + "," + playerNameInput.getText()));
+        	boolean created = (playerCreator.writeToPlayerFile(new Player(playerIDInput.getText() + "," + playerNameInput.getText())));
         	Alert alert  = new Alert(AlertType.CONFIRMATION);
-        	alert.setTitle("SUCCESS");
-        	alert.setHeaderText("Player created");
-        	alert.setContentText("Huzzah! You have created a Player.");
-            alert.showAndWait().ifPresent(rs -> {
-                if (rs == ButtonType.OK) {
-                    System.out.println("Pressed OK.");
-                }
-            });
+        	if(created) {
+	        	alert.setTitle("SUCCESS");
+	        	alert.setHeaderText("Player created");
+	        	alert.setContentText("Huzzah! You have created a Player.");
+	            alert.showAndWait().ifPresent(rs -> {
+	                if (rs == ButtonType.OK) {
+	                    System.out.println("Pressed OK.");
+	                }
+	            });
+        	}
+        	else {
+        		alert.setTitle("FAILURE");
+        		alert.setHeaderText("Player not created");
+        		alert.setContentText("A player with that ID already exists");
+        		alert.showAndWait().ifPresent(rs -> {
+	                if (rs == ButtonType.OK) {
+	                    System.out.println("Pressed OK.");
+	                }
+	            });
+        	}
 		} catch (Exception exception) {
             exception.printStackTrace();
         }

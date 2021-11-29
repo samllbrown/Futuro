@@ -172,10 +172,13 @@ public class FileManager {
 		return new Player(getPlayerInfo(playerID));
 	}
 
-	public static void writeToPlayerFile(Player player) {
+	public boolean writeToPlayerFile(Player player) {
+		boolean writen = false;
 		if(recordRepeatedInFile(player.getPlayerID(), PLAYER_FILE) == false) {
 			writeRecordToFile(player.toString(), PLAYER_FILE);
+			writen = true;
 		}
+		return writen;
 	}
 //
 //	public static void writeToPlayerFile(Player player) throws IOException {
