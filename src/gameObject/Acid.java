@@ -19,8 +19,8 @@ public class Acid extends Item {
 	
 	@Override
 	public void act(Mech mech) {
-		if(mech.getType() == MechType.BABY) {
-			
+		if(mech.getIsBaby() == true) {
+			mech.getHealth();
 		}
 	}
 

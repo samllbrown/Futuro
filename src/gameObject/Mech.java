@@ -60,6 +60,10 @@ public class Mech extends Rectangle {
 		setFill(new ImagePattern(this.img));
 	}
 
+	
+	public boolean getIsBaby() {
+		return this.isBaby;
+	}
 	public Image getImage(){
 		return this.img;
 	}
@@ -101,6 +105,17 @@ public class Mech extends Rectangle {
 	
 	public void setType(MechType type) {
 		this.type = type;
+	}
+	
+	public int getHealth() {
+		return this.health;
+	}
+	
+	public void setHealthFromDamage(int damage) {
+		this.health = this.health - damage;
+		if(this.health < 0) {
+			
+		}
 	}
 	// should itemId be a thing in the constructor for item?
 	// need to update this constructor
