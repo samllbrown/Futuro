@@ -18,7 +18,7 @@ import inventory.Inventory;
  */
 
 public class FileManager {
-	public static final File PLAYER_FILE = new File ( "Players.txt");
+	public static final File PLAYER_FILE = new File ( "res/Players.txt");
 	public static final File LEADERBOARD_FILE = new File ("Leaderboard.txt");
 
 	// need to do leaderboard reading and writing or something
@@ -121,7 +121,7 @@ public class FileManager {
 //		return recorded;
 //	}
 	// could do something liek this instead? idk, you decide but lmk what you think
-	public HashSet<Integer> getAllIdsInFile(File file) {
+	public static HashSet<Integer> getAllIdsInFile(File file) {
 		HashSet<Integer> ids = new HashSet<>();
 		BufferedReader br = null;
 		try {
@@ -145,7 +145,7 @@ public class FileManager {
 	}
 
 	// good idea
-	public boolean writeToPlayerFile(Player player) {
+	public static boolean writeToPlayerFile(Player player) {
 		boolean written = false;
 		HashSet<Integer> playerids = getAllIdsInFile(PLAYER_FILE);
 		if(!(playerids.contains(player.getPlayerID()))) {

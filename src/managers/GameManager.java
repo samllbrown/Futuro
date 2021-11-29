@@ -107,7 +107,7 @@ public class GameManager extends Application {
         	//Level level = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
             Level level = null;
             try {
-                level = FileManager.readLevel("LEVEL_1.txt");
+                level = FileManager.readLevel("res/Levels/LEVEL_1.txt");
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
@@ -118,6 +118,15 @@ public class GameManager extends Application {
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
+        });
+        
+        deletePlayer.setOnAction(e -> {
+        	Pane deletePlayerPane = buildDeletePlayer();
+            Scene deletePlayerScene = new Scene(deletePlayerPane, 300, 200);
+            Stage deletePlayerStage = new Stage();
+            deletePlayerStage.setScene(deletePlayerScene);
+            deletePlayerStage.setTitle("New player");
+            deletePlayerStage.show();
         });
         
         // Create a new profile to play the game as
@@ -160,11 +169,11 @@ public class GameManager extends Application {
         Button newPlayerButton = new Button("CREATE PLAYER");
         root.setLeft(sidebar);
         sidebar.getChildren().addAll(playerID, playerIDInput, playerName, playerNameInput, newPlayerButton);
-        
-        FileManager playerCreator = new FileManager();
+
+
         newPlayerButton.setOnAction(e -> { 
     	try {
-        	boolean created = (playerCreator.writeToPlayerFile(new Player(playerIDInput.getText() + "," + playerNameInput.getText())));
+        	boolean created = (FileManager.writeToPlayerFile(new Player(playerIDInput.getText() + "," + playerNameInput.getText())));
         	Alert alert  = new Alert(AlertType.CONFIRMATION);
         	if(created) {
 	        	alert.setTitle("SUCCESS");
@@ -201,8 +210,22 @@ public class GameManager extends Application {
         sidebar.setSpacing(10);
         sidebar.setPadding(new Insets(10, 10, 10, 10));
         
+        
+        Label playerID = new Label("ID of player: ");
+        TextField playerIDInput = new TextField ();
+        Button choosePlayerButton = new Button("Delete player");
+        
         root.setLeft(sidebar);
-        sidebar.getChildren().addAll();
+        sidebar.getChildren().addAll(playerID, playerIDInput, choosePlayerButton);
+        
+        FileManager playerDeleter = new FileManager();
+        choosePlayerButton.setOnAction(e -> {
+        	
+        	
+        	
+        	
+        	
+        });
     	return root;
     }
 
