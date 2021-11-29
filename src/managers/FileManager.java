@@ -1,10 +1,7 @@
 package managers;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 import board.Grid;
 import board.Level;
@@ -31,8 +28,6 @@ public class FileManager {
 		try {
 			bw = new BufferedWriter(new FileWriter(file, true));
 			bw.write(record + "\n");
-//			bw.flush();
-//			bw.close();
 		} catch(IOException e) {
 			System.err.println(String.format("Could not write record: %s to file: %s", record, file.getName()));
 		} finally {
@@ -46,13 +41,6 @@ public class FileManager {
 			}
 		}
 	}
-
-//	private static void writeRecordToFile(String record, File file) throws IOException {
-//		BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
-//		bw.write(record + "\n");
-//		bw.flush();
-//		bw.close();
-//	}
 
 	public static String getRecordWithID(int id, File file) {
 		BufferedReader br = null;
@@ -80,18 +68,6 @@ public class FileManager {
 		}
 		return returnLine;
 	}
-//		BufferedReader br = new BufferedReader(new FileReader(file));
-//		String currentLine;
-//		String[] lineSplit;
-//		while((currentLine = br.readLine()) != null) {
-//			lineSplit = currentLine.split(",");
-//			if(Integer.valueOf(lineSplit[0]) == id) {
-//				br.close();
-//				return currentLine;
-//			}
-//		}
-//		br.close();
-//		return null;
 
 	public static void deleteRecordWithID(int id, File file) {
 		BufferedReader br = null;
@@ -127,41 +103,57 @@ public class FileManager {
 		
 	}
 
-	
-	private static boolean recordRepeatedInFile(int record, File file) {
-		Scanner sc = null;
-		boolean recorded = false;
-		try {
-			 sc = new Scanner(PLAYER_FILE);
-			 while (sc.hasNextLine() && recorded == false) {
-				 String[] line = (sc.nextLine()).split(",");
-				 recorded = (Integer.valueOf(line[0]) == record);
-			 }
-			 
-		   	 sc.close();
-		} catch(IOException e) {
-			System.err.println(String.format("Could not write record: %s to file: %s", record, file.getName()));
-		} 
-		return recorded;
-	}
-	
-//		System.err.println("Attempting to delete record with ID: " + id);
-//		File newFile = new File("temp.txt");
-//		BufferedReader br = new BufferedReader(new FileReader(file));
-//		BufferedWriter wr = new BufferedWriter(new FileWriter(newFile));
-//		String currentLine;
+	// no need!
+//	private static boolean recordRepeatedInFile(int record, File file) {
+//		Scanner sc = null;
+//		boolean recorded = false;
+//		try {
+//			 sc = new Scanner(PLAYER_FILE);
+//			 while (sc.hasNextLine() && recorded == false) {
+//				 String[] line = (sc.nextLine()).split(",");
+//				 recorded = (Integer.valueOf(line[0]) == record);
+//			 }
 //
-//		while((currentLine = br.readLine()) != null) {
-//			if(!(id == Integer.valueOf(currentLine.split(",")[0]))) {
-//				wr.write(currentLine + "\n");
-//			}
+//		   	 sc.close();
+//		} catch(IOException e) {
+//			System.err.println(String.format("Could not write record: %s to file: %s", record, file.getName()));
 //		}
-//		br.close();
-//		wr.flush();
-//		wr.close();
-//		file.delete();
-//		newFile.renameTo(file);
-	
+//		return recorded;
+//	}
+	// could do something liek this instead? idk, you decide but lmk what you think
+	public HashSet<Integer> getAllIdsInFile(File file) {
+		HashSet<Integer> ids = new HashSet<>();
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new FileReader(file));
+			String currentLine;
+			String[] currentLineSplit;
+			while((currentLine = br.readLine()) != null) {
+				currentLineSplit = currentLine.split(",");
+				ids.add(Integer.valueOf(currentLineSplit[0]));
+			}
+		} catch(IOException e) {
+			System.err.println("");
+		} finally {
+			try {
+				br.close();
+			} catch(IOException e) {
+				System.err.println("There was an error closing the BufferedReader");
+			}
+		}
+		return ids;
+	}
+
+	// good idea
+	public boolean writeToPlayerFile(Player player) {
+		boolean written = false;
+		HashSet<Integer> playerids = getAllIdsInFile(PLAYER_FILE);
+		if(!(playerids.contains(player.getPlayerID()))) {
+			writeRecordToFile(player.toString(), PLAYER_FILE);
+			written = true;
+		}
+		return written;
+	}
 
 	// probably needs validation
 	public static String getPlayerInfo(int playerID) {
@@ -171,41 +163,6 @@ public class FileManager {
 	public static Player getPlayer(int playerID) {
 		return new Player(getPlayerInfo(playerID));
 	}
-
-	public boolean writeToPlayerFile(Player player) {
-		boolean writen = false;
-		if(recordRepeatedInFile(player.getPlayerID(), PLAYER_FILE) == false) {
-			writeRecordToFile(player.toString(), PLAYER_FILE);
-			writen = true;
-		}
-		return writen;
-	}
-//
-//	public static void writeToPlayerFile(Player player) throws IOException {
-//		boolean found = false;
-//		try {
-//		    Scanner scanner = new Scanner(PLAYER_FILE);
-//		    BufferedWriter bw = new BufferedWriter(new FileWriter(PLAYER_FILE));
-//		    int lineNum = 0;
-//
-//		    while (scanner.hasNextLine() && found == false) {
-//		        String line = scanner.nextLine();
-//		        lineNum++;
-//		        if (line.contains(Integer.toString(player.getPlayerID()))) {
-//		        	System.out.println(line);
-//		        	bw.write(line + System.getProperty("line.separator"));
-//		        	found = true;
-//		        }
-//		    }
-//		    bw.flush();
-//		    bw.close();
-//		} catch(FileNotFoundException e) {
-//		    //handle this
-//		}
-//		if(found == false) {
-//			writeRecordToFile(player.getPlayerInfo(), PLAYER_FILE);
-//		}
-//	}
 
 //	public static void writeToLeaderboardFile(Player player, int playerScore, int rank) throws IOException {
 //		// put this into a method plz
