@@ -148,9 +148,11 @@ public class Game {
         for(Mech m : this.level.getMechs()) {
             gc.drawImage(m.getImage(), m.getGridX() * TILE_SIZE, m.getGridY() * TILE_SIZE);
         }
+        /*
         for(Item i : this.level.getItems()) {
         	gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
         }
+        */
     }
 
     private Parent makeContent() throws Exception {
