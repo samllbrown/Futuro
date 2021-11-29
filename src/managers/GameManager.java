@@ -88,7 +88,8 @@ public class GameManager extends Application {
         Button createPlayer = new Button("(START GAME (testing)");   
         Button choosePlayer = new Button("CHOOSE PLAYER");        
         Button newPlayer = new Button("CREATE PLAYER");
-        Button deletePlayer = new Button("DELETE PLAYER");   
+        Button deletePlayer = new Button("DELETE PLAYER");
+        Button load = new Button("LOAD");
         
         
         Button exitMainMenu = new Button("EXIT GAME");       
@@ -100,7 +101,7 @@ public class GameManager extends Application {
         
         // Add the elements on the canvas onto the sidebar
         root.setLeft(sidebar);
-        sidebar.getChildren().addAll(createPlayer, choosePlayer, newPlayer, deletePlayer, exitMainMenu);
+        sidebar.getChildren().addAll(createPlayer, choosePlayer, newPlayer, deletePlayer,load ,exitMainMenu);
 
 
         createPlayer.setOnAction(e -> {
@@ -129,7 +130,28 @@ public class GameManager extends Application {
             newPlayerStage.setTitle("New player");
             newPlayerStage.show();
         });
-        
+
+
+        // Load game
+        load.setOnAction(e -> {
+            if(this.currentPlayer == null){ // check if a player is selected, opens choose player if none are selected
+                Pane choosePlayerPane = buildChoosePlayer();
+                Scene choosePlayerScene = new Scene(choosePlayerPane, 300, 200);
+                Stage choosePlayerStage = new Stage();
+                choosePlayerStage.setScene(choosePlayerScene);
+                choosePlayerStage.setTitle("Choose player");
+                choosePlayerStage.show();
+            } else { // If a player is selected open load menu
+                Pane loadPane = loadNewGame();
+                Scene loadScene = new Scene(loadPane, 300, 200);
+                Stage loadStage = new Stage();
+                loadStage.setScene(loadScene);
+                loadStage.setTitle("Load game");
+                loadStage.show();
+            }
+        });
+
+
         // Close the main menu
         exitMainMenu.setOnAction(e -> {
             GameManager.mainMenu.hide();
@@ -206,9 +228,21 @@ public class GameManager extends Application {
     	return root;
     }
 
-    private Pane buildChooseLevel() {
-        // needs to be done
-        return null;
+    // SetOnAction needs to load a file (open file manager? input level id like choose player does?)
+    private Pane loadNewGame() {
+        BorderPane root = new BorderPane();
+        VBox sidebar = new VBox();
+        sidebar.setSpacing(10);
+        sidebar.setPadding(new Insets(10, 10, 10, 10));
+
+        Button loadButton = new Button("Select game file");
+
+        root.setLeft(sidebar);
+        sidebar.getChildren().add(loadButton);
+        loadButton.setOnAction(e -> {
+
+        });
+        return root;
     }
     
     private Pane buildChoosePlayer() {
