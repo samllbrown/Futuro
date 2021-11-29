@@ -72,7 +72,7 @@ public class FileManager {
 	public static void deleteRecordWithID(int id, File file) {
 		BufferedReader br = null;
 		BufferedWriter wr = null;
-		File newFile = new File("temp.txt");
+		File newFile = new File("res/temp.txt");
 		try {
 			br = new BufferedReader(new FileReader(file));
 			wr = new BufferedWriter(new FileWriter(newFile));
@@ -90,6 +90,7 @@ public class FileManager {
 			try {
 				br.close();
 				wr.flush();
+				wr.close();
 				if(file.delete()) {
 					newFile.renameTo(file);
 				} else {
@@ -154,12 +155,13 @@ public class FileManager {
 		}
 		return written;
 	}
+	
 	public static boolean deleteFromPlayerFile(Player player) {
 		boolean deleted = false;
 		HashSet<Integer> playerids = getAllIdsInFile(PLAYER_FILE);
 		System.out.println(playerids.contains(player.getPlayerID()));
-		if(!(playerids.contains(player.getPlayerID()))) {
-			//deletes statement here
+		if((playerids.contains(player.getPlayerID()))) {
+			deleteRecordWithID(player.getPlayerID(), PLAYER_FILE);
 			deleted = true;
 		}
 		return deleted;
