@@ -9,7 +9,9 @@ import managers.Game;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class Mech extends Rectangle {
 	// X_RANGE AND Y_RANGE should define where this item
@@ -35,8 +37,18 @@ public class Mech extends Rectangle {
 //
 //
 //	private Tile[] neighbourTiles;
+	/*
+	* for the movement:
+	* Illia's suggestion:
+	* for every move, get the neighbour tiles and check them
+	* */
 	private MechType type;
+
 	private int x, y;
+
+	private Direction currentDirection;
+	private Pair currentCords;
+
 	private int health;
 	private boolean pregnant;
 
@@ -51,10 +63,88 @@ public class Mech extends Rectangle {
 		this.type = type;
 		this.x = x;
 		this.y = y;
+		this.currentCords = new Pair(x, y);
+		this.currentDirection = Direction.RIGHT;
 		this.health = health;
 		this.pregnant = pregnant;
 		this.img = getImageForType(type);
 		setFill(new ImagePattern(this.img));
+	}
+
+
+	private static Direction getTurnDirection(String relativeDir, Direction currentDirection) {
+		try {
+			switch (relativeDir) {
+				case "AROUND":
+					return Direction.fromPair(currentDirection.toPair().mult(new Pair(-1, -1)));
+				case "RIGHT":
+					return Direction.fromPair(new Pair(currentDirection.getYDir(), (-1 * currentDirection.getXDir())));
+//				this.currentDirection = new Pair(this.currentDirection.getYDir(), (-1 * this.currentDirection.getXDir()));
+				case "LEFT":
+					return Direction.fromPair(new Pair((-1 * currentDirection.getYDir()), currentDirection.getXDir()));
+//			case "FORWARD":
+//				this.currentDirection = this.currentDirection;
+				default:
+					return currentDirection;
+			}
+		} catch(Exception e) {
+			System.err.println("ERROR GETTING DIRECTION FROM STATIC TURN DIRECTION");
+			return null;
+		}
+	}
+
+	private void turn(String relativeDir) throws Exception {
+		switch (relativeDir) {
+			case "AROUND":
+				this.currentDirection = Direction.fromPair(this.currentDirection.toPair().mult(new Pair(-1, -1)));
+				break;
+			case "RIGHT":
+				this.currentDirection = Direction.fromPair(new Pair(this.currentDirection.getYDir(), (-1 * this.currentDirection.getXDir())));
+				break;
+//				this.currentDirection = new Pair(this.currentDirection.getYDir(), (-1 * this.currentDirection.getXDir()));
+			case "LEFT":
+				this.currentDirection = Direction.fromPair(new Pair((-1 * this.currentDirection.getYDir()), this.currentDirection.getXDir()));
+				break;
+//			case "FORWARD":
+//				this.currentDirection = this.currentDirection;
+			default:
+				this.currentDirection = this.currentDirection;
+		}
+	}
+
+	private Pair getNextPos(Direction inDirection) {
+		return this.currentCords.add(inDirection.toPair());
+	}
+
+	public void move(Grid onGrid) throws Exception {
+		Pair possibleNextCoords = this.getNextPos(this.currentDirection);
+		ArrayList<String> turns = new ArrayList<>();
+		turns.add("FORWARD");
+		turns.add("LEFT");
+		turns.add("RIGHT");
+		//turns.add("AROUND");
+		Random rand = new Random();
+		if (!(onGrid.getTileAt(possibleNextCoords).isWalkable())) {
+			if((!(onGrid.getTileAt(this.getNextPos(Direction.RIGHT)).isWalkable())) && (!(onGrid.getTileAt(this.getNextPos(Direction.LEFT)).isWalkable()))) {
+				this.turn("AROUND");
+				this.currentCords = this.currentCords.add(this.currentDirection.toPair());
+			} else {
+				turns.remove("FORWARD");
+				turns = new ArrayList<String>(turns.stream().filter(dirStr ->
+						(onGrid.getTileAt(this.getNextPos(getTurnDirection(dirStr, this.currentDirection)))).isWalkable()).collect(Collectors.toList()));
+				this.turn(turns.get(rand.nextInt(turns.size())));
+				this.currentCords = this.currentCords.add(this.currentDirection.toPair());
+			}
+		} else {
+			turns = new ArrayList<String>(turns.stream().filter(dirStr ->
+					(onGrid.getTileAt(this.getNextPos(getTurnDirection(dirStr, this.currentDirection)))).isWalkable()).collect(Collectors.toList()));
+			this.turn(turns.get(rand.nextInt(turns.size())));
+			this.currentCords = this.currentCords.add(this.currentDirection.toPair());
+		}
+
+//		this.currentCords = this.currentCords.add(this.currentDirection.toPair());
+		this.x = this.currentCords.x;
+		this.y = this.currentCords.y;
 	}
 
 	public Image getImage(){
@@ -87,10 +177,7 @@ public class Mech extends Rectangle {
 		return img;
 	}
 
-	public void move(int x, int y) {
-		this.x += x;
-		this.y += y;
-	}
+
 
 	public MechType getType() {
 		return this.type;

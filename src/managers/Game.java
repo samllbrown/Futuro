@@ -70,9 +70,9 @@ public class Game {
         this.CURRENT_HEIGHT = level.getGrid().getHeight();
     }
 
-    private void tick() {
-        moveMechs();
-    }
+    //private void tick() {
+      //  moveMechs();
+    //}
 
     public Level getLevel() {
         return level;
@@ -99,8 +99,9 @@ public class Game {
     }
 
 
-    private void moveMechs() {
+    private void moveMechs() throws Exception {
         for(Mech m : this.level.getMechs()) {
+            m.move(this.level.getGrid());
 //            Pair currentVector = new Pair(m.getGridX(), m.getGridY());
 //            Pair nextVector = new Pair(m.getGr);
 //            if(this.level.getGrid().getTileAt(m.getGridX(), m.getGridY())) {
@@ -128,7 +129,11 @@ public class Game {
         toolbar.getChildren().addAll(mechMoveBtn, addItemBtn);
 
         mechMoveBtn.setOnAction(e -> {
-            moveMechs();
+            try {
+                moveMechs();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
             drawGame();
         });
         

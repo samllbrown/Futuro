@@ -28,6 +28,10 @@ public class Tile extends Rectangle {
 		setFill(new ImagePattern(this.img));
 	}
 
+	public boolean isWalkable() {
+		return (this.tileType.walkable == 1);
+	}
+
 	public Image getImage() {
 		return this.img;
 	}
