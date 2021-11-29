@@ -10,7 +10,6 @@ import board.Level;
 import board.Tile;
 import gameObject.Acid;
 import gameObject.Item;
-import board.Pair;
 import gameObject.Mech;
 import gameObject.TileType;
 import javafx.application.Application;
@@ -43,8 +42,8 @@ public class Game {
     private Group tileGroup = new Group();
     private Group mechGroup = new Group();
 
-    private static final int WINDOW_WIDTH = 1200;
-    private static final int WINDOW_HEIGHT = 700;
+    private static final int WINDOW_WIDTH = 1800;
+    private static final int WINDOW_HEIGHT = 908;
 
     // The dimensions of the canvas
     private static final int CANVAS_WIDTH = 1800;
@@ -74,9 +73,9 @@ public class Game {
         this.CURRENT_HEIGHT = level.getGrid().getHeight();
     }
 
-    //private void tick() {
-      //  moveMechs();
-    //}
+    private void tick() {
+        moveMechs();
+    }
 
     public Level getLevel() {
         return level;
@@ -103,17 +102,13 @@ public class Game {
     }
 
 
-    private void moveMechs() throws Exception {
+
+    private void moveMechs() {
         for(Mech m : this.level.getMechs()) {
-            m.move(this.level.getGrid());
-//            Pair currentVector = new Pair(m.getGridX(), m.getGridY());
-//            Pair nextVector = new Pair(m.getGr);
-//            if(this.level.getGrid().getTileAt(m.getGridX(), m.getGridY())) {
-//                //
-//            }
-//            if(m.getGridX() >= this.level.getGrid().getWidth()) {
-//                m.move(-2, 0);
-//            }
+            m.move(1, 0);
+            if(m.getGridX() > this.level.getGrid().getWidth()) {
+                m.move(-2, 0);
+            }
         }
     }
 
@@ -133,11 +128,7 @@ public class Game {
         toolbar.getChildren().addAll(mechMoveBtn, addItemBtn);
 
         mechMoveBtn.setOnAction(e -> {
-            try {
-                moveMechs();
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
+            moveMechs();
             drawGame();
         });
         
@@ -158,11 +149,8 @@ public class Game {
                 gc.drawImage(this.level.getGrid().getTileAt(i, j).getImage(), i*TILE_SIZE, j*TILE_SIZE);
             }
         }
-
         for(Mech m : this.level.getMechs()) {
-            if(this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).isVisibleTile()) {
-                gc.drawImage(m.getImage(), m.getGridX() * TILE_SIZE, m.getGridY() * TILE_SIZE);
-            }
+            gc.drawImage(m.getImage(), m.getGridX() * TILE_SIZE, m.getGridY() * TILE_SIZE);
         }
         for(Item i : this.level.getItems()) {
         	if(i.getXRange() > 0) {
@@ -174,6 +162,10 @@ public class Game {
         			else {
         				q = 1000;
         			}
+        			q++;
+        		}
+        		q = 0;
+        		while(q < i.getXRange()) {
         			if(this.level.getGrid().getTileAt((i.getGridX() - q), i.getGridY()).getTileType() != TileType.WALL) {
         				gc.drawImage(i.getImage(), (i.getGridX() - q) * TILE_SIZE, i.getGridY() * TILE_SIZE);
         			}
@@ -190,6 +182,10 @@ public class Game {
         			else {
         				q = 1000;
         			}
+        			q++;
+        		}
+        		q = 0;
+        		while(q < i.getXRange()) {
         			if(this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() - q).getTileType() != TileType.WALL) {
         				gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, (i.getGridY() - q) * TILE_SIZE);
         			}
@@ -255,7 +251,7 @@ public class Game {
         Stage stage = new Stage();
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         ArrayList<Item> itemTest = new ArrayList<Item>();
-        itemTest.add(new Acid(6, 3));
+        itemTest.add(new Acid(5, 5));
         this.level.setItems(itemTest);
         drawGame();
         stage.setScene(scene);
