@@ -57,10 +57,10 @@ public class GameManager extends Application {
         // Display the scene on the stage
         primaryStage.setScene(scene);
         mainMenu = primaryStage;
-       // String bip = getCurrentWorkingDirectory() + "\\src\\music\\ratmusic.mp3";
-      //  System.out.println(bip);
-       // Media hit = new Media(new File(bip).toURI().toString());
-      //  MediaPlayer mediaPlayer = new MediaPlayer(hit);
+        String bip = getCurrentWorkingDirectory() + "\\src\\music\\ratmusic.mp3";
+        System.out.println(bip);
+        Media hit = new Media(new File(bip).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(hit);
         //mediaPlayer.play();
         mainMenu.show();
     }
@@ -162,7 +162,6 @@ public class GameManager extends Application {
         FileManager playerCreator = new FileManager();
         newPlayerButton.setOnAction(e -> { 
     	try {
-    		
         	playerCreator.writeToPlayerFile(new Player(playerIDInput.getText() + "," + playerNameInput.getText()));
         	Alert alert  = new Alert(AlertType.CONFIRMATION);
         	alert.setTitle("SUCCESS");
