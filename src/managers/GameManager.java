@@ -38,7 +38,7 @@ public class GameManager extends Application {
 
     // The size to draw the shapes
     private static final int SHAPE_SIZE = 30;
-    
+    // test branch
     public static Stage mainMenu;
     public Player currentPlayer;
     // The canvas in the GUI. This needs to be a global variable
