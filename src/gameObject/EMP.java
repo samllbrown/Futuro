@@ -4,13 +4,13 @@ import board.Grid;
 import javafx.scene.image.Image;
 
 public class EMP extends Item {
-	private static final int X_RANGE = 1;
-	private static final int Y_RANGE = 1;
-	private int timer;
+	private static final int X_RANGE = 4;
+	private static final int Y_RANGE = 4;
 
 	public EMP(int x, int y) {
 		super(x, y);
-		this.timer = 5;
+		setXRange(X_RANGE);
+		setYRange(Y_RANGE);
 	}
 	
 	@Override
@@ -21,8 +21,8 @@ public class EMP extends Item {
 
 	@Override
 	public Image getImage() {
-		// TODO Auto-generated method stub
-		return null;
+		Image img = new Image("file:res/Sprites/emp.png",50, 50, false, false);
+		return img;
 	}
 
 //	private void spread(Grid grid) {
