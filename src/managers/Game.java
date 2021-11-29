@@ -7,6 +7,7 @@ import java.io.IOException;
 import board.Grid;
 import board.Level;
 import gameObject.Item;
+import board.Pair;
 import gameObject.Mech;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -100,10 +101,14 @@ public class Game {
 
     private void moveMechs() {
         for(Mech m : this.level.getMechs()) {
-            m.move(1, 0);
-            if(m.getGridX() > this.level.getGrid().getWidth()) {
-                m.move(-2, 0);
-            }
+//            Pair currentVector = new Pair(m.getGridX(), m.getGridY());
+//            Pair nextVector = new Pair(m.getGr);
+//            if(this.level.getGrid().getTileAt(m.getGridX(), m.getGridY())) {
+//                //
+//            }
+//            if(m.getGridX() >= this.level.getGrid().getWidth()) {
+//                m.move(-2, 0);
+//            }
         }
     }
 
@@ -145,8 +150,11 @@ public class Game {
                 gc.drawImage(this.level.getGrid().getTileAt(i, j).getImage(), i*TILE_SIZE, j*TILE_SIZE);
             }
         }
+
         for(Mech m : this.level.getMechs()) {
-            gc.drawImage(m.getImage(), m.getGridX() * TILE_SIZE, m.getGridY() * TILE_SIZE);
+            if(this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).isVisibleTile()) {
+                gc.drawImage(m.getImage(), m.getGridX() * TILE_SIZE, m.getGridY() * TILE_SIZE);
+            }
         }
         /*
         for(Item i : this.level.getItems()) {
