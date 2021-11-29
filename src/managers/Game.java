@@ -3,12 +3,16 @@ package managers;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import board.Grid;
 import board.Level;
+import board.Tile;
+import gameObject.Acid;
 import gameObject.Item;
 import board.Pair;
 import gameObject.Mech;
+import gameObject.TileType;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -141,7 +145,6 @@ public class Game {
             drawGame();
         });
 
-
         return root;
     }
 
@@ -163,6 +166,49 @@ public class Game {
         }
         /*
         for(Item i : this.level.getItems()) {
+        	if(i.getXRange() > 0) {
+        		int q = 0;
+        		while(q < i.getXRange()) {
+        			if(this.level.getGrid().getTileAt((i.getGridX() + q), i.getGridY()).getTileType() != TileType.WALL) {
+        				gc.drawImage(i.getImage(), (i.getGridX() + q) * TILE_SIZE, i.getGridY() * TILE_SIZE);
+        			}
+        			else {
+        				q = 1000;
+        			}
+        			q++;
+        		}
+        		q = 0;
+        		while(q < i.getXRange()) {
+        			if(this.level.getGrid().getTileAt((i.getGridX() - q), i.getGridY()).getTileType() != TileType.WALL) {
+        				gc.drawImage(i.getImage(), (i.getGridX() - q) * TILE_SIZE, i.getGridY() * TILE_SIZE);
+        			}
+        			else {
+        				q = 1000;
+        			}
+        			q++;
+        		}
+        		q = 0;
+        		while(q < i.getYRange()) {
+        			if(this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() + q).getTileType() != TileType.WALL) {
+        				gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, (i.getGridY() + q) * TILE_SIZE);
+        			}
+        			else {
+        				q = 1000;
+        			}
+        			q++;
+        		}
+        		q = 0;
+        		while(q < i.getYRange()) {
+        			if(this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() - q).getTileType() != TileType.WALL) {
+        				gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, (i.getGridY() - q) * TILE_SIZE);
+        			}
+        			else {
+        				q = 1000;
+        			}
+        			q++;
+        		}	
+        	}
+        	
         	gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
         }
         */
@@ -218,6 +264,9 @@ public class Game {
         Pane root = buildGUI();
         Stage stage = new Stage();
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        ArrayList<Item> itemTest = new ArrayList<Item>();
+        itemTest.add(new Acid(3, 3));
+        this.level.setItems(itemTest);
         drawGame();
         stage.setScene(scene);
         stage.show();

@@ -54,9 +54,11 @@ public class Mech extends Rectangle {
 
 	private int prevX, prevY;
 	private Image img;
+	
+	private boolean isBaby;
 
 	// haven't implemented age functionality
-	public Mech(MechType type, int x, int y, int health, boolean pregnant) {
+	public Mech(MechType type, int x, int y, int health, boolean pregnant, boolean isBaby) {
 		setWidth(Game.TILE_SIZE);
 		setHeight(Game.TILE_SIZE);
 		relocate(x * Game.TILE_SIZE, y * Game.TILE_SIZE);
@@ -68,9 +70,9 @@ public class Mech extends Rectangle {
 		this.health = health;
 		this.pregnant = pregnant;
 		this.img = getImageForType(type);
+		this.isBaby = isBaby;
 		setFill(new ImagePattern(this.img));
 	}
-
 
 	private static Direction getTurnDirection(String relativeDir, Direction currentDirection) {
 		try {
@@ -149,6 +151,10 @@ public class Mech extends Rectangle {
 		this.x = this.currentCords.x;
 		this.y = this.currentCords.y;
 	}
+	
+	public boolean getIsBaby() {
+		return this.isBaby;
+	}
 
 	public Image getImage(){
 		return this.img;
@@ -180,10 +186,23 @@ public class Mech extends Rectangle {
 		return img;
 	}
 
-
-
 	public MechType getType() {
 		return this.type;
+	}
+	
+	public void setType(MechType type) {
+		this.type = type;
+	}
+	
+	public int getHealth() {
+		return this.health;
+	}
+	
+	public void setHealthFromDamage(int damage) {
+		this.health = this.health - damage;
+		if(this.health < 0) {
+			
+		}
 	}
 	// should itemId be a thing in the constructor for item?
 	// need to update this constructor
@@ -336,8 +355,5 @@ public class Mech extends Rectangle {
 //
 //	public void setyDir(int yDir) {
 //		this.yDir = yDir;
-//	}
-
-	
-	
+//	}	
 }

@@ -57,17 +57,7 @@ public class GameManager extends Application {
         // Display the scene on the stage
         primaryStage.setScene(scene);
         mainMenu = primaryStage;
-     //   String bip = getCurrentWorkingDirectory() + "\\src\\music\\ratmusic.mp3";
-     //   System.out.println(bip);
-     //   Media hit = new Media(new File(bip).toURI().toString());
-     //   MediaPlayer mediaPlayer = new MediaPlayer(hit);
-        //mediaPlayer.play();
         mainMenu.show();
-    }
-    
-    private static String getCurrentWorkingDirectory() {
-        String userDirectory = System.getProperty("user.dir");
-        return userDirectory;
     }
 
     public static void main(String[] args) throws Exception {

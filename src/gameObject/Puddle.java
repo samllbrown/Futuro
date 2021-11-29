@@ -21,8 +21,8 @@ public class Puddle extends Item {
 
 	@Override
 	public Image getImage() {
-		// TODO Auto-generated method stub
-		return null;
+		Image img = new Image("file:res/Sprites/puddle.png",50, 50, false, false);
+		return img;
 	}
 
 }

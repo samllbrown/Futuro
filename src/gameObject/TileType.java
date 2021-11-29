@@ -3,7 +3,8 @@ package gameObject;
 public enum TileType {
     PATH(1, 1, 1), TUNNEL(0, 0, 1), WALL(1, 0, 0);
 
-    public final int visible;
+
+	public final int visible;
     public final int placeable;
     public final int walkable;
 
