@@ -125,7 +125,8 @@ public class Game {
 
         Button mechMoveBtn = new Button("Move mechs");
         Button addItemBtn = new Button("Add item");
-        toolbar.getChildren().addAll(mechMoveBtn, addItemBtn);
+        Button saveGameBtn = new Button("Save Game");
+        toolbar.getChildren().addAll(mechMoveBtn, addItemBtn, saveGameBtn);
 
         mechMoveBtn.setOnAction(e -> {
             moveMechs();
@@ -136,8 +137,16 @@ public class Game {
             drawGame();
         });
 
+        saveGameBtn.setOnAction(e ->{
+            saveGame();
+        });
+
 
         return root;
+    }
+
+    public void saveGame() {
+        //save the game for current player
     }
 
 	public void drawGame() {
