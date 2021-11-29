@@ -1,3 +1,9 @@
 /bin/
+<<<<<<< Updated upstream
 /txtfiles/
 /managers/
+=======
+>>>>>>> Stashed changes
+/board/
+/gameObject/
+/inventory/
