@@ -203,17 +203,40 @@ public class GameManager extends Application {
         
         Label playerID = new Label("ID of player: ");
         TextField playerIDInput = new TextField ();
-        Button choosePlayerButton = new Button("Delete player");
+        Button deletePlayerButton = new Button("Delete player");
         
         root.setLeft(sidebar);
-        sidebar.getChildren().addAll(playerID, playerIDInput, choosePlayerButton);
-        
-        FileManager playerDeleter = new FileManager();
-        choosePlayerButton.setOnAction(e -> {
+        sidebar.getChildren().addAll(playerID, playerIDInput, deletePlayerButton);
+
+
+        deletePlayerButton.setOnAction(e -> {
+        	try {
+            	boolean deleted = (FileManager.deleteFromPlayerFile(new Player(Integer.valueOf(playerIDInput.getText()), "ass", 0)));
+            	Alert alert  = new Alert(AlertType.CONFIRMATION);
+            	if(deleted) {
+            		alert.setTitle("SUCCESS");
+    	        	alert.setHeaderText("Player deleted");
+    	        	alert.setContentText("Huzzah! You have created a Player.");
+    	            alert.showAndWait().ifPresent(rs -> {
+    	                if (rs == ButtonType.OK) {
+    	                    System.out.println("Pressed OK.");
+    	                }
+    	            });
+            	}
+            	else {
+            		alert.setTitle("FAILURE");
+            		alert.setHeaderText("Player not deleted");
+            		alert.setContentText("A player with that ID can't be found");
+            		alert.showAndWait().ifPresent(rs -> {
+    	                if (rs == ButtonType.OK) {
+    	                    System.out.println("Pressed OK.");
+    	                }
+    	            });
+            	}
         	
-        	
-        	
-        	
+        	} catch (Exception exception) {
+                exception.printStackTrace();
+            }
         	
         });
     	return root;
