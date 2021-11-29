@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import managers.Game;
+import services.audioPlayer;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
@@ -56,9 +57,11 @@ public class Mech extends Rectangle {
 	private Image img;
 	
 	private boolean isBaby;
+	
+	private boolean isSterile;
 
 	// haven't implemented age functionality
-	public Mech(MechType type, int x, int y, int health, boolean pregnant, boolean isBaby) {
+	public Mech(MechType type, int x, int y, int health, boolean pregnant, boolean isBaby, boolean isSterile) {
 		setWidth(Game.TILE_SIZE);
 		setHeight(Game.TILE_SIZE);
 		relocate(x * Game.TILE_SIZE, y * Game.TILE_SIZE);
@@ -71,6 +74,7 @@ public class Mech extends Rectangle {
 		this.pregnant = pregnant;
 		this.img = getImageForType(type);
 		this.isBaby = isBaby;
+		this.isSterile = isSterile;
 		setFill(new ImagePattern(this.img));
 	}
 
@@ -198,10 +202,11 @@ public class Mech extends Rectangle {
 		return this.health;
 	}
 	
-	public void setHealthFromDamage(int damage) {
+	public void takeDamage(int damage) {
 		this.health = this.health - damage;
-		if(this.health < 0) {
-			
+		if(this.health <= 0) {
+			audioPlayer.playDeathSound();
+			//DESTORY MECH HERE
 		}
 	}
 	// should itemId be a thing in the constructor for item?
@@ -356,4 +361,12 @@ public class Mech extends Rectangle {
 //	public void setyDir(int yDir) {
 //		this.yDir = yDir;
 //	}	
+
+	public boolean isSterile() {
+		return isSterile;
+	}
+
+	public void setSterile(boolean isSterile) {
+		this.isSterile = isSterile;
+	}
 }

@@ -12,7 +12,11 @@ import board.Tile;
 import gameObject.Acid;
 import gameObject.EMP;
 import gameObject.Item;
+import gameObject.Lightning;
 import gameObject.Mech;
+import gameObject.Mine;
+import gameObject.Puddle;
+import gameObject.Remodel;
 import gameObject.TileType;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -218,6 +222,9 @@ public class Game {
         			q++;
         		}	
         	}
+        	else {
+        		gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
+        	}
         }
     }
 
@@ -275,6 +282,10 @@ public class Game {
 
         itemTest.add(new Acid(2, 10));
         itemTest.add(new EMP(4, 4));
+        itemTest.add(new Mine(1, 4));
+        itemTest.add(new Lightning(3, 2));
+        itemTest.add(new Remodel(8, 2, true));
+        itemTest.add(new Remodel(8, 4, false));
 
         this.level.setItems(itemTest);
         drawGame();

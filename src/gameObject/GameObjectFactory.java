@@ -28,7 +28,7 @@ public class GameObjectFactory {
 		}
 
 		Mech newMech = new Mech(mechType, Integer.valueOf(mechComponents[1]), Integer.valueOf(mechComponents[2]), Integer.valueOf(mechComponents[3]),
-				(Integer.valueOf(mechComponents[5]) == 0), false);
+				(Integer.valueOf(mechComponents[5]) == 0), false, false);
 
 		return newMech;
 	}
