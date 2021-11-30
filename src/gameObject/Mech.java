@@ -52,6 +52,7 @@ public class Mech extends Rectangle {
 
 	private int health;
 	private boolean pregnant;
+	private int numOfBabies;
 
 	private int prevX, prevY;
 	private Image img;
@@ -116,6 +117,14 @@ public class Mech extends Rectangle {
 			default:
 				this.currentDirection = this.currentDirection;
 		}
+	}
+
+	public int getNumOfBabies() {
+		return numOfBabies;
+	}
+
+	public void setNumOfBabies(int numOfBabies) {
+		this.numOfBabies = numOfBabies;
 	}
 
 	private Pair getNextPos(Direction inDirection) {
@@ -192,6 +201,14 @@ public class Mech extends Rectangle {
 
 	public MechType getType() {
 		return this.type;
+	}
+
+	public boolean isPregnant() {
+		return this.pregnant;
+	}
+
+	public void setPregnant(boolean isPregnant) {
+		this.pregnant = isPregnant;
 	}
 	
 	public void setType(MechType type) {
@@ -306,13 +323,6 @@ public class Mech extends Rectangle {
 //	}
 //
 //
-//	public boolean isPregnant() {
-//		return isPregnant;
-//	}
-//
-//	public void setPregnant(boolean isPregnant) {
-//		this.isPregnant = isPregnant;
-//	}
 //
 //	public int getHealth() {
 //		return health;

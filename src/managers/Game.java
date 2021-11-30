@@ -9,15 +9,7 @@ import java.util.ArrayList;
 import board.Grid;
 import board.Level;
 import board.Tile;
-import gameObject.Acid;
-import gameObject.EMP;
-import gameObject.Item;
-import gameObject.Lightning;
-import gameObject.Mech;
-import gameObject.Mine;
-import gameObject.Puddle;
-import gameObject.Remodel;
-import gameObject.TileType;
+import gameObject.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -79,9 +71,26 @@ public class Game {
         this.CURRENT_HEIGHT = level.getGrid().getHeight();
     }
 
+    private void updateScore(int currentScore){
+        /*while game is running so every tick, get mechs health, if mechs health is 0
+        add 10 points to current score and set that value as the currentscore of the level
+        assuming all mechs start with full health...*/
+        //if this.level.getNumberofmechsleftingame <= this.level.getlosingmechs then game finished so
+        //don't do for loop i guess else...
+        for (Mech m: this.level.getMechs()){
+            if(m.getHealth() == 0 && m.getType()== MechType.PRODUCTION && m.isPregnant()){ //assuming they have 5 babies idk how we're checking that - David
+                currentScore = currentScore+ 10*(m.getNumOfBabies()+1); //score is 10 times number of babies plus the female mech
+            } else if (m.getHealth()==0){
+                currentScore = currentScore + 10;
+            }
+        }
+        this.level.setCurrentScore(currentScore);
+    }
+
     private void tick() {
         try {
 			moveMechs();
+            updateScore(this.level.getCurrentScore());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -99,7 +99,7 @@ public class GameManager extends Application {
         	//Level level = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
             Level level = null;
             try {
-                level = FileManager.readLevel("res/Levels/LEVEL_1.txt");
+                level = FileManager.readLevel("C:\\Users\\ultim\\Documents\\GitHub\\Futuro\\res\\Levels\\LEVEL_1.txt");
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
