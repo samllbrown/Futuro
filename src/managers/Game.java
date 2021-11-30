@@ -174,6 +174,11 @@ public class Game {
         });
 
         Item i = new Acid(2,3);
+//        Item EMP = new EMP(2,3);
+//        Item lightning = new Lightning(2,3);
+//        Item mine = new Mine(2,3);
+//        Item puddle = new Puddle(2,3);
+        
     // Setup a draggable image.
        ImageView draggableImage = new ImageView();
        draggableImage.setImage(i.getImage());
@@ -227,16 +232,16 @@ public class Game {
     // just testing the drag and drop from the starter kit
     
     public void canvasDragDroppedOccured(DragEvent event) {
-//        double x = event.getX();
-//        double y = event.getY();
-//        int xcoord = 
-//        int ycoord = 
-        Item i = new Acid(800,200);
+        double x = event.getX();
+        double y = event.getY();
+        int xCoord = (int)Math.round(x) / TILE_SIZE;
+        int yCoord = (int)Math.round(y) / TILE_SIZE;
+        Item i = new Acid(xCoord,yCoord);
 
         // Draw an icon at the dropped location.
         GraphicsContext gc = canvas.getGraphicsContext2D();
         // Draw the the image so the top-left corner is where we dropped.
-        gc.drawImage(i.getImage(),i.getGridX(), i.getGridY());
+        gc.drawImage(i.getImage(),i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
         // Draw the the image so the center is where we dropped.
         // gc.drawImage(iconImage, x - iconImage.getWidth() / 2.0, y -
         // iconImage.getHeight() / 2.0);
