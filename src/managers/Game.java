@@ -12,6 +12,7 @@ import board.Tile;
 import gameObject.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,6 +22,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -40,14 +46,14 @@ public class Game {
     private Group tileGroup = new Group();
     private Group mechGroup = new Group();
 
-    private static final int WINDOW_WIDTH = 1800;
-    private static final int WINDOW_HEIGHT = 908;
+    private static final int WINDOW_WIDTH = 1000;
+    private static final int WINDOW_HEIGHT = 700;
 
     // The dimensions of the canvas
     private static final int CANVAS_WIDTH = 1800;
     private static final int CANVAS_HEIGHT = 908;
 
-    //pixels
+    // pixels
     private static final int TILE_SIZE_WIDTH = 50;
     private static final int TILE_SIZE_HEIGHT = 50;
 
@@ -71,16 +77,22 @@ public class Game {
         this.CURRENT_HEIGHT = level.getGrid().getHeight();
     }
 
-    private void updateScore(int currentScore){
-        /*while game is running so every tick, get mechs health, if mechs health is 0
-        add 10 points to current score and set that value as the currentscore of the level
-        assuming all mechs start with full health...*/
-        //if this.level.getNumberofmechsleftingame <= this.level.getlosingmechs then game finished so
-        //don't do for loop i guess else...
-        for (Mech m: this.level.getMechs()){
-            if(m.getHealth() == 0 && m.getType()== MechType.PRODUCTION && m.isPregnant()){ //assuming they have 5 babies idk how we're checking that - David
-                currentScore = currentScore+ 10*(m.getNumOfBabies()+1); //score is 10 times number of babies plus the female mech
-            } else if (m.getHealth()==0){
+    private void updateScore(int currentScore) {
+        /*
+         * while game is running so every tick, get mechs health, if mechs health is 0
+         * add 10 points to current score and set that value as the currentscore of the
+         * level assuming all mechs start with full health...
+         */
+        // if this.level.getNumberofmechsleftingame <= this.level.getlosingmechs then
+        // game finished so
+        // don't do for loop i guess else...
+        for (Mech m : this.level.getMechs()) {
+            if (m.getHealth() == 0 && m.getType() == MechType.PRODUCTION && m.isPregnant()) { // assuming they have 5
+                                                                                              // babies idk how we're
+                                                                                              // checking that - David
+                currentScore = currentScore + 10 * (m.getNumOfBabies() + 1); // score is 10 times number of babies plus
+                                                                             // the female mech
+            } else if (m.getHealth() == 0) {
                 currentScore = currentScore + 10;
             }
         }
@@ -89,12 +101,12 @@ public class Game {
 
     private void tick() {
         try {
-			moveMechs();
+            moveMechs();
             updateScore(this.level.getCurrentScore());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     public Level getLevel() {
@@ -121,10 +133,8 @@ public class Game {
         this.messageOfTheDay = messageOfTheDay;
     }
 
-
-
     private void moveMechs() throws Exception {
-        for(Mech m : this.level.getMechs()) {
+        for (Mech m : this.level.getMechs()) {
             m.move(this.level.getGrid());
 //            Pair currentVector = new Pair(m.getGridX(), m.getGridY());
 //            Pair nextVector = new Pair(m.getGr);
@@ -137,103 +147,167 @@ public class Game {
         }
     }
 
-
-
     private Pane buildGUI() {
         BorderPane root = new BorderPane();
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         root.setCenter(canvas);
-        HBox toolbar = new HBox();
-        toolbar.setSpacing(10);
-        toolbar.setPadding(new Insets(10, 10, 10, 10));
-        root.setTop(toolbar);
+        HBox sidebar = new HBox();
+        sidebar.setSpacing(10);
+        sidebar.setPadding(new Insets(10, 10, 10, 10));
+        root.setTop(sidebar);
 
         Button mechMoveBtn = new Button("Move mechs");
         Button addItemBtn = new Button("Add item");
-        toolbar.getChildren().addAll(mechMoveBtn, addItemBtn);
 
         mechMoveBtn.setOnAction(e -> {
             try {
-				moveMechs();
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+                moveMechs();
+            } catch (Exception e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
             drawGame();
         });
-        
+
         addItemBtn.setOnAction(e -> {
             drawGame();
         });
 
+        Item i = new Acid(2,3);
+    // Setup a draggable image.
+       ImageView draggableImage = new ImageView();
+       draggableImage.setImage(i.getImage());
+       sidebar.getChildren().addAll(mechMoveBtn, addItemBtn,draggableImage);
+       
+       // This code setup what happens when the dragging starts on the image.
+       // You probably don't need to change this (unless you wish to do more advanced things).
+       draggableImage.setOnDragDetected(new EventHandler<MouseEvent>() {
+           public void handle(MouseEvent event) {
+               // Mark the drag as started.
+               // We do not use the transfer mode (this can be used to indicate different forms
+               // of drags operations, for example, moving files or copying files).
+               Dragboard db = draggableImage.startDragAndDrop(TransferMode.ANY);
+
+               // We have to put some content in the clipboard of the drag event.
+               // We do not use this, but we could use it to store extra data if we wished.
+               ClipboardContent content = new ClipboardContent();
+               content.putString("Hello");
+               db.setContent(content);
+               
+               // Consume the event. This means we mark it as dealt with. 
+               event.consume();
+           }
+       });
+        
+       canvas.setOnDragOver(new EventHandler<DragEvent>() {
+           public void handle(DragEvent event) {
+               // Mark the drag as acceptable if the source was the draggable image.
+               // (for example, we don't want to allow the user to drag things or files into our application)
+               if (event.getGestureSource() == draggableImage) {
+                   // Mark the drag event as acceptable by the canvas.
+                   event.acceptTransferModes(TransferMode.ANY);
+                   // Consume the event. This means we mark it as dealt with.
+                   event.consume();
+               }
+           }
+       });
+       
+       canvas.setOnDragDropped(new EventHandler<DragEvent>() {
+           public void handle(DragEvent event) {                
+               // We call this method which is where the bulk of the behaviour takes place.
+               canvasDragDroppedOccured(event);
+               // Consume the event. This means we mark it as dealt with.
+               event.consume();
+            }
+       });
+       
         return root;
     }
 
-	public void drawGame() {
+    // just testing the drag and drop from the starter kit
+    
+    public void canvasDragDroppedOccured(DragEvent event) {
+        double x = event.getX();
+        double y = event.getY();
+        Item i = new Acid(2,3);
+
+        // Print a string showing the location.
+        String s = String.format("You dropped at (%f, %f) relative to the canvas.", x, y);
+        System.out.println(s);
+
+        // Draw an icon at the dropped location.
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.clearRect(0,0, canvas.getWidth(), canvas.getHeight());
+        // Draw the the image so the top-left corner is where we dropped.
+        gc.drawImage(i.getImage(), (i.getGridX()) * TILE_SIZE, i.getGridY() * TILE_SIZE);
+        // Draw the the image so the center is where we dropped.
+        // gc.drawImage(iconImage, x - iconImage.getWidth() / 2.0, y -
+        // iconImage.getHeight() / 2.0);
+    }
+
+    public void drawGame() {
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc.setFill(Color.GRAY);
-        gc.fillRect(0,0,canvas.getWidth(), canvas.getHeight());
-        for(int i = 0; i < this.CURRENT_WIDTH; i++) {
-            for(int j = 0; j < this.CURRENT_HEIGHT; j++) {
-                gc.drawImage(this.level.getGrid().getTileAt(i, j).getImage(), i*TILE_SIZE, j*TILE_SIZE);
+        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        for (int i = 0; i < this.CURRENT_WIDTH; i++) {
+            for (int j = 0; j < this.CURRENT_HEIGHT; j++) {
+                gc.drawImage(this.level.getGrid().getTileAt(i, j).getImage(), i * TILE_SIZE, j * TILE_SIZE);
             }
         }
-        for(Mech m : this.level.getMechs()) {
+        for (Mech m : this.level.getMechs()) {
             gc.drawImage(m.getImage(), m.getGridX() * TILE_SIZE, m.getGridY() * TILE_SIZE);
         }
-        
-        for(Item i : this.level.getItems()) {
-        	if(i.getXRange() > 0) {
-        		int q = 0;
-        		while(q < i.getXRange()) {
-        			System.out.println(this.level.getGrid().getTileAt((i.getGridX() + q), i.getGridY()).getTileType());
-        			if(this.level.getGrid().getTileAt((i.getGridX() + q), i.getGridY()).getTileType() == TileType.PATH) {
-        				
-        				gc.drawImage(i.getImage(), (i.getGridX() + q) * TILE_SIZE, i.getGridY() * TILE_SIZE);
-        			}
-        			else {
-        				q = 1000;
-        			}
-        			q++;
-        		}
-        		q = 0;
-        		while(q < i.getXRange()) {
-        			System.out.println(this.level.getGrid().getTileAt((i.getGridX() - q), i.getGridY()).getTileType());
-        			if(this.level.getGrid().getTileAt((i.getGridX() - q), i.getGridY()).getTileType() == TileType.PATH) {
-        				gc.drawImage(i.getImage(), (i.getGridX() - q) * TILE_SIZE, i.getGridY() * TILE_SIZE);
-        			}
-        			else {
-        				q = 1000;
-        			}
-        			q++;
-        		}
-        		q = 0;
-        		while(q < i.getYRange()) {
-        			System.out.println(this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() + q).getTileType());
-        			if(this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() + q).getTileType() == TileType.PATH) {    				
-        				gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, (i.getGridY() + q) * TILE_SIZE);
-        			}
-        			else {
-        				q = 1000;
-        			}
-        			q++;
-        		}
-        		q = 0;
-        		while(q < i.getYRange()) {
-        			System.out.println(this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() - q).getTileType());
-        			if(this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() - q).getTileType() == TileType.PATH) {
-        				gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, (i.getGridY() - q) * TILE_SIZE);
-        			}
-        			else {
-        				q = 1000;
-        			}
-        			q++;
-        		}	
-        	}
-        	else {
-        		gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
-        	}
+
+        for (Item i : this.level.getItems()) {
+            if (i.getXRange() > 0) {
+                int q = 0;
+                while (q < i.getXRange()) {
+                    System.out.println(this.level.getGrid().getTileAt((i.getGridX() + q), i.getGridY()).getTileType());
+                    if (this.level.getGrid().getTileAt((i.getGridX() + q), i.getGridY())
+                            .getTileType() == TileType.PATH) {
+
+                        gc.drawImage(i.getImage(), (i.getGridX() + q) * TILE_SIZE, i.getGridY() * TILE_SIZE);
+                    } else {
+                        q = 1000;
+                    }
+                    q++;
+                }
+                q = 0;
+                while (q < i.getXRange()) {
+                    System.out.println(this.level.getGrid().getTileAt((i.getGridX() - q), i.getGridY()).getTileType());
+                    if (this.level.getGrid().getTileAt((i.getGridX() - q), i.getGridY())
+                            .getTileType() == TileType.PATH) {
+                        gc.drawImage(i.getImage(), (i.getGridX() - q) * TILE_SIZE, i.getGridY() * TILE_SIZE);
+                    } else {
+                        q = 1000;
+                    }
+                    q++;
+                }
+                q = 0;
+                while (q < i.getYRange()) {
+                    System.out.println(this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() + q).getTileType());
+                    if (this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() + q)
+                            .getTileType() == TileType.PATH) {
+                        gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, (i.getGridY() + q) * TILE_SIZE);
+                    } else {
+                        q = 1000;
+                    }
+                    q++;
+                }
+                q = 0;
+                while (q < i.getYRange()) {
+                    System.out.println(this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() - q).getTileType());
+                    if (this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() - q)
+                            .getTileType() == TileType.PATH) {
+                        gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, (i.getGridY() - q) * TILE_SIZE);
+                    } else {
+                        q = 1000;
+                    }
+                    q++;
+                }
+            } else {
+                gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
+            }
         }
     }
 
@@ -241,13 +315,13 @@ public class Game {
         Pane root = new Pane();
         root.setPrefSize(this.CURRENT_WIDTH * TILE_SIZE, this.CURRENT_HEIGHT * TILE_SIZE);
         root.getChildren().addAll(tileGroup, mechGroup);
-        for(Mech m : this.level.getMechs()) {
+        for (Mech m : this.level.getMechs()) {
             this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).addMech(m);
             mechGroup.setVisible(this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).isVisibleTile());
             mechGroup.getChildren().add(m);
         }
-        for(int i = 0; i < this.CURRENT_WIDTH; i++) {
-            for(int j = 0; j < this.CURRENT_HEIGHT; j++) {
+        for (int i = 0; i < this.CURRENT_WIDTH; i++) {
+            for (int j = 0; j < this.CURRENT_HEIGHT; j++) {
                 tileGroup.getChildren().add(this.level.getGrid().getTileAt(i, j));
             }
         }
@@ -305,19 +379,19 @@ public class Game {
 //        stage.setTitle("Futuro Testing");
 //        stage.setScene(scene);
 //        stage.show();
-        //Label playerName = new Label();
+        // Label playerName = new Label();
 //        Button showLeaderboard = new Button("SHOW LEADERBOARD");
 //        Button exitGame = new Button("EXIT GAME");
 //
 //        Label messageOfDay = new Label(getMessageOfTheDay());
-        //VBox sidebar = new VBox();
-        //sidebar.setSpacing(10);
-        //sidebar.setPadding(new Insets(10, 10, 10, 10));
-        //sidebar.getChildren().addAll(showLeaderboard, exitGame, messageOfDay, grid);
+//         VBox sidebar = new VBox();
+//         sidebar.setSpacing(10);
+//         sidebar.setPadding(new Insets(10, 10, 10, 10));
+        // sidebar.getChildren().addAll(showLeaderboard, exitGame, messageOfDay, grid);
 //
 //        HBox gridBox = new HBox();
 //        gridBox.setSpacing(10);
-        //gridBox.getChildren().addAll(grid);
+        // gridBox.getChildren().addAll(grid);
 
 //        exitGame.setOnAction(e -> {
 //            stage.hide();
@@ -328,7 +402,8 @@ public class Game {
 //        stage.setTitle("Futuro");
 //        stage.setScene(scene);
 //        stage.show();
-        //start(stage);
+        // start(stage);
+               
     }
 
 }
