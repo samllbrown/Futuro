@@ -227,18 +227,16 @@ public class Game {
     // just testing the drag and drop from the starter kit
     
     public void canvasDragDroppedOccured(DragEvent event) {
-        double x = event.getX();
-        double y = event.getY();
-        Item i = new Acid(2,3);
-
-        // Print a string showing the location.
-        String s = String.format("You dropped at (%f, %f) relative to the canvas.", x, y);
-        System.out.println(s);
+//        double x = event.getX();
+//        double y = event.getY();
+//        int xcoord = 
+//        int ycoord = 
+        Item i = new Acid(800,200);
 
         // Draw an icon at the dropped location.
         GraphicsContext gc = canvas.getGraphicsContext2D();
         // Draw the the image so the top-left corner is where we dropped.
-        gc.drawImage(i.getImage(), (i.getGridX()) * TILE_SIZE, i.getGridY() * TILE_SIZE);
+        gc.drawImage(i.getImage(),i.getGridX(), i.getGridY());
         // Draw the the image so the center is where we dropped.
         // gc.drawImage(iconImage, x - iconImage.getWidth() / 2.0, y -
         // iconImage.getHeight() / 2.0);
