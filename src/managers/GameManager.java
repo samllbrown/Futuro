@@ -1,11 +1,9 @@
 package managers;
 
 import javafx.application.Application;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import board.Level;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
