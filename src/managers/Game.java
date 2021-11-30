@@ -40,8 +40,8 @@ public class Game {
     private Group tileGroup = new Group();
     private Group mechGroup = new Group();
 
-    private static final int WINDOW_WIDTH = 1800;
-    private static final int WINDOW_HEIGHT = 908;
+    private static final int WINDOW_WIDTH = 1000;
+    private static final int WINDOW_HEIGHT = 700;
 
     // The dimensions of the canvas
     private static final int CANVAS_WIDTH = 1800;
