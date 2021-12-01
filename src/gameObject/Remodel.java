@@ -10,7 +10,7 @@ public class Remodel extends Item {
 	public static final Image ITEM_IMAGE_P_TO_R = new Image("file:res/Sprites/PtoR.png",50, 50, false, false);
 
 	public Remodel(int x, int y, boolean isMaleRemodel) {
-		super(x, y);
+		super(x, y, 0);
 		this.isMaleRemodel = isMaleRemodel;
 	}
 	
