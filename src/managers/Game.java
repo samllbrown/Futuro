@@ -57,11 +57,11 @@ public class Game {
     public int CURRENT_HEIGHT;
     private Group tileGroup = new Group();
     private Group mechGroup = new Group();
-    private static final int WINDOW_WIDTH = 700;
+    private static final int WINDOW_WIDTH = 750;
     private static final int WINDOW_HEIGHT = 725;
     // The dimensions of the canvas
-    private static final int CANVAS_WIDTH = 1800;
-    private static final int CANVAS_HEIGHT = 908;
+    private static final int CANVAS_WIDTH = 700;
+    private static final int CANVAS_HEIGHT = 650;
     // pixels
     private static final int TILE_SIZE_WIDTH = 50;
     private static final int TILE_SIZE_HEIGHT = 50;
@@ -254,7 +254,7 @@ public class Game {
 //        Item puddle = new Puddle(2,3);
 
     // Setup a draggable image.
-       //ImageView draggableImage = new ImageView();
+       ImageView draggableImage = new ImageView();
        InventoryItem acidItem = new AcidInventoryItem();
        InventoryItem deathMechItem = new DeathMechInventoryItem();
 
