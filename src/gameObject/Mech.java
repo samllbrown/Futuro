@@ -141,7 +141,7 @@ public class Mech extends Rectangle {
 		}
 	}
 
-	private void turn(String relativeDir) throws Exception {
+	public void turn(String relativeDir) throws Exception {
 		switch (relativeDir) {
 			case "AROUND":
 				this.currentDirection = Direction.fromPair(this.currentDirection.toPair().mult(new Pair(-1, -1)));

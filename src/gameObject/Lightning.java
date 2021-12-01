@@ -10,14 +10,13 @@ public class Lightning extends Item {
 	private int DURATION = 3; //3 ticks or seconds
 	
 	public Lightning(int atX, int atY) {
-		super(atX, atY);
+		super(atX, atY, 0);
 		setXRange(X_RANGE);
 		setYRange(Y_RANGE);
 	}
 	@Override
 	public void act(Mech mech) {
 		mech.setSterile(true);
-		
 	}
 	@Override
 	public Image getImage() {
