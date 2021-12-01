@@ -11,6 +11,7 @@ import board.Level;
 import board.Tile;
 import gameObject.*;
 import inventory.AcidInventoryItem;
+import inventory.DeathMechInventoryItem;
 import inventory.InventoryItem;
 import javafx.application.Application;
 import javafx.animation.Animation;
@@ -247,7 +248,6 @@ public class Game {
             startTickTimelineButton.setDisable(false);
         });
 
-        Item i = new Acid(2,3);
 //        Item EMP = new EMP(2,3);
 //        Item lightning = new Lightning(2,3);
 //        Item mine = new Mine(2,3);
@@ -256,13 +256,15 @@ public class Game {
     // Setup a draggable image.
        //ImageView draggableImage = new ImageView();
        InventoryItem acidItem = new AcidInventoryItem();
+       InventoryItem deathMechItem = new DeathMechInventoryItem();
 
-       acidItem.setImage(i.getImage());
+       acidItem.setImage(acidItem.getImage());
+       deathMechItem.setImage(deathMechItem.getImage());
 
 //       topbar.getChildren().add(mechMoveBtn);
 
        topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton);
-       sidebar.getChildren().addAll(acidItem);
+       sidebar.getChildren().addAll(acidItem, deathMechItem);
 
        // This code setup what happens when the dragging starts on the image.
        // You probably don't need to change this (unless you wish to do more advanced things).
@@ -454,6 +456,7 @@ public class Game {
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         ArrayList<Item> itemTest = new ArrayList<Item>();
 
+        itemTest.add(new DeathMech(5,5).getDeathItem());
         itemTest.add(new Acid(2, 10));
         itemTest.add(new EMP(4, 4));
         itemTest.add(new Mine(1, 4));
