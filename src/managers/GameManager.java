@@ -24,6 +24,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class GameManager extends Application {
@@ -235,13 +236,17 @@ public class GameManager extends Application {
         sidebar.setSpacing(10);
         sidebar.setPadding(new Insets(10, 10, 10, 10));
 
+        FileChooser selectLoadFile = new FileChooser();
+        selectLoadFile.setTitle("Select game file");
+
         Button loadButton = new Button("Select game file");
 
         root.setLeft(sidebar);
         sidebar.getChildren().add(loadButton);
         loadButton.setOnAction(e -> {
-
+            File selectedFile = selectLoadFile.showOpenDialog(mainMenu);
         });
+
         return root;
     }
     
