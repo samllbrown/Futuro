@@ -44,6 +44,8 @@ public abstract class InventoryItem extends ImageView {
                 return Remodel.ITEM_IMAGE_P_TO_R;
             case "REMODEL_R_TO_P":
                 return Remodel.ITEM_IMAGE_R_TO_P;
+            case "DEATH_MECH":
+            	return DeathMech.ITEM_IMAGE;
             default:
                 System.err.println("Probably should be throwing an error here");
                 return null;
