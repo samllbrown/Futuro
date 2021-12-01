@@ -10,9 +10,7 @@ import board.Grid;
 import board.Level;
 import board.Tile;
 import gameObject.*;
-import inventory.AcidInventoryItem;
-import inventory.DeathMechInventoryItem;
-import inventory.InventoryItem;
+import inventory.*;
 import javafx.application.Application;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -246,13 +244,7 @@ public class Game {
             startTickTimelineButton.setDisable(false);
         });
 
-        Item i = new Acid(2, 3);
-//        Item EMP = new EMP(2,3);
-//        Item lightning = new Lightning(2,3);
-//        Item mine = new Mine(2,3);
-//        Item puddle = new Puddle(2,3);
 
-    // Setup a draggable image.
        ImageView draggableImage = new ImageView();
        InventoryItem acidItem = new AcidInventoryItem();
        InventoryItem deathMechItem = new DeathMechInventoryItem();
@@ -260,56 +252,24 @@ public class Game {
        acidItem.setImage(acidItem.getImage());
        deathMechItem.setImage(deathMechItem.getImage());
 
-//       topbar.getChildren().add(mechMoveBtn);
 
        topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton);
        sidebar.getChildren().addAll(acidItem, deathMechItem);
-        // Setup a draggable image.
-        ImageView draggableImage = new ImageView();
-        InventoryItem acidItem = new AcidInventoryItem();
 
-        acidItem.setImage(i.getImage());
-
-//       topbar.getChildren().add(mechMoveBtn);
-
-        topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton);
-        sidebar.getChildren().addAll(acidItem);
 
         // This code setup what happens when the dragging starts on the image.
         // You probably don't need to change this (unless you wish to do more advanced
         // things).
         acidItem.setOnDragDetected(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                // Mark the drag as started.
-                // We do not use the transfer mode (this can be used to indicate different forms
-                // of drags operations, for example, moving files or copying files).
                 Dragboard db = acidItem.startDragAndDrop(TransferMode.ANY);
 
-                // We have to put some content in the clipboard of the drag event.
-                // We do not use this, but we could use it to store extra data if we wished.
+
                 ClipboardContent content = new ClipboardContent();
                 content.putString("Hello");
                 db.setContent(content);
 
-                // Consume the event. This means we mark it as dealt with.
-                event.consume();
-            }
-        });
 
-        acidItem.setOnDragDetected(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                // Mark the drag as started.
-                // We do not use the transfer mode (this can be used to indicate different forms
-                // of drags operations, for example, moving files or copying files).
-                Dragboard db = acidItem.startDragAndDrop(TransferMode.ANY);
-
-                // We have to put some content in the clipboard of the drag event.
-                // We do not use this, but we could use it to store extra data if we wished.
-                ClipboardContent content = new ClipboardContent();
-                content.putString("Hello");
-                db.setContent(content);
-
-                // Consume the event. This means we mark it as dealt with.
                 event.consume();
             }
         });
