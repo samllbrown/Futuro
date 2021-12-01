@@ -52,8 +52,8 @@ public class Level {
 		this.grid = grid;
 	}
 
-	public void updateLevel() {
-
+	public void addItem(Item i) {
+		this.items.add(i);
 	}
 
 	private int getPointsForKill(Mech m) {
@@ -67,10 +67,8 @@ public class Level {
 	}
 
 	private void updateMechs() throws Exception {
-		int points;
 		ArrayList<Mech> currentMechsCopy = new ArrayList<>(this.mechs);
-
-		for(Mech m : getMechs()) {
+		for(Mech m : currentMechsCopy) {
 			Tile currentMechTile = this.getGrid().getTileAt(m.getGridX(), m.getGridY());
 			Item currentItemOnTile = currentMechTile.getCurrentItem();
 
@@ -83,46 +81,33 @@ public class Level {
 				System.err.println("A mech has died");
 			} else {
 				for(Mech om : this.getGrid().getTileAt(m.getGridX(), m.getGridY()).getMechs()) {
+					System.out.println("This mech is on another tile with a mech");
 					if(m.canBreedWith(om)) {
-
+						System.err.println("BREEDING BREEDING");
+						// then they will start breeding
+						// the breeding occurs for 5 seconds
+						// whilst breeding, they do not move
+						// after breeding they go their own way
+						// how can we do this without making the entire thread wait :/
+						// we need to break
+					} else {
+						System.err.println("eee");
 					}
 				}
 			}
-
-		}
-
-		for(Mech m : this.getMechs()) {
-			if(this.getGrid().getTileAt(m.getGridX(), m.getGridY()).getCurrentItem() != null) {
-				this.getGrid().getTileAt(m.getGridX(), m.getGridY()).getCurrentItem().act(m);
-			}
-			if(m.getHealth() <= 0) {
-				points = this.getCurrentScore() + (m.isPregnant() ? (SCORE_PER_KILL * (Mech.NUM_OF_BABIES_IF_BIRTHING + 1)) : SCORE_PER_KILL);
-				this.setCurrentScore(points);
-				// concurrent modification exception happening here probably.
-				this.removeMech(m);
-				System.err.println("A MECH HAS DIED");
-			} else {
-				for(Mech mechIShareMyTileWith : this.getGrid().getTileAt(m.getGridX(), m.getGridY()).getMechs()) {
-					if(!(mechIShareMyTileWith.isPregnant() || mechIShareMyTileWith.getType() == m.getType() || mechIShareMyTileWith.isSterile() || m.isBreeding() || mechIShareMyTileWith.isBreeding())) {
-						if (mechIShareMyTileWith.getType() == MechType.PRODUCTION) {
-							// need to add the isBreeding and other validation before doing this
-							for(int i = 0; i < 5; i++) {
-								this.addMech(m.birthMech());
-							}
-						}
-					}
-				}
-				// this is being accessed when it's being removed or something
-				m.move(this.getGrid());
-			}
+			m.move(this.getGrid());
 		}
 	}
 
-	private void update() throws Exception {
-		// this for loop should probs just go into an init method
+	public void updateItems() throws Exception {
 		for(Item i : this.getItems()) {
 			this.getGrid().getTileAt(i.getGridX(), i.getGridY()).setCurrentItem(i);
 		}
+	}
+
+	public void update() throws Exception {
+		// this for loop should probs just go into an init method
+		this.updateItems();
 		this.updateMechs();
 	}
 

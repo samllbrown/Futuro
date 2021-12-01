@@ -1,4 +1,7 @@
-/Mine.class
+/bin/
 /gameObject/
 /managers/
-/Player.class
+/board/
+/inventory/
+/music/
+/services/

@@ -97,6 +97,10 @@ public class Mech extends Rectangle {
 		return bothOppositeTypes && neitherSterile && neitherCurrentlyBreeding && neitherPregnant && bothNotDeathMech;
 	}
 
+	public void breedWith(Mech otherMech) {
+
+	}
+
 	public Mech birthMech() {
 		assert this.type.equals(MechType.PRODUCTION);
 		Random random = new Random();
@@ -196,7 +200,6 @@ public class Mech extends Rectangle {
 			this.turn(turns.get(rand.nextInt(turns.size())));
 			this.currentCords = this.currentCords.add(this.currentDirection.toPair());
 		}
-
 //		this.currentCords = this.currentCords.add(this.currentDirection.toPair());
 		this.x = this.currentCords.x;
 		this.y = this.currentCords.y;

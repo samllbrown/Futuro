@@ -10,7 +10,12 @@ import board.Grid;
 import board.Level;
 import board.Tile;
 import gameObject.*;
+import inventory.AcidInventoryItem;
+import inventory.InventoryItem;
 import javafx.application.Application;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -37,26 +42,26 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import services.MessageOfTheDay;
+import javafx.util.Duration;
 
 public class Game {
+    
+    private Timeline tickTimeline; 
+    
     // probably needs to be bigger than 50
     public static final int TILE_SIZE = 50;
     public int CURRENT_WIDTH;
     public int CURRENT_HEIGHT;
     private Group tileGroup = new Group();
     private Group mechGroup = new Group();
-
     private static final int WINDOW_WIDTH = 700;
     private static final int WINDOW_HEIGHT = 725;
-
     // The dimensions of the canvas
     private static final int CANVAS_WIDTH = 1800;
     private static final int CANVAS_HEIGHT = 908;
-
     // pixels
     private static final int TILE_SIZE_WIDTH = 50;
     private static final int TILE_SIZE_HEIGHT = 50;
-
     private Canvas canvas;
 
     private Level level;
@@ -79,42 +84,42 @@ public class Game {
         this.CURRENT_HEIGHT = level.getGrid().getHeight();
     }
 
-    private void updateMechs() throws Exception {
-        int points;
-        for(Mech m : this.level.getMechs()) {
-            if(this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).getCurrentItem() != null) {
-                this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).getCurrentItem().act(m);
-            }
-            if(m.getHealth() <= 0) {
-                points = this.level.getCurrentScore() + (m.isPregnant() ? (SCORE_PER_KILL * (Mech.NUM_OF_BABIES_IF_BIRTHING + 1)) : SCORE_PER_KILL);
-                this.level.setCurrentScore(points);
-                // concurrent modification exception happening here probably.
-                this.level.removeMech(m);
-                System.err.println("A MECH HAS DIED");
-            } else {
-                for(Mech mechIShareMyTileWith : this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).getMechs()) {
-                    if(!(mechIShareMyTileWith.isPregnant() || mechIShareMyTileWith.getType() == m.getType() || mechIShareMyTileWith.isSterile() || m.isBreeding() || mechIShareMyTileWith.isBreeding())) {
-                        if (mechIShareMyTileWith.getType() == MechType.PRODUCTION) {
-                            // need to add the isBreeding and other validation before doing this
-                            for(int i = 0; i < 5; i++) {
-                                this.level.addMech(m.birthMech());
-                            }
-                        }
-                    }
-                }
-                // this is being accessed when it's being removed or something
-                m.move(this.level.getGrid());
-            }
-        }
-    }
+//    private void updateMechs() throws Exception {
+//        int points;
+//        for(Mech m : this.level.getMechs()) {
+//            if(this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).getCurrentItem() != null) {
+//                this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).getCurrentItem().act(m);
+//            }
+//            if(m.getHealth() <= 0) {
+//                points = this.level.getCurrentScore() + (m.isPregnant() ? (SCORE_PER_KILL * (Mech.NUM_OF_BABIES_IF_BIRTHING + 1)) : SCORE_PER_KILL);
+//                this.level.setCurrentScore(points);
+//                // concurrent modification exception happening here probably.
+//                this.level.removeMech(m);
+//                System.err.println("A MECH HAS DIED");
+//            } else {
+//                for(Mech mechIShareMyTileWith : this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).getMechs()) {
+//                    if(!(mechIShareMyTileWith.isPregnant() || mechIShareMyTileWith.getType() == m.getType() || mechIShareMyTileWith.isSterile() || m.isBreeding() || mechIShareMyTileWith.isBreeding())) {
+//                        if (mechIShareMyTileWith.getType() == MechType.PRODUCTION) {
+//                            // need to add the isBreeding and other validation before doing this
+//                            for(int i = 0; i < 5; i++) {
+//                                this.level.addMech(m.birthMech());
+//                            }
+//                        }
+//                    }
+//                }
+//                // this is being accessed when it's being removed or something
+//                m.move(this.level.getGrid());
+//            }
+//        }
+//    }
 
-    private void update() throws Exception {
-        // this for loop should probs just go into an init method
-        for(Item i : this.level.getItems()) {
-            this.level.getGrid().getTileAt(i.getGridX(), i.getGridY()).setCurrentItem(i);
-        }
-        this.updateMechs();
-    }
+//    private void update() throws Exception {
+//        // this for loop should probs just go into an init method
+//        for(Item i : this.level.getItems()) {
+//            this.level.getGrid().getTileAt(i.getGridX(), i.getGridY()).setCurrentItem(i);
+//        }
+//        this.updateMechs();
+//    }
 
 //    private void updateScore(int currentScore) {
 //        /*
@@ -138,9 +143,11 @@ public class Game {
 //        this.level.setCurrentScore(currentScore);
 //    }
 
+    public void run() {}
     private void tick() {
         try {
-            update();
+            this.level.update();
+            drawGame();
             //updateMechs();
             //moveMechs();
             //updateScore(this.level.getCurrentScore());
@@ -149,7 +156,7 @@ public class Game {
             e.printStackTrace();
         }
     }
-
+    
     public Level getLevel() {
         return level;
     }
@@ -192,28 +199,52 @@ public class Game {
         BorderPane root = new BorderPane();
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         root.setCenter(canvas);
-        HBox sidebar = new HBox();
-        sidebar.setSpacing(10);
-        sidebar.setPadding(new Insets(10, 10, 10, 10));
-        root.setTop(sidebar);
+        HBox topbar = new HBox();
+        topbar.setSpacing(10);
+        topbar.setPadding(new Insets(10, 10, 10, 10));
+        root.setTop(topbar);
+        
+        VBox sidebar = new VBox();
+        root.setRight(sidebar);
 
-        Button mechMoveBtn = new Button("Move mechs");
-        Button addItemBtn = new Button("Add item");
+//        Button mechMoveBtn = new Button("Move mechs");
+//        Button addItemBtn = new Button("Add item");
+//
+//        mechMoveBtn.setOnAction(e -> {
+//            try {
+//                //moveMechs();
+//                //updateMechs();
+//                update();
+//            } catch (Exception e1) {
+//                // TODO Auto-generated catch block
+//                e1.printStackTrace();
+//            }
+//            drawGame();
+//        });
+//
+//        addItemBtn.setOnAction(e -> {
+//            drawGame();
+//        });
+        
+        Button startTickTimelineButton = new Button("Start Ticks");
+        Button stopTickTimelineButton = new Button("Stop Ticks");
+        
+        // Stop button is disabled by default
+        stopTickTimelineButton.setDisable(true);
 
-        mechMoveBtn.setOnAction(e -> {
-            try {
-                //moveMechs();
-                //updateMechs();
-                update();
-            } catch (Exception e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
-            drawGame();
+        // Setup the behaviour of the buttons.
+        startTickTimelineButton.setOnAction(e -> {
+            // Start the tick timeline and enable/disable buttons as appropriate.
+            startTickTimelineButton.setDisable(true);
+            this.tickTimeline.play();
+            stopTickTimelineButton.setDisable(false);
         });
 
-        addItemBtn.setOnAction(e -> {
-            drawGame();
+        stopTickTimelineButton.setOnAction(e -> {
+            // Stop the tick timeline and enable/disable buttons as appropriate.
+            stopTickTimelineButton.setDisable(true);
+            this.tickTimeline.stop();
+            startTickTimelineButton.setDisable(false);
         });
 
         Item i = new Acid(2,3);
@@ -223,18 +254,24 @@ public class Game {
 //        Item puddle = new Puddle(2,3);
         
     // Setup a draggable image.
-       ImageView draggableImage = new ImageView();
-       draggableImage.setImage(i.getImage());
-       sidebar.getChildren().addAll(mechMoveBtn, addItemBtn,draggableImage);
+       //ImageView draggableImage = new ImageView();
+       InventoryItem acidItem = new AcidInventoryItem();
+
+       acidItem.setImage(i.getImage());
+       
+//       topbar.getChildren().add(mechMoveBtn);
+       
+       topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton);
+       sidebar.getChildren().addAll(acidItem);
        
        // This code setup what happens when the dragging starts on the image.
        // You probably don't need to change this (unless you wish to do more advanced things).
-       draggableImage.setOnDragDetected(new EventHandler<MouseEvent>() {
+        acidItem.setOnDragDetected(new EventHandler<MouseEvent>() {
            public void handle(MouseEvent event) {
                // Mark the drag as started.
                // We do not use the transfer mode (this can be used to indicate different forms
                // of drags operations, for example, moving files or copying files).
-               Dragboard db = draggableImage.startDragAndDrop(TransferMode.ANY);
+               Dragboard db = acidItem.startDragAndDrop(TransferMode.ANY);
 
                // We have to put some content in the clipboard of the drag event.
                // We do not use this, but we could use it to store extra data if we wished.
@@ -251,7 +288,7 @@ public class Game {
            public void handle(DragEvent event) {
                // Mark the drag as acceptable if the source was the draggable image.
                // (for example, we don't want to allow the user to drag things or files into our application)
-               if (event.getGestureSource() == draggableImage) {
+               if (event.getGestureSource() == acidItem) {
                    // Mark the drag event as acceptable by the canvas.
                    event.acceptTransferModes(TransferMode.ANY);
                    // Consume the event. This means we mark it as dealt with.
@@ -273,14 +310,13 @@ public class Game {
     }
 
     // just testing the drag and drop from the starter kit
-    
     public void canvasDragDroppedOccured(DragEvent event) {
         double x = event.getX();
         double y = event.getY();
         int xCoord = (int)Math.round(x) / TILE_SIZE;
         int yCoord = (int)Math.round(y) / TILE_SIZE;
-        Item i = new Acid(xCoord,yCoord);
-
+        Acid i = new Acid(xCoord,yCoord);
+        this.level.addItem(i);
         // Draw an icon at the dropped location.
         GraphicsContext gc = canvas.getGraphicsContext2D();
         // Draw the the image so the top-left corner is where we dropped.
@@ -291,6 +327,7 @@ public class Game {
     }
 
     public void drawGame() {
+
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc.setFill(Color.GRAY);
@@ -304,6 +341,10 @@ public class Game {
             if(this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).isVisibleTile()) {
                 gc.drawImage(m.getImage(), m.getGridX() * TILE_SIZE, m.getGridY() * TILE_SIZE);
             }
+        }
+
+        for(Item i : this.level.getItems()) {
+
         }
 
         for (Item i : this.level.getItems()) {

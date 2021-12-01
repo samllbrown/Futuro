@@ -5,7 +5,8 @@ import javafx.scene.image.Image;
 public class Lightning extends Item {
 	private static final int X_RANGE = 2;
 	private static final int Y_RANGE = 2;
-	
+	public static final Image ITEM_IMAGE = new Image("file:res/Sprites/lightning.png",50, 50, false, false);
+
 	private int DURATION = 3; //3 ticks or seconds
 	
 	public Lightning(int atX, int atY) {
@@ -20,8 +21,7 @@ public class Lightning extends Item {
 	}
 	@Override
 	public Image getImage() {
-		Image img = new Image("file:res/Sprites/lightning.png",50, 50, false, false);
-		return img;
+		return ITEM_IMAGE;
 	}
 
 }

@@ -5,7 +5,10 @@ import javafx.scene.image.Image;
 public class Remodel extends Item {
 	
 	private boolean isMaleRemodel;
-	
+
+	public static final Image ITEM_IMAGE_R_TO_P = new Image("file:res/Sprites/RtoP.png",50, 50, false, false);
+	public static final Image ITEM_IMAGE_P_TO_R = new Image("file:res/Sprites/PtoR.png",50, 50, false, false);
+
 	public Remodel(int x, int y, boolean isMaleRemodel) {
 		super(x, y);
 		this.isMaleRemodel = isMaleRemodel;
@@ -22,14 +25,7 @@ public class Remodel extends Item {
 
 	@Override
 	public Image getImage() {
-		Image img = null;
-		if(isMaleRemodel) {
-			img = new Image("file:res/Sprites/RtoP.png",50, 50, false, false);
-		}
-		else {
-			img = new Image("file:res/Sprites/PtoR.png",50, 50, false, false);
-		}	
-		return img;
+		return (isMaleRemodel ? ITEM_IMAGE_R_TO_P : ITEM_IMAGE_P_TO_R);
 	}
 
 }
