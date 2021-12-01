@@ -142,6 +142,8 @@ public class Game {
 //        this.level.setCurrentScore(currentScore);
 //    }
     private void tick() {
+
+
         try {
             this.level.update();
             drawGame();
@@ -233,6 +235,8 @@ public class Game {
         startTickTimelineButton.setOnAction(e -> {
             // Start the tick timeline and enable/disable buttons as appropriate.
             startTickTimelineButton.setDisable(true);
+            tickTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> tick()));
+            tickTimeline.setCycleCount(Animation.INDEFINITE);
             this.tickTimeline.play();
             stopTickTimelineButton.setDisable(false);
         });
@@ -240,17 +244,29 @@ public class Game {
         stopTickTimelineButton.setOnAction(e -> {
             // Stop the tick timeline and enable/disable buttons as appropriate.
             stopTickTimelineButton.setDisable(true);
-            this.tickTimeline.stop();
+            this.tickTimeline.pause();
             startTickTimelineButton.setDisable(false);
         });
 
+<<<<<<< Updated upstream
+=======
+        Acid i = new Acid(2,3);
+//        Item EMP = new EMP(2,3);
+//        Item lightning = new Lightning(2,3);
+//        Item mine = new Mine(2,3);
+//        Item puddle = new Puddle(2,3);
+>>>>>>> Stashed changes
 
        ImageView draggableImage = new ImageView();
        InventoryItem acidItem = new AcidInventoryItem();
        InventoryItem deathMechItem = new DeathMechInventoryItem();
 
+<<<<<<< Updated upstream
        acidItem.setImage(acidItem.getImage());
        deathMechItem.setImage(deathMechItem.getImage());
+=======
+       acidItem.setImage(i.getPlacedImage());
+>>>>>>> Stashed changes
 
 
        topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton);
@@ -318,8 +334,7 @@ public class Game {
     }
 
     public void drawGame() {
-        tickTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> tick()));
-        tickTimeline.setCycleCount(Animation.INDEFINITE);
+
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc.setFill(Color.GRAY);

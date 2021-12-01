@@ -181,6 +181,7 @@ public class Mech extends Rectangle {
 		//turns.add("AROUND");
 		Random rand = new Random();
 		// if the next tile in the current direction isn't walkable (i.e. if it's a wall)
+
 		if (!(onGrid.getTileAt(possibleNextCoords).isWalkable())) {
 			// if the
 			//if((!(onGrid.getTileAt(this.getNextPos(Direction.RIGHT)).isWalkable())) && (!(onGrid.getTileAt(this.getNextPos(Direction.LEFT)).isWalkable()))) {
