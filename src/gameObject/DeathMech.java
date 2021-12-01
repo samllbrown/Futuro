@@ -1,6 +1,6 @@
 package gameObject;
 
-public class DeathMech {
+public class DeathMech extends Mech {
 //public class DeathMech extends Mech {
 //	private static final int DAMAGE = 100;
 //
