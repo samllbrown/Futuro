@@ -1,8 +1,11 @@
 package gameObject;
 
 import javafx.scene.image.Image;
+import org.w3c.dom.css.Rect;
 
-public abstract class Item {
+import java.awt.*;
+
+public abstract class Item extends Rectangle {
 	//private String itemID;
 	private int x, y;
 

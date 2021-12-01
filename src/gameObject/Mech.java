@@ -204,6 +204,7 @@ public class Mech extends Rectangle {
 		this.x = this.currentCords.x;
 		this.y = this.currentCords.y;
 	}
+
 	
 	public boolean getIsBaby() {
 		return this.isBaby;
