@@ -10,6 +10,8 @@ import board.Grid;
 import board.Level;
 import board.Tile;
 import gameObject.*;
+import inventory.AcidInventoryItem;
+import inventory.InventoryItem;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.event.EventHandler;
@@ -223,18 +225,20 @@ public class Game {
 //        Item puddle = new Puddle(2,3);
         
     // Setup a draggable image.
-       ImageView draggableImage = new ImageView();
-       draggableImage.setImage(i.getImage());
-       sidebar.getChildren().addAll(mechMoveBtn, addItemBtn,draggableImage);
+       //ImageView draggableImage = new ImageView();
+       InventoryItem acidItem = new AcidInventoryItem();
+
+       acidItem.setImage(i.getImage());
+       sidebar.getChildren().addAll(mechMoveBtn, addItemBtn,acidItem);
        
        // This code setup what happens when the dragging starts on the image.
        // You probably don't need to change this (unless you wish to do more advanced things).
-       draggableImage.setOnDragDetected(new EventHandler<MouseEvent>() {
+        acidItem.setOnDragDetected(new EventHandler<MouseEvent>() {
            public void handle(MouseEvent event) {
                // Mark the drag as started.
                // We do not use the transfer mode (this can be used to indicate different forms
                // of drags operations, for example, moving files or copying files).
-               Dragboard db = draggableImage.startDragAndDrop(TransferMode.ANY);
+               Dragboard db = acidItem.startDragAndDrop(TransferMode.ANY);
 
                // We have to put some content in the clipboard of the drag event.
                // We do not use this, but we could use it to store extra data if we wished.
@@ -251,7 +255,7 @@ public class Game {
            public void handle(DragEvent event) {
                // Mark the drag as acceptable if the source was the draggable image.
                // (for example, we don't want to allow the user to drag things or files into our application)
-               if (event.getGestureSource() == draggableImage) {
+               if (event.getGestureSource() == acidItem) {
                    // Mark the drag event as acceptable by the canvas.
                    event.acceptTransferModes(TransferMode.ANY);
                    // Consume the event. This means we mark it as dealt with.
@@ -278,8 +282,8 @@ public class Game {
         double y = event.getY();
         int xCoord = (int)Math.round(x) / TILE_SIZE;
         int yCoord = (int)Math.round(y) / TILE_SIZE;
-        Item i = new Acid(xCoord,yCoord);
-
+        Acid i = new Acid(xCoord,yCoord);
+        this.level.addItem(i);
         // Draw an icon at the dropped location.
         GraphicsContext gc = canvas.getGraphicsContext2D();
         // Draw the the image so the top-left corner is where we dropped.
@@ -303,6 +307,10 @@ public class Game {
             if(this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).isVisibleTile()) {
                 gc.drawImage(m.getImage(), m.getGridX() * TILE_SIZE, m.getGridY() * TILE_SIZE);
             }
+        }
+
+        for(Item i : this.level.getItems()) {
+
         }
 
         for (Item i : this.level.getItems()) {
