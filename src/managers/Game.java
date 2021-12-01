@@ -45,8 +45,6 @@ import javafx.stage.Stage;
 import services.MessageOfTheDay;
 import javafx.util.Duration;
 
-
-
 public class Game {
 
     private Timeline tickTimeline;
@@ -57,7 +55,7 @@ public class Game {
     public int CURRENT_HEIGHT;
     private Group tileGroup = new Group();
     private Group mechGroup = new Group();
-    private static final int WINDOW_WIDTH = 700;
+    private static final int WINDOW_WIDTH = 750;
     private static final int WINDOW_HEIGHT = 725;
     // The dimensions of the canvas
     private static final int CANVAS_WIDTH = 700;
@@ -149,9 +147,9 @@ public class Game {
         try {
             this.level.update();
             drawGame();
-            //updateMechs();
-            //moveMechs();
-            //updateScore(this.level.getCurrentScore());
+            // updateMechs();
+            // moveMechs();
+            // updateScore(this.level.getCurrentScore());
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -248,13 +246,14 @@ public class Game {
             startTickTimelineButton.setDisable(false);
         });
 
+        Item i = new Acid(2, 3);
 //        Item EMP = new EMP(2,3);
 //        Item lightning = new Lightning(2,3);
 //        Item mine = new Mine(2,3);
 //        Item puddle = new Puddle(2,3);
 
     // Setup a draggable image.
-       //ImageView draggableImage = new ImageView();
+       ImageView draggableImage = new ImageView();
        InventoryItem acidItem = new AcidInventoryItem();
        InventoryItem deathMechItem = new DeathMechInventoryItem();
 
@@ -265,48 +264,78 @@ public class Game {
 
        topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton);
        sidebar.getChildren().addAll(acidItem, deathMechItem);
+        // Setup a draggable image.
+        ImageView draggableImage = new ImageView();
+        InventoryItem acidItem = new AcidInventoryItem();
 
-       // This code setup what happens when the dragging starts on the image.
-       // You probably don't need to change this (unless you wish to do more advanced things).
+        acidItem.setImage(i.getImage());
+
+//       topbar.getChildren().add(mechMoveBtn);
+
+        topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton);
+        sidebar.getChildren().addAll(acidItem);
+
+        // This code setup what happens when the dragging starts on the image.
+        // You probably don't need to change this (unless you wish to do more advanced
+        // things).
         acidItem.setOnDragDetected(new EventHandler<MouseEvent>() {
-           public void handle(MouseEvent event) {
-               // Mark the drag as started.
-               // We do not use the transfer mode (this can be used to indicate different forms
-               // of drags operations, for example, moving files or copying files).
-               Dragboard db = acidItem.startDragAndDrop(TransferMode.ANY);
+            public void handle(MouseEvent event) {
+                // Mark the drag as started.
+                // We do not use the transfer mode (this can be used to indicate different forms
+                // of drags operations, for example, moving files or copying files).
+                Dragboard db = acidItem.startDragAndDrop(TransferMode.ANY);
 
-               // We have to put some content in the clipboard of the drag event.
-               // We do not use this, but we could use it to store extra data if we wished.
-               ClipboardContent content = new ClipboardContent();
-               content.putString("Hello");
-               db.setContent(content);
+                // We have to put some content in the clipboard of the drag event.
+                // We do not use this, but we could use it to store extra data if we wished.
+                ClipboardContent content = new ClipboardContent();
+                content.putString("Hello");
+                db.setContent(content);
 
-               // Consume the event. This means we mark it as dealt with.
-               event.consume();
-           }
-       });
-
-       canvas.setOnDragOver(new EventHandler<DragEvent>() {
-           public void handle(DragEvent event) {
-               // Mark the drag as acceptable if the source was the draggable image.
-               // (for example, we don't want to allow the user to drag things or files into our application)
-               if (event.getGestureSource() == acidItem) {
-                   // Mark the drag event as acceptable by the canvas.
-                   event.acceptTransferModes(TransferMode.ANY);
-                   // Consume the event. This means we mark it as dealt with.
-                   event.consume();
-               }
-           }
-       });
-
-       canvas.setOnDragDropped(new EventHandler<DragEvent>() {
-           public void handle(DragEvent event) {
-               // We call this method which is where the bulk of the behaviour takes place.
-               canvasDragDroppedOccured(event);
-               // Consume the event. This means we mark it as dealt with.
-               event.consume();
+                // Consume the event. This means we mark it as dealt with.
+                event.consume();
             }
-       });
+        });
+
+        acidItem.setOnDragDetected(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                // Mark the drag as started.
+                // We do not use the transfer mode (this can be used to indicate different forms
+                // of drags operations, for example, moving files or copying files).
+                Dragboard db = acidItem.startDragAndDrop(TransferMode.ANY);
+
+                // We have to put some content in the clipboard of the drag event.
+                // We do not use this, but we could use it to store extra data if we wished.
+                ClipboardContent content = new ClipboardContent();
+                content.putString("Hello");
+                db.setContent(content);
+
+                // Consume the event. This means we mark it as dealt with.
+                event.consume();
+            }
+        });
+
+        canvas.setOnDragOver(new EventHandler<DragEvent>() {
+            public void handle(DragEvent event) {
+                // Mark the drag as acceptable if the source was the draggable image.
+                // (for example, we don't want to allow the user to drag things or files into
+                // our application)
+                if (event.getGestureSource() == acidItem) {
+                    // Mark the drag event as acceptable by the canvas.
+                    event.acceptTransferModes(TransferMode.ANY);
+                    // Consume the event. This means we mark it as dealt with.
+                    event.consume();
+                }
+            }
+        });
+
+        canvas.setOnDragDropped(new EventHandler<DragEvent>() {
+            public void handle(DragEvent event) {
+                // We call this method which is where the bulk of the behaviour takes place.
+                canvasDragDroppedOccured(event);
+                // Consume the event. This means we mark it as dealt with.
+                event.consume();
+            }
+        });
 
         return root;
     }
@@ -315,14 +344,14 @@ public class Game {
     public void canvasDragDroppedOccured(DragEvent event) {
         double x = event.getX();
         double y = event.getY();
-        int xCoord = (int)Math.round(x) / TILE_SIZE;
-        int yCoord = (int)Math.round(y) / TILE_SIZE;
-        Acid i = new Acid(xCoord,yCoord);
+        int xCoord = (int) Math.round(x) / TILE_SIZE;
+        int yCoord = (int) Math.round(y) / TILE_SIZE;
+        Acid i = new Acid(xCoord, yCoord);
         this.level.addItem(i);
         // Draw an icon at the dropped location.
         GraphicsContext gc = canvas.getGraphicsContext2D();
         // Draw the the image so the top-left corner is where we dropped.
-        gc.drawImage(i.getImage(),i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
+        gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
         // Draw the the image so the center is where we dropped.
         // gc.drawImage(iconImage, x - iconImage.getWidth() / 2.0, y -
         // iconImage.getHeight() / 2.0);
@@ -341,12 +370,12 @@ public class Game {
             }
         }
         for (Mech m : this.level.getMechs()) {
-            if(this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).isVisibleTile()) {
+            if (this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).isVisibleTile()) {
                 gc.drawImage(m.getImage(), m.getGridX() * TILE_SIZE, m.getGridY() * TILE_SIZE);
             }
         }
 
-        for(Item i : this.level.getItems()) {
+        for (Item i : this.level.getItems()) {
 
         }
 
@@ -354,7 +383,7 @@ public class Game {
             if (i.getXRange() > 0) {
                 int q = 0;
                 while (q < i.getXRange()) {
-                    System.out.println(this.level.getGrid().getTileAt((i.getGridX() + q), i.getGridY()).getTileType());
+//                    System.out.println(this.level.getGrid().getTileAt((i.getGridX() + q), i.getGridY()).getTileType());
                     if (this.level.getGrid().getTileAt((i.getGridX() + q), i.getGridY())
                             .getTileType() == TileType.PATH) {
 
@@ -366,7 +395,7 @@ public class Game {
                 }
                 q = 0;
                 while (q < i.getXRange()) {
-                    System.out.println(this.level.getGrid().getTileAt((i.getGridX() - q), i.getGridY()).getTileType());
+//                    System.out.println(this.level.getGrid().getTileAt((i.getGridX() - q), i.getGridY()).getTileType());
                     if (this.level.getGrid().getTileAt((i.getGridX() - q), i.getGridY())
                             .getTileType() == TileType.PATH) {
                         gc.drawImage(i.getImage(), (i.getGridX() - q) * TILE_SIZE, i.getGridY() * TILE_SIZE);
@@ -377,7 +406,7 @@ public class Game {
                 }
                 q = 0;
                 while (q < i.getYRange()) {
-                    System.out.println(this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() + q).getTileType());
+//                    System.out.println(this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() + q).getTileType());
                     if (this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() + q)
                             .getTileType() == TileType.PATH) {
                         gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, (i.getGridY() + q) * TILE_SIZE);
@@ -388,7 +417,7 @@ public class Game {
                 }
                 q = 0;
                 while (q < i.getYRange()) {
-                    System.out.println(this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() - q).getTileType());
+//                    System.out.println(this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() - q).getTileType());
                     if (this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() - q)
                             .getTileType() == TileType.PATH) {
                         gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, (i.getGridY() - q) * TILE_SIZE);
@@ -497,7 +526,7 @@ public class Game {
 //        stage.setScene(scene);
 //        stage.show();
         // start(stage);
-               
+
     }
 
 }
