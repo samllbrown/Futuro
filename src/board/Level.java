@@ -85,6 +85,10 @@ public class Level {
 		this.mechs.remove(m);
 	}
 
+	public void addMech(Mech m) {
+		this.mechs.add(m);
+	}
+
 	public Grid getGrid() {
 		return this.grid;
 	}

@@ -91,6 +91,16 @@ public class Game {
                 this.level.removeMech(m);
                 System.err.println("A MECH HAS DIED");
             } else {
+                for(Mech mechIShareMyTileWith : this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).getMechs()) {
+                    if(!(mechIShareMyTileWith.isPregnant() || mechIShareMyTileWith.getType() == m.getType() || mechIShareMyTileWith.isSterile() || m.isBreeding() || mechIShareMyTileWith.isBreeding())) {
+                        if (mechIShareMyTileWith.getType() == MechType.PRODUCTION) {
+                            // need to add the isBreeding and other validation before doing this
+                            for(int i = 0; i < 5; i++) {
+                                this.level.addMech(m.birthMech());
+                            }
+                        }
+                    }
+                }
                 m.move(this.level.getGrid());
             }
         }
@@ -128,7 +138,8 @@ public class Game {
 
     private void tick() {
         try {
-            updateMechs();
+            update();
+            //updateMechs();
             //moveMechs();
             //updateScore(this.level.getCurrentScore());
         } catch (Exception e) {

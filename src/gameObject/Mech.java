@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import managers.Game;
+import services.Globals;
 import services.audioPlayer;
 
 import java.sql.SQLOutput;
@@ -62,6 +63,7 @@ public class Mech extends Rectangle {
 	private boolean isBaby;
 	
 	private boolean isSterile;
+	private boolean isBreeding;
 
 	// haven't implemented age functionality
 	public Mech(MechType type, int x, int y, int health, boolean pregnant, boolean isBaby, boolean isSterile) {
@@ -79,6 +81,25 @@ public class Mech extends Rectangle {
 		this.isBaby = isBaby;
 		this.isSterile = isSterile;
 		setFill(new ImagePattern(this.img));
+	}
+
+	public Mech birthMech() {
+		assert this.type.equals(MechType.PRODUCTION);
+		Random random = new Random();
+		MechType babyType = Globals.NORMAL_MECH_TYPES[random.nextInt(2)];
+		Direction babyDirection = Globals.NON_STATIONARY_DIRECTIONS[random.nextInt(4)];
+		// need to create baby speed thingy
+		Mech myBaby = new Mech(babyType, this.x, this.y, 100, false, true, true);
+		myBaby.setCurrentDirection(babyDirection);
+		return myBaby;
+	}
+
+	public boolean isBreeding() {
+		return this.isBreeding;
+	}
+
+	public void setCurrentDirection(Direction dir) {
+		this.currentDirection = dir;
 	}
 
 	private static Direction getTurnDirection(String relativeDir, Direction currentDirection) {
