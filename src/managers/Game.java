@@ -60,8 +60,8 @@ public class Game {
     private static final int WINDOW_WIDTH = 700;
     private static final int WINDOW_HEIGHT = 725;
     // The dimensions of the canvas
-    private static final int CANVAS_WIDTH = 1800;
-    private static final int CANVAS_HEIGHT = 908;
+    private static final int CANVAS_WIDTH = 700;
+    private static final int CANVAS_HEIGHT = 650;
     // pixels
     private static final int TILE_SIZE_WIDTH = 50;
     private static final int TILE_SIZE_HEIGHT = 50;
