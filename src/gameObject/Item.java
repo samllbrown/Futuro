@@ -8,11 +8,13 @@ public abstract class Item {
 
 	private int xRange;
 	private int yRange;
+	private int damage;
 
 //	protected Item(String itemID, int xPos, int yPos, int xRange, int yRange) {
-	protected Item(int x, int y) {
+	protected Item(int x, int y, int damage) {
 		this.x = x;
 		this.y = y;
+		this.damage = damage;
 	}
 	
 	public void setXRange(int xRange) {
@@ -41,5 +43,10 @@ public abstract class Item {
 	public abstract Image getImage();
 
 	// every item will act on some mech
-	public abstract void act(Mech someMech);
+	// no david
+	//public abstract void act(Mech someMech);
+	public void act(Mech someMech) {
+		someMech.takeDamage(this.damage);
+	}
+
 }
