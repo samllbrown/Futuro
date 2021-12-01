@@ -44,10 +44,12 @@ import javafx.stage.Stage;
 import services.MessageOfTheDay;
 import javafx.util.Duration;
 
+
+
 public class Game {
-    
-    private Timeline tickTimeline; 
-    
+
+    private Timeline tickTimeline;
+
     // probably needs to be bigger than 50
     public static final int TILE_SIZE = 50;
     public int CURRENT_WIDTH;
@@ -142,8 +144,6 @@ public class Game {
 //        }
 //        this.level.setCurrentScore(currentScore);
 //    }
-
-    public void run() {}
     private void tick() {
         try {
             this.level.update();
@@ -156,7 +156,7 @@ public class Game {
             e.printStackTrace();
         }
     }
-    
+
     public Level getLevel() {
         return level;
     }
@@ -203,7 +203,7 @@ public class Game {
         topbar.setSpacing(10);
         topbar.setPadding(new Insets(10, 10, 10, 10));
         root.setTop(topbar);
-        
+
         VBox sidebar = new VBox();
         root.setRight(sidebar);
 
@@ -225,10 +225,10 @@ public class Game {
 //        addItemBtn.setOnAction(e -> {
 //            drawGame();
 //        });
-        
+
         Button startTickTimelineButton = new Button("Start Ticks");
         Button stopTickTimelineButton = new Button("Stop Ticks");
-        
+
         // Stop button is disabled by default
         stopTickTimelineButton.setDisable(true);
 
@@ -252,18 +252,18 @@ public class Game {
 //        Item lightning = new Lightning(2,3);
 //        Item mine = new Mine(2,3);
 //        Item puddle = new Puddle(2,3);
-        
+
     // Setup a draggable image.
        //ImageView draggableImage = new ImageView();
        InventoryItem acidItem = new AcidInventoryItem();
 
        acidItem.setImage(i.getImage());
-       
+
 //       topbar.getChildren().add(mechMoveBtn);
-       
+
        topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton);
        sidebar.getChildren().addAll(acidItem);
-       
+
        // This code setup what happens when the dragging starts on the image.
        // You probably don't need to change this (unless you wish to do more advanced things).
         acidItem.setOnDragDetected(new EventHandler<MouseEvent>() {
@@ -278,12 +278,12 @@ public class Game {
                ClipboardContent content = new ClipboardContent();
                content.putString("Hello");
                db.setContent(content);
-               
-               // Consume the event. This means we mark it as dealt with. 
+
+               // Consume the event. This means we mark it as dealt with.
                event.consume();
            }
        });
-        
+
        canvas.setOnDragOver(new EventHandler<DragEvent>() {
            public void handle(DragEvent event) {
                // Mark the drag as acceptable if the source was the draggable image.
@@ -296,16 +296,16 @@ public class Game {
                }
            }
        });
-       
+
        canvas.setOnDragDropped(new EventHandler<DragEvent>() {
-           public void handle(DragEvent event) {                
+           public void handle(DragEvent event) {
                // We call this method which is where the bulk of the behaviour takes place.
                canvasDragDroppedOccured(event);
                // Consume the event. This means we mark it as dealt with.
                event.consume();
             }
        });
-       
+
         return root;
     }
 
@@ -327,7 +327,8 @@ public class Game {
     }
 
     public void drawGame() {
-
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> tick()));
+        tickTimeline.setCycleCount(Animation.INDEFINITE);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc.setFill(Color.GRAY);

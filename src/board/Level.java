@@ -73,7 +73,9 @@ public class Level {
 			Item currentItemOnTile = currentMechTile.getCurrentItem();
 
 			if(currentItemOnTile != null) {
+				System.out.println("Item is acting on mech");
 				currentItemOnTile.act(m);
+				System.out.println("Mech's health is now = " + m.getHealth());
 			}
 
 			if(m.getHealth() <= 0) {
