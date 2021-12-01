@@ -27,6 +27,13 @@ public class Level {
 	
 	private ArrayList<Item> items;
 	private ArrayList<Mech> mechs;
+
+
+
+	private HashMap<Pair, Item> coordsToItems;
+	// probably can't have a hashmap of coordstomechs because collisions are possible :/
+	//private HashMap<Pair, Mech> ccordsToMechs;
+
 	private Grid grid;
 
 	private final char[] mechTypes = {'R', 'P'};
@@ -71,6 +78,11 @@ public class Level {
 		this.elapsedTime = elapsedTime;
 		this.mechs = mechs;
 		this.grid = grid;
+	}
+
+	// need some validation
+	public void removeMech(Mech m) {
+		this.mechs.remove(m);
 	}
 
 	public Grid getGrid() {

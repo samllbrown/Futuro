@@ -47,6 +47,8 @@ public class Mech extends Rectangle {
 
 	private int x, y;
 
+	public static final int NUM_OF_BABIES_IF_BIRTHING = 5;
+
 	private Direction currentDirection;
 	private Pair currentCords;
 

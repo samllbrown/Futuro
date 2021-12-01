@@ -12,6 +12,7 @@ import managers.Game;
 
 public class Tile extends Rectangle {
 	private ArrayList<Mech> currentMechs;
+	private Item currentItem;
 	private Image img;
 	private TileType tileType;
 	private boolean visibleTile;
@@ -26,6 +27,7 @@ public class Tile extends Rectangle {
 		this.currentMechs = new ArrayList<>();
 		this.visibleTile = (this.tileType == TileType.TUNNEL ? false : true);
 		setFill(new ImagePattern(this.img));
+		this.currentItem = null;
 	}
 
 	public boolean isWalkable() {
@@ -50,6 +52,14 @@ public class Tile extends Rectangle {
 			default:
 				return new Image("file:res/Sprites/tileW.png",50, 50, false, false);
 		}
+	}
+
+	public void setCurrentItem(Item item) {
+		this.currentItem = item;
+	}
+
+	public Item getCurrentItem() {
+		return this.currentItem;
 	}
 
 	public ArrayList<Mech> getMechs() {

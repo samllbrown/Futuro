@@ -65,6 +65,8 @@ public class Game {
     private String messageOfTheDay;
     private Boolean isPaused;
 
+    private static final int SCORE_PER_KILL = 10;
+
     public Game(Level level) {
         this.level = level;
         this.CURRENT_WIDTH = level.getGrid().getWidth();
@@ -77,32 +79,58 @@ public class Game {
         this.CURRENT_HEIGHT = level.getGrid().getHeight();
     }
 
-    private void updateScore(int currentScore) {
-        /*
-         * while game is running so every tick, get mechs health, if mechs health is 0
-         * add 10 points to current score and set that value as the currentscore of the
-         * level assuming all mechs start with full health...
-         */
-        // if this.level.getNumberofmechsleftingame <= this.level.getlosingmechs then
-        // game finished so
-        // don't do for loop i guess else...
-        for (Mech m : this.level.getMechs()) {
-            if (m.getHealth() == 0 && m.getType() == MechType.PRODUCTION && m.isPregnant()) { // assuming they have 5
-                                                                                              // babies idk how we're
-                                                                                              // checking that - David
-                currentScore = currentScore + 10 * (m.getNumOfBabies() + 1); // score is 10 times number of babies plus
-                                                                             // the female mech
-            } else if (m.getHealth() == 0) {
-                currentScore = currentScore + 10;
+    private void updateMechs() throws Exception {
+        int points;
+        for(Mech m : this.level.getMechs()) {
+            if(this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).getCurrentItem() != null) {
+                this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).getCurrentItem().act(m);
+            }
+            if(m.getHealth() <= 0) {
+                points = this.level.getCurrentScore() + (m.isPregnant() ? (SCORE_PER_KILL * (Mech.NUM_OF_BABIES_IF_BIRTHING + 1)) : SCORE_PER_KILL);
+                this.level.setCurrentScore(points);
+                this.level.removeMech(m);
+                System.err.println("A MECH HAS DIED");
+            } else {
+                m.move(this.level.getGrid());
             }
         }
-        this.level.setCurrentScore(currentScore);
     }
+
+    private void update() throws Exception {
+        // this for loop should probs just go into an init method
+        for(Item i : this.level.getItems()) {
+            this.level.getGrid().getTileAt(i.getGridX(), i.getGridY()).setCurrentItem(i);
+        }
+        this.updateMechs();
+    }
+
+//    private void updateScore(int currentScore) {
+//        /*
+//         * while game is running so every tick, get mechs health, if mechs health is 0
+//         * add 10 points to current score and set that value as the currentscore of the
+//         * level assuming all mechs start with full health...
+//         */
+//        // if this.level.getNumberofmechsleftingame <= this.level.getlosingmechs then
+//        // game finished so
+//        // don't do for loop i guess else...
+//        for (Mech m : this.level.getMechs()) {
+//            if (m.getHealth() == 0 && m.getType() == MechType.PRODUCTION && m.isPregnant()) { // assuming they have 5
+//                                                                                              // babies idk how we're
+//                                                                                              // checking that - David
+//                currentScore = currentScore + 10 * (m.getNumOfBabies() + 1); // score is 10 times number of babies plus
+//                                                                             // the female mech
+//            } else if (m.getHealth() == 0) {
+//                currentScore = currentScore + 10;
+//            }
+//        }
+//        this.level.setCurrentScore(currentScore);
+//    }
 
     private void tick() {
         try {
-            moveMechs();
-            updateScore(this.level.getCurrentScore());
+            updateMechs();
+            //moveMechs();
+            //updateScore(this.level.getCurrentScore());
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -161,7 +189,9 @@ public class Game {
 
         mechMoveBtn.setOnAction(e -> {
             try {
-                moveMechs();
+                //moveMechs();
+                //updateMechs();
+                update();
             } catch (Exception e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
@@ -258,7 +288,9 @@ public class Game {
             }
         }
         for (Mech m : this.level.getMechs()) {
-            gc.drawImage(m.getImage(), m.getGridX() * TILE_SIZE, m.getGridY() * TILE_SIZE);
+            if(this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).isVisibleTile()) {
+                gc.drawImage(m.getImage(), m.getGridX() * TILE_SIZE, m.getGridY() * TILE_SIZE);
+            }
         }
 
         for (Item i : this.level.getItems()) {
@@ -311,6 +343,7 @@ public class Game {
             } else {
                 gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
             }
+
         }
     }
 

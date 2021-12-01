@@ -21,12 +21,14 @@ public class Acid extends Item {
 	
 	@Override
 	public void act(Mech mech) {
-		if(mech.getIsBaby() == true) {
-			mech.takeDamage(DAMAGE_OVER_TIME_BABY);
-		}
-		else {
-			mech.takeDamage(DAMAGE_OVER_TIME_ADULT);
-		}
+		mech.takeDamage(mech.getIsBaby() ? DAMAGE_OVER_TIME_BABY : DAMAGE_OVER_TIME_ADULT);
+		System.err.println("A MECH HAS TAKEN DAMAGE");
+//		if(mech.getIsBaby()) {
+//			mech.takeDamage(DAMAGE_OVER_TIME_BABY);
+//		}
+//		else {
+//			mech.takeDamage(DAMAGE_OVER_TIME_ADULT);
+//		}
 	}
 
 	@Override
