@@ -12,7 +12,9 @@ import managers.Game;
 
 public class Tile extends Rectangle {
 	private ArrayList<Mech> currentMechs;
+
 	private Item currentItem;
+
 	private Image img;
 	private TileType tileType;
 	private boolean visibleTile;

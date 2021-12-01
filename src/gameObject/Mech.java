@@ -83,6 +83,20 @@ public class Mech extends Rectangle {
 		setFill(new ImagePattern(this.img));
 	}
 
+	public boolean canBreedWith(Mech otherMech) {
+		// the mechs must be opposite types
+		// both mechs must be both NOT CURRENTLY BREEDING
+		// the mech who is a resource mech must NOT be pregnant
+		// neither mech can be a death mech
+		// both mechs must NOT be sterile
+		boolean bothOppositeTypes = (this.type != otherMech.getType());
+		boolean neitherSterile = !(this.isSterile || otherMech.isSterile());
+		boolean neitherCurrentlyBreeding = !(this.isBreeding || otherMech.isBreeding());
+		boolean neitherPregnant = !(this.isPregnant() || otherMech.isPregnant());
+		boolean bothNotDeathMech = !((this.type != MechType.DEATH) && (otherMech.getType() != MechType.DEATH));
+		return bothOppositeTypes && neitherSterile && neitherCurrentlyBreeding && neitherPregnant && bothNotDeathMech;
+	}
+
 	public Mech birthMech() {
 		assert this.type.equals(MechType.PRODUCTION);
 		Random random = new Random();

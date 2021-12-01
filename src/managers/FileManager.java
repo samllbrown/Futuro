@@ -182,12 +182,12 @@ public class FileManager {
 //		writeRecordToFile(record, LEADERBOARD_FILE);
 //	}
 	
-	/**
-	 * Given a playerID checks if that player exists within the player file, if so then returns that player
-	 * @param playerID
-	 * @return
-	 * @throws FileNotFoundException
-	 */
+//	/**
+//	 * Given a playerID checks if that player exists within the player file, if so then returns that player
+//	 * @param playerID
+//	 * @return
+//	 * @throws FileNotFoundException
+//	 */
 //	public static Player checkIfPlayerExists (int playerID) throws Exception {
 //		String playerRecord = getPlayerInfoFromFile(playerID, PLAYER_FILE);
 //		if(playerRecord == null) {
@@ -238,7 +238,8 @@ public class FileManager {
 		grid.populateGrid(tiles);
 		br.close();
 		// null for inventory for now;
-		return new Level(levelid, height, width, null, numberOfMechsToLose, currentScore, expectedSecondsToComplete, elapsedTime, mechs, grid);
+		//return new Level(levelid, height, width, null, numberOfMechsToLose, currentScore, expectedSecondsToComplete, elapsedTime, grid);
+		return new Level(levelid, inventory, numberOfMechsToLose, currentScore, expectedSecondsToComplete, elapsedTime, mechs, grid);
 	}
 
 	/*

@@ -88,6 +88,7 @@ public class Game {
             if(m.getHealth() <= 0) {
                 points = this.level.getCurrentScore() + (m.isPregnant() ? (SCORE_PER_KILL * (Mech.NUM_OF_BABIES_IF_BIRTHING + 1)) : SCORE_PER_KILL);
                 this.level.setCurrentScore(points);
+                // concurrent modification exception happening here probably.
                 this.level.removeMech(m);
                 System.err.println("A MECH HAS DIED");
             } else {
@@ -101,6 +102,7 @@ public class Game {
                         }
                     }
                 }
+                // this is being accessed when it's being removed or something
                 m.move(this.level.getGrid());
             }
         }
