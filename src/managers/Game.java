@@ -44,8 +44,6 @@ import javafx.stage.Stage;
 import services.MessageOfTheDay;
 import javafx.util.Duration;
 
-
-
 public class Game {
     
     private Timeline tickTimeline; 
@@ -86,42 +84,42 @@ public class Game {
         this.CURRENT_HEIGHT = level.getGrid().getHeight();
     }
 
-    private void updateMechs() throws Exception {
-        int points;
-        for(Mech m : this.level.getMechs()) {
-            if(this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).getCurrentItem() != null) {
-                this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).getCurrentItem().act(m);
-            }
-            if(m.getHealth() <= 0) {
-                points = this.level.getCurrentScore() + (m.isPregnant() ? (SCORE_PER_KILL * (Mech.NUM_OF_BABIES_IF_BIRTHING + 1)) : SCORE_PER_KILL);
-                this.level.setCurrentScore(points);
-                // concurrent modification exception happening here probably.
-                this.level.removeMech(m);
-                System.err.println("A MECH HAS DIED");
-            } else {
-                for(Mech mechIShareMyTileWith : this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).getMechs()) {
-                    if(!(mechIShareMyTileWith.isPregnant() || mechIShareMyTileWith.getType() == m.getType() || mechIShareMyTileWith.isSterile() || m.isBreeding() || mechIShareMyTileWith.isBreeding())) {
-                        if (mechIShareMyTileWith.getType() == MechType.PRODUCTION) {
-                            // need to add the isBreeding and other validation before doing this
-                            for(int i = 0; i < 5; i++) {
-                                this.level.addMech(m.birthMech());
-                            }
-                        }
-                    }
-                }
-                // this is being accessed when it's being removed or something
-                m.move(this.level.getGrid());
-            }
-        }
-    }
+//    private void updateMechs() throws Exception {
+//        int points;
+//        for(Mech m : this.level.getMechs()) {
+//            if(this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).getCurrentItem() != null) {
+//                this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).getCurrentItem().act(m);
+//            }
+//            if(m.getHealth() <= 0) {
+//                points = this.level.getCurrentScore() + (m.isPregnant() ? (SCORE_PER_KILL * (Mech.NUM_OF_BABIES_IF_BIRTHING + 1)) : SCORE_PER_KILL);
+//                this.level.setCurrentScore(points);
+//                // concurrent modification exception happening here probably.
+//                this.level.removeMech(m);
+//                System.err.println("A MECH HAS DIED");
+//            } else {
+//                for(Mech mechIShareMyTileWith : this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).getMechs()) {
+//                    if(!(mechIShareMyTileWith.isPregnant() || mechIShareMyTileWith.getType() == m.getType() || mechIShareMyTileWith.isSterile() || m.isBreeding() || mechIShareMyTileWith.isBreeding())) {
+//                        if (mechIShareMyTileWith.getType() == MechType.PRODUCTION) {
+//                            // need to add the isBreeding and other validation before doing this
+//                            for(int i = 0; i < 5; i++) {
+//                                this.level.addMech(m.birthMech());
+//                            }
+//                        }
+//                    }
+//                }
+//                // this is being accessed when it's being removed or something
+//                m.move(this.level.getGrid());
+//            }
+//        }
+//    }
 
-    private void update() throws Exception {
-        // this for loop should probs just go into an init method
-        for(Item i : this.level.getItems()) {
-            this.level.getGrid().getTileAt(i.getGridX(), i.getGridY()).setCurrentItem(i);
-        }
-        this.updateMechs();
-    }
+//    private void update() throws Exception {
+//        // this for loop should probs just go into an init method
+//        for(Item i : this.level.getItems()) {
+//            this.level.getGrid().getTileAt(i.getGridX(), i.getGridY()).setCurrentItem(i);
+//        }
+//        this.updateMechs();
+//    }
 
 //    private void updateScore(int currentScore) {
 //        /*
@@ -145,9 +143,10 @@ public class Game {
 //        this.level.setCurrentScore(currentScore);
 //    }
 
+    public void run() {}
     private void tick() {
         try {
-            update();
+            this.level.update();
             drawGame();
             //updateMechs();
             //moveMechs();
@@ -237,14 +236,14 @@ public class Game {
         startTickTimelineButton.setOnAction(e -> {
             // Start the tick timeline and enable/disable buttons as appropriate.
             startTickTimelineButton.setDisable(true);
-            tickTimeline.play();
+            this.tickTimeline.play();
             stopTickTimelineButton.setDisable(false);
         });
 
         stopTickTimelineButton.setOnAction(e -> {
             // Stop the tick timeline and enable/disable buttons as appropriate.
             stopTickTimelineButton.setDisable(true);
-            tickTimeline.stop();
+            this.tickTimeline.stop();
             startTickTimelineButton.setDisable(false);
         });
 
@@ -328,10 +327,7 @@ public class Game {
     }
 
     public void drawGame() {
-        
-        tickTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> tick()));
-        tickTimeline.setCycleCount(Animation.INDEFINITE);
-        
+
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc.setFill(Color.GRAY);
