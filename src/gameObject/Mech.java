@@ -97,6 +97,10 @@ public class Mech extends Rectangle {
 		return bothOppositeTypes && neitherSterile && neitherCurrentlyBreeding && neitherPregnant && bothNotDeathMech;
 	}
 
+	public void breedWith(Mech otherMech) {
+
+	}
+
 	public Mech birthMech() {
 		assert this.type.equals(MechType.PRODUCTION);
 		Random random = new Random();

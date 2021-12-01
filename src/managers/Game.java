@@ -273,7 +273,6 @@ public class Game {
     }
 
     // just testing the drag and drop from the starter kit
-    
     public void canvasDragDroppedOccured(DragEvent event) {
         double x = event.getX();
         double y = event.getY();

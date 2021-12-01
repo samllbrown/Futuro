@@ -7,7 +7,7 @@ public class Puddle extends Item {
 	private static final int Y_RANGE = 0;
 	
 	private int health;
-	
+	public static final Image ITEM_IMAGE = new Image("file:res/Sprites/tileW.png",50, 50, false, false);
 	public Puddle(int x, int y) {
 		super(x, y);
 		setXRange(X_RANGE);
@@ -21,8 +21,7 @@ public class Puddle extends Item {
 
 	@Override
 	public Image getImage() {
-		Image img = new Image("file:res/Sprites/tileP.png",50, 50, false, false);
-		return img;
+		return ITEM_IMAGE;
 	}
 
 	public int getHealth() {

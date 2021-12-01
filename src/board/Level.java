@@ -66,6 +66,10 @@ public class Level {
 		this.mechs.remove(m);
 	}
 
+	private void updateBreeder() {
+		// hmmmm
+	}
+
 	private void updateMechs() throws Exception {
 		int points;
 		ArrayList<Mech> currentMechsCopy = new ArrayList<>(this.mechs);
@@ -84,7 +88,11 @@ public class Level {
 			} else {
 				for(Mech om : this.getGrid().getTileAt(m.getGridX(), m.getGridY()).getMechs()) {
 					if(m.canBreedWith(om)) {
-
+						// then they will start breeding
+						// the breeding occurs for 5 seconds
+						// whilst breeding, they do not move
+						// after breeding they go their own way
+						// how can we do this without making the entire thread wait :/
 					}
 				}
 			}
