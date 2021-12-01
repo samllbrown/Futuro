@@ -67,10 +67,8 @@ public class Level {
 	}
 
 	private void updateMechs() throws Exception {
-		int points;
 		ArrayList<Mech> currentMechsCopy = new ArrayList<>(this.mechs);
-
-		for(Mech m : getMechs()) {
+		for(Mech m : currentMechsCopy) {
 			Tile currentMechTile = this.getGrid().getTileAt(m.getGridX(), m.getGridY());
 			Item currentItemOnTile = currentMechTile.getCurrentItem();
 
@@ -83,6 +81,7 @@ public class Level {
 				System.err.println("A mech has died");
 			} else {
 				for(Mech om : this.getGrid().getTileAt(m.getGridX(), m.getGridY()).getMechs()) {
+					System.out.println("This mech is on another tile with a mech");
 					if(m.canBreedWith(om)) {
 						System.err.println("BREEDING BREEDING");
 						// then they will start breeding
@@ -91,6 +90,8 @@ public class Level {
 						// after breeding they go their own way
 						// how can we do this without making the entire thread wait :/
 						// we need to break
+					} else {
+						System.err.println("eee");
 					}
 				}
 			}
@@ -104,7 +105,7 @@ public class Level {
 		}
 	}
 
-	private void update() throws Exception {
+	public void update() throws Exception {
 		// this for loop should probs just go into an init method
 		this.updateItems();
 		this.updateMechs();

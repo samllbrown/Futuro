@@ -51,6 +51,8 @@ public class Tile extends Rectangle {
 		switch(tileType) {
 			case PATH:
 				return new Image("file:res/Sprites/grassMid.png",50, 50, false, false);
+			case TUNNEL:
+				return new Image("file:res/Sprites/tileT.png", 50, 50, false, false);
 			default:
 				return new Image("file:res/Sprites/tileW.png",50, 50, false, false);
 		}
@@ -67,7 +69,9 @@ public class Tile extends Rectangle {
 	public ArrayList<Mech> getMechs() {
 		return this.currentMechs;
 	}
-
+	public void removeMech(Mech m) {
+		this.currentMechs.remove(m);
+	}
 	public void addMech(Mech m) {
 		this.currentMechs.add(m);
 	}

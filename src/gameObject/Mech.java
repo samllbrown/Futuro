@@ -200,7 +200,6 @@ public class Mech extends Rectangle {
 			this.turn(turns.get(rand.nextInt(turns.size())));
 			this.currentCords = this.currentCords.add(this.currentDirection.toPair());
 		}
-
 //		this.currentCords = this.currentCords.add(this.currentDirection.toPair());
 		this.x = this.currentCords.x;
 		this.y = this.currentCords.y;
