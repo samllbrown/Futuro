@@ -11,8 +11,8 @@ public class Inventory {
 	
 	public Inventory() {
 		HashMap<String, InventoryItem> inventoryItems = new HashMap<String, InventoryItem>();
-		inventoryItems.put(DeathMechInventoryItem.getName(), new DeathMechInventoryItem());
-		inventoryItems.put(AcidInventoryItem.getName(), new AcidInventoryItem());
+		//inventoryItems.put(DeathMechInventoryItem.getName(), new DeathMechInventoryItem());
+		//inventoryItems.put(AcidInventoryItem.getName(), new AcidInventoryItem());
 		this.inventoryItems = inventoryItems;
 	}
 
