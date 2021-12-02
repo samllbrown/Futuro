@@ -11,6 +11,7 @@ public class Inventory {
 	
 	public Inventory() {
 		HashMap<String, InventoryItem> inventoryItems = new HashMap<String, InventoryItem>();
+
 		inventoryItems.put(DeathMechInventoryItem.getName(), new DeathMechInventoryItem());
 		inventoryItems.put(AcidInventoryItem.getName(), new AcidInventoryItem());
 		inventoryItems.put(EMPInventoryItem.getName(), new EMPInventoryItem());
@@ -19,6 +20,10 @@ public class Inventory {
 		inventoryItems.put(PuddleInventoryItem.getName(), new PuddleInventoryItem());
 		inventoryItems.put(RemodelPInventoryItem.getName(), new RemodelPInventoryItem());
 		inventoryItems.put(RemodelRInventoryItem.getName(), new RemodelRInventoryItem());
+
+		//inventoryItems.put(DeathMechInventoryItem.getName(), new DeathMechInventoryItem());
+		//inventoryItems.put(AcidInventoryItem.getName(), new AcidInventoryItem());
+
 		this.inventoryItems = inventoryItems;
 	}
 

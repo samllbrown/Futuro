@@ -18,20 +18,22 @@ public class Remodel extends Item {
 		if(mech.getType() != MechType.DEATH) {
 			if(mech.getType() == MechType.PRODUCTION && this.isMaleRemodel == true) {
 				mech.setType(MechType.RESOURCE);
+				mech.setImage();
 			} else if (mech.getType() == MechType.RESOURCE && this.isMaleRemodel == false){
 				mech.setType(MechType.PRODUCTION);
+				mech.setImage();
 			}
+			this.isReadyForDestroy = true;
 		}
 	}
 
 	@Override
-	public void act(Mech someMech) {
-		this.remodelMech(someMech);
+	public void act(Mech mech) {
+		this.remodelMech(mech);
 	}
 
 	@Override
 	public Image getImage() {
 		return (isMaleRemodel ? ITEM_IMAGE_R_TO_P : ITEM_IMAGE_P_TO_R);
 	}
-
 }

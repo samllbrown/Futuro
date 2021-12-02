@@ -12,6 +12,8 @@ public abstract class Item extends Rectangle {
 	private int xRange;
 	private int yRange;
 	private int damage;
+	
+	public boolean isReadyForDestroy = false;
 
 //	protected Item(String itemID, int xPos, int yPos, int xRange, int yRange) {
 	protected Item(int x, int y, int damage) {
@@ -45,11 +47,7 @@ public abstract class Item extends Rectangle {
 	}
 	public abstract Image getImage();
 
-	// every item will act on some mech
-	// no david
-	//public abstract void act(Mech someMech);
 	public void act(Mech someMech) {
 		someMech.takeDamage(this.damage);
 	}
-
 }

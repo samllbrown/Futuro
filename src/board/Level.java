@@ -102,9 +102,17 @@ public class Level {
 	}
 
 	public void updateItems() throws Exception {
-		for(Item i : this.getItems()) {
+		ArrayList<Item> currentItemCopy = new ArrayList<>(this.items);
+		for(Item i : currentItemCopy) {
 			this.getGrid().getTileAt(i.getGridX(), i.getGridY()).setCurrentItem(i);
+			if(i.isReadyForDestroy) {
+				removeItem(i);
+			}
 		}
+	}
+	
+	private void removeItem(Item i) {
+		this.items.remove(i);
 	}
 
 	public void update() throws Exception {

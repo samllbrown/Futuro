@@ -21,10 +21,4 @@ public class EMP extends Item {
 	public Image getImage() {
 		return ITEM_IMAGE;
 	}
-
-//	private void spread(Grid grid) {
-//		int xCells[];
-//		item yCells[];
-//	}
-
 }

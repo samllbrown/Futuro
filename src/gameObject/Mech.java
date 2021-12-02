@@ -214,6 +214,10 @@ public class Mech extends Rectangle {
 	public Image getImage(){
 		return this.img;
 	}
+	
+	public void setImage() {
+		this.img = this.getImageForType(this.type);
+	}
 	public int getGridX() {
 		return this.x;
 	}
