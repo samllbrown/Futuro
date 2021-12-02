@@ -307,7 +307,11 @@ public class Game {
         
         if(db.hasString()) {
 	        Item i = InventoryItem.getItemForName(db.getString(), xCoord, yCoord);
-	        this.level.addItem(i);
+	        if(db.getString() == "DEATH_MECH") {
+	        	
+	        	Mech newMech = new DeathMech(xCoord, yCoord);
+	        	this.level.addMech(newMech);
+	        } else {  this.level.addItem(i);}
 	        // Draw an icon at the dropped location.
 	        GraphicsContext gc = canvas.getGraphicsContext2D();
 	        // Draw the the image so the top-left corner is where we dropped.
