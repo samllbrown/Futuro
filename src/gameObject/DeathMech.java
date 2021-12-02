@@ -11,15 +11,13 @@ public class DeathMech extends Mech{
 
 	public DeathMech(int x, int y) {
 		super(MechType.DEATH,x,y,5,false,false,true);
-		Item deathMechItem = new Item(x,y,DAMAGE) {
+		Item deathMechItem = new Item(x,y,DAMAGE, killsLeft) {
 			@Override
 			public Image getImage() {
 				return ITEM_IMAGE;
 			}
 		};
-
 		this.dmItem  = deathMechItem;
-
 	}
 
 	public Item getDeathItem(){

@@ -12,7 +12,7 @@ public abstract class Item extends Rectangle {
 	private int xRange;
 	private int yRange;
 	private int damage;
-	private int uses;
+	protected int uses;
 	
 	public boolean isReadyForDestroy = false;
 
