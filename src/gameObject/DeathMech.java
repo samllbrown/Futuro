@@ -6,17 +6,19 @@ public class DeathMech extends Mech{
 
 	private Item dmItem;
 	private static final int DAMAGE = 100;
-	private int killsLeft = 5;
+	public static final int USES = 5;
+	private int killsLeft;
 	public static final Image ITEM_IMAGE = new Image("file:res/Sprites/mechD.png",50, 50, false, false);
 
 	public DeathMech(int x, int y) {
-		super(MechType.DEATH,x,y,5,false,false,true);
-		Item deathMechItem = new Item(x,y,DAMAGE, killsLeft) {
+		super(MechType.DEATH,x,y,100,false,false,true);
+		Item deathMechItem = new Item(x,y,DAMAGE, USES) {
 			@Override
 			public Image getImage() {
 				return ITEM_IMAGE;
 			}
 		};
+		this.killsLeft = USES;
 		this.dmItem  = deathMechItem;
 	}
 
