@@ -12,14 +12,16 @@ public abstract class Item extends Rectangle {
 	private int xRange;
 	private int yRange;
 	private int damage;
+	private int uses;
 	
 	public boolean isReadyForDestroy = false;
 
 //	protected Item(String itemID, int xPos, int yPos, int xRange, int yRange) {
-	protected Item(int x, int y, int damage) {
+	protected Item(int x, int y, int damage, int uses) {
 		this.x = x;
 		this.y = y;
 		this.damage = damage;
+		this.uses = uses;
 	}
 	
 	public void setXRange(int xRange) {
@@ -47,7 +49,16 @@ public abstract class Item extends Rectangle {
 	}
 	public abstract Image getImage();
 
+	public boolean isReadyForDestroy() {
+		return (this.uses == 0);
+	}
+
 	public void act(Mech someMech) {
-		someMech.takeDamage(this.damage);
+		if(this.uses != 0) {
+			someMech.takeDamage(this.damage);
+			this.uses--;
+		} else {
+			System.err.println("Cannot act on mech as uses left <= 0");
+		}
 	}
 }

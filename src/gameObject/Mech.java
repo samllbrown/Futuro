@@ -97,8 +97,8 @@ public class Mech extends Rectangle {
 		return bothOppositeTypes && neitherSterile && neitherCurrentlyBreeding && neitherPregnant && bothNotDeathMech;
 	}
 
-	public void breedWith(Mech otherMech) {
-
+	public void actOn(Mech otherMech) {
+		// breed
 	}
 
 	public Mech birthMech() {

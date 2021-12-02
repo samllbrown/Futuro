@@ -9,7 +9,6 @@ public class DeathMech extends Mech{
 	private int killsLeft = 5;
 	public static final Image ITEM_IMAGE = new Image("file:res/Sprites/mechD.png",50, 50, false, false);
 
-
 	public DeathMech(int x, int y) {
 		super(MechType.DEATH,x,y,5,false,false,true);
 		Item deathMechItem = new Item(x,y,DAMAGE) {
@@ -27,8 +26,9 @@ public class DeathMech extends Mech{
 		return this.dmItem;
 	}
 
-	public void act(Mech mech) {
-		while (killsLeft!= 0) {
+	@Override
+	public void actOn(Mech mech) {
+		if(killsLeft != 0) {
 			mech.takeDamage(DAMAGE);
 			killsLeft--;
 			System.out.println("DEATH MECH HAS KILLED A MECH");

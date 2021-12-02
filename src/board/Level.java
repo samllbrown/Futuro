@@ -69,6 +69,10 @@ public class Level {
 	private void updateMechs() throws Exception {
 		ArrayList<Mech> currentMechsCopy = new ArrayList<>(this.mechs);
 		for(Mech m : currentMechsCopy) {
+			if(m.getType().equals(MechType.DEATH)) {
+				//this.getGrid().getTileAt(m.getGridX(), m.getGridY()).getMechs().forEach(om -> killMech(om));
+				this.getGrid().getTileAt(m.getGridX(), m.getGridY()).getMechs().forEach(om -> m.actOn(om));
+			}
 			Tile currentMechTile = this.getGrid().getTileAt(m.getGridX(), m.getGridY());
 			Item currentItemOnTile = currentMechTile.getCurrentItem();
 
@@ -97,7 +101,9 @@ public class Level {
 					}
 				}
 			}
+			this.getGrid().getTileAt(m.getGridX(), m.getGridY()).removeMech(m);
 			m.move(this.getGrid());
+			this.getGrid().getTileAt(m.getGridX(), m.getGridY()).addMech(m);
 		}
 	}
 
@@ -105,14 +111,16 @@ public class Level {
 		ArrayList<Item> currentItemCopy = new ArrayList<>(this.items);
 		for(Item i : currentItemCopy) {
 			this.getGrid().getTileAt(i.getGridX(), i.getGridY()).setCurrentItem(i);
-			if(i.isReadyForDestroy) {
-				removeItem(i);
+			if(i.isReadyForDestroy()) {
+				this.removeItem(i);
+				//this.getGrid().getTileAt(i.getGridX(), i.getGridY()).setCurrentItem(null);
 			}
 		}
 	}
 	
 	private void removeItem(Item i) {
 		this.items.remove(i);
+		this.getGrid().getTileAt(i.getGridX(), i.getGridY()).setCurrentItem(null);
 	}
 
 	public void update() throws Exception {
