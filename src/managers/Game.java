@@ -248,59 +248,39 @@ public class Game {
             startTickTimelineButton.setDisable(false);
         });
 
-<<<<<<< Updated upstream
-=======
-        Acid i = new Acid(2,3);
-//        Item EMP = new EMP(2,3);
-//        Item lightning = new Lightning(2,3);
-//        Item mine = new Mine(2,3);
-//        Item puddle = new Puddle(2,3);
->>>>>>> Stashed changes
-
-       ImageView draggableImage = new ImageView();
-       InventoryItem acidItem = new AcidInventoryItem();
-       InventoryItem deathMechItem = new DeathMechInventoryItem();
-
-<<<<<<< Updated upstream
-       acidItem.setImage(acidItem.getImage());
-       deathMechItem.setImage(deathMechItem.getImage());
-=======
-       acidItem.setImage(i.getPlacedImage());
->>>>>>> Stashed changes
-
 
        topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton);
-       sidebar.getChildren().addAll(acidItem, deathMechItem);
-
 
         // This code setup what happens when the dragging starts on the image.
         // You probably don't need to change this (unless you wish to do more advanced
         // things).
-        acidItem.setOnDragDetected(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                Dragboard db = acidItem.startDragAndDrop(TransferMode.ANY);
-
-
-                ClipboardContent content = new ClipboardContent();
-                content.putString("Hello");
-                db.setContent(content);
-
-
-                event.consume();
-            }
-        });
-
+       for(var i : this.level.getInventory().getHashMap().entrySet()) {
+    	   InventoryItem iconItem = i.getValue();
+    	   iconItem.setImage(iconItem.getSprite());
+    	   sidebar.getChildren().addAll(iconItem);
+    	   
+    	   iconItem.setOnDragDetected(new EventHandler<MouseEvent>() {
+	            public void handle(MouseEvent event) {
+	                Dragboard db = iconItem.startDragAndDrop(TransferMode.ANY);
+	
+	
+	                ClipboardContent content = new ClipboardContent();
+	                content.putString(iconItem.itemName);
+	                db.setContent(content);
+	
+	
+	                event.consume();
+	            }
+	        });
+       }
         canvas.setOnDragOver(new EventHandler<DragEvent>() {
             public void handle(DragEvent event) {
                 // Mark the drag as acceptable if the source was the draggable image.
                 // (for example, we don't want to allow the user to drag things or files into
                 // our application)
-                if (event.getGestureSource() == acidItem) {
-                    // Mark the drag event as acceptable by the canvas.
-                    event.acceptTransferModes(TransferMode.ANY);
+               event.acceptTransferModes(TransferMode.ANY);
                     // Consume the event. This means we mark it as dealt with.
-                    event.consume();
-                }
+               event.consume();
             }
         });
 
@@ -318,19 +298,24 @@ public class Game {
 
     // just testing the drag and drop from the starter kit
     public void canvasDragDroppedOccured(DragEvent event) {
+    	Dragboard db = event.getDragboard();
+    	
         double x = event.getX();
         double y = event.getY();
         int xCoord = (int) Math.round(x) / TILE_SIZE;
         int yCoord = (int) Math.round(y) / TILE_SIZE;
-        Acid i = new Acid(xCoord, yCoord);
-        this.level.addItem(i);
-        // Draw an icon at the dropped location.
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        // Draw the the image so the top-left corner is where we dropped.
-        gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
-        // Draw the the image so the center is where we dropped.
-        // gc.drawImage(iconImage, x - iconImage.getWidth() / 2.0, y -
-        // iconImage.getHeight() / 2.0);
+        
+        if(db.hasString()) {
+	        Item i = InventoryItem.getItemForName(db.getString(), xCoord, yCoord);
+	        this.level.addItem(i);
+	        // Draw an icon at the dropped location.
+	        GraphicsContext gc = canvas.getGraphicsContext2D();
+	        // Draw the the image so the top-left corner is where we dropped.
+	        gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
+	        // Draw the the image so the center is where we dropped.
+	        // gc.drawImage(iconImage, x - iconImage.getWidth() / 2.0, y -
+	        // iconImage.getHeight() / 2.0);
+        } 
     }
 
     public void drawGame() {

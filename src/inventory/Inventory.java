@@ -8,9 +8,12 @@ import gameObject.Item;
 public class Inventory {
 
 	private HashMap<String, InventoryItem> inventoryItems;
-
+	
 	public Inventory() {
-		this.inventoryItems = new HashMap<>();
+		HashMap<String, InventoryItem> inventoryItems = new HashMap<String, InventoryItem>();
+		inventoryItems.put(DeathMechInventoryItem.getName(), new DeathMechInventoryItem());
+		inventoryItems.put(AcidInventoryItem.getName(), new AcidInventoryItem());
+		this.inventoryItems = inventoryItems;
 	}
 
 	public Item useItem(String name, int atX, int atY) throws Exception {
@@ -26,6 +29,10 @@ public class Inventory {
 
 	public void addItem(InventoryItem invItem) {
 		//this.inventoryItems.put(invItem.getName(), invItem);
+	}
+	
+	public HashMap<String, InventoryItem> getHashMap(){
+		return this.inventoryItems;
 	}
 
 }

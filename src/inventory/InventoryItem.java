@@ -8,7 +8,7 @@ import java.util.Locale;
 
 public abstract class InventoryItem extends ImageView {
     protected final int MAX_ITEM_USES = 4;
-    protected final String itemName;
+    public final String itemName;
     protected final Image itemSprite;
     protected int remainingUses;
 
@@ -17,6 +17,7 @@ public abstract class InventoryItem extends ImageView {
         // this needs to be changed
         this.itemSprite = getImageForName(name);
         this.remainingUses = MAX_ITEM_USES;
+        System.out.println(itemSprite);
     }
 
     public InventoryItem(String name, int remainingUses) {
@@ -40,7 +41,6 @@ public abstract class InventoryItem extends ImageView {
             case "PUDDLE":
                 return Puddle.ITEM_IMAGE;
             case "REMODEL_P_TO_R":
-                // THIS ABSOLUTELY, 100% DEFINITELY NEEDS TO BE CHANGED
                 return Remodel.ITEM_IMAGE_P_TO_R;
             case "REMODEL_R_TO_P":
                 return Remodel.ITEM_IMAGE_R_TO_P;
@@ -48,6 +48,29 @@ public abstract class InventoryItem extends ImageView {
             	return DeathMech.ITEM_IMAGE;
             default:
                 System.err.println("Probably should be throwing an error here");
+                return null;
+        }
+    }
+    public static Item getItemForName(String name, int xCord, int yCord) {
+        switch(name.toUpperCase(Locale.ROOT)) {
+            case "LIGHTNING":
+                return new Lightning(xCord, yCord);
+            case "ACID":
+                return new Acid(xCord, yCord);
+            case "EMP":
+                return new EMP(xCord, yCord);
+            case "MINE":
+                return new Mine(xCord, yCord);
+            case "PUDDLE":
+                return new Puddle(xCord, yCord);
+            case "REMODEL_P_TO_R":
+                return new Remodel(xCord, yCord, false);
+            case "REMODEL_R_TO_P":
+                return new Remodel(xCord, yCord, true);
+            case "DEATH_MECH":
+            	return new DeathMech(xCord, yCord).getDeathItem();
+            default:
+                System.err.println("Probably should be throwing an error here 2");
                 return null;
         }
     }
@@ -66,8 +89,11 @@ public abstract class InventoryItem extends ImageView {
         this.remainingUses -= uses;
     }
 
-    public String getName() {
-        return this.itemName;
+    public Image getSprite() {
+    	return itemSprite;
     }
+
+    //getName abstract static meaning that all items should
+
 
 }

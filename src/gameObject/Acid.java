@@ -26,9 +26,7 @@ public class Acid extends Item {
 	}
 
 	@Override
-	public Image getImage() {
-		return ITEM_IMAGE_PUDDLE;
-	}
+	public Image getImage() { return ITEM_IMAGE_PUDDLE;}
 
 
 	public Image getPlacedImage() { return ITEM_IMAGE;}

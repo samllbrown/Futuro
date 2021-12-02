@@ -15,7 +15,13 @@ public class Remodel extends Item {
 	}
 	
 	private void remodelMech(Mech mech) {
-		mech.setType((this.isMaleRemodel ? MechType.PRODUCTION : MechType.RESOURCE));
+		if(mech.getType() != MechType.DEATH) {
+			if(mech.getType() == MechType.PRODUCTION && this.isMaleRemodel == true) {
+				mech.setType(MechType.RESOURCE);
+			} else if (mech.getType() == MechType.RESOURCE && this.isMaleRemodel == false){
+				mech.setType(MechType.PRODUCTION);
+			}
+		}
 	}
 
 	@Override
