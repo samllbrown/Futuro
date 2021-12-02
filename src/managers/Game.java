@@ -179,21 +179,6 @@ public class Game {
     public void setMessageOfTheDay(String messageOfTheDay) {
         this.messageOfTheDay = messageOfTheDay;
     }
-
-    private void moveMechs() throws Exception {
-        for (Mech m : this.level.getMechs()) {
-            m.move(this.level.getGrid());
-//            Pair currentVector = new Pair(m.getGridX(), m.getGridY());
-//            Pair nextVector = new Pair(m.getGr);
-//            if(this.level.getGrid().getTileAt(m.getGridX(), m.getGridY())) {
-//                //
-//            }
-//            if(m.getGridX() >= this.level.getGrid().getWidth()) {
-//                m.move(-2, 0);
-//            }
-        }
-    }
-
     private Pane buildGUI() {
         BorderPane root = new BorderPane();
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
