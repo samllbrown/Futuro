@@ -72,32 +72,33 @@ public class Level {
 			if(m.getType().equals(MechType.DEATH)) {
 				//this.getGrid().getTileAt(m.getGridX(), m.getGridY()).getMechs().forEach(om -> killMech(om));
 				this.getGrid().getTileAt(m.getGridX(), m.getGridY()).getMechs().forEach(om -> m.actOn(om));
-			}
-			Tile currentMechTile = this.getGrid().getTileAt(m.getGridX(), m.getGridY());
-			Item currentItemOnTile = currentMechTile.getCurrentItem();
-
-			if(currentItemOnTile != null) {
-				System.out.println("Item is acting on mech");
-				currentItemOnTile.act(m);
-				System.out.println("Mech's health is now = " + m.getHealth());
-			}
-
-			if(m.getHealth() <= 0) {
-				this.killMech(m);
-				System.err.println("A mech has died");
 			} else {
-				for(Mech om : this.getGrid().getTileAt(m.getGridX(), m.getGridY()).getMechs()) {
-					System.out.println("This mech is on another tile with a mech");
-					if(m.canBreedWith(om)) {
-						System.err.println("BREEDING BREEDING");
-						// then they will start breeding
-						// the breeding occurs for 5 seconds
-						// whilst breeding, they do not move
-						// after breeding they go their own way
-						// how can we do this without making the entire thread wait :/
-						// we need to break
-					} else {
-						System.err.println("eee");
+				Tile currentMechTile = this.getGrid().getTileAt(m.getGridX(), m.getGridY());
+				Item currentItemOnTile = currentMechTile.getCurrentItem();
+
+				if(currentItemOnTile != null) {
+					System.out.println("Item is acting on mech");
+					currentItemOnTile.act(m);
+					System.out.println("Mech's health is now = " + m.getHealth());
+				}
+
+				if(m.getHealth() <= 0) {
+					this.killMech(m);
+					System.err.println("A mech has died");
+				} else {
+					for(Mech om : this.getGrid().getTileAt(m.getGridX(), m.getGridY()).getMechs()) {
+						System.out.println("This mech is on another tile with a mech");
+						if(m.canBreedWith(om)) {
+							System.err.println("BREEDING BREEDING");
+							// then they will start breeding
+							// the breeding occurs for 5 seconds
+							// whilst breeding, they do not move
+							// after breeding they go their own way
+							// how can we do this without making the entire thread wait :/
+							// we need to break
+						} else {
+							System.err.println("eee");
+						}
 					}
 				}
 			}

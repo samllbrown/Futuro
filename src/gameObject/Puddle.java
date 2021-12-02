@@ -19,12 +19,13 @@ public class Puddle extends Item {
 	@Override
 	public void act(Mech mech) {
 		try {
-			mech.turn("AROUND");
-			this.health -= 5;
-			this.uses -= 1;
-			if(this.health == 0) {
-				System.err.println("THIS SHOULD NO LONGER BE HERE");
-
+			if(super.uses != 0) {
+				mech.turn("AROUND");
+				this.health -= 5;
+				super.uses -= 1;
+				if(this.health == 0) {
+					System.err.println("THIS SHOULD NO LONGER BE HERE");
+				}
 			}
 		} catch(Exception e) {
 			System.err.println("PUDDLE HAS THROWN AN ERROR WHILST TRYING TO TURN THE MECH AROUND");
