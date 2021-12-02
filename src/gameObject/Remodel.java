@@ -23,6 +23,7 @@ public class Remodel extends Item {
 				mech.setType(MechType.PRODUCTION);
 				mech.setImage();
 			}
+			this.isReadyForDestroy = true;
 		}
 	}
 
@@ -35,5 +36,4 @@ public class Remodel extends Item {
 	public Image getImage() {
 		return (isMaleRemodel ? ITEM_IMAGE_R_TO_P : ITEM_IMAGE_P_TO_R);
 	}
-
 }

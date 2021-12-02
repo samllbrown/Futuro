@@ -65,6 +65,10 @@ public class Level {
 		this.currentScore += getPointsForKill(m);
 		this.mechs.remove(m);
 	}
+	
+	private void removeItemFromBoard(Item i) {
+		this.items.remove(i);
+	}
 
 	private void updateMechs() throws Exception {
 		ArrayList<Mech> currentMechsCopy = new ArrayList<>(this.mechs);
@@ -104,6 +108,9 @@ public class Level {
 	public void updateItems() throws Exception {
 		for(Item i : this.getItems()) {
 			this.getGrid().getTileAt(i.getGridX(), i.getGridY()).setCurrentItem(i);
+			if(i.isReadyForDestroy) {
+				removeItemFromBoard(i);
+			}
 		}
 	}
 
