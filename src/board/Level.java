@@ -130,6 +130,7 @@ public class Level {
 		for(Item i : currentItemCopy) {
 			this.getGrid().getTileAt(i.getGridX(), i.getGridY()).setCurrentItem(i);
 			if(i.isReadyForDestroy()) {
+				System.err.println("Gets destroyed");
 				this.removeItem(i);
 				//this.getGrid().getTileAt(i.getGridX(), i.getGridY()).setCurrentItem(null);
 			}

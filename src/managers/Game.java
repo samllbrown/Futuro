@@ -380,17 +380,7 @@ public class Game {
         Pane root = buildGUI();
         Stage stage = new Stage();
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
-        ArrayList < Item > itemTest = new ArrayList < Item > ();
 
-        itemTest.add(new DeathMech(5, 5).getDeathItem());
-        itemTest.add(new Acid(2, 10));
-        itemTest.add(new EMP(4, 4));
-        itemTest.add(new Mine(1, 4));
-        itemTest.add(new Lightning(3, 2));
-        itemTest.add(new Remodel(8, 2, true));
-        itemTest.add(new Remodel(8, 4, false));
-
-        this.level.setItems(itemTest);
         drawGame();
         stage.setScene(scene);
         stage.show();
