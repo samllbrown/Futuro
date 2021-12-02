@@ -7,7 +7,7 @@ public class Puddle extends Item {
 	private static final int Y_RANGE = 0;
 
 	private int health;
-	public static final Image ITEM_IMAGE = new Image("file:res/Sprites/tileW.png",50, 50, false, false);
+	public static final Image ITEM_IMAGE = new Image("file:res/Sprites/puddle.png",50, 50, false, false);
 	public Puddle(int x, int y) {
 		super(x, y, 0);
 		this.health = 15;
