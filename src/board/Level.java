@@ -15,6 +15,7 @@ import gameObject.Item;
 import gameObject.Mech;
 import gameObject.MechType;
 import inventory.Inventory;
+import services.audioPlayer;
 
 public class Level {
 	private static final int WINNING_NUMBER_OF_MECHS = 0;
@@ -50,6 +51,7 @@ public class Level {
 		this.elapsedTime = elapsedTime;
 		this.mechs = mechs;
 		this.grid = grid;
+		this.items = new ArrayList<>();
 	}
 
 	public void addItem(Item i) {
@@ -63,28 +65,29 @@ public class Level {
 
 	private void killMech(Mech m) {
 		this.currentScore += getPointsForKill(m);
+		this.getGrid().getTileAt(m.getGridX(), m.getGridY()).removeMech(m);
 		this.mechs.remove(m);
 	}
 
 	private void updateMechs() throws Exception {
 		ArrayList<Mech> currentMechsCopy = new ArrayList<>(this.mechs);
 		for(Mech m : currentMechsCopy) {
-			Tile currentMechTile = this.getGrid().getTileAt(m.getGridX(), m.getGridY());
-			Item currentItemOnTile = currentMechTile.getCurrentItem();
-
-			if(currentItemOnTile != null) {
-				System.out.println("Item is acting on mech");
-				currentItemOnTile.act(m);
-				System.out.println("Mech's health is now = " + m.getHealth());
-			}
-
 			if(m.getHealth() <= 0) {
 				this.killMech(m);
+				audioPlayer.playDeathSound();
 				System.err.println("A mech has died");
 			} else {
-				for(Mech om : this.getGrid().getTileAt(m.getGridX(), m.getGridY()).getMechs()) {
-					System.out.println("This mech is on another tile with a mech");
-					if(m.canBreedWith(om)) {
+
+				Tile currentMechTile = this.getGrid().getTileAt(m.getGridX(), m.getGridY());
+				Item currentItemOnTile = currentMechTile.getCurrentItem();
+
+				if (currentItemOnTile != null) {
+					System.out.println("Item is acting on mech");
+					currentItemOnTile.act(m);
+					System.out.println("Mech's health is now = " + m.getHealth());
+				}
+				for (Mech om : this.getGrid().getTileAt(m.getGridX(), m.getGridY()).getMechs()) {
+					if ((!m.getType().equals(MechType.DEATH)) && m.canBreedWith(om)) {
 						System.err.println("BREEDING BREEDING");
 						// then they will start breeding
 						// the breeding occurs for 5 seconds
@@ -92,12 +95,20 @@ public class Level {
 						// after breeding they go their own way
 						// how can we do this without making the entire thread wait :/
 						// we need to break
-					} else {
-						System.err.println("eee");
 					}
 				}
 			}
+			this.getGrid().getTileAt(m.getGridX(), m.getGridY()).removeMech(m);
 			m.move(this.getGrid());
+			this.getGrid().getTileAt(m.getGridX(), m.getGridY()).addMech(m);
+			if (m.getType().equals(MechType.DEATH)) {
+				ArrayList<Mech> killTheseMechsOkay = new ArrayList<>(this.getGrid().getTileAt(m.getGridX(), m.getGridY()).getMechs());
+				killTheseMechsOkay.remove(m);
+				for (Mech om : killTheseMechsOkay) {
+					audioPlayer.playDeathSound();
+					this.killMech(om);
+				}
+			}
 		}
 	}
 
@@ -108,12 +119,17 @@ public class Level {
 			if(i.isReadyForDestroy) {
 				System.out.println(i.isReadyForDestroy);
 				removeItem(i);
+			if(i.isReadyForDestroy()) {
+				System.err.println("Gets destroyed");
+				this.removeItem(i);
+				//this.getGrid().getTileAt(i.getGridX(), i.getGridY()).setCurrentItem(null);
 			}
 		}
 	}
 	
 	private void removeItem(Item i) {
 		this.items.remove(i);
+		this.getGrid().getTileAt(i.getGridX(), i.getGridY()).setCurrentItem(null);
 	}
 
 	public void update() throws Exception {

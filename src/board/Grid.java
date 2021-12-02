@@ -1,5 +1,6 @@
 package board;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 //import java.util.Arrays;
@@ -11,6 +12,7 @@ public class Grid {
 	private final int height;
 	
 	private Tile[][] grid;
+	//private ArrayList<Tile> allTiles;
 	/*
 	* PLEASE BE AWARE THAT THIS READS IN THE TILES AND CONSTRUCTS THE ARRAY TOP TO BOTTOM
 	* I.E. THE ORIGIN OF X,Y IS TOP LEFT, NOT BOTTOM LEFT
@@ -19,7 +21,12 @@ public class Grid {
 		this.width = width;
 		this.height = height;
 		this.grid = new Tile[width][height];
+		//this.allTiles = new ArrayList<>();
 	}
+
+//	public ArrayList<Tile> getAllTiles() {
+//		return this.allTiles;
+//	}
 
 	public Tile getTileAt(int x, int y) {
 		// should we do x-1, y-1 ?
@@ -51,7 +58,9 @@ public class Grid {
 		for(int i = 0; i < rows.length; i++) {
 			String[] rowTiles = rows[i].split("");
 			for(int j = 0; j < rowTiles.length; j++) {
-				this.grid[j][i] = GameObjectFactory.makeTile(rowTiles[j].charAt(0), j, i);
+				Tile t = GameObjectFactory.makeTile(rowTiles[j].charAt(0), j, i);
+				this.grid[j][i] = t;
+				//allTiles.add(t);
 			}
 		}
 	}

@@ -375,7 +375,7 @@ public class Game {
         Pane root = buildGUI();
         Stage stage = new Stage();
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
-        ArrayList <Item> itemTest = new ArrayList <Item> ();
+        ArrayList < Item > itemTest = new ArrayList < Item > ();
 
         itemTest.add(new DeathMech(5, 5).getDeathItem());
         itemTest.add(new Acid(2, 10));
