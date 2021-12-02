@@ -3,29 +3,37 @@ package gameObject;
 import javafx.scene.image.Image;
 
 public class Remodel extends Item {
-	// could make these final ints in abstract item class instead (maybe?)
-	// is 0 x and y range because it acts on the tile it is on
-	private static final int X_RANGE = 0;
-	private static final int Y_RANGE = 0;
 	
-	public Remodel(int x, int y) {
-		super(x, y);
+	private boolean isMaleRemodel;
+
+	public static final Image ITEM_IMAGE_R_TO_P = new Image("file:res/Sprites/RtoP.png",50, 50, false, false);
+	public static final Image ITEM_IMAGE_P_TO_R = new Image("file:res/Sprites/PtoR.png",50, 50, false, false);
+
+	public Remodel(int x, int y, boolean isMaleRemodel) {
+		super(x, y, 0);
+		this.isMaleRemodel = isMaleRemodel;
 	}
 	
 	private void remodelMech(Mech mech) {
-		// figure out how to deal with possible pregnant mech
-		//mech.setType((mech.getType() == 'P' ? 'R' : 'P'));
+		if(mech.getType() != MechType.DEATH) {
+			if(mech.getType() == MechType.PRODUCTION && this.isMaleRemodel == true) {
+				mech.setType(MechType.RESOURCE);
+				mech.setImage();
+			} else if (mech.getType() == MechType.RESOURCE && this.isMaleRemodel == false){
+				mech.setType(MechType.PRODUCTION);
+				mech.setImage();
+			}
+			this.isReadyForDestroy = true;
+		}
 	}
 
 	@Override
-	public void act(Mech someMech) {
-		this.remodelMech(someMech);
+	public void act(Mech mech) {
+		this.remodelMech(mech);
 	}
 
 	@Override
 	public Image getImage() {
-		// TODO Auto-generated method stub
-		return null;
+		return (isMaleRemodel ? ITEM_IMAGE_R_TO_P : ITEM_IMAGE_P_TO_R);
 	}
-
 }

@@ -13,64 +13,123 @@ import board.Grid;
 import gameObject.GameObjectFactory;
 import gameObject.Item;
 import gameObject.Mech;
+import gameObject.MechType;
 import inventory.Inventory;
 
 public class Level {
+	private static final int WINNING_NUMBER_OF_MECHS = 0;
+	private static final int SCORE_PER_KILL = 10;
+
 	private int levelID;
-	private int width;
-	private int height;
 	private int numOfMechsToLose;
 	private int currentScore;
+
 	private int expectedSecs;
 	private int elapsedTime;
+
 	private Inventory inventory;
 	
 	private ArrayList<Item> items;
 	private ArrayList<Mech> mechs;
+
 	private Grid grid;
 
-	private final char[] mechTypes = {'R', 'P'};
-	
-	private final int MAX_ITEM_USES = 4;
-	private final int WINNING_NUMBER_OF_MECHS = 0;
-	private final int MECH_KILL_SCORE = 5;
-	private final int BABY_MECHS_FROM_MOTHER = 5;
-	
-//	private Grid grid;
-//	private Inventory inventory;
-//
-//	private int width;
-//	private int height;
-//	private int losingNumberOfMechs;
-//	private int currentScore;
-//	private int expectedSecondsToComplete;
-//	private int timeElapsed; // This might need to be in the game class, same with won/lost
-//	private int levelID;
-	// this shouldn't be static because it could be a different level (i think)
-	// basically, if you load up a level which is level, say, 3 then you're saying that the next level
-	// id is 2
-//
-//	private ArrayList<Mech> currentMechs;
-//	private ArrayList<Item> currentItemsInPlay;
-	
-	// maybe it's a good idea to let every mech access the grid?
-	// it sounds a bit off tbh but idk
-	// if every mech has access to the grid, then they have access to all the tiles
-	// if every item has access to the grid, then they have access to all the tiles
-	// every tile should hold the thing on it???
+	//private HashMap<Pair, Item> coordsToItems;
+	// probably can't have a hashmap of coordstomechs because collisions are possible :/
+	//private HashMap<Pair, Mech> ccordsToMechs;
+	//private final int MECH_KILL_SCORE = 5;
+	//private final int BABY_MECHS_FROM_MOTHER = 5;
 
-	public Level(int levelId, int width, int height, Inventory inventory, int numOfMechsToLose, int currentScore,
-				 int expectedSecs, int elapsedTime, ArrayList<Mech> mechs, Grid grid) {
-		this.levelID = levelId;
-		this.width = width;
-		this.height = height;
+	public Level(int levelID, Inventory inventory, int numberOfMechsToLose, int currentScore, int expectedSeconds,
+				 int elapsedTime, ArrayList<Mech> mechs, Grid grid) {
+		this.levelID = levelID;
 		this.inventory = inventory;
-		this.numOfMechsToLose = numOfMechsToLose;
+		this.numOfMechsToLose = numberOfMechsToLose;
 		this.currentScore = currentScore;
-		this.expectedSecs = expectedSecs;
+		this.expectedSecs = expectedSeconds;
 		this.elapsedTime = elapsedTime;
 		this.mechs = mechs;
 		this.grid = grid;
+	}
+
+	public void addItem(Item i) {
+		this.items.add(i);
+	}
+
+	private int getPointsForKill(Mech m) {
+		int points = m.isPregnant() ? (SCORE_PER_KILL * (Mech.NUM_OF_BABIES_IF_BIRTHING + 1)) : SCORE_PER_KILL;
+		return points;
+	}
+
+	private void killMech(Mech m) {
+		this.currentScore += getPointsForKill(m);
+		this.mechs.remove(m);
+	}
+
+	private void updateMechs() throws Exception {
+		ArrayList<Mech> currentMechsCopy = new ArrayList<>(this.mechs);
+		for(Mech m : currentMechsCopy) {
+			Tile currentMechTile = this.getGrid().getTileAt(m.getGridX(), m.getGridY());
+			Item currentItemOnTile = currentMechTile.getCurrentItem();
+
+			if(currentItemOnTile != null) {
+				System.out.println("Item is acting on mech");
+				currentItemOnTile.act(m);
+				System.out.println("Mech's health is now = " + m.getHealth());
+			}
+
+			if(m.getHealth() <= 0) {
+				this.killMech(m);
+				System.err.println("A mech has died");
+			} else {
+				for(Mech om : this.getGrid().getTileAt(m.getGridX(), m.getGridY()).getMechs()) {
+					System.out.println("This mech is on another tile with a mech");
+					if(m.canBreedWith(om)) {
+						System.err.println("BREEDING BREEDING");
+						// then they will start breeding
+						// the breeding occurs for 5 seconds
+						// whilst breeding, they do not move
+						// after breeding they go their own way
+						// how can we do this without making the entire thread wait :/
+						// we need to break
+					} else {
+						System.err.println("eee");
+					}
+				}
+			}
+			m.move(this.getGrid());
+		}
+	}
+
+	public void updateItems() throws Exception {
+		ArrayList<Item> currentItemCopy = new ArrayList<>(this.items);
+		for(Item i : currentItemCopy) {
+			this.getGrid().getTileAt(i.getGridX(), i.getGridY()).setCurrentItem(i);
+			if(i.isReadyForDestroy) {
+				removeItem(i);
+			}
+		}
+	}
+	
+	private void removeItem(Item i) {
+		this.items.remove(i);
+	}
+
+	public void update() throws Exception {
+		// this for loop should probs just go into an init method
+		this.updateItems();
+		this.updateMechs();
+	}
+
+
+
+	// need some validation
+	public void removeMech(Mech m) {
+		this.mechs.remove(m);
+	}
+
+	public void addMech(Mech m) {
+		this.mechs.add(m);
 	}
 
 	public Grid getGrid() {
@@ -188,14 +247,6 @@ public class Level {
 //		// set the pregnant mech's isPregnant var to false.
 //		// more is done
 //	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public int getHeight() {
-		return height;
-	}
 
 	public int getLosingNumberOfMechs() {
 		return numOfMechsToLose;

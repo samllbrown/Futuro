@@ -1,16 +1,41 @@
 package gameObject;
 
 import javafx.scene.image.Image;
+import org.w3c.dom.css.Rect;
 
-public abstract class Item {
+import java.awt.*;
+
+public abstract class Item extends Rectangle {
 	//private String itemID;
 	private int x, y;
 
+	private int xRange;
+	private int yRange;
+	private int damage;
 	
+	public boolean isReadyForDestroy = false;
+
 //	protected Item(String itemID, int xPos, int yPos, int xRange, int yRange) {
-	protected Item(int x, int y) {
+	protected Item(int x, int y, int damage) {
 		this.x = x;
 		this.y = y;
+		this.damage = damage;
+	}
+	
+	public void setXRange(int xRange) {
+		this.xRange = xRange;
+	}
+	
+	public void setYRange(int yRange) {
+		this.yRange = yRange;
+	}
+	
+	public int getXRange() {
+		return this.xRange;
+	}
+	
+	public int getYRange() {
+		return this.yRange;
 	}
 	
 	public int getGridX() {
@@ -21,7 +46,8 @@ public abstract class Item {
 		return this.y;
 	}
 	public abstract Image getImage();
-	
-	// every item will act on some mech
-	public abstract void act(Mech someMech);
+
+	public void act(Mech someMech) {
+		someMech.takeDamage(this.damage);
+	}
 }

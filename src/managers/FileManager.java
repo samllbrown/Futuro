@@ -18,8 +18,8 @@ import inventory.Inventory;
  */
 
 public class FileManager {
-	public static final File PLAYER_FILE = new File ( "Players.txt");
-	public static final File LEADERBOARD_FILE = new File ("Leaderboard.txt");
+	public static final File PLAYER_FILE = new File ( "res/Players.txt");
+	public static final File LEADERBOARD_FILE = new File ("res/Leaderboard.txt");
 
 	// need to do leaderboard reading and writing or something
 
@@ -72,7 +72,7 @@ public class FileManager {
 	public static void deleteRecordWithID(int id, File file) {
 		BufferedReader br = null;
 		BufferedWriter wr = null;
-		File newFile = new File("temp.txt");
+		File newFile = new File("res/temp.txt");
 		try {
 			br = new BufferedReader(new FileReader(file));
 			wr = new BufferedWriter(new FileWriter(newFile));
@@ -90,6 +90,7 @@ public class FileManager {
 			try {
 				br.close();
 				wr.flush();
+				wr.close();
 				if(file.delete()) {
 					newFile.renameTo(file);
 				} else {
@@ -121,7 +122,7 @@ public class FileManager {
 //		return recorded;
 //	}
 	// could do something liek this instead? idk, you decide but lmk what you think
-	public HashSet<Integer> getAllIdsInFile(File file) {
+	public static HashSet<Integer> getAllIdsInFile(File file) {
 		HashSet<Integer> ids = new HashSet<>();
 		BufferedReader br = null;
 		try {
@@ -145,7 +146,7 @@ public class FileManager {
 	}
 
 	// good idea
-	public boolean writeToPlayerFile(Player player) {
+	public static boolean writeToPlayerFile(Player player) {
 		boolean written = false;
 		HashSet<Integer> playerids = getAllIdsInFile(PLAYER_FILE);
 		if(!(playerids.contains(player.getPlayerID()))) {
@@ -153,6 +154,17 @@ public class FileManager {
 			written = true;
 		}
 		return written;
+	}
+	
+	public static boolean deleteFromPlayerFile(Player player) {
+		boolean deleted = false;
+		HashSet<Integer> playerids = getAllIdsInFile(PLAYER_FILE);
+		System.out.println(playerids.contains(player.getPlayerID()));
+		if((playerids.contains(player.getPlayerID()))) {
+			deleteRecordWithID(player.getPlayerID(), PLAYER_FILE);
+			deleted = true;
+		}
+		return deleted;
 	}
 
 	// probably needs validation
@@ -170,12 +182,12 @@ public class FileManager {
 //		writeRecordToFile(record, LEADERBOARD_FILE);
 //	}
 	
-	/**
-	 * Given a playerID checks if that player exists within the player file, if so then returns that player
-	 * @param playerID
-	 * @return
-	 * @throws FileNotFoundException
-	 */
+//	/**
+//	 * Given a playerID checks if that player exists within the player file, if so then returns that player
+//	 * @param playerID
+//	 * @return
+//	 * @throws FileNotFoundException
+//	 */
 //	public static Player checkIfPlayerExists (int playerID) throws Exception {
 //		String playerRecord = getPlayerInfoFromFile(playerID, PLAYER_FILE);
 //		if(playerRecord == null) {
@@ -226,7 +238,8 @@ public class FileManager {
 		grid.populateGrid(tiles);
 		br.close();
 		// null for inventory for now;
-		return new Level(levelid, height, width, null, numberOfMechsToLose, currentScore, expectedSecondsToComplete, elapsedTime, mechs, grid);
+		//return new Level(levelid, height, width, null, numberOfMechsToLose, currentScore, expectedSecondsToComplete, elapsedTime, grid);
+		return new Level(levelid, inventory, numberOfMechsToLose, currentScore, expectedSecondsToComplete, elapsedTime, mechs, grid);
 	}
 
 	/*

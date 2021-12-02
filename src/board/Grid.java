@@ -26,6 +26,10 @@ public class Grid {
 		// need to make sure that the correct x and y are being accessed
 		return this.grid[x][y];
 	}
+
+	public Tile getTileAt(Pair cords) {
+		return this.grid[cords.x][cords.y];
+	}
 	
 	public int getWidth() {
 		return this.width;

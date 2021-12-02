@@ -1,11 +1,9 @@
 package managers;
 
 import javafx.application.Application;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import board.Level;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -26,6 +24,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import services.audioPlayer;
 
 public class GameManager extends Application {
 
@@ -55,20 +54,12 @@ public class GameManager extends Application {
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         primaryStage.setTitle("Futuro");
         
+        audioPlayer.playMainMenu();
+        
         // Display the scene on the stage
         primaryStage.setScene(scene);
         mainMenu = primaryStage;
-     //   String bip = getCurrentWorkingDirectory() + "\\src\\music\\ratmusic.mp3";
-     //   System.out.println(bip);
-     //   Media hit = new Media(new File(bip).toURI().toString());
-     //   MediaPlayer mediaPlayer = new MediaPlayer(hit);
-        //mediaPlayer.play();
         mainMenu.show();
-    }
-    
-    private static String getCurrentWorkingDirectory() {
-        String userDirectory = System.getProperty("user.dir");
-        return userDirectory;
     }
 
     public static void main(String[] args) throws Exception {
@@ -104,22 +95,31 @@ public class GameManager extends Application {
         root.setLeft(sidebar);
         sidebar.getChildren().addAll(createPlayer, choosePlayer, newPlayer, deletePlayer,load ,exitMainMenu);
 
-
         createPlayer.setOnAction(e -> {
         	//Level level = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
             Level level = null;
             try {
-                level = FileManager.readLevel("LEVEL_1.txt");
+                level = FileManager.readLevel("res\\Levels\\LEVEL_1.txt");
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
             Game game = new Game(level);
             mainMenu.close();
             try {
+            	audioPlayer.stopAllMusic();
                 game.showGame();
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
+        });
+        
+        deletePlayer.setOnAction(e -> {
+        	Pane deletePlayerPane = buildDeletePlayer();
+            Scene deletePlayerScene = new Scene(deletePlayerPane, 300, 200);
+            Stage deletePlayerStage = new Stage();
+            deletePlayerStage.setScene(deletePlayerScene);
+            deletePlayerStage.setTitle("New player");
+            deletePlayerStage.show();
         });
         
         // Create a new profile to play the game as
@@ -183,11 +183,11 @@ public class GameManager extends Application {
         Button newPlayerButton = new Button("CREATE PLAYER");
         root.setLeft(sidebar);
         sidebar.getChildren().addAll(playerID, playerIDInput, playerName, playerNameInput, newPlayerButton);
-        
-        FileManager playerCreator = new FileManager();
+
+
         newPlayerButton.setOnAction(e -> { 
     	try {
-        	boolean created = (playerCreator.writeToPlayerFile(new Player(playerIDInput.getText() + "," + playerNameInput.getText())));
+        	boolean created = (FileManager.writeToPlayerFile(new Player(playerIDInput.getText() + "," + playerNameInput.getText())));
         	Alert alert  = new Alert(AlertType.CONFIRMATION);
         	if(created) {
 	        	alert.setTitle("SUCCESS");
@@ -224,8 +224,45 @@ public class GameManager extends Application {
         sidebar.setSpacing(10);
         sidebar.setPadding(new Insets(10, 10, 10, 10));
         
+        
+        Label playerID = new Label("ID of player: ");
+        TextField playerIDInput = new TextField ();
+        Button deletePlayerButton = new Button("Delete player");
+        
         root.setLeft(sidebar);
-        sidebar.getChildren().addAll();
+        sidebar.getChildren().addAll(playerID, playerIDInput, deletePlayerButton);
+
+
+        deletePlayerButton.setOnAction(e -> {
+        	try {
+            	boolean deleted = (FileManager.deleteFromPlayerFile(new Player(Integer.valueOf(playerIDInput.getText()), "ass", 0)));
+            	Alert alert  = new Alert(AlertType.CONFIRMATION);
+            	if(deleted) {
+            		alert.setTitle("SUCCESS");
+    	        	alert.setHeaderText("Player deleted");
+    	        	alert.setContentText("Huzzah! You have created a Player.");
+    	            alert.showAndWait().ifPresent(rs -> {
+    	                if (rs == ButtonType.OK) {
+    	                    System.out.println("Pressed OK.");
+    	                }
+    	            });
+            	}
+            	else {
+            		alert.setTitle("FAILURE");
+            		alert.setHeaderText("Player not deleted");
+            		alert.setContentText("A player with that ID can't be found");
+            		alert.showAndWait().ifPresent(rs -> {
+    	                if (rs == ButtonType.OK) {
+    	                    System.out.println("Pressed OK.");
+    	                }
+    	            });
+            	}
+        	
+        	} catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        	
+        });
     	return root;
     }
 

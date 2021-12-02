@@ -58,6 +58,6 @@ public class Player {
 
 	@Override
 	public String toString() {
-		return (this.playerID+","+this.playerName+","+this.maxLevelID);
+		return (this.playerID + "," + this.playerName+"," + this.maxLevelID);
 	}
 }

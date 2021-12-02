@@ -5,24 +5,41 @@ import javafx.scene.image.Image;
 public class Puddle extends Item {
 	private static final int X_RANGE = 0;
 	private static final int Y_RANGE = 0;
-	
+
 	private int health;
-	
-	public Puddle(int x, int y, int health) {
-		super(x, y);
-		this.health = 100;
+	public static final Image ITEM_IMAGE = new Image("file:res/Sprites/puddle.png",50, 50, false, false);
+	public Puddle(int x, int y) {
+		super(x, y, 0);
+		this.health = 15;
+		setXRange(X_RANGE);
+		setYRange(Y_RANGE);
 	}
 
 	@Override
-	public void act(Mech someMech) {
-		// TODO Auto-generated method stub
-		// changes the direction of a mech
+	public void act(Mech mech) {
+		try {
+			mech.turn("AROUND");
+			this.health -= 5;
+			if(this.health == 0) {
+				System.err.println("THIS SHOULD NO LONGER BE HERE");
+				
+			}
+		} catch(Exception e) {
+			System.err.println("PUDDLE HAS THROWN AN ERROR WHILST TRYING TO TURN THE MECH AROUND");
+		}
 	}
 
 	@Override
 	public Image getImage() {
-		// TODO Auto-generated method stub
-		return null;
+		return ITEM_IMAGE;
+	}
+
+	public int getHealth() {
+		return health;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
 	}
 
 }

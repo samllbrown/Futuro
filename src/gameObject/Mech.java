@@ -6,10 +6,14 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import managers.Game;
+import services.Globals;
+import services.audioPlayer;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class Mech extends Rectangle {
 	// X_RANGE AND Y_RANGE should define where this item
@@ -35,30 +39,184 @@ public class Mech extends Rectangle {
 //
 //
 //	private Tile[] neighbourTiles;
+	/*
+	* for the movement:
+	* Illia's suggestion:
+	* for every move, get the neighbour tiles and check them
+	* */
 	private MechType type;
+
 	private int x, y;
+
+	public static final int NUM_OF_BABIES_IF_BIRTHING = 5;
+
+	private Direction currentDirection;
+	private Pair currentCords;
+
 	private int health;
 	private boolean pregnant;
+	private int numOfBabies;
 
 	private int prevX, prevY;
 	private Image img;
+	
+	private boolean isBaby;
+	
+	private boolean isSterile;
+	private boolean isBreeding;
 
 	// haven't implemented age functionality
-	public Mech(MechType type, int x, int y, int health, boolean pregnant) {
+	public Mech(MechType type, int x, int y, int health, boolean pregnant, boolean isBaby, boolean isSterile) {
 		setWidth(Game.TILE_SIZE);
 		setHeight(Game.TILE_SIZE);
 		relocate(x * Game.TILE_SIZE, y * Game.TILE_SIZE);
 		this.type = type;
 		this.x = x;
 		this.y = y;
+		this.currentCords = new Pair(x, y);
+		this.currentDirection = Direction.RIGHT;
 		this.health = health;
 		this.pregnant = pregnant;
 		this.img = getImageForType(type);
+		this.isBaby = isBaby;
+		this.isSterile = isSterile;
 		setFill(new ImagePattern(this.img));
+	}
+
+	public boolean canBreedWith(Mech otherMech) {
+		// the mechs must be opposite types
+		// both mechs must be both NOT CURRENTLY BREEDING
+		// the mech who is a resource mech must NOT be pregnant
+		// neither mech can be a death mech
+		// both mechs must NOT be sterile
+		boolean bothOppositeTypes = (this.type != otherMech.getType());
+		boolean neitherSterile = !(this.isSterile || otherMech.isSterile());
+		boolean neitherCurrentlyBreeding = !(this.isBreeding || otherMech.isBreeding());
+		boolean neitherPregnant = !(this.isPregnant() || otherMech.isPregnant());
+		boolean bothNotDeathMech = !((this.type != MechType.DEATH) && (otherMech.getType() != MechType.DEATH));
+		return bothOppositeTypes && neitherSterile && neitherCurrentlyBreeding && neitherPregnant && bothNotDeathMech;
+	}
+
+	public void breedWith(Mech otherMech) {
+
+	}
+
+	public Mech birthMech() {
+		assert this.type.equals(MechType.PRODUCTION);
+		Random random = new Random();
+		MechType babyType = Globals.NORMAL_MECH_TYPES[random.nextInt(2)];
+		Direction babyDirection = Globals.NON_STATIONARY_DIRECTIONS[random.nextInt(4)];
+		// need to create baby speed thingy
+		Mech myBaby = new Mech(babyType, this.x, this.y, 100, false, true, true);
+		myBaby.setCurrentDirection(babyDirection);
+		return myBaby;
+	}
+
+	public boolean isBreeding() {
+		return this.isBreeding;
+	}
+
+	public void setCurrentDirection(Direction dir) {
+		this.currentDirection = dir;
+	}
+
+	private static Direction getTurnDirection(String relativeDir, Direction currentDirection) {
+		try {
+			switch (relativeDir) {
+				case "AROUND":
+					return Direction.fromPair(currentDirection.toPair().mult(new Pair(-1, -1)));
+				case "RIGHT":
+					return Direction.fromPair(new Pair(currentDirection.getYDir(), (-1 * currentDirection.getXDir())));
+//				this.currentDirection = new Pair(this.currentDirection.getYDir(), (-1 * this.currentDirection.getXDir()));
+				case "LEFT":
+					return Direction.fromPair(new Pair((-1 * currentDirection.getYDir()), currentDirection.getXDir()));
+//			case "FORWARD":
+//				this.currentDirection = this.currentDirection;
+				default:
+					return currentDirection;
+			}
+		} catch(Exception e) {
+			System.err.println("ERROR GETTING DIRECTION FROM STATIC TURN DIRECTION");
+			return null;
+		}
+	}
+
+	public void turn(String relativeDir) throws Exception {
+		switch (relativeDir) {
+			case "AROUND":
+				this.currentDirection = Direction.fromPair(this.currentDirection.toPair().mult(new Pair(-1, -1)));
+				break;
+			case "RIGHT":
+				this.currentDirection = Direction.fromPair(new Pair(this.currentDirection.getYDir(), (-1 * this.currentDirection.getXDir())));
+				break;
+//				this.currentDirection = new Pair(this.currentDirection.getYDir(), (-1 * this.currentDirection.getXDir()));
+			case "LEFT":
+				this.currentDirection = Direction.fromPair(new Pair((-1 * this.currentDirection.getYDir()), this.currentDirection.getXDir()));
+				break;
+//			case "FORWARD":
+//				this.currentDirection = this.currentDirection;
+			default:
+				this.currentDirection = this.currentDirection;
+		}
+	}
+
+	public int getNumOfBabies() {
+		return numOfBabies;
+	}
+
+	public void setNumOfBabies(int numOfBabies) {
+		this.numOfBabies = numOfBabies;
+	}
+
+	private Pair getNextPos(Direction inDirection) {
+		return this.currentCords.add(inDirection.toPair());
+	}
+
+	public void move(Grid onGrid) throws Exception {
+		Pair possibleNextCoords = this.getNextPos(this.currentDirection);
+		ArrayList<String> turns = new ArrayList<>();
+		turns.add("FORWARD");
+		turns.add("LEFT");
+		turns.add("RIGHT");
+		//turns.add("AROUND");
+		Random rand = new Random();
+		// if the next tile in the current direction isn't walkable (i.e. if it's a wall)
+
+		if (!(onGrid.getTileAt(possibleNextCoords).isWalkable())) {
+			// if the
+			//if((!(onGrid.getTileAt(this.getNextPos(Direction.RIGHT)).isWalkable())) && (!(onGrid.getTileAt(this.getNextPos(Direction.LEFT)).isWalkable()))) {
+			if((!onGrid.getTileAt(this.getNextPos(getTurnDirection("RIGHT",currentDirection))).isWalkable()) && (!onGrid.getTileAt(this.getNextPos(getTurnDirection("LEFT",currentDirection))).isWalkable())) {
+				this.turn("AROUND");
+				this.currentCords = this.currentCords.add(this.currentDirection.toPair());
+			} else {
+				turns.remove("FORWARD");
+				turns = new ArrayList<String>(turns.stream().filter(dirStr ->
+						(onGrid.getTileAt(this.getNextPos(getTurnDirection(dirStr, this.currentDirection)))).isWalkable()).collect(Collectors.toList()));
+				this.turn(turns.get(rand.nextInt(turns.size())));
+				this.currentCords = this.currentCords.add(this.currentDirection.toPair());
+			}
+		} else {
+			turns = new ArrayList<String>(turns.stream().filter(dirStr ->
+					(onGrid.getTileAt(this.getNextPos(getTurnDirection(dirStr, this.currentDirection)))).isWalkable()).collect(Collectors.toList()));
+			this.turn(turns.get(rand.nextInt(turns.size())));
+			this.currentCords = this.currentCords.add(this.currentDirection.toPair());
+		}
+//		this.currentCords = this.currentCords.add(this.currentDirection.toPair());
+		this.x = this.currentCords.x;
+		this.y = this.currentCords.y;
+	}
+
+	
+	public boolean getIsBaby() {
+		return this.isBaby;
 	}
 
 	public Image getImage(){
 		return this.img;
+	}
+	
+	public void setImage() {
+		this.img = this.getImageForType(this.type);
 	}
 	public int getGridX() {
 		return this.x;
@@ -87,13 +245,32 @@ public class Mech extends Rectangle {
 		return img;
 	}
 
-	public void move(int x, int y) {
-		this.x += x;
-		this.y += y;
-	}
-
 	public MechType getType() {
 		return this.type;
+	}
+
+	public boolean isPregnant() {
+		return this.pregnant;
+	}
+
+	public void setPregnant(boolean isPregnant) {
+		this.pregnant = isPregnant;
+	}
+	
+	public void setType(MechType type) {
+		this.type = type;
+	}
+	
+	public int getHealth() {
+		return this.health;
+	}
+	
+	public void takeDamage(int damage) {
+		this.health = this.health - damage;
+		if(this.health <= 0) {
+			audioPlayer.playDeathSound();
+			//DESTORY MECH HERE
+		}
 	}
 	// should itemId be a thing in the constructor for item?
 	// need to update this constructor
@@ -192,13 +369,6 @@ public class Mech extends Rectangle {
 //	}
 //
 //
-//	public boolean isPregnant() {
-//		return isPregnant;
-//	}
-//
-//	public void setPregnant(boolean isPregnant) {
-//		this.isPregnant = isPregnant;
-//	}
 //
 //	public int getHealth() {
 //		return health;
@@ -246,8 +416,13 @@ public class Mech extends Rectangle {
 //
 //	public void setyDir(int yDir) {
 //		this.yDir = yDir;
-//	}
+//	}	
 
-	
-	
+	public boolean isSterile() {
+		return isSterile;
+	}
+
+	public void setSterile(boolean isSterile) {
+		this.isSterile = isSterile;
+	}
 }
