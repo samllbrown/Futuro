@@ -207,7 +207,6 @@ public class Game {
         Button mechMoveBtn = new Button("Move mechs");
         Button addItemBtn = new Button("Add item");
         Button saveGameBtn = new Button("Save Game");
-        toolbar.getChildren().addAll(mechMoveBtn, addItemBtn, saveGameBtn);
 
         stopTickTimelineButton.setOnAction(e -> {
             // Stop the tick timeline and enable/disable buttons as appropriate.
@@ -220,7 +219,9 @@ public class Game {
             //Needs to be closed
             GameManager.mainMenu.show();
         });
-
+        saveGameBtn.setOnAction(e ->{
+            saveGame();
+        });
 
         topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton, exitGameButton);
 
@@ -254,10 +255,6 @@ public class Game {
             }
         });
 
-        saveGameBtn.setOnAction(e ->{
-            saveGame();
-        });
-
         canvas.setOnDragDropped(new EventHandler < DragEvent > () {
             public void handle(DragEvent event) {
                 // We call this method which is where the bulk of the behaviour takes place.
@@ -266,15 +263,12 @@ public class Game {
                 event.consume();
             }
         });
-
         return root;
     }
 
     public void saveGame() {
         //save the game for current player
     }
-
-	public void drawGame() {
 
     // just testing the drag and drop from the starter kit
     public void canvasDragDroppedOccured(DragEvent event) {
