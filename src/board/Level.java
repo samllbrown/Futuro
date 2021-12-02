@@ -106,6 +106,7 @@ public class Level {
 		for(Item i : currentItemCopy) {
 			this.getGrid().getTileAt(i.getGridX(), i.getGridY()).setCurrentItem(i);
 			if(i.isReadyForDestroy) {
+				System.out.println(i.isReadyForDestroy);
 				removeItem(i);
 			}
 		}

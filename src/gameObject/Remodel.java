@@ -19,11 +19,12 @@ public class Remodel extends Item {
 			if(mech.getType() == MechType.PRODUCTION && this.isMaleRemodel == true) {
 				mech.setType(MechType.RESOURCE);
 				mech.setImage();
+				this.isReadyForDestroy = true;
 			} else if (mech.getType() == MechType.RESOURCE && this.isMaleRemodel == false){
 				mech.setType(MechType.PRODUCTION);
 				mech.setImage();
+				this.isReadyForDestroy = true;
 			}
-			this.isReadyForDestroy = true;
 		}
 	}
 
