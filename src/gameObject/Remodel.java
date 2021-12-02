@@ -27,8 +27,8 @@ public class Remodel extends Item {
 	}
 
 	@Override
-	public void act(Mech someMech) {
-		this.remodelMech(someMech);
+	public void act(Mech mech) {
+		this.remodelMech(mech);
 	}
 
 	@Override
