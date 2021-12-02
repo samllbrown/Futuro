@@ -13,7 +13,7 @@ public abstract class Item extends Rectangle {
 	private int yRange;
 	private int damage;
 	
-	public boolean isReadyForDestroy;
+	public boolean isReadyForDestroy = false;
 
 //	protected Item(String itemID, int xPos, int yPos, int xRange, int yRange) {
 	protected Item(int x, int y, int damage) {
