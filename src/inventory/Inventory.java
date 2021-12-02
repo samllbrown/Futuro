@@ -22,14 +22,11 @@ public class Inventory {
 		this.inventoryItems = inventoryItems;
 	}
 
-	public Item useItem(String name, int atX, int atY) throws Exception {
+	public void useItem(String name){
 		if(inventoryItems.get(name).getRemainingUses() == 0) {
-			// make an exceptions class plz
-			throw new Exception("Item has been used too many times to use it again");
+
 		} else {
 			inventoryItems.get(name).reduceUses();
-			//return GameObjectFactory.makeItemFromName(name, atX, atY);
-			return null;
 		}
 	}
 

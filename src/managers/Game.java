@@ -242,7 +242,7 @@ public class Game {
        for(var i : this.level.getInventory().getHashMap().entrySet()) {
     	   InventoryItem iconItem = i.getValue();
     	   iconItem.setImage(iconItem.getSprite());
-    	   sidebar.getChildren().addAll(iconItem);
+    	   sidebar.getChildren().addAll(iconItem, new Button(Integer.toString(iconItem.getRemainingUses())));
     	   
     	   iconItem.setOnDragDetected(new EventHandler<MouseEvent>() {
 	            public void handle(MouseEvent event) {
@@ -292,6 +292,8 @@ public class Game {
         
         if(db.hasString()) {
 	        Item i = InventoryItem.getItemForName(db.getString(), xCoord, yCoord);
+	        level.getInventory().useItem(db.getString());
+	        
 	        if(db.getString() == "DEATH_MECH") {
 	        	
 	        	Mech newMech = new DeathMech(xCoord, yCoord);
@@ -304,7 +306,9 @@ public class Game {
 	        // Draw the the image so the center is where we dropped.
 	        // gc.drawImage(iconImage, x - iconImage.getWidth() / 2.0, y -
 	        // iconImage.getHeight() / 2.0);
-        } 
+        } else {
+        	System.out.println("This error should exist (Game.java)");
+        }
     }
 
     public void drawGame() {
