@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 import java.util.Locale;
 
 public abstract class InventoryItem extends ImageView {
-    protected final int MAX_ITEM_USES = 4;
+    protected static final int MAX_ITEM_USES = 4;
     public final String itemName;
     protected final Image itemSprite;
     protected int remainingUses;
@@ -83,15 +83,19 @@ public abstract class InventoryItem extends ImageView {
 
     public void reduceUses() {
         this.remainingUses--;
+        syncUses();
     }
 
     public void reduceUses(int uses) {
         this.remainingUses -= uses;
+        syncUses();
     }
 
     public Image getSprite() {
     	return itemSprite;
     }
+    
+    public abstract void syncUses();
 
     //getName abstract static meaning that all items should
 

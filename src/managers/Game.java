@@ -222,23 +222,26 @@ public class Game {
         // This code setup what happens when the dragging starts on the image.
         // You probably don't need to change this (unless you wish to do more advanced
         // things).
-        for (var i: this.level.getInventory().getHashMap().entrySet()) {
-            InventoryItem iconItem = i.getValue();
-            iconItem.setImage(iconItem.getSprite());
-            sidebar.getChildren().addAll(iconItem);
-
-            iconItem.setOnDragDetected(new EventHandler < MouseEvent > () {
-                public void handle(MouseEvent event) {
-                    Dragboard db = iconItem.startDragAndDrop(TransferMode.ANY);
-                    ClipboardContent content = new ClipboardContent();
-                    content.putString(iconItem.itemName);
-                    db.setContent(content);
-                    event.consume();
-                }
-            });
-        }
-
-        canvas.setOnDragOver(new EventHandler < DragEvent > () {
+       for(var i : this.level.getInventory().getHashMap().entrySet()) {
+    	   InventoryItem iconItem = i.getValue();
+    	   iconItem.setImage(iconItem.getSprite());
+    	   sidebar.getChildren().addAll(iconItem, new Button(Integer.toString(iconItem.getRemainingUses())));
+    	   
+    	   iconItem.setOnDragDetected(new EventHandler<MouseEvent>() {
+	            public void handle(MouseEvent event) {
+	                Dragboard db = iconItem.startDragAndDrop(TransferMode.ANY);
+	
+	
+	                ClipboardContent content = new ClipboardContent();
+	                content.putString(iconItem.itemName);
+	                db.setContent(content);
+	
+	
+	                event.consume();
+	            }
+	        });
+       }
+        canvas.setOnDragOver(new EventHandler<DragEvent>() {
             public void handle(DragEvent event) {
                 // Mark the drag as acceptable if the source was the draggable image.
                 // (for example, we don't want to allow the user to drag things or files into
@@ -269,23 +272,25 @@ public class Game {
         double y = event.getY();
         int xCoord = (int) Math.round(x) / TILE_SIZE;
         int yCoord = (int) Math.round(y) / TILE_SIZE;
-
-        if (db.hasString()) {
-            Item i = InventoryItem.getItemForName(db.getString(), xCoord, yCoord);
-            if (db.getString() == "DEATH_MECH") {
-
-                Mech newMech = new DeathMech(xCoord, yCoord);
-                this.level.addMech(newMech);
-            } else {
-                this.level.addItem(i);
-            }
-            // Draw an icon at the dropped location.
-            GraphicsContext gc = canvas.getGraphicsContext2D();
-            // Draw the the image so the top-left corner is where we dropped.
-            gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
-            // Draw the the image so the center is where we dropped.
-            // gc.drawImage(iconImage, x - iconImage.getWidth() / 2.0, y -
-            // iconImage.getHeight() / 2.0);
+        
+        if(db.hasString()) {
+	        Item i = InventoryItem.getItemForName(db.getString(), xCoord, yCoord);
+	        level.getInventory().useItem(db.getString());
+	        
+	        if(db.getString() == "DEATH_MECH") {
+	        	
+	        	Mech newMech = new DeathMech(xCoord, yCoord);
+	        	this.level.addMech(newMech);
+	        } else {  this.level.addItem(i);}
+	        // Draw an icon at the dropped location.
+	        GraphicsContext gc = canvas.getGraphicsContext2D();
+	        // Draw the the image so the top-left corner is where we dropped.
+	        gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
+	        // Draw the the image so the center is where we dropped.
+	        // gc.drawImage(iconImage, x - iconImage.getWidth() / 2.0, y -
+	        // iconImage.getHeight() / 2.0);
+        } else {
+        	System.out.println("This error should not exist (Game.java)");
         }
     }
 
