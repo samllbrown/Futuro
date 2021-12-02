@@ -53,7 +53,7 @@ public class GameManager extends Application {
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         primaryStage.setTitle("Futuro");
         
-        audioPlayer.playMainMenu();
+        //audioPlayer.playMainMenu();
         
         // Display the scene on the stage
         primaryStage.setScene(scene);
@@ -244,7 +244,8 @@ public class GameManager extends Application {
     }
 
     private Pane buildChooseLevel() {
-        // needs to be done
+    	//BorderPane root = new BorderPane();
+    	
         return null;
     }
     
@@ -266,6 +267,15 @@ public class GameManager extends Application {
         	if(playerIDInput.getText() != null) {
                 try {
                     this.currentPlayer = FileManager.getPlayer(Integer.valueOf(playerIDInput.getText()));
+                    Alert alert = new Alert(AlertType.INFORMATION);
+    				alert.setTitle("INFORMATION");
+    				alert.setHeaderText("Player found");
+    				alert.setContentText("Player ID:" + Integer.valueOf(playerIDInput.getText()));
+    				alert.showAndWait().ifPresent(rs -> {
+    				    if (rs == ButtonType.OK) {
+    				        System.out.println("Pressed OK.");
+    				    }
+    				});
                 } catch (Exception exception) {
                     Alert alert = new Alert(AlertType.INFORMATION);
     				alert.setTitle("INFORMATION");
