@@ -344,10 +344,6 @@ public class Game {
             }
         }
 
-        for(Item i : this.level.getItems()) {
-
-        }
-
         for (Item i : this.level.getItems()) {
             if (i.getXRange() > 0) {
                 int q = 0;

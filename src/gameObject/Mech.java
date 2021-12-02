@@ -260,10 +260,10 @@ public class Mech extends Rectangle {
 	}
 	
 	public void takeDamage(int damage) {
-		this.health = this.health - damage;
+		this.health -= damage;
 		if(this.health <= 0) {
 			audioPlayer.playDeathSound();
-			//DESTORY MECH HERE
+			//this.setVisible(false);
 		}
 	}
 	// should itemId be a thing in the constructor for item?
