@@ -2,29 +2,37 @@ package gameObject;
 
 import javafx.scene.image.Image;
 
-public class DeathMech {
+public class DeathMech extends Mech{
+
+	private Item dmItem;
 	private static final int DAMAGE = 100;
-	private int killsLeft = 5;
+	public static final int USES = 5;
+	private int killsLeft;
 	public static final Image ITEM_IMAGE = new Image("file:res/Sprites/mechD.png",50, 50, false, false);
 
-
-	public DeathMech(int x, int y, int xDir, int yDir) {
-		Item deathMechItem = new Item(x,y,DAMAGE) {
+	public DeathMech(int x, int y) {
+		super(MechType.DEATH,x,y,100,false,false,true);
+		Item deathMechItem = new Item(x,y,DAMAGE, USES) {
 			@Override
 			public Image getImage() {
 				return ITEM_IMAGE;
 			}
 		};
-
-
-
+		this.killsLeft = USES;
+		this.dmItem  = deathMechItem;
 	}
 
-	public void act(Mech mech) {
-		while (killsLeft!= 0) {
+	public Item getDeathItem(){
+		return this.dmItem;
+	}
+
+	@Override
+	public void actOn(Mech mech) {
+		if(killsLeft != 0) {
 			mech.takeDamage(DAMAGE);
 			killsLeft--;
-			System.err.println("DEATH MECH HAS KILLED A MECH");
+			super.health -= 20;
+			System.out.println("DEATH MECH HAS KILLED A MECH");
 		}
 	}
 

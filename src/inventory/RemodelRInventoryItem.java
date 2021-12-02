@@ -1,14 +1,14 @@
 package inventory;
 
-public class AcidInventoryItem extends InventoryItem {
+public class RemodelRInventoryItem extends InventoryItem{
 
-	private static final String name = "ACID";
+	private static final String name = "REMODEL_R_TO_P";
 	private static int usesLeft; 
 	
-    public AcidInventoryItem() {
-        super(name);
+	public RemodelRInventoryItem() {
+		super(name);
     	usesLeft = MAX_ITEM_USES;
-    }
+	}
     
     public static String getName() {
     	return name;

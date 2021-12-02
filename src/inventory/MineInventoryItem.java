@@ -1,13 +1,12 @@
 package inventory;
 
-public class AcidInventoryItem extends InventoryItem {
+public class MineInventoryItem extends InventoryItem{
 
-	private static final String name = "ACID";
+	private static final String name = "MINE";
 	private static int usesLeft; 
 	
-    public AcidInventoryItem() {
+    public MineInventoryItem() {
         super(name);
-    	usesLeft = MAX_ITEM_USES;
     }
     
     public static String getName() {

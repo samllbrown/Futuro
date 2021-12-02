@@ -1,20 +1,20 @@
 package inventory;
 
-public class AcidInventoryItem extends InventoryItem {
+public class DeathMechInventoryItem extends InventoryItem {
 
-	private static final String name = "ACID";
+	private static final String name = "DEATH_MECH";
 	private static int usesLeft; 
 	
-    public AcidInventoryItem() {
+    public DeathMechInventoryItem() {
         super(name);
     	usesLeft = MAX_ITEM_USES;
     }
-    
-    public static String getName() {
-    	return name;
-    }
+
     public static void used() {
     	usesLeft-- ;
+    }
+    public static String getName() {
+    	return name;
     }
     public static int getUses() {
     	return usesLeft;
@@ -23,3 +23,4 @@ public class AcidInventoryItem extends InventoryItem {
     	usesLeft = remainingUses;
     }
 }
+
