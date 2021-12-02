@@ -53,10 +53,11 @@ public class GameManager extends Application {
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         primaryStage.setTitle("Futuro");
         
+        audioPlayer.playMainMenu();
+        
         // Display the scene on the stage
         primaryStage.setScene(scene);
         mainMenu = primaryStage;
-        //audioPlayer.playMainMenu();
         mainMenu.show();
     }
 
@@ -103,6 +104,7 @@ public class GameManager extends Application {
             Game game = new Game(level);
             mainMenu.close();
             try {
+            	audioPlayer.stopAllMusic();
                 game.showGame();
             } catch (Exception exception) {
                 exception.printStackTrace();

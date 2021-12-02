@@ -18,8 +18,10 @@ public class Remodel extends Item {
 		if(mech.getType() != MechType.DEATH) {
 			if(mech.getType() == MechType.PRODUCTION && this.isMaleRemodel == true) {
 				mech.setType(MechType.RESOURCE);
+				mech.setImage();
 			} else if (mech.getType() == MechType.RESOURCE && this.isMaleRemodel == false){
 				mech.setType(MechType.PRODUCTION);
+				mech.setImage();
 			}
 		}
 	}

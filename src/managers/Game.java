@@ -1,17 +1,11 @@
 package managers;
 
-import java.io.Console;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import board.Grid;
 import board.Level;
-import board.Tile;
 import gameObject.*;
 import inventory.*;
-import javafx.application.Application;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -23,19 +17,13 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -301,7 +289,6 @@ public class Game {
     }
 
     public void drawGame() {
-
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc.setFill(Color.GRAY);
@@ -315,10 +302,6 @@ public class Game {
             if (this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).isVisibleTile()) {
                 gc.drawImage(m.getImage(), m.getGridX() * TILE_SIZE, m.getGridY() * TILE_SIZE);
             }
-        }
-
-        for (Item i: this.level.getItems()) {
-
         }
 
         for (Item i: this.level.getItems()) {
@@ -367,7 +350,6 @@ public class Game {
             } else {
                 gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
             }
-
         }
     }
 

@@ -22,6 +22,7 @@ public class Puddle extends Item {
 			this.health -= 5;
 			if(this.health == 0) {
 				System.err.println("THIS SHOULD NO LONGER BE HERE");
+				
 			}
 		} catch(Exception e) {
 			System.err.println("PUDDLE HAS THROWN AN ERROR WHILST TRYING TO TURN THE MECH AROUND");
