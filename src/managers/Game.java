@@ -31,40 +31,69 @@ import javafx.stage.Stage;
 import services.MessageOfTheDay;
 import javafx.util.Duration;
 
+/**
+ * The Class Game.
+ */
 public class Game {
 
+    /** The tick timeline. */
     private Timeline tickTimeline;
 
-    // probably needs to be bigger than 50
+    /** The Constant TILE_SIZE. */
     public static final int TILE_SIZE = 50;
+    
+    /** The current width. */
     public int CURRENT_WIDTH;
+    
+    /** The current height. */
     public int CURRENT_HEIGHT;
+    
+    /** The tile group. */
     private Group tileGroup = new Group();
+    
+    /** The mech group. */
     private Group mechGroup = new Group();
+    
+    /** The Constant WINDOW_WIDTH of the UI. */
     private static final int WINDOW_WIDTH = 750;
+    
+    /** The Constant WINDOW_HEIGHT of the UI. */
     private static final int WINDOW_HEIGHT = 725;
+    
+    /** The Constant CANVAS_WIDTH. */
     // The dimensions of the canvas
     private static final int CANVAS_WIDTH = 700;
+    
+    /** The Constant CANVAS_HEIGHT. */
     private static final int CANVAS_HEIGHT = 650;
-    // pixels
-    private static final int TILE_SIZE_WIDTH = 50;
-    private static final int TILE_SIZE_HEIGHT = 50;
+    
+    /** The canvas. */
     private Canvas canvas;
 
+    /** The level. */
     private Level level;
-    private Player currentPlayer;
+    
+    /** The message of the day. */
     // private Leaderboard leaderboard;
     private String messageOfTheDay;
-    private Boolean isPaused;
-
-    private static final int SCORE_PER_KILL = 10;
-
+    
+    /**
+     * Instantiates a new game.
+     *
+     * @param level the level
+     */
     public Game(Level level) {
         this.level = level;
         this.CURRENT_WIDTH = level.getGrid().getWidth();
         this.CURRENT_HEIGHT = level.getGrid().getHeight();
     }
 
+    /**
+     * Instantiates a new game.
+     *
+     * @param levelFile the level file
+     * @throws Exception the exception
+     */
     public Game(String levelFile) throws Exception {
         this.level = FileManager.readLevel(levelFile);
         this.CURRENT_WIDTH = level.getGrid().getWidth();
@@ -128,6 +157,9 @@ public class Game {
     //            }
     //        }
     //        this.level.setCurrentScore(currentScore);
+    /**
+     * Tick.
+     */
     //    }
     private void tick() {
 
@@ -144,14 +176,29 @@ public class Game {
         }
     }
 
+    /**
+     * Gets the level.
+     *
+     * @return the level
+     */
     public Level getLevel() {
         return level;
     }
 
+    /**
+     * Sets the level.
+     *
+     * @param level the new level
+     */
     public void setLevel(Level level) {
         this.level = level;
     }
 
+    /**
+     * Gets the message of the day.
+     *
+     * @return the message of the day
+     */
     // BAD IMPLEMENTATION
     public String getMessageOfTheDay() {
         String message;
@@ -164,10 +211,20 @@ public class Game {
         return messageOfTheDay;
     }
 
+    /**
+     * Sets the message of the day.
+     *
+     * @param messageOfTheDay the new message of the day
+     */
     public void setMessageOfTheDay(String messageOfTheDay) {
         this.messageOfTheDay = messageOfTheDay;
     }
 
+    /**
+     * Move mechs.
+     *
+     * @throws Exception the exception
+     */
     private void moveMechs() throws Exception {
         for (Mech m: this.level.getMechs()) {
             m.move(this.level.getGrid());
@@ -175,6 +232,11 @@ public class Game {
     }
 
 
+    /**
+     * Builds the GUI.
+     *
+     * @return the pane
+     */
     private Pane buildGUI() {
         BorderPane root = new BorderPane();
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -264,6 +326,11 @@ public class Game {
         return root;
     }
 
+    /**
+     * Canvas drag dropped occured.
+     *
+     * @param event the event
+     */
     // just testing the drag and drop from the starter kit
     public void canvasDragDroppedOccured(DragEvent event) {
         Dragboard db = event.getDragboard();
@@ -294,6 +361,9 @@ public class Game {
         }
     }
 
+    /**
+     * Draw game.
+     */
     public void drawGame() {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -359,6 +429,12 @@ public class Game {
         }
     }
 
+    /**
+     * Make content.
+     *
+     * @return the parent
+     * @throws Exception the exception
+     */
     private Parent makeContent() throws Exception {
         Pane root = new Pane();
         root.setPrefSize(this.CURRENT_WIDTH * TILE_SIZE, this.CURRENT_HEIGHT * TILE_SIZE);
@@ -375,6 +451,12 @@ public class Game {
         }
         return root;
     }
+    
+    /**
+     * Show game.
+     *
+     * @throws Exception the exception
+     */
     public void showGame() throws Exception {
 
         Pane root = buildGUI();
