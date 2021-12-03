@@ -76,7 +76,7 @@ public class GameManager extends Application {
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         root.setCenter(canvas);
         // Create the main buttons for navigating the main menu
-        Button createPlayer = new Button("(START GAME (testing)");   
+        Button chooseLevel = new Button("(START GAME (testing)");   
         Button choosePlayer = new Button("CHOOSE PLAYER");        
         Button newPlayer = new Button("CREATE PLAYER");
         Button deletePlayer = new Button("DELETE PLAYER");   
@@ -91,13 +91,17 @@ public class GameManager extends Application {
         
         // Add the elements on the canvas onto the sidebar
         root.setLeft(sidebar);
-        sidebar.getChildren().addAll(createPlayer, choosePlayer, newPlayer, deletePlayer, exitMainMenu);
+        sidebar.getChildren().addAll(chooseLevel, choosePlayer, newPlayer, deletePlayer, exitMainMenu);
 
-        createPlayer.setOnAction(e -> {
-        	//Level level = new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
+        chooseLevel.setOnAction(e -> {
             Level level = null;
             try {
-                level = FileManager.readLevel("res\\Levels\\LEVEL_1.txt");
+            	Pane chooseLevelPane = buildChooseLevel();
+                Scene chooseLevelScene = new Scene(chooseLevelPane, 300, 200);
+                Stage chooseLevelStage = new Stage();
+                chooseLevelStage.setScene(chooseLevelScene);
+                chooseLevelStage.setTitle("Choose Level");
+                chooseLevelStage.show();
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
@@ -196,6 +200,7 @@ public class GameManager extends Application {
     }
     
     private Pane buildDeletePlayer() {
+
     	BorderPane root = new BorderPane();
     	VBox sidebar = new VBox();
         sidebar.setSpacing(10);
@@ -243,12 +248,41 @@ public class GameManager extends Application {
     	return root;
     }
 
-    private Pane buildChooseLevel() {
-    	//BorderPane root = new BorderPane();
+    	private Pane buildChooseLevel() {
     	
-        return null;
+    	Button levelOne = new Button("Level One");
+     	Button levelTwo = new Button("Level Two");
+     	Button levelThree = new Button("Level Three");
+     	Button levelFour = new Button("Level Four");
+     	Button levelFive  = new Button("Level Five");
+     	
+    	BorderPane root = new BorderPane();
+    	VBox sidebar = new VBox();
+        sidebar.setSpacing(10);
+        sidebar.setPadding(new Insets(10, 10, 10, 10));
+        
+        root.setLeft(sidebar);
+        sidebar.getChildren().addAll(levelOne, levelTwo, levelThree, levelFour, levelFive);
+        
+        levelOne.setOnAction(e -> {
+        Level level = null;
+        	try {
+        		level = FileManager.readLevel("res\\Levels\\LEVEL_1.txt"); 
+        } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            Game game = new Game(level);
+            mainMenu.close();
+            try {
+            	audioPlayer.stopAllMusic();
+                game.showGame();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
+        return root; 
     }
-    
+        
     private Pane buildChoosePlayer() {
     	BorderPane root = new BorderPane();
     	VBox sidebar = new VBox();
