@@ -10,6 +10,16 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import managers.Game;
 
+/**
+ * Tile.java
+ * @author
+ * @version
+ * Last Mod Date:
+ */
+
+/**
+ * The Tile class represents a tile on the game canvas.
+ */
 public class Tile extends Rectangle {
 	private ArrayList<Mech> currentMechs;
 
@@ -18,8 +28,13 @@ public class Tile extends Rectangle {
 	private Image img;
 	private TileType tileType;
 	private boolean visibleTile;
-	// coords not pixels
-	// type could be enum
+
+	/**
+	 *Tile class constructor, includes all data a tile needs to know (e.g it's image, mechs on the tile etc.).
+	 * @param tileType what type of tile the constructed tile is (walkable,visible or placeable)
+	 * @param x x-coord of tile
+	 * @param y y-coord of tile
+	 */
 	public Tile(TileType tileType, int x, int y) {
 		setWidth(Game.TILE_SIZE);
 		setHeight(Game.TILE_SIZE);
@@ -32,18 +47,34 @@ public class Tile extends Rectangle {
 		this.currentItem = null;
 	}
 
+	/**
+	 * Checks if the Tile allows mechs to walk on it
+	 * @return true if Tile is walkable
+	 */
 	public boolean isWalkable() {
 		return (this.tileType.walkable == 1);
 	}
 
+	/**
+	 * Retrieves image of the Tile.
+	 * @return sprite image of tile
+	 */
 	public Image getImage() {
 		return this.img;
 	}
 
+	/**
+	 * Checks if the Tile is visible in the game.
+	 * @return true if a Tile is visible
+	 */
 	public boolean isVisibleTile() {
 		return this.visibleTile;
 	}
 
+	/**
+	 * Gets the type of Tile
+	 * @return
+	 */
 	public TileType getTileType() {
 		return this.tileType;
 	}
