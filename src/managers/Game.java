@@ -1,9 +1,13 @@
 package managers;
 
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import board.Level;
+import board.Tile;
 import gameObject.*;
 import inventory.*;
 import javafx.animation.Animation;
@@ -223,7 +227,7 @@ public class Game {
             saveGame();
         });
 
-        topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton, exitGameButton);
+        topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton, saveGameBtn, exitGameButton);
 
         // This code setup what happens when the dragging starts on the image.
         // You probably don't need to change this (unless you wish to do more advanced
@@ -266,8 +270,41 @@ public class Game {
         return root;
     }
 
-    public void saveGame() {
-        //save the game for current player
+    public void saveGame(){
+        for (Mech m: this.level.getMechs()) {
+            System.out.println(m.getGridX());
+            System.out.println(m.getGridY());
+            System.out.println(m.getHealth());
+            System.out.println(m.getType());
+            System.out.println(m.isPregnant());
+            System.out.println(m.isBreeding());
+
+            m.getGridX();
+            m.getGridY();
+            m.getHealth();
+            m.getType();
+            m.isPregnant();
+            m.isBreeding();
+
+            try {
+                // input the (modified) file content to the StringBuffer "input"
+                BufferedReader file = new BufferedReader(new FileReader("res\\levels\\LEVEL_1.txt"));
+                StringBuffer inputBuffer = new StringBuffer();
+                String line;
+
+                //CHANGE MECH LINES HERE
+
+                file.close();
+
+                // write the new string with the replaced line OVER the same file
+                FileOutputStream fileOut = new FileOutputStream("notes.txt");
+                fileOut.write(inputBuffer.toString().getBytes());
+                fileOut.close();
+
+            } catch (Exception e) {
+                System.out.println("Problem reading file.");
+            }
+        }
     }
 
     // just testing the drag and drop from the starter kit
