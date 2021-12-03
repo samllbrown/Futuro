@@ -72,12 +72,18 @@ public class Tile extends Rectangle {
 	}
 
 	/**
-	 * Gets the type of Tile
-	 * @return
+	 * Gets the type of Tile object
+	 * @return the tile type
 	 */
 	public TileType getTileType() {
 		return this.tileType;
 	}
+
+	/**
+	 *Retrieves image of Specific tile types from sprite file
+	 * @param tileType specific type of tile
+	 * @return Image of tile
+	 */
 	public static Image getImageForType(TileType tileType) {
 		switch(tileType) {
 			case PATH:
@@ -89,24 +95,50 @@ public class Tile extends Rectangle {
 		}
 	}
 
+	/**
+	 * Sets item on the tile.
+	 * @param item item being placed on tile
+	 */
 	public void setCurrentItem(Item item) {
 		this.currentItem = item;
 	}
 
+	/**
+	 * Gets the item on the tile.
+	 * @return item on tile
+	 */
 	public Item getCurrentItem() {
 		return this.currentItem;
 	}
 
+	/**
+	 *Gets all the Mechs on the Tile object
+	 * @return list of Mechs on tile
+	 */
 	public ArrayList<Mech> getMechs() {
 		return this.currentMechs;
 	}
+
+	/**
+	 *Remove a mech from the Tile object.
+	 * @param m mech to be removed
+	 */
 	public void removeMech(Mech m) {
 		this.currentMechs.remove(m);
 	}
+
+	/**
+	 *Adds a mech to the Tile
+	 * @param m mech to be added
+	 */
 	public void addMech(Mech m) {
 		this.currentMechs.add(m);
 	}
 
+	/**
+	 * Check if a Tile has a mech on it.
+	 * @return true, if number of mechs on the Tile is zero
+	 */
 	public boolean hasMech() {
 		return this.currentMechs.size() != 0;
 	}
