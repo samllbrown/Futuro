@@ -3,9 +3,8 @@ package gameObject;
 import javafx.scene.image.Image;
 import java.awt.*;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Item.
+ * The Class Item serves as a base for all items .
  */
 public abstract class Item extends Rectangle {
 
@@ -20,22 +19,21 @@ public abstract class Item extends Rectangle {
 
 	/** The x range of the item. */
 	private int damage;
-	
+
 	/** The uses. */
 	protected int uses;
 
 	/** The is ready for destroy. */
 	public boolean isReadyForDestroy = false;
 
-/**
- * Instantiates a new item.
- *
- * @param x the x
- * @param y the y
- * @param damage the damage
- * @param uses the uses
- */
-//	protected Item(String itemID, int xPos, int yPos, int xRange, int yRange) {
+	/**
+	 * Instantiates a new item.
+	 *
+	 * @param x      the x coordinate of the starting position
+	 * @param y      the y coordinate of the starting position
+	 * @param damage the amount damage the item can perform on a mech
+	 * @param uses   the amount of uses left of the item
+	 */
 	protected Item(int x, int y, int damage, int uses) {
 		this.x = x;
 		this.y = y;
@@ -100,7 +98,7 @@ public abstract class Item extends Rectangle {
 	/**
 	 * Gets the image of the item.
 	 *
-	 * @return the image
+	 * @return the image of the item
 	 */
 	public abstract Image getImage();
 
@@ -114,8 +112,8 @@ public abstract class Item extends Rectangle {
 	}
 
 	/**
-	 * Act - This performs an action on a mech
-	 * from an item
+	 * Act - This performs an action on a mech from an item
+	 * 
 	 * @param someMech the inputed mech
 	 */
 	public void act(Mech someMech) {
