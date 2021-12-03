@@ -4,6 +4,8 @@ import javafx.application.Application;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Timer;
+
 import board.Level;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -15,6 +17,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -23,6 +27,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import services.audioPlayer;
 
 public class GameManager extends Application {
@@ -57,11 +62,42 @@ public class GameManager extends Application {
         
         // Display the scene on the stage
         primaryStage.setScene(scene);
-        mainMenu = primaryStage;
-        mainMenu.show();
+        this.mainMenu = primaryStage;
+        splashScreen();
+    }
+    
+    public void splashScreen() {
+    	 Pane root = buildSplashScreen();
+         Stage splashScreen = new Stage();
+         splashScreen.setTitle("Futuro");
+
+         ImageView img = new ImageView();
+         img.setImage(new Image("res\\PIXEL_ART.jpg");
+         root.getChildren().add(img);
+         Scene scene = new Scene(root, 500, 500);
+         scene.setFill(Color.TRANSPARENT);
+         splashScreen.initStyle(StageStyle.TRANSPARENT);
+         splashScreen.setScene(scene);
+         splashScreen.show();
+         Timer timer = new Timer();
+         try {
+			timer.wait(3000);
+			splashScreen.hide();
+			this.mainMenu.show();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
     }
 
-    public static void main(String[] args) throws Exception {
+    private Pane buildSplashScreen() {
+    	BorderPane root = new BorderPane();
+    	canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+        root.setCenter(canvas);
+        
+		return root;
+	}
+
+	public static void main(String[] args) throws Exception {
         launch(args);
     }
 
@@ -73,7 +109,7 @@ public class GameManager extends Application {
     	BorderPane root = new BorderPane();
         Player player;
         // Create canvas
-        canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+        canvas = new Canvas(500, 500);
         root.setCenter(canvas);
         // Create the main buttons for navigating the main menu
         Button createPlayer = new Button("(START GAME (testing)");   
