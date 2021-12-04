@@ -2,6 +2,13 @@ package gameObject;
 
 import javafx.scene.image.Image;
 
+/**
+ * Acid.java
+ * @author
+ * @version
+ * Last Mod Date:
+ * Description: Acid Item, mimics the gas weapon from the functional spec. Inherits from Item Class.
+ */
 public class Acid extends Item {
 
 	private static final int X_RANGE = 3;
@@ -13,7 +20,13 @@ public class Acid extends Item {
 	
 	private static int DAMAGE_OVER_TIME_ADULT = 25; //25 Damage per tick
 	private static int DAMAGE_OVER_TIME_BABY = 10; //25 Damage per tick
-	
+
+	/**
+	 * Instantiates an Acid Item.
+	 * Uses super constructor
+	 * @param atX Starting x coordinate of Acid Item.
+	 * @param atY Starting y coordinate of Acid Item.
+	 */
 	public Acid(int atX, int atY) {
 		super(atX, atY, DAMAGE_OVER_TIME_ADULT, USES);
 		setXRange(X_RANGE);
