@@ -17,7 +17,6 @@ public class Inventory {
 	public Inventory() {
 
 		HashMap<String, InventoryItem> inventoryItems = new HashMap<String, InventoryItem>();
-<<<<<<< Updated upstream
 		inventoryItems.put(DeathMechInventoryItem.getName(), new DeathMechInventoryItem());
 		inventoryItems.put(AcidInventoryItem.getName(), new AcidInventoryItem());
 		inventoryItems.put(EMPInventoryItem.getName(), new EMPInventoryItem());
@@ -26,7 +25,6 @@ public class Inventory {
 		inventoryItems.put(PuddleInventoryItem.getName(), new PuddleInventoryItem());
 		inventoryItems.put(RemodelPInventoryItem.getName(), new RemodelPInventoryItem());
 		inventoryItems.put(RemodelRInventoryItem.getName(), new RemodelRInventoryItem());
-=======
 		HashMap<String, Label> labels = new HashMap<String, Label>();
 		this.inventoryItems = inventoryItems;
 		this.labels = labels;
@@ -46,7 +44,6 @@ public class Inventory {
 		inventoryItems.put(RemodelRInventoryItem.name, new RemodelRInventoryItem());
 		
 
->>>>>>> Stashed changes
 		this.inventoryItems = inventoryItems;
 	}
 
@@ -65,9 +62,7 @@ public class Inventory {
 		
 	}
 	
-<<<<<<< Updated upstream
 	public HashMap<String, InventoryItem> getHashMap(){
-=======
 	public int getItemUses(String name) {
 		return inventoryItems.get(name).getRemainingUses();
 	}
@@ -79,7 +74,6 @@ public class Inventory {
 	}
 	
 	public HashMap<String, InventoryItem> getItems(){
->>>>>>> Stashed changes
 		return this.inventoryItems;
 	}
 

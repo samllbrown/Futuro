@@ -52,11 +52,8 @@ public class Level {
 		this.elapsedTime = elapsedTime;
 		this.mechs = mechs;
 		this.grid = grid;
-<<<<<<< Updated upstream
-=======
 		this.items = new ArrayList<>();
 		//this.itemRecievePeriod = 
->>>>>>> Stashed changes
 	}
 
 	public void addItem(Item i) {
