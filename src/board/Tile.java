@@ -1,9 +1,11 @@
 package board;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import gameObject.Item;
 import gameObject.Mech;
+import gameObject.MechType;
 import gameObject.TileType;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
@@ -45,6 +47,30 @@ public class Tile extends Rectangle {
 		this.visibleTile = (this.tileType == TileType.TUNNEL ? false : true);
 		setFill(new ImagePattern(this.img));
 		this.currentItem = null;
+	}
+
+	public ArrayList<Mech> getOtherMechsOnTile(Mech differentToMech) throws Exception {
+		if(this.currentMechs.contains(differentToMech)) {
+			ArrayList<Mech> otherMechsOnTile = new ArrayList<>(currentMechs);
+			otherMechsOnTile.remove(differentToMech);
+			return otherMechsOnTile;
+		} else {
+			throw new Exception("Could not get the other mechs on the same tile as the mech given is not on this tile");
+		}
+	}
+
+	public ArrayList<Mech> getBreedableMechsOnTile(Mech forMech) {
+		ArrayList<Mech> breedableMechs = new ArrayList<>();
+		if(this.currentMechs.contains(forMech)) {
+			System.err.println("The for mech IS on this tile");
+			for(Mech nm : currentMechs) {
+				if(nm.getType() != MechType.DEATH && (!nm.equals(forMech))) {
+					breedableMechs.add(nm);
+				}
+			}
+		}
+		return new ArrayList<Mech>(breedableMechs.stream().filter(normalMech ->
+				((!normalMech.isPregnant()) && (!normalMech.getIsBaby()) && (!normalMech.isSterile()) && (normalMech.getType() != forMech.getType()))).collect(Collectors.toList()));
 	}
 
 	/**

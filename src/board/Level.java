@@ -15,6 +15,8 @@ import gameObject.Item;
 import gameObject.Mech;
 import gameObject.MechType;
 import inventory.Inventory;
+import managers.Breeder;
+import managers.MechManager;
 import services.audioPlayer;
 
 /**
@@ -38,6 +40,8 @@ public class Level {
 	
 	private ArrayList<Item> items;
 	private ArrayList<Mech> mechs;
+
+	private Breeder breeder;
 
 	private Grid grid;
 
@@ -69,6 +73,7 @@ public class Level {
 		this.mechs = mechs;
 		this.grid = grid;
 		this.items = new ArrayList<>();
+		this.breeder = new Breeder();
 	}
 
 	/**
@@ -105,7 +110,8 @@ public class Level {
 	 *e.g. Checking whether any mechs are dead, if they're interacting with an item
 	 * @throws Exception
 	 */
-	private void updateMechs() throws Exception {
+	@Deprecated
+	private void updateMechsOld() throws Exception {
 		ArrayList<Mech> currentMechsCopy = new ArrayList<>(this.mechs);
 		for(Mech m : currentMechsCopy) {
 			if(m.getHealth() <= 0) {
@@ -146,6 +152,42 @@ public class Level {
 				}
 			}
 		}
+	}
+
+	private void updateMechs() throws Exception {
+		MechManager.checkMechsForDeath(this.mechs, this.grid);
+		MechManager.checkMechsForDamageFromItems(this.mechs, this.grid);
+
+		ArrayList<Mech> currentMechs = new ArrayList<>(this.mechs);
+
+		for(Mech mech : currentMechs) {
+			if(mech.getHealth() <= 0) {
+				this.killMech(mech);
+				//audioPlayer.playDeathSound();
+				System.out.println("Update Mechs method has detected a mech with <= 0 hp, so it ded");
+			}
+		}
+
+		for(Mech m : currentMechs) {
+			if(m.getType() != MechType.DEATH) {
+				if(((!m.getIsBaby()) && (!m.isSterile()) && (!m.isPregnant()) && (!m.isBreeding()))) {
+					ArrayList<Mech> availableMechs = new ArrayList<>();
+					availableMechs = (grid.getTileAt(m.getGridX(), m.getGridY()).getBreedableMechsOnTile(m));
+					Random rand = new Random();
+					System.err.println(availableMechs.size());
+					Mech breedWith = availableMechs.get(rand.nextInt(availableMechs.size()));
+					this.breeder.breed(m, breedWith);
+				}
+			}
+		}
+		//MechManager.checkMechsForBreeding(this.mechs, this.grid);
+		this.mechs.forEach(m -> {
+			try {
+				m.move(this.grid);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
 	}
 
 	/**
