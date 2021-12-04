@@ -120,6 +120,7 @@ public class Grid {
 				}
 				tiles += String.valueOf(type);
 			}
+			tiles += "\n";
 		}
 		return tiles;
 	}
