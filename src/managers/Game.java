@@ -60,11 +60,10 @@ public class Game {
     /** The Constant WINDOW_HEIGHT of the UI. */
     private static final int WINDOW_HEIGHT = 725;
     
-    /** The Constant CANVAS_WIDTH. */
-    // The dimensions of the canvas
+    /** The Constant CANVAS_WIDTH of the canvas */
     private static final int CANVAS_WIDTH = 700;
     
-    /** The Constant CANVAS_HEIGHT. */
+    /** The Constant CANVAS_HEIGHT of the canvas */
     private static final int CANVAS_HEIGHT = 650;
     
     /** The canvas. */
@@ -74,7 +73,6 @@ public class Game {
     private Level level;
     
     /** The message of the day. */
-    // private Leaderboard leaderboard;
     private String messageOfTheDay;
     
     /**
@@ -199,7 +197,6 @@ public class Game {
      *
      * @return the message of the day
      */
-    // BAD IMPLEMENTATION
     public String getMessageOfTheDay() {
         String message;
         try {
@@ -221,9 +218,9 @@ public class Game {
     }
 
     /**
-     * Move mechs.
+     * Move all mechs.
      *
-     * @throws Exception the exception
+     * @throws Exception 
      */
     private void moveMechs() throws Exception {
         for (Mech m: this.level.getMechs()) {
@@ -231,9 +228,8 @@ public class Game {
         }
     }
 
-
     /**
-     * Builds the GUI.
+     * Builds the GUI of the game.
      *
      * @return the pane
      */
@@ -327,11 +323,10 @@ public class Game {
     }
 
     /**
-     * Canvas drag dropped occured.
+     * Canvas drag dropped occurred.
      *
      * @param event the event
      */
-    // just testing the drag and drop from the starter kit
     public void canvasDragDroppedOccured(DragEvent event) {
         Dragboard db = event.getDragboard();
 
@@ -430,10 +425,10 @@ public class Game {
     }
 
     /**
-     * Make content.
+     * Make content. This populates the grid with mechs and tiles. 
      *
      * @return the parent
-     * @throws Exception the exception
+     * @throws Exception 
      */
     private Parent makeContent() throws Exception {
         Pane root = new Pane();
@@ -453,9 +448,9 @@ public class Game {
     }
     
     /**
-     * Show game.
+     * Show the UI of the game.
      *
-     * @throws Exception the exception
+     * @throws Exception 
      */
     public void showGame() throws Exception {
 
