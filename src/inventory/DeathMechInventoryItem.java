@@ -2,25 +2,17 @@ package inventory;
 
 public class DeathMechInventoryItem extends InventoryItem {
 
-	private static final String name = "DEATH_MECH";
-	private static int usesLeft; 
-	
+    public static final String name = "DEATH_MECH";
+
     public DeathMechInventoryItem() {
         super(name);
-    	usesLeft = MAX_ITEM_USES;
     }
 
-    public static void used() {
-    	usesLeft-- ;
+    public DeathMechInventoryItem(int uses) {
+        super(name, uses);
     }
-    public static String getName() {
-    	return name;
-    }
-    public static int getUses() {
-    	return usesLeft;
-    }
-    public void syncUses() {
-    	usesLeft = remainingUses;
+
+    public String getName() {
+        return DeathMechInventoryItem.name;
     }
 }
-

@@ -2,24 +2,17 @@ package inventory;
 
 public class EMPInventoryItem extends InventoryItem{
 
-	private static final String name = "EMP";
-	private static int usesLeft; 
-	
+    public static final String name = "EMP";
+
     public EMPInventoryItem() {
         super(name);
-    	usesLeft = MAX_ITEM_USES;
     }
-    
-    public static String getName() {
-    	return name;
+
+    public EMPInventoryItem(int uses) {
+        super(name, uses);
     }
-    public static void used() {
-    	usesLeft-- ;
-    }
-    public static int getUses() {
-    	return usesLeft;
-    }
-    public void syncUses() {
-    	usesLeft = remainingUses;
+
+    public String getName() {
+        return EMPInventoryItem.name;
     }
 }

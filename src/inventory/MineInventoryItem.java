@@ -2,23 +2,17 @@ package inventory;
 
 public class MineInventoryItem extends InventoryItem{
 
-	private static final String name = "MINE";
-	private static int usesLeft; 
-	
+    public static final String name = "MINE";
+
     public MineInventoryItem() {
         super(name);
     }
-    
-    public static String getName() {
-    	return name;
+
+    public MineInventoryItem(int uses) {
+        super(name, uses);
     }
-    public static void used() {
-    	usesLeft-- ;
-    }
-    public static int getUses() {
-    	return usesLeft;
-    }
-    public void syncUses() {
-    	usesLeft = remainingUses;
+
+    public String getName() {
+        return MineInventoryItem.name;
     }
 }

@@ -26,7 +26,7 @@ public abstract class InventoryItem extends ImageView {
     public InventoryItem(String name, int remainingUses) {
         this.itemName = name;
         // this needs to be changed
-        this.itemSprite = null;
+        this.itemSprite = getImageForName(name);
         // NEED TO CHECK IF GREATER THAN MAX, LESS THAN 0 FOR REMAINING USES
         this.label =  new Label(Integer.toString(remainingUses));
         this.remainingUses = remainingUses;

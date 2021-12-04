@@ -2,24 +2,17 @@ package inventory;
 
 public class LightningInventoryItem extends InventoryItem{
 
-	private static final String name = "LIGHTNING";
-	private static int usesLeft; 
-		
-	    public LightningInventoryItem() {
-	        super(name);
-	    	usesLeft = MAX_ITEM_USES;
-	    }
-	    
-	    public static String getName() {
-	    	return name;
-	    }
-	    public static void used() {
-	    	usesLeft-- ;
-	    }
-	    public static int getUses() {
-	    	return usesLeft;
-	    }
-	    public void syncUses() {
-	    	usesLeft = remainingUses;
-	    }
+    public static final String name = "LIGHTNING";
+
+        public LightningInventoryItem() {
+            super(name);
+        }
+
+        public LightningInventoryItem(int uses) {
+            super(name, uses);
+        }
+
+        public String getName() {
+            return LightningInventoryItem.name;
+        }
 }

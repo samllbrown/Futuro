@@ -1,7 +1,6 @@
 /bin/
-/gameObject/
-/managers/
 /board/
+/gameObject/
 /inventory/
-/music/
+/managers/
 /services/

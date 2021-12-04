@@ -1,11 +1,13 @@
 package gameObject;
 
+import java.util.Locale;
+
 import board.Grid;
 import board.Path;
 import board.Tile;
 import board.Tunnel;
 import board.Wall;
-import inventory.InventoryItem;
+import inventory.*;
 
 public class GameObjectFactory {
 	public static Mech readMech(String id) {
@@ -52,12 +54,40 @@ public class GameObjectFactory {
 		}
 		return new Tile(tileType, x, y);
 	}
+	
+	public static InventoryItem readInventoryItem(String id) {
+
+        String[] itemInfo = id.split(",");
+        String itemType = itemInfo[0];
+        int usesLeft = Integer.parseInt(itemInfo[1]);
+
+        switch(itemType.toUpperCase(Locale.ROOT)) {
+        case "LTG":
+            return new LightningInventoryItem(usesLeft);
+        case "ACD":
+            return new AcidInventoryItem(usesLeft);
+        case "EMP":
+            return new EMPInventoryItem(usesLeft);
+        case "MIN":
+            return new MineInventoryItem(usesLeft);
+        case "PDL":
+            return new PuddleInventoryItem(usesLeft);
+        case "RTR":
+            return new RemodelPInventoryItem(usesLeft);
+        case "RTP":
+            return new RemodelRInventoryItem(usesLeft);
+        case "DMC":
+            return new DeathMechInventoryItem(usesLeft);
+        default:
+            System.out.println(itemType);
+            System.out.println(usesLeft);
+            System.err.println("Probably should be throwing an error here");
+            return null;
+        }
+	}
 
 
 	public static Item readItem(String id) {
-		return null;
-	}
-	public static InventoryItem readInventoryItem(String id) {
 		return null;
 	}
 	// needs to be done
