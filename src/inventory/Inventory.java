@@ -9,7 +9,6 @@ public class Inventory {
 
 	private HashMap<String, InventoryItem> inventoryItems;
 	
-	
 	public Inventory() {
 
 		HashMap<String, InventoryItem> inventoryItems = new HashMap<String, InventoryItem>();
