@@ -2,6 +2,7 @@ package managers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import board.Level;
 import gameObject.*;
@@ -17,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.DragEvent;
@@ -222,48 +224,58 @@ public class Game {
         // This code setup what happens when the dragging starts on the image.
         // You probably don't need to change this (unless you wish to do more advanced
         // things).
-       for(var i : this.level.getInventory().getHashMap().entrySet()) {
+        for(var i : this.level.getInventory().getItems().entrySet()) {
     	   InventoryItem iconItem = i.getValue();
-    	   iconItem.setImage(iconItem.getSprite());
-    	   sidebar.getChildren().addAll(iconItem, new Button(Integer.toString(iconItem.getRemainingUses())));
-    	   
+     	   iconItem.setImage(iconItem.getSprite());
+     	   sidebar.getChildren().addAll(iconItem, i.getValue().getLabel());
+    
     	   iconItem.setOnDragDetected(new EventHandler<MouseEvent>() {
 	            public void handle(MouseEvent event) {
-	                Dragboard db = iconItem.startDragAndDrop(TransferMode.ANY);
+	            	if(iconItem.getRemainingUses()!= 0) {
+	            		Dragboard db = iconItem.startDragAndDrop(TransferMode.ANY);
+	            		System.out.println(iconItem.getRemainingUses());
 	
+	            		ClipboardContent itemName = new ClipboardContent();
+	            		itemName.putString(iconItem.itemName);
+	                	db.setContent(itemName);
 	
-	                ClipboardContent content = new ClipboardContent();
-	                content.putString(iconItem.itemName);
-	                db.setContent(content);
-	
-	
+
+		               
+	                	event.consume();
+	            	}
+	            }
+	        });
+
+
+       }
+
+           canvas.setOnDragDropped(new EventHandler < DragEvent > () {
+	            public void handle(DragEvent event) {
+	                // We call this method which is where the bulk of the behaviour takes place.
+	            	Dragboard db = event.getDragboard();
+	            	
+	                canvasDragDroppedOccured(event); 
+
+	                level.getInventory().getLabel(db.getString()).setText(Integer.toString(level.getInventory().getItemUses(db.getString())));
+
+	                // Consume the event. This means we mark it as dealt with.
 	                event.consume();
 	            }
 	        });
-       }
-        canvas.setOnDragOver(new EventHandler<DragEvent>() {
-            public void handle(DragEvent event) {
-                // Mark the drag as acceptable if the source was the draggable image.
-                // (for example, we don't want to allow the user to drag things or files into
-                // our application)
-                event.acceptTransferModes(TransferMode.ANY);
-                // Consume the event. This means we mark it as dealt with.
-                event.consume();
-            }
-        });
-
-        canvas.setOnDragDropped(new EventHandler < DragEvent > () {
-            public void handle(DragEvent event) {
-                // We call this method which is where the bulk of the behaviour takes place.
-                canvasDragDroppedOccured(event);
-                // Consume the event. This means we mark it as dealt with.
-                event.consume();
-            }
-        });
-
+           
+    	   canvas.setOnDragOver(new EventHandler<DragEvent>() {
+	            public void handle(DragEvent event) {
+	                // Mark the drag as acceptable if the source was the draggable image.
+	                // (for example, we don't want to allow the user to drag things or files into
+	                // our application)
+	                event.acceptTransferModes(TransferMode.ANY);
+	                // Consume the event. This means we mark it as dealt with.
+	                event.consume();
+	            }
+	        });
         return root;
     }
-
+    
     // just testing the drag and drop from the starter kit
     public void canvasDragDroppedOccured(DragEvent event) {
         Dragboard db = event.getDragboard();
@@ -276,6 +288,8 @@ public class Game {
         if(db.hasString()) {
 	        Item i = InventoryItem.getItemForName(db.getString(), xCoord, yCoord);
 	        level.getInventory().useItem(db.getString());
+	        
+	        
 	        
 	        if(db.getString() == "DEATH_MECH") {
 	        	

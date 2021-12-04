@@ -1,6 +1,7 @@
 package inventory;
 
 import gameObject.*;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -11,12 +12,14 @@ public abstract class InventoryItem extends ImageView {
     public final String itemName;
     protected final Image itemSprite;
     protected int remainingUses;
+    protected Label label;
 
     public InventoryItem(String name) {
         this.itemName = name;
         // this needs to be changed
         this.itemSprite = getImageForName(name);
         this.remainingUses = MAX_ITEM_USES;
+        this.label =  new Label(Integer.toString(remainingUses));
         System.out.println(itemSprite);
     }
 
@@ -25,6 +28,7 @@ public abstract class InventoryItem extends ImageView {
         // this needs to be changed
         this.itemSprite = null;
         // NEED TO CHECK IF GREATER THAN MAX, LESS THAN 0 FOR REMAINING USES
+        this.label =  new Label(Integer.toString(remainingUses));
         this.remainingUses = remainingUses;
     }
 
@@ -83,19 +87,19 @@ public abstract class InventoryItem extends ImageView {
 
     public void reduceUses() {
         this.remainingUses--;
-        syncUses();
     }
 
     public void reduceUses(int uses) {
         this.remainingUses -= uses;
-        syncUses();
     }
 
     public Image getSprite() {
     	return itemSprite;
     }
     
-    public abstract void syncUses();
+    public Label getLabel() {
+    	return this.label;
+    }
 
     //getName abstract static meaning that all items should
 
