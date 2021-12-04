@@ -36,15 +36,20 @@ public class Grid {
 	}
 
 	/**
-	 * Retrieve Tile as a specified position (x,y).
+	 * Retrieve Tile as a specified position column x, row y.
 	 * @param x x-coord
 	 * @param y y-coord
-	 * @return Tile at (x,y).
+	 * @return Tile at column x, row y
 	 */
 	public Tile getTileAt(int x, int y) {
 		return this.grid[x][y];
 	}
 
+	/**
+	 *Retrieve Tile as a specified position column coords.x, row coords.y
+	 * @param cords a Pair of coords
+	 * @return Tile at coords
+	 */
 	public Tile getTileAt(Pair cords) {
 		return this.grid[cords.x][cords.y];
 	}
