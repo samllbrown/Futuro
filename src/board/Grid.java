@@ -99,4 +99,14 @@ public class Grid {
 			}
 		}
 	}
+
+	public String getGridAsString() {
+		String tiles = "";
+		for(int i = 0; i < this.width; i++) {
+			for(int j = 0; j < this.height; j++) {
+				tiles += this.grid[i][j];
+			}
+		}
+		return tiles;
+	}
 }
