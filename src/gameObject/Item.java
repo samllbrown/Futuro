@@ -1,60 +1,123 @@
 package gameObject;
 
 import javafx.scene.image.Image;
-import org.w3c.dom.css.Rect;
-
 import java.awt.*;
 
+/**
+ * The Class Item serves as a base for all items .
+ */
 public abstract class Item extends Rectangle {
-	//private String itemID;
+
+	/** The y. */
 	private int x, y;
 
+	/** The x range of the item. */
 	private int xRange;
+
+	/** The y range of the item. */
 	private int yRange;
+
+	/** The x range of the item. */
 	private int damage;
+
+	/** The uses. */
 	protected int uses;
-	
+
+	/** The is ready for destroy. */
 	public boolean isReadyForDestroy = false;
 
-//	protected Item(String itemID, int xPos, int yPos, int xRange, int yRange) {
+	/**
+	 * Instantiates a new item.
+	 *
+	 * @param x      the x coordinate of the starting position
+	 * @param y      the y coordinate of the starting position
+	 * @param damage the amount damage the item can perform on a mech
+	 * @param uses   the amount of uses left of the item
+	 */
 	protected Item(int x, int y, int damage, int uses) {
 		this.x = x;
 		this.y = y;
 		this.damage = damage;
 		this.uses = uses;
 	}
-	
+
+	/**
+	 * Sets the x range.
+	 *
+	 * @param xRange the new x range
+	 */
 	public void setXRange(int xRange) {
 		this.xRange = xRange;
 	}
-	
+
+	/**
+	 * Sets the y range.
+	 *
+	 * @param yRange the new y range
+	 */
 	public void setYRange(int yRange) {
 		this.yRange = yRange;
 	}
-	
+
+	/**
+	 * Gets the x range.
+	 *
+	 * @return the x range
+	 */
 	public int getXRange() {
 		return this.xRange;
 	}
-	
+
+	/**
+	 * Gets the y range.
+	 *
+	 * @return the y range
+	 */
 	public int getYRange() {
 		return this.yRange;
 	}
-	
+
+	/**
+	 * Gets the grid X.
+	 *
+	 * @return the grid X
+	 */
 	public int getGridX() {
 		return this.x;
 	}
 
+	/**
+	 * Gets the grid Y.
+	 *
+	 * @return the grid Y
+	 */
 	public int getGridY() {
 		return this.y;
 	}
+
+	/**
+	 * Gets the image of the item.
+	 *
+	 * @return the image of the item
+	 */
 	public abstract Image getImage();
 
+	/**
+	 * Checks if is ready for destroy.
+	 *
+	 * @return true, if is ready for destroy
+	 */
 	public boolean isReadyForDestroy() {
 		return (this.uses == 0);
 	}
 
+	/**
+	 * Act - This performs an action on a mech from an item
+	 * 
+	 * @param someMech the inputed mech
+	 */
 	public void act(Mech someMech) {
-		if(this.uses != 0) {
+		if (this.uses != 0) {
 			someMech.takeDamage(this.damage);
 			this.uses--;
 		} else {
