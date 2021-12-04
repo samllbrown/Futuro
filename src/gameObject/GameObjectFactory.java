@@ -1,11 +1,15 @@
 package gameObject;
 
+import java.util.Locale;
+
 import board.Grid;
 import board.Path;
 import board.Tile;
 import board.Tunnel;
 import board.Wall;
 import inventory.InventoryItem;
+import javafx.scene.image.Image;
+import inventory.*;
 
 public class GameObjectFactory {
 	public static Mech readMech(String id) {
@@ -52,13 +56,88 @@ public class GameObjectFactory {
 		}
 		return new Tile(tileType, x, y);
 	}
+	
+	public static Image getImageForName(String name) {
+        switch(name.toUpperCase(Locale.ROOT)) {
+            case "LIGHTNING":
+                return Lightning.ITEM_IMAGE;
+            case "ACID":
+                return Acid.ITEM_IMAGE;
+            case "EMP":
+                return EMP.ITEM_IMAGE;
+            case "MINE":
+                return Mine.ITEM_IMAGE;
+            case "PUDDLE":
+                return Puddle.ITEM_IMAGE;
+            case "REMODEL_P_TO_R":
+                return Remodel.ITEM_IMAGE_P_TO_R;
+            case "REMODEL_R_TO_P":
+                return Remodel.ITEM_IMAGE_R_TO_P;
+            case "DEATH_MECH":
+            	return DeathMech.ITEM_IMAGE;
+            default:
+                System.err.println("Probably should be throwing an error here");
+                return null;
+        }
+    }
+	
+    public static Item getItemForName(String name, int xCord, int yCord) {
+        switch(name.toUpperCase(Locale.ROOT)) {
+            case "LIGHTNING":
+                return new Lightning(xCord, yCord);
+            case "ACID":
+                return new Acid(xCord, yCord);
+            case "EMP":
+                return new EMP(xCord, yCord);
+            case "MINE":
+                return new Mine(xCord, yCord);
+            case "PUDDLE":
+                return new Puddle(xCord, yCord);
+            case "REMODEL_P_TO_R":
+                return new Remodel(xCord, yCord, false);
+            case "REMODEL_R_TO_P":
+                return new Remodel(xCord, yCord, true);
+            case "DEATH_MECH":
+            	return new DeathMech(xCord, yCord).getDeathItem();
+            default:
+                System.err.println("Probably should be throwing an error here 2");
+                return null;
+        }
+    }
 
 
 	public static Item readItem(String id) {
 		return null;
 	}
 	public static InventoryItem readInventoryItem(String id) {
-		return null;
+
+		String[] itemInfo = id.split(",");
+		String itemType = itemInfo[0];
+		int usesLeft = Integer.parseInt(itemInfo[1]);
+		
+		switch(itemType.toUpperCase(Locale.ROOT)) {
+        case "LTG":
+            return new LightningInventoryItem(usesLeft);
+        case "ACD":
+            return new AcidInventoryItem(usesLeft);
+        case "EMP":
+            return new EMPInventoryItem(usesLeft);
+        case "MIN":
+            return new MineInventoryItem(usesLeft);
+        case "PDL":
+            return new PuddleInventoryItem(usesLeft);
+        case "RTR":
+            return new RemodelPInventoryItem(usesLeft);
+        case "RTP":
+            return new RemodelRInventoryItem(usesLeft);
+        case "DMC":
+        	return new DeathMechInventoryItem(usesLeft);
+        default:
+        	System.out.println(itemType);
+        	System.out.println(usesLeft);
+            System.err.println("Probably should be throwing an error here");
+            return null;
+    }
 	}
 	// needs to be done
 //	public static Mech readMech(String id) {

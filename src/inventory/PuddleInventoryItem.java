@@ -2,24 +2,17 @@ package inventory;
 
 public class PuddleInventoryItem extends InventoryItem{
 
-	private static final String name = "PUDDLE";
-	private static int usesLeft; 
+	public static final String name = "PUDDLE";
 	
     public PuddleInventoryItem() {
         super(name);
-    	usesLeft = MAX_ITEM_USES;
     }
     
-    public static String getName() {
-    	return name;
+    public PuddleInventoryItem(int uses) {
+    	super(name, uses);
     }
-    public static void used() {
-    	usesLeft-- ;
-    }
-    public static int getUses() {
-    	return usesLeft;
-    }
-    public void syncUses() {
-    	usesLeft = remainingUses;
+    
+    public String getName() {
+    	return PuddleInventoryItem.name;
     }
 }

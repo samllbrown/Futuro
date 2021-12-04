@@ -291,7 +291,7 @@ public class Game {
         int yCoord = (int) Math.round(y) / TILE_SIZE;
         
         if(db.hasString()) {
-	        Item i = InventoryItem.getItemForName(db.getString(), xCoord, yCoord);
+	        Item i = GameObjectFactory.getItemForName(db.getString(), xCoord, yCoord);
 	        level.getInventory().useItem(db.getString());
 	        
 	        if(db.getString() == "DEATH_MECH") {

@@ -2,24 +2,17 @@ package inventory;
 
 public class RemodelPInventoryItem extends InventoryItem{
 
-	private static final String name = "REMODEL_P_TO_R";
-	private static int usesLeft; 
+	public static final String name = "REMODEL_P_TO_R";
 		
 	public RemodelPInventoryItem() {
 		super(name);
-    	usesLeft = MAX_ITEM_USES;
 	}
+	
+	public RemodelPInventoryItem(int uses) {
+    	super(name, uses);
+    }
     
-    public static String getName() {
-    	return name;
-    }
-    public static void used() {
-    	usesLeft-- ;
-    }
-    public static int getUses() {
-    	return usesLeft;
-    }
-    public void syncUses() {
-    	usesLeft = remainingUses;
+    public String getName() {
+    	return RemodelPInventoryItem.name;
     }
 }
