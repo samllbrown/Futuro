@@ -18,7 +18,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import services.audioPlayer;
+import services.AudioPlayer;
 
 /**
  * FileManager.java
@@ -67,7 +67,7 @@ public class GameManager extends Application {
 		Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 		primaryStage.setTitle("Futuro");
 
-		audioPlayer.playMainMenu();
+		AudioPlayer.playMainMenu();
 
 		// Display the scene on the stage
 		primaryStage.setScene(scene);
@@ -157,7 +157,7 @@ public class GameManager extends Application {
 			Game game = new Game(level);
 			mainMenu.close();
 			try {
-				audioPlayer.stopAllMusic();
+				AudioPlayer.stopAllMusic();
 				game.showGame();
 			} catch (Exception exception) {
 				exception.printStackTrace();

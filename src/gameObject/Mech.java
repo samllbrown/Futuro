@@ -7,7 +7,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import managers.Game;
 import services.Globals;
-import services.audioPlayer;
+import services.AudioPlayer;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
