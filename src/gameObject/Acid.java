@@ -47,6 +47,11 @@ public class Acid extends Item {
 		}
 	}
 
+	@Override
+	public String generateItemID() {
+		return "ACID_ITEM," + this.getX() + "," + this.getY();
+	}
+
 	/**
 	 * Retrieve the image of the Acid for the GUI
 	 * @return the Acid sprite image

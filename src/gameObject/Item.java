@@ -124,4 +124,12 @@ public abstract class Item extends Rectangle {
 			System.err.println("Cannot act on mech as uses left <= 0");
 		}
 	}
+
+	public abstract String generateItemID();
+
+	@Override
+	public String toString() {
+		return this.generateItemID();
+	}
+
 }

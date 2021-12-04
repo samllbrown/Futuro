@@ -51,6 +51,11 @@ public class Puddle extends Item {
 		}
 	}
 
+	@Override
+	public String generateItemID() {
+		return "PUDDLE_ITEM," + this.getX() + "," + this.getY();
+	}
+
 	/**
 	 * Retrieve the image of the Puddle for the GUI
 	 * @return the Puddle sprite image

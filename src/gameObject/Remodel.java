@@ -58,6 +58,11 @@ public class Remodel extends Item {
 		}
 	}
 
+	@Override
+	public String generateItemID() {
+		return isMaleRemodel ? "REMODEL_R_TO_P," + this.getX() + "," + this.getY() : "REMODEL_P_TO_R," + this.getX() + "," + this.getY();
+	}
+
 	/**
 	 * Retrieve the image of the Remodel item for the GUI
 	 * @return the Remodel sprite image

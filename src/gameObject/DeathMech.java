@@ -17,6 +17,11 @@ public class DeathMech extends Mech{
 			public Image getImage() {
 				return ITEM_IMAGE;
 			}
+
+			@Override
+			public String generateItemID() {
+				return "DEATH_MECH_ITEM," + this.getX() + "," + this.getY();
+			}
 		};
 		this.killsLeft = USES;
 		this.dmItem  = deathMechItem;

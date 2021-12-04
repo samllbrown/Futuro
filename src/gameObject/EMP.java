@@ -38,4 +38,9 @@ public class EMP extends Item {
 	public Image getImage() {
 		return ITEM_IMAGE;
 	}
+
+	@Override
+	public String generateItemID() {
+		return "EMP_ITEM," + this.getX() + "," + this.getY();
+	}
 }

@@ -33,6 +33,32 @@ public class GameObjectFactory {
 		return newMech;
 	}
 
+	public static Item readItem(String id) {
+		// format of id:
+		// M,X,Y,HEALTH,TYPE,PREG,SECSTILADULT
+		String[] itemComponents = id.split(",");
+		switch (itemComponents[0]) {
+			case "LIGHTNING_ITEM":
+				return new Lightning(Integer.valueOf(itemComponents[1]), Integer.valueOf(itemComponents[2]));
+			case "MINE_ITEM":
+				return new Mine(Integer.valueOf(itemComponents[1]), Integer.valueOf(itemComponents[2]));
+			case "PUDDLE_ITEM":
+				return new Puddle(Integer.valueOf(itemComponents[1]), Integer.valueOf(itemComponents[2]));
+			case "DEATH_MECH_ITEM":
+				return new DeathMech(Integer.valueOf(itemComponents[1]), Integer.valueOf(itemComponents[2])).getDeathItem();
+			case "ACID_ITEM":
+				return new Acid(Integer.valueOf(itemComponents[1]), Integer.valueOf(itemComponents[2]));
+			case "REMODEL_P_TO_R_ITEM":
+				return new Remodel(Integer.valueOf(itemComponents[1]), Integer.valueOf(itemComponents[2]), false);
+			case "REMODEL_R_TO_P_ITEM":
+				return new Remodel(Integer.valueOf(itemComponents[1]), Integer.valueOf(itemComponents[2]), true);
+			default:
+				System.err.println("error");
+				return null;
+			// death mech needs to be done
+		}
+	}
+
 	public static Tile makeTile(char type, int x, int y) throws Exception {
 		TileType tileType;
 		switch (Character.toUpperCase(type)) {
@@ -53,10 +79,6 @@ public class GameObjectFactory {
 		return new Tile(tileType, x, y);
 	}
 
-
-	public static Item readItem(String id) {
-		return null;
-	}
 	public static InventoryItem readInventoryItem(String id) {
 		return null;
 	}

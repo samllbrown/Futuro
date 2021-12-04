@@ -36,6 +36,11 @@ public class Mine extends Item {
 	public Image getImage() {
 		return ITEM_IMAGE;
 	}
-	
+
+	@Override
+	public String generateItemID() {
+		return "MINE_ITEM," + this.getX() + "," + this.getY();
+	}
+
 
 }
