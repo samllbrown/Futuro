@@ -13,9 +13,6 @@ import javafx.scene.media.MediaPlayer;
  * @version 1.5
  * Last Mod Date: 27/11/2021
  */
-/**
- * The Class audioPlayer.
- */
 public class AudioPlayer {
 	
 	/** The current music list. */
