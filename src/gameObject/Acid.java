@@ -23,7 +23,7 @@ public class Acid extends Item {
 
 	/**
 	 * Instantiates an Acid Item.
-	 * Uses super constructor
+	 * Uses Item super constructor to set the location, damage and uses for the acid object.
 	 * @param atX Starting x coordinate of Acid Item.
 	 * @param atY Starting y coordinate of Acid Item.
 	 */
@@ -32,7 +32,12 @@ public class Acid extends Item {
 		setXRange(X_RANGE);
 		setYRange(Y_RANGE);
 	}
-	
+
+	/**
+	 * Act of doing damange to a Mech.
+	 * Damage done per tick of the game, overridden from method in Item class.
+	 * @param mech mech the action is being performed on
+	 */
 	@Override
 	public void act(Mech mech) {
 		if(super.uses != 0) {
@@ -42,9 +47,10 @@ public class Acid extends Item {
 		}
 	}
 
+	/**
+	 * Retrieve the image of the Acid for the GUI
+	 * @return the Acid sprite image
+	 */
 	@Override
 	public Image getImage() { return ITEM_IMAGE_PUDDLE;}
-
-
-	public Image getPlacedImage() { return ITEM_IMAGE;}
 }
