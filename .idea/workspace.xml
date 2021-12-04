@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2c5d8a34-dd84-46e8-910d-8e1df5abf2b3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Futuro.xml" beforeDir="false" />
+    <list default="true" id="2c5d8a34-dd84-46e8-910d-8e1df5abf2b3" name="Changes" comment="LOAD WORKS :)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/board/Grid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/board/Grid.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/managers/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/managers/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/managers/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/managers/GameManager.java" afterDir="false" />
     </list>
@@ -50,6 +48,14 @@
       <option name="presentableId" value="Default" />
       <updated>1638637642236</updated>
     </task>
+    <task id="LOCAL-00001" summary="LOAD WORKS :)">
+      <created>1638641840361</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1638641840361</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -62,5 +68,10 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="LOAD WORKS :)" />
+    <option name="LAST_COMMIT_MESSAGE" value="LOAD WORKS :)" />
   </component>
 </project>

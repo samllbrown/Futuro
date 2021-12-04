@@ -6,6 +6,7 @@ import java.util.Arrays;
 //import java.util.Arrays;
 
 import gameObject.GameObjectFactory;
+import gameObject.TileType;
 
 public class Grid {
 	private final int width;
@@ -63,5 +64,29 @@ public class Grid {
 				//allTiles.add(t);
 			}
 		}
+	}
+
+	public String getGridAsString() {
+		String tiles = "";
+		for(int i = 0; i < this.width; i++) {
+			for(int j = 0; j < this.height; j++) {
+				char type = 'X';
+				TileType currentTileType = this.grid[i][j].getTileType();
+				switch (currentTileType) {
+					case PATH:
+						type = 'P';
+						break;
+					case TUNNEL:
+						type = 'T';
+						break;
+					case WALL:
+						type = 'W';
+						break;
+				}
+				tiles += String.valueOf(type);
+			}
+			tiles += "\n";
+		}
+		return tiles;
 	}
 }
