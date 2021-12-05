@@ -546,40 +546,25 @@ public class GameManager extends Application {
         root.setCenter(sidebar);
         sidebar.getChildren().addAll(playerID, playerIDInput, choosePlayerButton);
         choosePlayerButton.setOnAction(e -> {
-        	if(playerIDInput.getText() != null) {
-                try {
-                    this.currentPlayer = FileManager.getPlayer(Integer.valueOf(playerIDInput.getText()));
-                    Alert alert = new Alert(AlertType.INFORMATION);
-    				alert.setTitle("INFORMATION");
-    				alert.setHeaderText("Player found");
-    				alert.setContentText("Player ID:" + Integer.valueOf(playerIDInput.getText()));
-    				alert.showAndWait().ifPresent(rs -> {
-    				    if (rs == ButtonType.OK) {
-    				        System.out.println("Pressed OK.");
-    				        GameManager.choosePlayerMenu.hide();
-    				        Pane chooseLevelPane = buildChooseLevel();
-    		                Scene chooseLevelScene = new Scene(chooseLevelPane, 300, 200);
-    		                Stage chooseLevelStage = new Stage();
-    		                chooseLevelStage.setScene(chooseLevelScene);
-    		                chooseLevelStage.setTitle("Choose Level");
-    		                GameManager.chooseLevelMenu = chooseLevelStage;
-    		                GameManager.chooseLevelMenu.show();
-    				    }
-    				});
-                } catch (Exception exception) {
-                	if(this.currentPlayer == null) {
-                		Alert alert = new Alert(AlertType.INFORMATION);
-        				alert.setTitle("INFORMATION");
-        				alert.setHeaderText("No player found");
-        				alert.setContentText("Please try again");
-        				alert.showAndWait().ifPresent(rs -> {
-        				    if (rs == ButtonType.OK) {
-        				        System.out.println("Pressed OK.");
-        				    }
-        				});
-                	}
+            if(playerIDInput.getText() != null) {
+                this.currentPlayer = FileManager.getPlayer(Integer.valueOf(playerIDInput.getText()));
+                String playerIDGiven = String.valueOf(currentPlayer.getPlayerID());
+                if(this.currentPlayer != null) {
+                    showAlert("INFORMATION", "Player found", "Player ID: " + playerIDGiven);
+                    GameManager.choosePlayerMenu.close();
+                    Pane chooseLevelPane = buildChooseLevel();
+                    Scene chooseLevelScene = new Scene(chooseLevelPane, 300, 200);
+                    Stage chooseLevelStage = new Stage();
+                    chooseLevelStage.setScene(chooseLevelScene);
+                    chooseLevelStage.setTitle("Choose Level");
+                    GameManager.chooseLevelMenu = chooseLevelStage;
+                    GameManager.chooseLevelMenu.show();
+                } else {
+                    showAlert("INFORMATION", "Could not find player", "Player ID: " + playerIDGiven);
                 }
-			}
+            } else {
+                showAlert("INFORMATION", "Invalid player ID given", "Please try again.");
+            }
         });
         
     	return root;
