@@ -99,6 +99,15 @@ public class Game {
 		this.messageOfTheDay = getMessageOfTheDay();
 	}
 
+	// THIS ASSUMES THAT YOU WILL DEFINITELY
+	// IPSO-FACTO 100 PERCFENT SET THE ATTRIBUTES MANUALLY AFTERWARDS.
+	public Game() {
+		this.level = null;
+		this.CURRENT_WIDTH = 0;
+		this.CURRENT_HEIGHT = 0;
+		this.messageOfTheDay = getMessageOfTheDay();
+	}
+
 	/**
 	 * Instantiates a new game.
 	 *
