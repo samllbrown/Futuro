@@ -285,40 +285,9 @@ public class FileManager {
 			bw.write(height + "\n");
 			bw.write(tiles + "\n");
 			bw.write(level.getMechs().size() + "\n");
-
-			PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8");
-			writer.println(width);
-			writer.println(height);
-			writer.println(tiles);
-			for (Mech m: level.getMechs()) {
-				writer.println(m.toString());
-//                String mechString = "M";
-//                String mechX = Integer.toString(m.getGridX());
-//                String mechY = Integer.toString(m.getGridY());
-//                String mechHealth = Integer.toString(m.getHealth());
-//                String mechType = null;
-//                switch (m.getType()) {
-//                    case RESOURCE:
-//                        mechType = "R";
-//                        break;
-//                    case PRODUCTION:
-//                        mechType = "P";
-//                        break;
-//                    case DEATH:
-//                        mechType = "D";
-//                        break;
-//                    default:
-//                        System.err.println("error");
-//                        break;
-//                }
-
-//                boolean mechPregnantBool = m.isPregnant();
-//                int mechPregnant = (mechPregnantBool) ? 1 : 0;
-//                List<String> mechList = Arrays.asList(mechString,mechX,mechY,mechHealth,mechType,Integer.toString(mechPregnant));
-//                String mechListResult = String.join(",", mechList);
-//                writer.println(mechListResult);
+			for(Mech m : level.getMechs()) {
+				bw.write(m.toString() + "\n");
 			}
-			writer.close();
 		} catch (Exception e){
 			e.printStackTrace();
 		}
