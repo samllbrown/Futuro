@@ -2,11 +2,7 @@ package gameObject;
 
 import java.util.Locale;
 
-import board.Grid;
-import board.Path;
 import board.Tile;
-import board.Tunnel;
-import board.Wall;
 import inventory.*;
 
 /**
