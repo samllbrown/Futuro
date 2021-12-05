@@ -12,20 +12,17 @@ import inventory.Inventory;
 
 /**
  * FileManager.java
- * @author David Terence-Abanulo, Sam R,...
+ * @author David Terence-Abanulo, Sam R, Sam B
  * @version 1.5
- * Last Mod Date: 30/11/2021
+ * Last Mod Date: 27/11/2021
  */
 
 public class FileManager {
 	public static final File PLAYER_FILE = new File ( "res/Players.txt");
 	public static final File LEADERBOARD_FILE = new File ("res/Leaderboard.txt");
 
-	/**
-	 * Writes a record (e.g player info) to the coreesponding file (e.g player file).
-	 * @param record Record info
-	 * @param file File
-	 */
+	// need to do leaderboard reading and writing or something
+
 	private static void writeRecordToFile(String record, File file) {
 		BufferedWriter bw = null;
 		try {
@@ -45,12 +42,6 @@ public class FileManager {
 		}
 	}
 
-	/**
-	 * Used to retrieve a record given an ID.
-	 * @param id given id to identify a record
-	 * @param file file to get record from
-	 * @return the record retrieved
-	 */
 	public static String getRecordWithID(int id, File file) {
 		BufferedReader br = null;
 		String returnLine = null;
@@ -78,11 +69,6 @@ public class FileManager {
 		return returnLine;
 	}
 
-	/**
-	 * Deletes a record with a given ID
-	 * @param id given id to identify the record
-	 * @param file ...
-	 */
 	public static void deleteRecordWithID(int id, File file) {
 		BufferedReader br = null;
 		BufferedWriter wr = null;
@@ -118,11 +104,24 @@ public class FileManager {
 		
 	}
 
-	/**
-	 * Gets all IDs from a file by storing them in a hashset.
-	 * @param file input file to retrieve IDs.
-	 * @return a hashset containing all IDs from teh file
-	 */
+	// no need!
+//	private static boolean recordRepeatedInFile(int record, File file) {
+//		Scanner sc = null;
+//		boolean recorded = false;
+//		try {
+//			 sc = new Scanner(PLAYER_FILE);
+//			 while (sc.hasNextLine() && recorded == false) {
+//				 String[] line = (sc.nextLine()).split(",");
+//				 recorded = (Integer.valueOf(line[0]) == record);
+//			 }
+//
+//		   	 sc.close();
+//		} catch(IOException e) {
+//			System.err.println(String.format("Could not write record: %s to file: %s", record, file.getName()));
+//		}
+//		return recorded;
+//	}
+	// could do something liek this instead? idk, you decide but lmk what you think
 	public static HashSet<Integer> getAllIdsInFile(File file) {
 		HashSet<Integer> ids = new HashSet<>();
 		BufferedReader br = null;
@@ -146,11 +145,7 @@ public class FileManager {
 		return ids;
 	}
 
-	/**
-	 * Writes a player object to a file (by writing their record to the file), used to when adding a new player.
-	 * @param player selected player to write to file
-	 * @return true if the player has been successfully written to the file, as confirmation to be used in the GUI
-	 */
+	// good idea
 	public static boolean writeToPlayerFile(Player player) {
 		boolean written = false;
 		HashSet<Integer> playerids = getAllIdsInFile(PLAYER_FILE);
@@ -160,12 +155,7 @@ public class FileManager {
 		}
 		return written;
 	}
-
-	/**
-	 * Removes a player from the player file
-	 * @param player selected player to be removed
-	 * @return true if the player has been successfully removed from the file storing all players.
-	 */
+	
 	public static boolean deleteFromPlayerFile(Player player) {
 		boolean deleted = false;
 		HashSet<Integer> playerids = getAllIdsInFile(PLAYER_FILE);
@@ -177,20 +167,11 @@ public class FileManager {
 		return deleted;
 	}
 
-	/**
-	 * Retrieves the player record(ID,NAME and MAX LEVEL) from the file of all players using the player's ID
-	 * @param playerID given playerID used to search for the player's info in the file
-	 * @return the player record from the playerID
-	 */
+	// probably needs validation
 	public static String getPlayerInfo(int playerID) {
 		return getRecordWithID(playerID, PLAYER_FILE);
 	}
 
-	/**
-	 * Creates a player object from a player record in the file storing all players, retrieved using ID
-	 * @param playerID given playerID create player object from
-	 * @return the created Player object
-	 */
 	public static Player getPlayer(int playerID) {
 		return new Player(getPlayerInfo(playerID));
 	}
@@ -217,17 +198,10 @@ public class FileManager {
 //	}
 
 
-	/**
-	 * Reads a level, constructs a Level object using info from Level File.
-	 * @param fileName Level File
-	 * @return return the constructed level object to be used in the Game
-	 * @throws Exception if the file isn't found
-	 */
-
 	public static Level readLevel(String fileName) throws Exception {
 		BufferedReader br = new BufferedReader(new FileReader(new File(fileName)));
 		String currentLine;
-		int levelid, width, height, numberOfMechs, numberOfItemsInPlay, numberOfItemsInInventory, currentScore, elapsedTime, numberOfMechsToLose, expectedSecondsToComplete;
+		int levelid, width, height, numberOfMechs, numberOfItemsInPlay, numberOfItemsInInventory, currentScore, elapsedTime, numberOfMechsToLose, expectedSecondsToComplete, itemRespawn;
 		//ArrayList<String> rowsOfTiles = new ArrayList<>();
 		String tiles = "";
 		ArrayList<Mech> mechs = new ArrayList<>();
@@ -261,11 +235,12 @@ public class FileManager {
 		elapsedTime = Integer.valueOf(br.readLine());
 		expectedSecondsToComplete = Integer.valueOf(br.readLine());
 		numberOfMechsToLose = Integer.valueOf(br.readLine());
+		itemRespawn = Integer.valueOf(br.readLine());
 		grid.populateGrid(tiles);
 		br.close();
 		// null for inventory for now;
 		//return new Level(levelid, height, width, null, numberOfMechsToLose, currentScore, expectedSecondsToComplete, elapsedTime, grid);
-		return new Level(levelid, inventory, numberOfMechsToLose, currentScore, expectedSecondsToComplete, elapsedTime, mechs, grid);
+		return new Level(levelid, inventory, numberOfMechsToLose, currentScore, expectedSecondsToComplete, elapsedTime, mechs, grid, itemRespawn);
 	}
 
 	public static void writeLevel(Level level, Player forPlayer) {

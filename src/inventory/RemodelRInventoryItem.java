@@ -1,25 +1,39 @@
 package inventory;
 
+/**
+ * RemodelRInventoryItem.java
+ * @author Sam R, Illia L.
+ * @version 1
+ * Last Mod Date: 27/11/2021
+ * Description: handles the remodel item
+ */
 public class RemodelRInventoryItem extends InventoryItem{
 
-	private static final String name = "REMODEL_R_TO_P";
-	private static int usesLeft; 
-	
-	public RemodelRInventoryItem() {
-		super(name);
-    	usesLeft = MAX_ITEM_USES;
-	}
-    
-    public static String getName() {
-    	return name;
+    /** The Constant name. */
+    public static final String name = "REMODEL_R_TO_P";
+
+    /**
+     * Instantiates a new remodel R inventory item.
+     */
+    public RemodelRInventoryItem() {
+        super(name);
     }
-    public static void used() {
-    	usesLeft-- ;
+
+    /**
+     * Instantiates a new remodel R inventory item.
+     *
+     * @param uses - the amount of uses left
+     */
+    public RemodelRInventoryItem(int uses) {
+        super(name, uses);
     }
-    public static int getUses() {
-    	return usesLeft;
-    }
-    public void syncUses() {
-    	usesLeft = remainingUses;
+
+    /**
+     * Gets the name.
+     *
+     * @return the name of the item
+     */
+    public String getName() {
+        return RemodelRInventoryItem.name;
     }
 }

@@ -1,25 +1,38 @@
 package inventory;
 
+/**
+ * EMPInventoryItem.java
+ * @author Sam R, Illia L.
+ * @version 1
+ * Last Mod Date: 27/11/2021
+ * Description: handles the EMP inventory item
+ */
 public class EMPInventoryItem extends InventoryItem{
 
-	private static final String name = "EMP";
-	private static int usesLeft; 
-	
+    /** The Constant name. */
+    public static final String name = "EMP";
+
+    /**
+     * Instantiates a new EMP inventory item.
+     */
     public EMPInventoryItem() {
         super(name);
-    	usesLeft = MAX_ITEM_USES;
     }
-    
-    public static String getName() {
-    	return name;
+
+    /**
+     * Instantiates a new EMP inventory item.
+     *
+     * @param uses - the amount of uses left
+     */
+    public EMPInventoryItem(int uses) {
+        super(name, uses);
     }
-    public static void used() {
-    	usesLeft-- ;
-    }
-    public static int getUses() {
-    	return usesLeft;
-    }
-    public void syncUses() {
-    	usesLeft = remainingUses;
+
+    /**
+     * Retrieve the EMPInventoryItem name.
+     * @return the EMPInventoryItem name
+     */
+    public String getName() {
+        return EMPInventoryItem.name;
     }
 }

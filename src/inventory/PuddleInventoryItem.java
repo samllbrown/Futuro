@@ -1,25 +1,39 @@
 package inventory;
 
+/**
+ * PuddleInventoryItem.java
+ * @author Sam R, Illia L.
+ * @version 1
+ * Last Mod Date: 27/11/2021
+ * Description: handles the puddle inventory item 
+ */
 public class PuddleInventoryItem extends InventoryItem{
 
-	private static final String name = "PUDDLE";
-	private static int usesLeft; 
-	
+    /** The Constant name. */
+    public static final String name = "PUDDLE";
+
+    /**
+     * Instantiates a new puddle inventory item.
+     */
     public PuddleInventoryItem() {
         super(name);
-    	usesLeft = MAX_ITEM_USES;
     }
-    
-    public static String getName() {
-    	return name;
+
+    /**
+     * Instantiates a new puddle inventory item.
+     *
+     * @param uses - the amount of uses left
+     */
+    public PuddleInventoryItem(int uses) {
+        super(name, uses);
     }
-    public static void used() {
-    	usesLeft-- ;
-    }
-    public static int getUses() {
-    	return usesLeft;
-    }
-    public void syncUses() {
-    	usesLeft = remainingUses;
+
+    /**
+     * Gets the name.
+     *
+     * @return the name
+     */
+    public String getName() {
+        return PuddleInventoryItem.name;
     }
 }

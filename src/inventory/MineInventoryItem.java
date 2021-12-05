@@ -1,24 +1,39 @@
 package inventory;
 
+/**
+ * MineInventoryItem.java
+ * @author Sam R, Illia L.
+ * @version 1
+ * Last Mod Date: 27/11/2021
+ * Description: handles the item mine inventory item
+ */
 public class MineInventoryItem extends InventoryItem{
 
-	private static final String name = "MINE";
-	private static int usesLeft; 
-	
+    /** The Constant name. */
+    public static final String name = "MINE";
+
+    /**
+     * Instantiates a new mine inventory item.
+     */
     public MineInventoryItem() {
         super(name);
     }
-    
-    public static String getName() {
-    	return name;
+
+    /**
+     * Instantiates a new mine inventory item.
+     *
+     * @param uses - the amount of uses left
+     */
+    public MineInventoryItem(int uses) {
+        super(name, uses);
     }
-    public static void used() {
-    	usesLeft-- ;
-    }
-    public static int getUses() {
-    	return usesLeft;
-    }
-    public void syncUses() {
-    	usesLeft = remainingUses;
+
+    /**
+     * Gets the name.
+     *
+     * @return the name
+     */
+    public String getName() {
+        return MineInventoryItem.name;
     }
 }
