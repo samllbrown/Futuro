@@ -132,7 +132,7 @@ public class GameManager extends Application {
         primaryStage.setTitle("Futuro");
 
 
-        //audioPlayer.playMainMenu();
+        AudioPlayer.playMainMenu();
         
         // Display the scene on the stage
         primaryStage.setScene(scene);
@@ -268,7 +268,8 @@ public class GameManager extends Application {
             Stage choosePlayerStage = new Stage();
             choosePlayerStage.setScene(choosePlayerScene);
             choosePlayerStage.setTitle("Choose player");
-            choosePlayerStage.show();
+            this.choosePlayerMenu = choosePlayerStage;
+            this.choosePlayerMenu.show();
         });
         
         return root;
@@ -546,25 +547,41 @@ public class GameManager extends Application {
         sidebar.getChildren().addAll(playerID, playerIDInput, choosePlayerButton);
         choosePlayerButton.setOnAction(e -> {
         	if(playerIDInput.getText() != null) {
-        	    this.currentPlayer = FileManager.getPlayer(Integer.valueOf(playerIDInput.getText()));
-        	    if(this.currentPlayer == null) {
+                try {
+                    this.currentPlayer = FileManager.getPlayer(Integer.valueOf(playerIDInput.getText()));
                     Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("INFORMATION");
-                    alert.setHeaderText("No player found");
-                    alert.setContentText("Please try again");
-                    alert.showAndWait().ifPresent(rs -> {
-                        if (rs == ButtonType.OK) {
-
-                            System.out.println("Pressed OK.");
-                        }
-                    });
-                } else {
-        	        this.showAlert("INFORMATION", "Player founssssd", String.format("Player ID:", Integer.valueOf(playerIDInput.getText())));
+    				alert.setTitle("INFORMATION");
+    				alert.setHeaderText("Player found");
+    				alert.setContentText("Player ID:" + Integer.valueOf(playerIDInput.getText()));
+    				alert.showAndWait().ifPresent(rs -> {
+    				    if (rs == ButtonType.OK) {
+    				        System.out.println("Pressed OK.");
+    				        GameManager.choosePlayerMenu.hide();
+    				        Pane chooseLevelPane = buildChooseLevel();
+    		                Scene chooseLevelScene = new Scene(chooseLevelPane, 300, 200);
+    		                Stage chooseLevelStage = new Stage();
+    		                chooseLevelStage.setScene(chooseLevelScene);
+    		                chooseLevelStage.setTitle("Choose Level");
+    		                GameManager.chooseLevelMenu = chooseLevelStage;
+    		                GameManager.chooseLevelMenu.show();
+    				    }
+    				});
+                } catch (Exception exception) {
+                	if(this.currentPlayer == null) {
+                		Alert alert = new Alert(AlertType.INFORMATION);
+        				alert.setTitle("INFORMATION");
+        				alert.setHeaderText("No player found");
+        				alert.setContentText("Please try again");
+        				alert.showAndWait().ifPresent(rs -> {
+        				    if (rs == ButtonType.OK) {
+        				        System.out.println("Pressed OK.");
+        				    }
+        				});
+                	}
                 }
-            } else {
-        	    this.showAlert("INFORMATION", "No player found", "Please try again");
-            }
+			}
         });
+        
     	return root;
     }
 
