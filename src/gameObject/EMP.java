@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 /**
  * EMP.java
- * @author
+ * @author Sam B, Debbie L, ...
  * @version
  * Last Mod Date:
  * Description: Emp Item, mimics the bomb weapon from the functional spec. Inherits from Item Class.

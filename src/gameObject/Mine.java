@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 /**
  * Mine.java
- * @author
+ * @author Sam B, Debbie L, ...
  * @version
  * Last Mod Date:
  * Description: Mine Item, mimics the poison weapon (instakill) from the functional spec. Inherits from Item Class.

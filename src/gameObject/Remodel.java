@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 /**
  * Remodel.java
- * @author
+ * @author Sam B, Debbie L, ...
  * @version
  * Last Mod Date:
  * Description: Model Item, mimics the male/female sex change item from the functional spec. Inherits from Item Class.

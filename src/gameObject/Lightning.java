@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 /**
  * Lightning.java
- * @author
+ * @author Sam B, Debbie L, ...
  * @version
  * Last Mod Date:
  * Description: Lightning Item, mimics the sterilisation weapon from the functional spec. Inherits from Item Class.

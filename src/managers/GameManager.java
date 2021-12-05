@@ -22,7 +22,7 @@ import services.audioPlayer;
 
 /**
  * FileManager.java
- * @author Sam B, ..... 
+ * @author Sam B, Debbie L 
  * @version 1.5
  * Last Mod Date: 30/11/2021
  */

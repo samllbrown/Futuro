@@ -34,7 +34,8 @@ import services.MessageOfTheDay;
 import javafx.util.Duration;
 
 /**
- * The Class Game.
+ * Game.java
+ * @author Debbie, Illia, ...
  */
 public class Game {
 

@@ -5,6 +5,8 @@ import java.awt.*;
 
 /**
  * The Class Item serves as a base for all items .
+ * Item.java
+ * @author Sam B, ...
  */
 public abstract class Item extends Rectangle {
 

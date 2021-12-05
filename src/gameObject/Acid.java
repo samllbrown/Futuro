@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 /**
  * Acid.java
- * @author
+ * @author Sam B, Debbie L, ...
  * @version
  * Last Mod Date:
  * Description: Acid Item, mimics the gas weapon from the functional spec. Inherits from Item Class.
