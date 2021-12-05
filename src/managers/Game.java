@@ -32,6 +32,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import services.AudioPlayer;
 import services.MessageOfTheDay;
 import javafx.util.Duration;
 
@@ -97,6 +98,7 @@ public class Game {
 		System.out.println(this.CURRENT_WIDTH);
 		System.out.println(this.CURRENT_HEIGHT);
 		this.messageOfTheDay = getMessageOfTheDay();
+		AudioPlayer.playInGameMusic();
 	}
 
 	// THIS ASSUMES THAT YOU WILL DEFINITELY
