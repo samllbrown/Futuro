@@ -66,7 +66,6 @@ public class FileManager {
 				System.err.println("There was an error closing the BufferedReader whilst retrieving a record");
 			}
 		}
-		System.out.println("READ RECORD: " + returnLine);
 		return returnLine;
 	}
 
@@ -170,18 +169,11 @@ public class FileManager {
 
 	// probably needs validation
 	public static String getPlayerInfo(int playerID) {
-		String playerInfo = getRecordWithID(playerID, PLAYER_FILE);
-		return playerInfo;
-		//return getRecordWithID(playerID, PLAYER_FILE);
+		return getRecordWithID(playerID, PLAYER_FILE);
 	}
 
 	public static Player getPlayer(int playerID) {
-		String playerInfo = getPlayerInfo(playerID);
-		if(playerInfo == null) {
-			return null;
-		} else {
-			return new Player(playerInfo);
-		}
+		return new Player(getPlayerInfo(playerID));
 	}
 
 //	public static void writeToLeaderboardFile(Player player, int playerScore, int rank) throws IOException {

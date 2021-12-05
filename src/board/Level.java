@@ -157,8 +157,7 @@ public class Level {
 	 * @throws Exception
 	 */
 	private void updateMechs() throws Exception {
-		label.setText(Integer.toString(currentScore));
-		
+		label.setText("Score: " +  Integer.toString(currentScore));
 		MechManager.checkMechsForDeath(this.mechs, this.grid);
 		MechManager.checkMechsForDamageFromItems(this.mechs, this.grid);
 
