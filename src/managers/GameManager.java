@@ -146,6 +146,7 @@ public class GameManager extends Application {
      * @param args the arguments
      * @throws Exception 
      */
+    /*
     public static void main(String[] args) throws Exception {
         // Build the GUI
         Pane root = buildMainMenu();
@@ -165,7 +166,7 @@ public class GameManager extends Application {
         mainMenu = primaryStage;
         mainMenu.show();
     }
-
+	*/
     public static void main(String[] args) throws Exception {
         System.out.println(javafx.scene.text.Font.getFamilies());
         launch(args);
@@ -177,6 +178,13 @@ public class GameManager extends Application {
      * @return the pane
      */
     private Pane buildMainMenu() {
+    	
+    	BorderPane root = new BorderPane();
+        Player player;
+        // Create canvas
+        canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+        root.setCenter(canvas);
+        
         // Create the main buttons for navigating the main menu
         Button chooseLevel = new Button("START GAME");
         Button choosePlayer = new Button("CHOOSE PLAYER");        
@@ -219,7 +227,7 @@ public class GameManager extends Application {
             Game game = new Game(level);
             mainMenu.close();
             try {
-            	audioPlayer.stopAllMusic();
+            	AudioPlayer.stopAllMusic();
                 game.showGame();
             } catch (Exception exception) {
                 exception.printStackTrace();
@@ -347,7 +355,6 @@ public class GameManager extends Application {
      * @return the pane
      */
     private Pane buildDeletePlayer() {
-
     	BorderPane root = new BorderPane();
     	VBox sidebar = new VBox();
         sidebar.setSpacing(10);
@@ -368,13 +375,13 @@ public class GameManager extends Application {
             	Alert alert  = new Alert(AlertType.CONFIRMATION);
             	if(deleted) {
             		alert.setTitle("SUCCESS");
-    	        	alert.setHeaderText("Player deleted");
-
     	        	alert.setContentText("Huzzah! You have deleted a Player.");
     	            alert.showAndWait().ifPresent(rs -> {
     	                if (rs == ButtonType.OK) {
     	                    System.out.println("Pressed OK.");
     	                    this.deletePlayerMenu.hide();
+    	                }
+    	            });
             	}
             	else {
             		alert.setTitle("FAILURE");
