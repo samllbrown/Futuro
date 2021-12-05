@@ -34,10 +34,10 @@ public class Remodel extends Item {
 	 */
 	private void remodelMech(Mech mech) {
 		if(mech.getType() != MechType.DEATH) {
-			if(mech.getType() == MechType.PRODUCTION && this.isMaleRemodel == true) {
+			if(mech.getType() == MechType.PRODUCTION && this.isMaleRemodel == false) {
 				mech.setType(MechType.RESOURCE);
 				mech.setImage();
-			} else if (mech.getType() == MechType.RESOURCE && this.isMaleRemodel == false){
+			} else if (mech.getType() == MechType.RESOURCE && this.isMaleRemodel == true){
 				mech.setType(MechType.PRODUCTION);
 				mech.setImage();
 			}
