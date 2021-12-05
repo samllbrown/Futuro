@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import board.Level;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -74,7 +75,7 @@ public class GameManager extends Application {
         Player player;
         // Create canvas
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-        root.setCenter(canvas);
+//        root.setCenter(canvas);
         // Create the main buttons for navigating the main menu
         Button chooseLevel = new Button("(START GAME (testing)");   
         Button choosePlayer = new Button("CHOOSE PLAYER");        
@@ -87,10 +88,12 @@ public class GameManager extends Application {
         // Create a sidebar with some nice padding and spacing
         VBox sidebar = new VBox();
         sidebar.setSpacing(10);
+        sidebar.setAlignment(Pos.CENTER);
         sidebar.setPadding(new Insets(10, 10, 10, 10));
         
         // Add the elements on the canvas onto the sidebar
-        root.setLeft(sidebar);
+        root.setCenter(sidebar);
+        
         sidebar.getChildren().addAll(chooseLevel, choosePlayer, newPlayer, deletePlayer, exitMainMenu);
 
         chooseLevel.setOnAction(e -> {
@@ -120,7 +123,7 @@ public class GameManager extends Application {
             Scene deletePlayerScene = new Scene(deletePlayerPane, 300, 200);
             Stage deletePlayerStage = new Stage();
             deletePlayerStage.setScene(deletePlayerScene);
-            deletePlayerStage.setTitle("New player");
+            deletePlayerStage.setTitle("Delete player");
             deletePlayerStage.show();
         });
         
@@ -162,7 +165,7 @@ public class GameManager extends Application {
         Label playerName = new Label("Name of player: ");
         TextField playerNameInput = new TextField ();
         Button newPlayerButton = new Button("CREATE PLAYER");
-        root.setLeft(sidebar);
+        root.setCenter(sidebar);
         sidebar.getChildren().addAll(playerID, playerIDInput, playerName, playerNameInput, newPlayerButton);
 
 
@@ -211,7 +214,7 @@ public class GameManager extends Application {
         TextField playerIDInput = new TextField ();
         Button deletePlayerButton = new Button("Delete player");
         
-        root.setLeft(sidebar);
+        root.setCenter(sidebar);
         sidebar.getChildren().addAll(playerID, playerIDInput, deletePlayerButton);
 
 
@@ -261,7 +264,7 @@ public class GameManager extends Application {
         sidebar.setSpacing(10);
         sidebar.setPadding(new Insets(10, 10, 10, 10));
         
-        root.setLeft(sidebar);
+        root.setCenter(sidebar);
         sidebar.getChildren().addAll(levelOne, levelTwo, levelThree, levelFour, levelFive);
         
         levelOne.setOnAction(e -> {
@@ -295,7 +298,7 @@ public class GameManager extends Application {
         Button choosePlayerButton = new Button("Choose player");
         
         
-        root.setLeft(sidebar);
+        root.setCenter(sidebar);
         sidebar.getChildren().addAll(playerID, playerIDInput, choosePlayerButton);
         choosePlayerButton.setOnAction(e -> {
         	if(playerIDInput.getText() != null) {
