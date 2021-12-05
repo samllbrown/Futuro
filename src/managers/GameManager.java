@@ -6,6 +6,7 @@ import java.io.File;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import java.util.Random;
@@ -53,6 +54,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import services.AudioPlayer;
+import services.Globals;
 //import javax.swing.text.html.ImageView;
 
 /**
@@ -133,7 +135,7 @@ public class GameManager extends Application {
         primaryStage.setTitle("Futuro");
 
 
-        AudioPlayer.playMainMenu();
+        //AudioPlayer.playMainMenu();
         
         // Display the scene on the stage
         primaryStage.setScene(scene);
@@ -168,17 +170,24 @@ public class GameManager extends Application {
         root.setCenter(canvas);
         
         // Create the main buttons for navigating the main menu
-        Button chooseLevel = new Button("START GAME");
+        Button startGame = new Button("START GAME");
         Button choosePlayer = new Button("CHOOSE PLAYER");        
         Button newPlayer = new Button("CREATE PLAYER");
         Button deletePlayer = new Button("DELETE PLAYER");
         Button exitMainMenu = new Button("EXIT GAME");
-        chooseLevel.setStyle(BUTTON_STYLE);
+        startGame.setStyle(BUTTON_STYLE);
         choosePlayer.setStyle(BUTTON_STYLE);
         newPlayer.setStyle(BUTTON_STYLE);
         deletePlayer.setStyle(BUTTON_STYLE);
         exitMainMenu.setStyle(BUTTON_STYLE);
 
+//        Pane chooseLevelPane = buildChooseLevel();
+//        Scene chooseLevelScene = new Scene(chooseLevelPane, 300, 200);
+//        Stage chooseLevelStage = new Stage();
+//        chooseLevelStage.setScene(chooseLevelScene);
+//        chooseLevelStage.setTitle("Choose Level");
+//        GameManager.chooseLevelMenu = chooseLevelStage;
+//        GameManager.chooseLevelMenu.show();
         // Create a sidebar with some nice padding and spacing
         VBox sidebar = new VBox();
         sidebar.setSpacing(10);
@@ -187,24 +196,26 @@ public class GameManager extends Application {
         
         // Add the elements on the canvas onto the sidebar
         root.setCenter(sidebar);
-        sidebar.getChildren().addAll(chooseLevel, choosePlayer, newPlayer, deletePlayer, exitMainMenu);
+        sidebar.getChildren().addAll(startGame, choosePlayer, newPlayer, deletePlayer, exitMainMenu);
 
-        chooseLevel.setOnMouseEntered(e ->{
-            chooseLevel.setStyle(HOVERED_BUTTON_STYLE);
+        startGame.setOnMouseEntered(e ->{
+            startGame.setStyle(HOVERED_BUTTON_STYLE);
         });
 
-        chooseLevel.setOnMouseExited(e ->{
-            chooseLevel.setStyle(BUTTON_STYLE);
+        startGame.setOnMouseExited(e ->{
+            startGame.setStyle(BUTTON_STYLE);
         });
 
-        chooseLevel.setOnAction(e -> {
+        startGame.setOnAction(e -> {
             if(this.currentPlayer != null) {
                 Pane chooseLevelPane = buildChooseLevel();
                 Scene chooseLevelScene = new Scene(chooseLevelPane, 300, 200);
                 Stage chooseLevelStage = new Stage();
                 chooseLevelStage.setScene(chooseLevelScene);
                 chooseLevelStage.setTitle("Choose Level");
-                chooseLevelStage.show();
+                GameManager.chooseLevelMenu = chooseLevelStage;
+                GameManager.chooseLevelMenu.show();
+                //chooseLevelStage.show();
             } else {
                 showAlert("INFORMATION", "No player has been selected", "Please select a player before starting the game");
             }
@@ -441,11 +452,17 @@ public class GameManager extends Application {
      * @return the pane
      */
     private Pane buildChooseLevel() {
-    	Button levelOne = new Button("Level One");
+    	HashMap<Button, String> buttonsToLevelFiles = new HashMap<>();
+        Button levelOne = new Button("Level One");
+        buttonsToLevelFiles.put(levelOne, Globals.LEVEL1);
      	Button levelTwo = new Button("Level Two");
+        buttonsToLevelFiles.put(levelTwo, Globals.LEVEL2);
      	Button levelThree = new Button("Level Three");
+        buttonsToLevelFiles.put(levelThree, Globals.LEVEL3);
      	Button levelFour = new Button("Level Four");
+        buttonsToLevelFiles.put(levelFour, Globals.LEVEL4);
      	Button levelFive  = new Button("Level Five");
+        buttonsToLevelFiles.put(levelFive, Globals.LEVEL5);
      	
     	BorderPane root = new BorderPane();
     	VBox sidebar = new VBox();
@@ -454,92 +471,111 @@ public class GameManager extends Application {
         
         root.setLeft(sidebar);
         sidebar.getChildren().addAll(levelOne, levelTwo, levelThree, levelFour, levelFive);
-        
-        levelOne.setOnAction(e -> {
-        Level level = null;
-		try {
-			level = FileManager.readLevel("res\\Levels\\LEVEL_1.txt"); 
-        } catch (Exception exception) {
-			exception.printStackTrace();
+        Game game = new Game();
+
+        for(Button btn : buttonsToLevelFiles.keySet()) {
+            btn.setOnAction(e -> {
+                try {
+                    game.setLevel(FileManager.readLevel(buttonsToLevelFiles.get(btn)));
+                    if(this.currentPlayer.getMaxLevelID() < game.getLevel().getLevelID()) {
+                        showAlert("Information", "Level too high", "You can't play that level yet");
+                    } else {
+                        mainMenu.close();
+                        AudioPlayer.stopAllMusic();
+                        game.showGame();
+                        chooseLevelMenu.close();
+                    }
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            });
         }
-        Game game = new Game(level);
-        mainMenu.close();
-        try {
-        	AudioPlayer.stopAllMusic();
-            game.showGame();
-            chooseLevelMenu.close();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        	}
-        });
-        levelTwo.setOnAction(e -> {
-            Level level = null;
-            	try {
-            		level = FileManager.readLevel("res\\Levels\\LEVEL_2.txt"); 
-            } catch (Exception exception) {
-                    exception.printStackTrace();
-            }
-            Game game = new Game(level);
-            mainMenu.close();
-            chooseLevelMenu.close();
-            try {
-            	AudioPlayer.stopAllMusic();
-                game.showGame();
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-        });
-        levelThree.setOnAction(e -> {
-            Level level = null;
-			try {
-				level = FileManager.readLevel("res\\Levels\\LEVEL_3.txt"); 		
-			} catch (Exception exception) {
-				exception.printStackTrace();
-			}
-            Game game = new Game(level);
-            mainMenu.close();
-            chooseLevelMenu.close();
-            try {
-            	AudioPlayer.stopAllMusic();
-                game.showGame();
-            } catch (Exception exception) {
-                exception.printStackTrace();
-        	}
-        });
-        levelFour.setOnAction(e -> {
-            Level level = null;
-            	try {
-            		level = FileManager.readLevel("res\\Levels\\LEVEL_4.txt"); 
-            } catch (Exception exception) {
-                    exception.printStackTrace();
-            }
-            Game game = new Game(level);
-            mainMenu.close();
-            chooseLevelMenu.close();
-            try {
-            	AudioPlayer.stopAllMusic();
-                game.showGame();
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-        });
-        levelFive.setOnAction(e -> {
-            Level level = null;
-            	try {
-            		level = FileManager.readLevel("res\\Levels\\LEVEL_5.txt"); 
-            } catch (Exception exception) {
-                    exception.printStackTrace();
-            }
-            Game game = new Game(level);
-            mainMenu.close();
-            chooseLevelMenu.close();
-            try {
-            	AudioPlayer.stopAllMusic();
-                game.showGame();
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-        });
+
+//        levelOne.setOnAction(e -> {
+//            Level level = null;
+//            try {
+//                level = FileManager.readLevel("res\\Levels\\LEVEL_1.txt");
+//            } catch (Exception exception) {
+//                exception.printStackTrace();
+//            }
+//            Game game = new Game(level);
+//            mainMenu.close();
+//            try {
+//                AudioPlayer.stopAllMusic();
+//                game.showGame();
+//                chooseLevelMenu.close();
+//            } catch (Exception exception) {
+//                exception.printStackTrace();
+//            }
+//        });
+//        levelTwo.setOnAction(e -> {
+//            Level level = null;
+//            try {
+//                level = FileManager.readLevel("res\\Levels\\LEVEL_2.txt");
+//            } catch (Exception exception) {
+//                exception.printStackTrace();
+//            }
+//            Game game = new Game(level);
+//            mainMenu.close();
+//            chooseLevelMenu.close();
+//            try {
+//                AudioPlayer.stopAllMusic();
+//                game.showGame();
+//            } catch (Exception exception) {
+//                exception.printStackTrace();
+//            }
+//        });
+//        levelThree.setOnAction(e -> {
+//            Level level = null;
+//            try {
+//                level = FileManager.readLevel("res\\Levels\\LEVEL_3.txt");
+//            } catch (Exception exception) {
+//                exception.printStackTrace();
+//            }
+//            Game game = new Game(level);
+//            mainMenu.close();
+//            chooseLevelMenu.close();
+//            try {
+//                AudioPlayer.stopAllMusic();
+//                game.showGame();
+//            } catch (Exception exception) {
+//                exception.printStackTrace();
+//            }
+//        });
+//        levelFour.setOnAction(e -> {
+//            Level level = null;
+//            try {
+//                level = FileManager.readLevel("res\\Levels\\LEVEL_4.txt");
+//            } catch (Exception exception) {
+//                exception.printStackTrace();
+//            }
+//            Game game = new Game(level);
+//            mainMenu.close();
+//            chooseLevelMenu.close();
+//            try {
+//                AudioPlayer.stopAllMusic();
+//                game.showGame();
+//            } catch (Exception exception) {
+//                exception.printStackTrace();
+//            }
+//        });
+//        levelFive.setOnAction(e -> {
+//            Level level = null;
+//            try {
+//                level = FileManager.readLevel("res\\Levels\\LEVEL_5.txt");
+//            } catch (Exception exception) {
+//                exception.printStackTrace();
+//            }
+//            Game game = new Game(level);
+//            mainMenu.close();
+//            chooseLevelMenu.close();
+//            try {
+//                AudioPlayer.stopAllMusic();
+//                game.showGame();
+//            } catch (Exception exception) {
+//                exception.printStackTrace();
+//            }
+//        });
         return root; 
     }
 
@@ -562,19 +598,13 @@ public class GameManager extends Application {
         choosePlayerButton.setOnAction(e -> {
             if(playerIDInput.getText() != null) {
                 this.currentPlayer = FileManager.getPlayer(Integer.valueOf(playerIDInput.getText()));
-                String playerIDGiven = String.valueOf(currentPlayer.getPlayerID());
                 if(this.currentPlayer != null) {
+                    String playerIDGiven = String.valueOf(currentPlayer.getPlayerID());
                     showAlert("INFORMATION", "Player found", "Player ID: " + playerIDGiven);
+                    System.err.println(String.format("Player ID: %d\nPlayer Name: %s\nPlayer Max Level ID: %d", currentPlayer.getPlayerID(), currentPlayer.getPlayerName(), currentPlayer.getMaxLevelID()));
                     GameManager.choosePlayerMenu.close();
-                    Pane chooseLevelPane = buildChooseLevel();
-                    Scene chooseLevelScene = new Scene(chooseLevelPane, 300, 200);
-                    Stage chooseLevelStage = new Stage();
-                    chooseLevelStage.setScene(chooseLevelScene);
-                    chooseLevelStage.setTitle("Choose Level");
-                    GameManager.chooseLevelMenu = chooseLevelStage;
-                    GameManager.chooseLevelMenu.show();
                 } else {
-                    showAlert("INFORMATION", "Could not find player", "Player ID: " + playerIDGiven);
+                    showAlert("INFORMATION", "Could not find player", "Player ID: " + playerIDInput.getText());
                 }
             } else {
                 showAlert("INFORMATION", "Invalid player ID given", "Please try again.");
