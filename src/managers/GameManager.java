@@ -132,7 +132,7 @@ public class GameManager extends Application {
         primaryStage.setTitle("Futuro");
 
 
-        //audioPlayer.playMainMenu();
+        AudioPlayer.playMainMenu();
         
         // Display the scene on the stage
         primaryStage.setScene(scene);
@@ -560,18 +560,21 @@ public class GameManager extends Application {
     				    }
     				});
                 } catch (Exception exception) {
-                    Alert alert = new Alert(AlertType.INFORMATION);
-    				alert.setTitle("INFORMATION");
-    				alert.setHeaderText("No player found");
-    				alert.setContentText("Please try again");
-    				alert.showAndWait().ifPresent(rs -> {
-    				    if (rs == ButtonType.OK) {
-    				        System.out.println("Pressed OK.");
-    				    }
-    				});
+                	if(this.currentPlayer == null) {
+                		Alert alert = new Alert(AlertType.INFORMATION);
+        				alert.setTitle("INFORMATION");
+        				alert.setHeaderText("No player found");
+        				alert.setContentText("Please try again");
+        				alert.showAndWait().ifPresent(rs -> {
+        				    if (rs == ButtonType.OK) {
+        				        System.out.println("Pressed OK.");
+        				    }
+        				});
+                	}
                 }
             }
         });
+        
     	return root;
     }
 }
