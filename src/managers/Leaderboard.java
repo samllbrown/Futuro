@@ -5,6 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Leadboard.Java
+ * @author
+ * @version
+ * Last Mod Date:
+ */
 public class Leaderboard {
     private final static int MAX_PLAYERS_IN_LEADERBOARD = 10;
     // needed?
