@@ -101,8 +101,8 @@ public class Mech extends Rectangle {
 		this.health = health;
 		this.pregnancyTimer = 0;
 		this.pregnant = pregnant;
-		this.img = isBaby ? new Image("file:res/Sprites/babyMech.png", 50, 50, false, false) : getImageForType(type);
 		this.isBaby = isBaby;
+		this.img = isBaby ? new Image("file:res/Sprites/babyMechP.png", 50, 50, false, false) : getImageForType(type);
 		this.isSterile = isSterile;
 		this.secondsUntilAdult = 0;
 		setFill(new ImagePattern(this.img));
