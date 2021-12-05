@@ -10,6 +10,8 @@ public class BreedingPair {
     public BreedingPair(Mech m1, Mech m2) {
         this.m1 = m1;
         this.m2 = m2;
+        m1.setIsBreeding(true);
+        m2.setIsBreeding(true);
         // 5 seconds to breed
         this.timeLeft = 5;
     }

@@ -52,7 +52,7 @@ public class Mech extends Rectangle {
 
 	private Direction currentDirection;
 	private Pair currentCords;
-
+	private int timeUntilAdult;
 	protected int health;
 	private boolean pregnant;
 	private int numOfBabies;
@@ -73,11 +73,12 @@ public class Mech extends Rectangle {
 		this.type = type;
 		this.x = x;
 		this.y = y;
+		this.timeUntilAdult = 0;
 		this.currentCords = new Pair(x, y);
 		this.currentDirection = Direction.RIGHT;
 		this.health = health;
 		this.pregnant = pregnant;
-		this.img = getImageForType(type);
+		this.img = isBaby ? new Image("file:res/Sprites/babyMech.png", 50, 50, false, false) : getImageForType(type);
 		this.isBaby = isBaby;
 		this.isSterile = isSterile;
 		setFill(new ImagePattern(this.img));
@@ -95,6 +96,29 @@ public class Mech extends Rectangle {
 		boolean neitherPregnant = !(this.isPregnant() || otherMech.isPregnant());
 		boolean bothNotDeathMech = !((this.type != MechType.DEATH) && (otherMech.getType() != MechType.DEATH));
 		return bothOppositeTypes && neitherSterile && neitherCurrentlyBreeding && neitherPregnant && bothNotDeathMech;
+	}
+
+	public void growIntoAdult() {
+		assert (this.isBaby);
+		assert (this.timeUntilAdult <= 0);
+		this.isBaby = false;
+		this.setImage(getImageForType(this.type));
+	}
+
+	public void setTimeUntilAdult(int time) {
+		this.timeUntilAdult = time;
+	}
+
+	public int getTimeUntilAdult() {
+		return this.timeUntilAdult;
+	}
+
+	public void setIsBreeding(boolean bool) {
+		this.isBreeding = bool;
+	}
+
+	public void reduceTimeUntilAdult() {
+		this.timeUntilAdult--;
 	}
 
 	public void actOn(Mech otherMech) {
@@ -211,12 +235,16 @@ public class Mech extends Rectangle {
 		return this.isBaby;
 	}
 
+	public void setIsBaby(boolean bool) {
+		this.isBaby = bool;
+	}
+
 	public Image getImage(){
 		return this.img;
 	}
 	
-	public void setImage() {
-		this.img = this.getImageForType(this.type);
+	public void setImage(Image image) {
+		this.img = image;
 	}
 	public int getGridX() {
 		return this.x;

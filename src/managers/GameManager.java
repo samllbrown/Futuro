@@ -57,7 +57,7 @@ public class GameManager extends Application {
 
 	/**
 	 * Start
-	 *
+	 *Y
 	 * @param primaryStage the main stage
 	 */
 	public void start(Stage primaryStage) {

@@ -82,6 +82,7 @@ public class Level {
 	 */
 	public void addItem(Item i) {
 		this.items.add(i);
+		this.grid.getTileAt(i.getGridX(), i.getGridY()).setCurrentItem(i);
 	}
 
 	/**
@@ -165,6 +166,16 @@ public class Level {
 				this.killMech(mech);
 				//audioPlayer.playDeathSound();
 				System.out.println("Update Mechs method has detected a mech with <= 0 hp, so it ded");
+			} else {
+				if(mech.getIsBaby()) {
+					if(mech.getTimeUntilAdult() == 0) {
+						//mech.growUp();
+						System.err.println("Should now be an adult tbh");
+						mech.growIntoAdult();
+					} else {
+						mech.reduceTimeUntilAdult();
+					}
+				}
 			}
 		}
 		
@@ -177,13 +188,14 @@ public class Level {
 					availableMechs = (grid.getTileAt(m.getGridX(), m.getGridY()).getBreedableMechsOnTile(m));
 					if(availableMechs.size() != 0) {
 						Random rand = new Random();
-						System.err.println(availableMechs.size());
+						System.err.println("AVAILABLE MECHS: " + availableMechs.size());
 						Mech breedWith = availableMechs.get(rand.nextInt(availableMechs.size()));
 						this.breeder.breed(m, breedWith);
 					}
 				}
 			}
 		}
+
 		//MechManager.checkMechsForBreeding(this.mechs, this.grid);
 		this.mechs.forEach(m -> {
 			try {
@@ -230,6 +242,7 @@ public class Level {
 		// this for loop should probs just go into an init method
 		this.updateItems();
 		this.updateMechs();
+		this.breeder.update(this.mechs, grid);
 	}
 
 
@@ -247,6 +260,7 @@ public class Level {
 	 */
 	public void addMech(Mech m) {
 		this.mechs.add(m);
+		this.grid.getTileAt(m.getGridX(), m.getGridY()).addMech(m);
 	}
 
 	/**

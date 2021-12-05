@@ -6,6 +6,7 @@ import gameObject.Mech;
 import gameObject.MechType;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Breeder {
     private ArrayList<BreedingPair> breedingPairsQueue;
@@ -20,11 +21,16 @@ public class Breeder {
         for(BreedingPair bp : this.breedingPairsQueue) {
             if(bp.getTimeLeft() == 0) {
                 for(int i = 0; i < 5; i++) {
-                    Mech baby = new Mech (MechType.PRODUCTION, bp.m1.getGridX(), bp.m1.getGridY(), 100, false, true, false);
+                    MechType[] mechTypes = {MechType.PRODUCTION, MechType.RESOURCE};
+                    Random rand = new Random();
+                    Mech baby = new Mech (mechTypes[rand.nextInt(2)], bp.m1.getGridX(), bp.m1.getGridY(), 100, false, true, false);
+                    baby.setTimeUntilAdult(10);
                     grid.getTileAt(new Pair(bp.m1.getGridX(), bp.m1.getGridY())).addMech(baby);
                     mechs.add(baby);
                 }
                 toRemove.add(bp);
+                bp.m1.setIsBreeding(false);
+                bp.m1.setIsBreeding(false);
             } else {
                 bp.decreaseTimeLeft();
             }
