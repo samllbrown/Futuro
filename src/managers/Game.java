@@ -2,6 +2,8 @@ package managers;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 import board.Grid;
@@ -33,6 +35,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import services.MessageOfTheDay;
 import javafx.util.Duration;
+
+import static gameObject.MechType.*;
 
 public class Game {
 
@@ -278,17 +282,42 @@ public class Game {
         Grid grid = level.getGrid();
         String tiles = grid.getGridAsString();
 
-        System.out.println(width);
-        System.out.println(height);
-        System.out.println(tiles);
+        try {
+            PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8");
+            writer.println(width);
+            writer.println(height);
+            writer.println(tiles);
+            for (Mech m: level.getMechs()) {
+                String mechString = "M";
+                String mechX = Integer.toString(m.getGridX());
+                String mechY = Integer.toString(m.getGridY());
+                String mechHealth = Integer.toString(m.getHealth());
+                String mechType = null;
+                switch (m.getType()) {
+                    case RESOURCE:
+                        mechType = "R";
+                        break;
+                    case PRODUCTION:
+                        mechType = "P";
+                        break;
+                    case DEATH:
+                        mechType = "D";
+                        break;
+                    default:
+                        System.err.println("error");
+                        break;
+                }
 
-        for (Mech m: level.getMechs()) {
-            System.out.println(m.getGridX());
-            System.out.println(m.getGridY());
-            System.out.println(m.getHealth());
-            System.out.println(m.getType());
-            System.out.println(m.isPregnant());
-            System.out.println(m.isBreeding());
+                boolean mechPregnantBool = m.isPregnant();
+                int mechPregnant = (mechPregnantBool) ? 1 : 0;
+
+                List<String> mechList = Arrays.asList(mechString,mechX,mechY,mechHealth,mechType,Integer.toString(mechPregnant));
+                String mechListResult = String.join(",", mechList);
+                writer.println(mechListResult);
+            }
+            writer.close();
+        } catch (Exception e){
+            e.printStackTrace();
         }
 
     }
