@@ -562,6 +562,7 @@ public class GameManager extends Application {
     		                Stage chooseLevelStage = new Stage();
     		                chooseLevelStage.setScene(chooseLevelScene);
     		                chooseLevelStage.setTitle("Choose Level");
+    		                GameManager.mainMenu.hide();
     		                GameManager.chooseLevelMenu = chooseLevelStage;
     		                GameManager.chooseLevelMenu.show();
     				    }
