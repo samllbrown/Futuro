@@ -5,7 +5,7 @@ import board.Path;
 import board.Tile;
 import board.Tunnel;
 import board.Wall;
-import inventory.InventoryItem;
+import inventory.*;
 
 public class GameObjectFactory {
 	public static Mech readMech(String id) {
@@ -55,10 +55,69 @@ public class GameObjectFactory {
 
 
 	public static Item readItem(String id) {
-		return null;
+		String[] idComp = id.split(",");
+		int atX = Integer.valueOf(idComp[1]);
+		int atY = Integer.valueOf(idComp[2]);
+		int usesLeft = Integer.valueOf(idComp[3]);
+		Item item = null;
+		switch(idComp[0]) {
+			case "ACID":
+				item = new Acid(atX, atY);
+				item.setUses(usesLeft);
+				break;
+			case "EMP":
+				item = new EMP(atX, atY);
+				item.setUses(usesLeft);
+				break;
+			case "LIGHTNING":
+				item = new Lightning(atX, atY);
+				item.setUses(usesLeft);
+				break;
+			case "DEATHMECHITEM":
+				System.err.println("Not adding a death mech item because deathmech mech already adds deathmechitem to the level");
+				break;
+			case "MINE":
+				item = new Mine(atX, atY);
+				item.setUses(usesLeft);
+				break;
+			case "PUDDLE":
+				item = new Puddle(atX, atY);
+				item.setUses(usesLeft);
+				break;
+		}
+		return item;
 	}
 	public static InventoryItem readInventoryItem(String id) {
-		return null;
+		String[] idComps = id.split(",");
+		int uses = Integer.valueOf(idComps[1]);
+		InventoryItem invItem = null;
+		switch(idComps[0]) {
+			case "ACID":
+				invItem = new AcidInventoryItem();
+				invItem.setUses(uses);
+				break;
+			case "EMP":
+				invItem = new EMPInventoryItem();
+				invItem.setUses(uses);
+				break;
+			case "LIGHTNING":
+				invItem = new LightningInventoryItem();
+				invItem.setUses(uses);
+				break;
+			case "DEATHMECH":
+				invItem = new DeathMechInventoryItem();
+				invItem.setUses(uses);
+				break;
+			case "MINE":
+				invItem = new MineInventoryItem();
+				invItem.setUses(uses);
+				break;
+			case "PUDDLE":
+				invItem = new PuddleInventoryItem();
+				invItem.setUses(uses);
+				break;
+		}
+		return invItem;
 	}
 	// needs to be done
 //	public static Mech readMech(String id) {
