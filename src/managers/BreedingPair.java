@@ -21,5 +21,5 @@ public class BreedingPair {
     public void decreaseTimeLeft() {
         this.timeLeft--;
     }
-
+    //lol
 }
