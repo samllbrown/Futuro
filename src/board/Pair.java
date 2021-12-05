@@ -24,7 +24,7 @@ public class Pair {
 
     /**
      * Adds a new Pair of coords to this current one.
-     * @param p
+     * @param p Pair of coords
      * @return the new Pair of coord values
      */
     public Pair add(Pair p) {
@@ -33,7 +33,7 @@ public class Pair {
 
     /**
      * Subtracts a new Pair of coords to this current one.
-     * @param p
+     * @param p Pair of coords
      * @return the new Pair of coord values
      */
     public Pair sub(Pair p) {
@@ -42,7 +42,7 @@ public class Pair {
 
     /**
      * Multiples a new Pair of coords to this current one.
-     * @param p
+     * @param p Pair of coords
      * @return the new Pair of coord values
      */
     public Pair mult(Pair p) {
@@ -50,9 +50,9 @@ public class Pair {
     }
 
     /**
-     *
-     * @param p
-     * @return
+     * Divides this Pair of coords by a new one.
+     * @param p pair of coords divided by
+     * @return the new Pair of coord values
      */
     public Pair div(Pair p) {
         return new Pair(this.x/p.x, this.y/p.y);
