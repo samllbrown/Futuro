@@ -49,7 +49,7 @@ public class Breeder {
         ArrayList<Mech> tempPregs = new ArrayList<>(this.pregnantMechs);
 
         for(Mech pm : tempPregs) {
-            if(pm.getPregnancyTimer() <= 0) {
+            if(pm.getPregnancyTimer() <= 0 && (pm.getHealth() > 0)) {
                 for(int i = 0; i < 5; i++) {
                     MechType[] mechTypes = {MechType.PRODUCTION, MechType.RESOURCE};
                     Random rand = new Random();
