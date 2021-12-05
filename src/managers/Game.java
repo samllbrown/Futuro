@@ -74,6 +74,8 @@ public class Game {
 
 	/** The canvas. */
 	private Canvas canvas;
+	
+	private Stage gameStage;
 
 	/** The level. */
 	private Level level;
@@ -279,7 +281,7 @@ public class Game {
 		});
 
 		exitGameButton.setOnAction(e -> {
-			// Needs to be closed
+			this.gameStage.hide();
 			GameManager.mainMenu.show();
 		});
 
@@ -475,6 +477,7 @@ public class Game {
 
 		drawGame();
 		stage.setScene(scene);
-		stage.show();
+		gameStage = stage;
+		gameStage.show();
 	}
 }

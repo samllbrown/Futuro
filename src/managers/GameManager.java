@@ -53,6 +53,11 @@ public class GameManager extends Application {
     /** The main menu. */
     public static Stage mainMenu;
     
+    public static Stage choosePlayerMenu;
+   
+    public static Stage newPlayerMenu;
+    
+    public static Stage deletePlayerMenu;
     public static Stage chooseLevelMenu;
     
     /** The current player. */
@@ -145,7 +150,7 @@ public class GameManager extends Application {
             Scene deletePlayerScene = new Scene(deletePlayerPane, 300, 200);
             Stage deletePlayerStage = new Stage();
             deletePlayerStage.setScene(deletePlayerScene);
-            deletePlayerStage.setTitle("New player");
+            deletePlayerStage.setTitle("Delete player");
             deletePlayerStage.show();
         });
         
@@ -154,9 +159,10 @@ public class GameManager extends Application {
         	Pane newPlayerPane = buildNewPlayer();
             Scene newPlayerScene = new Scene(newPlayerPane, 300, 200);
             Stage newPlayerStage = new Stage();
-            newPlayerStage.setScene(newPlayerScene);
-            newPlayerStage.setTitle("New player");
-            newPlayerStage.show();
+            this.newPlayerMenu = newPlayerStage;
+            this.newPlayerMenu.setScene(newPlayerScene);
+            this.newPlayerMenu.setTitle("New player");
+            this.newPlayerMenu.show();
         });
 
 
@@ -166,9 +172,10 @@ public class GameManager extends Application {
                 Pane choosePlayerPane = buildChoosePlayer();
                 Scene choosePlayerScene = new Scene(choosePlayerPane, 300, 200);
                 Stage choosePlayerStage = new Stage();
-                choosePlayerStage.setScene(choosePlayerScene);
-                choosePlayerStage.setTitle("Choose player");
-                choosePlayerStage.show();
+                this.choosePlayerMenu = choosePlayerStage;
+                this.choosePlayerMenu.setScene(choosePlayerScene);
+                this.choosePlayerMenu.setTitle("Choose player");
+                this.choosePlayerMenu.show();
             } else { // If a player is selected open load menu
                //
             }
@@ -185,9 +192,10 @@ public class GameManager extends Application {
         	Pane choosePlayerPane = buildChoosePlayer();
             Scene choosePlayerScene = new Scene(choosePlayerPane, 300, 200);
             Stage choosePlayerStage = new Stage();
-            choosePlayerStage.setScene(choosePlayerScene);
-            choosePlayerStage.setTitle("Choose player");
-            choosePlayerStage.show();
+            this.choosePlayerMenu = choosePlayerStage;
+            this.choosePlayerMenu.setScene(choosePlayerScene);
+            this.choosePlayerMenu.setTitle("Choose player");
+            this.choosePlayerMenu.show();
         });
         
         return root;
@@ -274,10 +282,11 @@ public class GameManager extends Application {
             	if(deleted) {
             		alert.setTitle("SUCCESS");
     	        	alert.setHeaderText("Player deleted");
-    	        	alert.setContentText("Huzzah! You have created a Player.");
+    	        	alert.setContentText("Huzzah! You have deleted a Player.");
     	            alert.showAndWait().ifPresent(rs -> {
     	                if (rs == ButtonType.OK) {
     	                    System.out.println("Pressed OK.");
+    	                    this.deletePlayerMenu.hide();
     	                }
     	            });
             	}
@@ -475,6 +484,7 @@ public class GameManager extends Application {
     				alert.showAndWait().ifPresent(rs -> {
     				    if (rs == ButtonType.OK) {
     				        System.out.println("Pressed OK.");
+    				        this.choosePlayerMenu.hide();
     				    }
     				});
                 } catch (Exception exception) {
