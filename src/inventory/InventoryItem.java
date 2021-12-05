@@ -9,7 +9,7 @@ import java.util.Locale;
 
 /**
  * InventoryItem.java
- * @author Sam R
+ * @author Sam R, Illia L.
  * @version 1
  * Last Mod Date: 27/11/2021
  * Description: the blueprint for a new item. 

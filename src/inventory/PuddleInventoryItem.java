@@ -2,7 +2,7 @@ package inventory;
 
 /**
  * PuddleInventoryItem.java
- * @author Sam R
+ * @author Sam R, Illia L.
  * @version 1
  * Last Mod Date: 27/11/2021
  * Description: handles the puddle inventory item 
@@ -22,7 +22,7 @@ public class PuddleInventoryItem extends InventoryItem{
     /**
      * Instantiates a new puddle inventory item.
      *
-     * @param uses the uses
+     * @param uses - the amount of uses left
      */
     public PuddleInventoryItem(int uses) {
         super(name, uses);
