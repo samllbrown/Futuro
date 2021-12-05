@@ -243,6 +243,33 @@ public class FileManager {
 		return new Level(levelid, inventory, numberOfMechsToLose, currentScore, expectedSecondsToComplete, elapsedTime, mechs, grid, itemRespawn);
 	}
 
+	public static void writeLevel(Level level, Player forPlayer) {
+		int width = level.getGrid().getWidth();
+		int height = level.getGrid().getHeight();
+
+		Grid grid = level.getGrid();
+
+		String tiles = grid.toString();
+		String recentSaveFileName = String.format("Players/%d/lastSave.txt", forPlayer.getPlayerID());
+
+		BufferedWriter bw = null;
+		try {
+			bw = new BufferedWriter(new FileWriter(recentSaveFileName, false));
+			bw.write(level.toString());
+		} catch (Exception e){
+			e.printStackTrace();
+		} finally {
+			if(bw != null) {
+				try {
+					bw.flush();
+					bw.close();
+				} catch(Exception e) {
+					System.err.println("Error flushing and closing buffered writers");
+				}
+			}
+		}
+	}
+
 	/*
 	* LEVEL FILE FORMAT ONCE AND FOR ALL:
 	* LEVELID

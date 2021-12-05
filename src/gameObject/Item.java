@@ -43,6 +43,17 @@ public abstract class Item extends Rectangle {
 		this.uses = uses;
 	}
 
+	public int getUses() {
+		return this.uses;
+	}
+
+	public void setUses(int uses) {
+		this.uses = uses;
+	}
+
+	@Override
+	public abstract String toString();
+  
 	/**
 	 * Sets the x range.
 	 *

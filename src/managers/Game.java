@@ -1,10 +1,12 @@
 package managers;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import board.Grid;
 import board.Level;
+import board.Tile;
 import gameObject.*;
 import inventory.*;
 import javafx.animation.Animation;

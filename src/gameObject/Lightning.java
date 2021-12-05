@@ -51,4 +51,9 @@ public class Lightning extends Item {
 		return ITEM_IMAGE;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("%s,%d,%d,%d", "LIGHTNING",this.getGridX(),this.getGridY(),this.uses);
+	}
+
 }

@@ -46,6 +46,10 @@ public abstract class InventoryItem extends ImageView {
         System.out.println(itemSprite);
     }
 
+    public void setUses(int uses) {
+        this.remainingUses = remainingUses;
+    }
+
     /**
      * Instantiates a new inventory item.
      *

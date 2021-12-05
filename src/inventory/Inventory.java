@@ -58,6 +58,19 @@ public class Inventory {
         	labels.put(i.getKey(), i.getValue().getLabel());
         }
     }
+  
+    @Override
+	  public String toString() {
+		  String asString = "";
+		  for(String i : inventoryItems.keySet()) {
+			  asString += (i + "," + inventoryItems.get(i).getRemainingUses() + "\n");
+		  }
+		  return asString;
+	  }
+ 
+	  public int size() {
+		  return inventoryItems.keySet().size();
+	  }
     	
 	    /**
 	     * Use item.

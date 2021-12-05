@@ -78,4 +78,9 @@ public class Puddle extends Item {
 		this.health = health;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("%s,%d,%d,%d", "PUDDLE",this.getGridX(),this.getGridY(),this.uses);
+	}
+
 }

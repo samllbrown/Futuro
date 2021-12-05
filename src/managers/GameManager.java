@@ -2,6 +2,7 @@ package managers;
 
 import javafx.application.Application;
 import java.io.File;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -10,7 +11,6 @@ import board.Level;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -20,12 +20,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import services.AudioPlayer;
 
@@ -52,7 +49,7 @@ public class GameManager extends Application {
 
     /** The Constant SHAPE_SIZE. */
     private static final int SHAPE_SIZE = 30;
-    
+
     /** The main menu. */
     public static Stage mainMenu;
     
@@ -110,7 +107,8 @@ public class GameManager extends Application {
         Button chooseLevel = new Button("(START GAME (testing)");   
         Button choosePlayer = new Button("CHOOSE PLAYER");        
         Button newPlayer = new Button("CREATE PLAYER");
-        Button deletePlayer = new Button("DELETE PLAYER");   
+        Button deletePlayer = new Button("DELETE PLAYER");
+        Button load = new Button("LOAD");
         
         
         Button exitMainMenu = new Button("EXIT GAME");       
@@ -122,6 +120,7 @@ public class GameManager extends Application {
         
         // Add the elements on the canvas onto the sidebar
         root.setLeft(sidebar);
+        //sidebar.getChildren().addAll(createPlayer, choosePlayer, newPlayer, deletePlayer,load ,exitMainMenu);
         sidebar.getChildren().addAll(chooseLevel, choosePlayer, newPlayer, deletePlayer, exitMainMenu);
 
         chooseLevel.setOnAction(e -> {
@@ -166,7 +165,28 @@ public class GameManager extends Application {
             newPlayerStage.setTitle("New player");
             newPlayerStage.show();
         });
-        
+
+
+        // Load game
+        load.setOnAction(e -> {
+            if(this.currentPlayer == null){ // check if a player is selected, opens choose player if none are selected
+                Pane choosePlayerPane = buildChoosePlayer();
+                Scene choosePlayerScene = new Scene(choosePlayerPane, 300, 200);
+                Stage choosePlayerStage = new Stage();
+                choosePlayerStage.setScene(choosePlayerScene);
+                choosePlayerStage.setTitle("Choose player");
+                choosePlayerStage.show();
+            } else { // If a player is selected open load menu
+                Pane loadPane = loadNewGame();
+                Scene loadScene = new Scene(loadPane, 300, 200);
+                Stage loadStage = new Stage();
+                loadStage.setScene(loadScene);
+                loadStage.setTitle("Load game");
+                loadStage.show();
+            }
+        });
+
+
         // Close the main menu
         exitMainMenu.setOnAction(e -> {
             GameManager.mainMenu.hide();
@@ -291,6 +311,43 @@ public class GameManager extends Application {
         });
     	return root;
     }
+
+    // SetOnAction needs to load a file (open file manager? input level id like choose player does?)
+//     private Pane loadNewGame() {
+//         BorderPane root = new BorderPane();
+//         VBox sidebar = new VBox();
+//         sidebar.setSpacing(10);
+//         sidebar.setPadding(new Insets(10, 10, 10, 10));
+
+//         FileChooser selectLoadFile = new FileChooser();
+//         selectLoadFile.setTitle("Select game file");
+
+//         Button loadButton = new Button("Select game file");
+
+//         root.setLeft(sidebar);
+//         sidebar.getChildren().add(loadButton);
+//         loadButton.setOnAction(e -> {
+//             File selectedFile = selectLoadFile.showOpenDialog(mainMenu);
+//             String selectedFilePath = selectedFile.getAbsolutePath();
+//             Level level = null;
+//             try {
+//                 level = FileManager.readLevel(selectedFilePath);
+//             } catch (Exception exception) {
+//                 exception.printStackTrace();
+//             }
+//             Game game = new Game(level);
+
+//             mainMenu.close();
+//             try {
+//                 game.showGame();
+//             } catch (Exception ex) {
+//                 ex.printStackTrace();
+//             }
+//         });
+
+//         return root;
+
+//     }
 
 	/**
      * Builds the choose level UI.

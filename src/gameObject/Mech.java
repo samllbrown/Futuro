@@ -71,6 +71,7 @@ public class Mech extends Rectangle {
 
 	private boolean isSterile;
 	private boolean isBreeding;
+	private int secondsUntilAdult;
 
 	private int breedingCoolDown;
 
@@ -103,6 +104,7 @@ public class Mech extends Rectangle {
 		this.img = isBaby ? new Image("file:res/Sprites/babyMech.png", 50, 50, false, false) : getImageForType(type);
 		this.isBaby = isBaby;
 		this.isSterile = isSterile;
+		this.secondsUntilAdult = 0;
 		setFill(new ImagePattern(this.img));
 	}
 
@@ -124,7 +126,6 @@ public class Mech extends Rectangle {
 		boolean bothNotDeathMech = !((this.type != MechType.DEATH) && (otherMech.getType() != MechType.DEATH));
 		return bothOppositeTypes && neitherSterile && neitherCurrentlyBreeding && neitherPregnant && bothNotDeathMech;
 	}
-
 
 	public void actOn(Mech otherMech) {
 		// breed
@@ -390,6 +391,13 @@ public class Mech extends Rectangle {
 				break;
 		}
 		return img;
+	}
+
+	@Override
+	public String toString() {
+		char typeAsChar = this.type.toString().charAt(0);
+		return String.format("M,%d,%d,%d,%c,%d,%d", this.getGridX(), this.getGridY(), this.getHealth(),
+				typeAsChar,(this.isPregnant() ? 1 : 0), this.getTimeUntilAdult());
 	}
 
 	/**
