@@ -15,7 +15,7 @@ import gameObject.Item;
 import gameObject.Mech;
 import gameObject.MechType;
 import inventory.Inventory;
-import services.audioPlayer;
+import services.AudioPlayer;
 
 /**
  * Level.java
@@ -113,7 +113,7 @@ public class Level {
 		for(Mech m : currentMechsCopy) {
 			if(m.getHealth() <= 0) {
 				this.killMech(m);
-				audioPlayer.playDeathSound();
+				AudioPlayer.playDeathSound();
 				System.err.println("A mech has died");
 			} else {
 
@@ -144,7 +144,7 @@ public class Level {
 				ArrayList<Mech> killTheseMechsOkay = new ArrayList<>(this.getGrid().getTileAt(m.getGridX(), m.getGridY()).getMechs());
 				killTheseMechsOkay.remove(m);
 				for (Mech om : killTheseMechsOkay) {
-					audioPlayer.playDeathSound();
+					AudioPlayer.playDeathSound();
 					this.killMech(om);
 				}
 			}

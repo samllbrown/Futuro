@@ -2,14 +2,12 @@ package managers;
 
 /**
  * Player.java
- * @author Sam R,
+ * @author Sam R, Sam B
  * @version 1
  * Last Mod Date: 30/11/2021
+ * Description: The Class Player handles all player information.
  */
 
-/**
- * The Class Player handles all player information.
- */
 public class Player {
 
 	/** The player ID. */

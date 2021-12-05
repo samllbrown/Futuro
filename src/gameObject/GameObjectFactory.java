@@ -9,10 +9,20 @@ import board.Tunnel;
 import board.Wall;
 import inventory.*;
 
+/**
+ * GameObjectFactory.java
+ * @author
+ * @version
+ * Last Mod Date:
+ */
 public class GameObjectFactory {
+
+	/**
+	 * Reads a Mech given their unique ID (from the Level file).
+	 * @param id format of mech id: M,X,Y,HEALTH,TYPE,PREG,SECSTILADULT
+	 * @return a Mech object created from id
+	 */
 	public static Mech readMech(String id) {
-		// format of id:
-		// M,X,Y,HEALTH,TYPE,PREG,SECSTILADULT
 		String[] mechComponents = id.split(",");
 		char chartype = mechComponents[4].charAt(0);
 		MechType mechType = null;
@@ -35,6 +45,14 @@ public class GameObjectFactory {
 		return newMech;
 	}
 
+	/**
+	 * Creates a Tile for the game given type, and position on board.
+	 * @param type tiletype
+	 * @param x x position
+	 * @param y y position
+	 * @return the created Tile
+	 * @throws Exception given Tile type doesn't exist or is incorrect
+	 */
 	public static Tile makeTile(char type, int x, int y) throws Exception {
 		TileType tileType;
 		switch (Character.toUpperCase(type)) {
@@ -54,7 +72,12 @@ public class GameObjectFactory {
 		}
 		return new Tile(tileType, x, y);
 	}
-	
+
+	/**
+	 * Reads and creates items for a player's inventory.
+	 * @param id format of item id: itemType, itemUses
+	 * @return the created Item
+	 */
 	public static InventoryItem readInventoryItem(String id) {
 
         String[] itemInfo = id.split(",");

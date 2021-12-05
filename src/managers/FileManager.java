@@ -12,7 +12,7 @@ import inventory.Inventory;
 
 /**
  * FileManager.java
- * @author David Terence-Abanulo, Sam R
+ * @author David Terence-Abanulo, Sam R, Sam B
  * @version 1.5
  * Last Mod Date: 27/11/2021
  */

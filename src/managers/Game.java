@@ -270,8 +270,6 @@ public class Game {
         topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton, exitGameButton);
 
         // This code setup what happens when the dragging starts on the image.
-        // You probably don't need to change this (unless you wish to do more advanced
-        // things).
         for(var i : this.level.getInventory().getItems().entrySet()) {
     	   InventoryItem iconItem = i.getValue();
      	   iconItem.setImage(iconItem.getSprite());
