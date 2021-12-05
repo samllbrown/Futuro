@@ -273,6 +273,7 @@ public class Level {
 	 */
 	public void removeMech(Mech m) {
 		this.mechs.remove(m);
+		this.grid.getTileAt(m.getGridX(), m.getGridY()).removeMech(m);
 	}
 
 	/**
