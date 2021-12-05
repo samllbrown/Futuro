@@ -27,7 +27,7 @@ public class MechManager {
             Tile currentPath = grid.getTileAt(mech.getGridX(), mech.getGridY());
             if(currentPath.getCurrentItem() != null) {
                 Item itemOnCurrentTile = currentPath.getCurrentItem();
-                itemOnCurrentTile.actOn(mech);
+                itemOnCurrentTile.act(mech);
             }
         }
     }

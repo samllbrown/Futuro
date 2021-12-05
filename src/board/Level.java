@@ -173,10 +173,12 @@ public class Level {
 				if(((!m.getIsBaby()) && (!m.isSterile()) && (!m.isPregnant()) && (!m.isBreeding()))) {
 					ArrayList<Mech> availableMechs = new ArrayList<>();
 					availableMechs = (grid.getTileAt(m.getGridX(), m.getGridY()).getBreedableMechsOnTile(m));
-					Random rand = new Random();
-					System.err.println(availableMechs.size());
-					Mech breedWith = availableMechs.get(rand.nextInt(availableMechs.size()));
-					this.breeder.breed(m, breedWith);
+					if(availableMechs.size() != 0) {
+						Random rand = new Random();
+						System.err.println(availableMechs.size());
+						Mech breedWith = availableMechs.get(rand.nextInt(availableMechs.size()));
+						this.breeder.breed(m, breedWith);
+					}
 				}
 			}
 		}
