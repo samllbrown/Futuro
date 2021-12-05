@@ -302,18 +302,27 @@ public class Mech extends Rectangle {
 			if((!onGrid.getTileAt(this.getNextPos(getTurnDirection("RIGHT",currentDirection))).isWalkable()) && (!onGrid.getTileAt(this.getNextPos(getTurnDirection("LEFT",currentDirection))).isWalkable())) {
 				this.turn("AROUND");
 				this.currentCords = this.currentCords.add(this.currentDirection.toPair());
+				if(this.isBaby) {
+					this.currentCords.add(new Pair(1,1));
+				}
 			} else {
 				turns.remove("FORWARD");
 				turns = new ArrayList<String>(turns.stream().filter(dirStr ->
 						(onGrid.getTileAt(this.getNextPos(getTurnDirection(dirStr, this.currentDirection)))).isWalkable()).collect(Collectors.toList()));
 				this.turn(turns.get(rand.nextInt(turns.size())));
 				this.currentCords = this.currentCords.add(this.currentDirection.toPair());
+				if(this.isBaby) {
+					this.currentCords.add(new Pair(1,1));
+				}
 			}
 		} else {
 			turns = new ArrayList<String>(turns.stream().filter(dirStr ->
 					(onGrid.getTileAt(this.getNextPos(getTurnDirection(dirStr, this.currentDirection)))).isWalkable()).collect(Collectors.toList()));
 			this.turn(turns.get(rand.nextInt(turns.size())));
 			this.currentCords = this.currentCords.add(this.currentDirection.toPair());
+			if(this.isBaby) {
+				this.currentCords.add(new Pair(1,1));
+			}
 		}
 //		this.currentCords = this.currentCords.add(this.currentDirection.toPair());
 		this.x = this.currentCords.x;
@@ -339,8 +348,8 @@ public class Mech extends Rectangle {
 	/**
 	 * Sets image of Mech based on type.
 	 */
-	public void setImage() {
-		this.img = this.getImageForType(this.type);
+	public void setImage(Image img) {
+		this.img = img;
 	}
 
 	/**
@@ -389,6 +398,23 @@ public class Mech extends Rectangle {
 	 */
 	public MechType getType() {
 		return this.type;
+	}
+
+	public void reducePregnancyTimer() {
+		this.pregnancyTimer--;
+	}
+
+	public void makePregnant() {
+		this.setPregnant(true);
+		this.pregnancyTimer = 10;
+	}
+
+	public void setPregnancyTimer(int time) {
+		this.pregnancyTimer = 10;
+	}
+
+	public int getPregnancyTimer() {
+		return this.pregnancyTimer;
 	}
 
 	/**

@@ -75,6 +75,7 @@ public class Level {
 		this.grid = grid;
 		this.items = new ArrayList<>();
 		this.itemRespawnRate = itemRespawnRate;
+		this.breeder = new Breeder();
 	}
 
 	/**
@@ -83,6 +84,7 @@ public class Level {
 	 */
 	public void addItem(Item i) {
 		this.items.add(i);
+		this.grid.getTileAt(i.getGridX(), i.getGridY()).setCurrentItem(i);
 	}
 
 	/**
@@ -104,6 +106,7 @@ public class Level {
 		this.currentScore += getPointsForKill(m);
 		this.getGrid().getTileAt(m.getGridX(), m.getGridY()).removeMech(m);
 		this.mechs.remove(m);
+		AudioPlayer.playDeathSound();
 	}
 
 	/**
@@ -112,46 +115,60 @@ public class Level {
 	 * @throws Exception
 	 */
 	private void updateMechs() throws Exception {
-		ArrayList<Mech> currentMechsCopy = new ArrayList<>(this.mechs);
-		for(Mech m : currentMechsCopy) {
-			if(m.getHealth() <= 0) {
-				this.killMech(m);
-				AudioPlayer.playDeathSound();
-				System.err.println("A mech has died");
+		MechManager.checkMechsForDeath(this.mechs, this.grid);
+		MechManager.checkMechsForDamageFromItems(this.mechs, this.grid);
+
+		ArrayList<Mech> currentMechs = new ArrayList<>(this.mechs);
+
+		for(Mech mech : currentMechs) {
+			if(mech.getHealth() <= 0) {
+				this.killMech(mech);
+				//audioPlayer.playDeathSound();
+				System.out.println("Update Mechs method has detected a mech with <= 0 hp, so it ded");
 			} else {
-
-				Tile currentMechTile = this.getGrid().getTileAt(m.getGridX(), m.getGridY());
-				Item currentItemOnTile = currentMechTile.getCurrentItem();
-
-				if (currentItemOnTile != null) {
-					System.out.println("Item is acting on mech");
-					currentItemOnTile.act(m);
-					System.out.println("Mech's health is now = " + m.getHealth());
-				}
-				for (Mech om : this.getGrid().getTileAt(m.getGridX(), m.getGridY()).getMechs()) {
-					if ((!m.getType().equals(MechType.DEATH)) && m.canBreedWith(om)) {
-						System.err.println("BREEDING BREEDING");
-						// then they will start breeding
-						// the breeding occurs for 5 seconds
-						// whilst breeding, they do not move
-						// after breeding they go their own way
-						// how can we do this without making the entire thread wait :/
-						// we need to break
+				if(mech.getIsBaby()) {
+					if(mech.getTimeUntilAdult() == 0) {
+						//mech.growUp();
+						System.err.println("Should now be an adult tbh");
+						mech.growIntoAdult();
+					} else {
+						mech.reduceTimeUntilAdult();
 					}
-				}
-			}
-			this.getGrid().getTileAt(m.getGridX(), m.getGridY()).removeMech(m);
-			m.move(this.getGrid());
-			this.getGrid().getTileAt(m.getGridX(), m.getGridY()).addMech(m);
-			if (m.getType().equals(MechType.DEATH)) {
-				ArrayList<Mech> killTheseMechsOkay = new ArrayList<>(this.getGrid().getTileAt(m.getGridX(), m.getGridY()).getMechs());
-				killTheseMechsOkay.remove(m);
-				for (Mech om : killTheseMechsOkay) {
-					AudioPlayer.playDeathSound();
-					this.killMech(om);
+				} else {
+					mech.reduceBreedingCoolDown();
 				}
 			}
 		}
+
+		for(Mech m : currentMechs) {
+			if(m.getType() != MechType.DEATH) {
+				boolean partenr = 0 != grid.getTileAt(m.getGridX(), m.getGridY()).getBreedableMechsOnTile(m).size();
+				if(((!m.getIsBaby()) && (!m.isSterile()) && (!m.isPregnant()) && (!m.isBreeding()) && partenr)) {
+					System.out.println("Eurika2");
+					ArrayList<Mech> availableMechs = new ArrayList<>();
+					availableMechs = (grid.getTileAt(m.getGridX(), m.getGridY()).getBreedableMechsOnTile(m));
+					if(availableMechs.size() != 0) {
+						Random rand = new Random();
+						System.err.println("AVAILABLE MECHS: " + availableMechs.size());
+						Mech breedWith = availableMechs.get(rand.nextInt(availableMechs.size()));
+						this.breeder.breed(m, breedWith);
+					}
+				}
+			}
+		}
+
+		//MechManager.checkMechsForBreeding(this.mechs, this.grid);
+		this.mechs.forEach(m -> {
+			try {
+				if(!m.isBreeding()) {
+					this.getGrid().getTileAt(m.getGridX(), m.getGridY()).removeMech(m);
+					m.move(this.grid);
+					this.getGrid().getTileAt(m.getGridX(), m.getGridY()).addMech(m);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
 	}
 
 	/**

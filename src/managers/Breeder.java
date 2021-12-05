@@ -1,9 +1,13 @@
 package managers;
 
 import board.Grid;
+import board.Pair;
 import gameObject.Mech;
+import gameObject.MechType;
+import services.AudioPlayer;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Breeder.Java
@@ -75,7 +79,7 @@ public class Breeder {
 
     public void breed(Mech m1, Mech m2) {
         this.addBreedingPair(new BreedingPair(m1, m2));
-        audioPlayer.playBreedSound();
+        AudioPlayer.playBreedSound();
         m1.setIsBreeding(true);
         m2.setIsBreeding(true);
     }

@@ -17,7 +17,16 @@ public class AudioPlayer {
 	
 	/** The current music list. */
 	public static ArrayList<MediaPlayer> currentMusicList = new ArrayList<MediaPlayer>();
-	
+
+    public static void playBreedSound() {
+        String bip = getCurrentWorkingDirectory() + "\\src\\music\\breed.mp3";
+        System.out.println(bip);
+        Media hit = new Media(new File(bip).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(hit);
+        mediaPlayer.play();
+        currentMusicList.add(mediaPlayer);
+    }
+
 	/**
 	 * Play main menu sound.
 	 */

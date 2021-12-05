@@ -47,6 +47,29 @@ public class Tile extends Rectangle {
 		this.currentItem = null;
 	}
 
+	public ArrayList<Mech> getOtherMechsOnTile(Mech differentToMech) throws Exception {
+		if(this.currentMechs.contains(differentToMech)) {
+			ArrayList<Mech> otherMechsOnTile = new ArrayList<>(currentMechs);
+			otherMechsOnTile.remove(differentToMech);
+			return otherMechsOnTile;
+		} else {
+			throw new Exception("Could not get the other mechs on the same tile as the mech given is not on this tile");
+		}
+	}
+
+	public ArrayList<Mech> getBreedableMechsOnTile(Mech forMech) {
+		ArrayList<Mech> breedableMechs = new ArrayList<>();
+		if(this.currentMechs.contains(forMech)) {
+			for(Mech nm : currentMechs) {
+				if((nm.getType() != forMech.getType()) && (!nm.isBreeding()) && (!nm.getIsBaby()) && (!nm.isSterile())
+						&& (!nm.isPregnant()) && (nm.getBreedingCoolDown() <= 0)) {
+					breedableMechs.add(nm);
+				}
+			}
+		}
+		return breedableMechs;
+	}
+
 	/**
 	 * Checks if the Tile allows mechs to walk on it
 	 * @return true if Tile is walkable
