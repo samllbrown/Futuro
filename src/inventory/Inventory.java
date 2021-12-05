@@ -18,6 +18,11 @@ public class Inventory {
         this.labels = labels;
 
     }
+    
+    public Inventory(HashMap<String, InventoryItem> inventoryItems, HashMap<String, Label> labels) {
+    	this.inventoryItems = inventoryItems;
+    	this.labels = labels;
+    }
 
     public Inventory(int ID) {
         HashMap<String, InventoryItem> inventoryItems = new HashMap<String, InventoryItem>();
@@ -64,6 +69,10 @@ public class Inventory {
 
     public HashMap<String, InventoryItem> getItems(){
         return this.inventoryItems;
+    }
+    
+    public HashMap<String, Label> getLabels(){
+        return this.labels;
     }
 
 }

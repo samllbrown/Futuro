@@ -221,17 +221,6 @@ public class Game {
     }
 
     /**
-     * Move all mechs.
-     *
-     * @throws Exception 
-     */
-    private void moveMechs() throws Exception {
-        for (Mech m: this.level.getMechs()) {
-            m.move(this.level.getGrid());
-        }
-    }
-
-    /**
      * Builds the GUI of the game.
      *
      * @return the pane

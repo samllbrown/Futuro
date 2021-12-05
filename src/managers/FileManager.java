@@ -240,7 +240,7 @@ public class FileManager {
 		br.close();
 		// null for inventory for now;
 		//return new Level(levelid, height, width, null, numberOfMechsToLose, currentScore, expectedSecondsToComplete, elapsedTime, grid);
-		return new Level(levelid, inventory, numberOfMechsToLose, currentScore, expectedSecondsToComplete, elapsedTime, mechs, grid);
+		return new Level(levelid, inventory, numberOfMechsToLose, currentScore, expectedSecondsToComplete, elapsedTime, mechs, grid, itemRespawn);
 	}
 
 	/*

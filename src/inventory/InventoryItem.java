@@ -92,6 +92,12 @@ public abstract class InventoryItem extends ImageView {
     public void reduceUses(int uses) {
         this.remainingUses -= uses;
     }
+    
+    public void regenUse() {
+    	if(remainingUses < MAX_ITEM_USES) {
+    		this.remainingUses++;
+    	}
+    }
 
     public Image getSprite() {
     	return itemSprite;

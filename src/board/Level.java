@@ -40,6 +40,8 @@ public class Level {
 	private ArrayList<Mech> mechs;
 
 	private Grid grid;
+	
+	private int itemRespawnRate;
 
 	//private HashMap<Pair, Item> coordsToItems;
 	// probably can't have a hashmap of coordstomechs because collisions are possible :/
@@ -59,7 +61,7 @@ public class Level {
 	 * @param grid the grid format of the level
 	 */
 	public Level(int levelID, Inventory inventory, int numberOfMechsToLose, int currentScore, int expectedSeconds,
-				 int elapsedTime, ArrayList<Mech> mechs, Grid grid) {
+				 int elapsedTime, ArrayList<Mech> mechs, Grid grid, int itemRespawnRate) {
 		this.levelID = levelID;
 		this.inventory = inventory;
 		this.numOfMechsToLose = numberOfMechsToLose;
@@ -69,6 +71,7 @@ public class Level {
 		this.mechs = mechs;
 		this.grid = grid;
 		this.items = new ArrayList<>();
+		this.itemRespawnRate = itemRespawnRate;
 	}
 
 	/**
@@ -173,6 +176,21 @@ public class Level {
 		this.items.remove(i);
 		this.getGrid().getTileAt(i.getGridX(), i.getGridY()).setCurrentItem(null);
 	}
+	
+	private void updateInventoryItems() {
+		//Inventory currentInventoryCopy = new Inventory(this.inventory.getItems(), this.inventory.getLabels());
+		//System.out.println(currentInventoryCopy);
+		//System.out.println(this.inventory);
+		for(var i : this.inventory.getItems().entrySet()){
+			Random random = new Random();
+			if(random.nextInt(itemRespawnRate) == itemRespawnRate-1) {
+				i.getValue().regenUse();
+				System.out.println("True");
+				this.inventory.getLabel(i.getKey()).setText(Integer.toString(this.inventory.getItemUses(i.getKey())));
+			}
+			
+		}
+	}
 
 	/**
 	 * Update the whole Level by updating the items and the mechs in the Level.
@@ -182,6 +200,7 @@ public class Level {
 		// this for loop should probs just go into an init method
 		this.updateItems();
 		this.updateMechs();
+		this.updateInventoryItems();
 	}
 
 
