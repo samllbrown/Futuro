@@ -5,7 +5,7 @@ package inventory;
  * @author Sam R
  * @version 1
  * Last Mod Date: 27/11/2021
- * Description: 
+ * Description: handles the remodel item
  */
 public class RemodelRInventoryItem extends InventoryItem{
 
