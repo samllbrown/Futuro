@@ -131,19 +131,12 @@ public class GameManager extends Application {
                 Stage chooseLevelStage = new Stage();
                 chooseLevelStage.setScene(chooseLevelScene);
                 chooseLevelStage.setTitle("Choose Level");
-                this.chooseLevelMenu = chooseLevelStage;
-                this.chooseLevelMenu.show();
+                GameManager.chooseLevelMenu = chooseLevelStage;
+                GameManager.chooseLevelMenu.show();
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
-            Game game = new Game(level);
             mainMenu.close();
-            try {
-            	AudioPlayer.stopAllMusic();
-                game.showGame();
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
         });
         
         // Delete a player profile 
@@ -177,12 +170,7 @@ public class GameManager extends Application {
                 choosePlayerStage.setTitle("Choose player");
                 choosePlayerStage.show();
             } else { // If a player is selected open load menu
-                Pane loadPane = loadNewGame();
-                Scene loadScene = new Scene(loadPane, 300, 200);
-                Stage loadStage = new Stage();
-                loadStage.setScene(loadScene);
-                loadStage.setTitle("Load game");
-                loadStage.show();
+               //
             }
         });
 

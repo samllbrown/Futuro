@@ -228,6 +228,7 @@ public class FileManager {
 		}
 
 		numberOfItemsInInventory = Integer.valueOf(br.readLine());
+		System.out.println(numberOfItemsInInventory);
 		for(int i = 0; i < numberOfItemsInInventory; i++) {
 			inventory.addItem(GameObjectFactory.readInventoryItem(br.readLine()));
 		}

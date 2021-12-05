@@ -88,8 +88,12 @@ public class Game {
 	 */
 	public Game(Level level) {
 		this.level = level;
+		System.out.println(this.CURRENT_WIDTH);
+		System.out.println(this.CURRENT_HEIGHT);
 		this.CURRENT_WIDTH = level.getGrid().getWidth();
 		this.CURRENT_HEIGHT = level.getGrid().getHeight();
+		System.out.println(this.CURRENT_WIDTH);
+		System.out.println(this.CURRENT_HEIGHT);
 		this.messageOfTheDay = getMessageOfTheDay();
 	}
 

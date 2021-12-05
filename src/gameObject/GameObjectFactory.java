@@ -113,35 +113,33 @@ public class GameObjectFactory {
 	 * @return the created Item
 	 */
 	public static InventoryItem readInventoryItem(String id) {
-		String[] idComps = id.split(",");
-		int uses = Integer.valueOf(idComps[1]);
-		InventoryItem invItem = null;
-		switch(idComps[0]) {
-			case "ACID":
-				invItem = new AcidInventoryItem();
-				invItem.setUses(uses);
-				break;
-			case "EMP":
-				invItem = new EMPInventoryItem();
-				invItem.setUses(uses);
-				break;
-			case "LIGHTNING":
-				invItem = new LightningInventoryItem();
-				invItem.setUses(uses);
-				break;
-			case "DEATHMECH":
-				invItem = new DeathMechInventoryItem();
-				invItem.setUses(uses);
-				break;
-			case "MINE":
-				invItem = new MineInventoryItem();
-				invItem.setUses(uses);
-				break;
-			case "PUDDLE":
-				invItem = new PuddleInventoryItem();
-				invItem.setUses(uses);
-				break;
-		}
-		return invItem;
+
+        String[] itemInfo = id.split(",");
+        String itemType = itemInfo[0];
+        int usesLeft = Integer.parseInt(itemInfo[1]);
+
+        switch(itemType.toUpperCase(Locale.ROOT)) {
+        case "LTG":
+            return new LightningInventoryItem(usesLeft);
+        case "ACD":
+            return new AcidInventoryItem(usesLeft);
+        case "EMP":
+            return new EMPInventoryItem(usesLeft);
+        case "MIN":
+            return new MineInventoryItem(usesLeft);
+        case "PDL":
+            return new PuddleInventoryItem(usesLeft);
+        case "RTR":
+            return new RemodelPInventoryItem(usesLeft);
+        case "RTP":
+            return new RemodelRInventoryItem(usesLeft);
+        case "DMC":
+            return new DeathMechInventoryItem(usesLeft);
+        default:
+            System.out.println(itemType);
+            System.out.println(usesLeft);
+            System.err.println("Probably should be throwing an error here");
+            return null;
+        }
 	}
 }
