@@ -53,6 +53,7 @@ public class Mech extends Rectangle {
 	private Direction currentDirection;
 	private Pair currentCords;
 	private int timeUntilAdult;
+	private int pregnancyTimer;
 	protected int health;
 	private boolean pregnant;
 	private int numOfBabies;
@@ -65,6 +66,8 @@ public class Mech extends Rectangle {
 	private boolean isSterile;
 	private boolean isBreeding;
 
+	private int breedingCoolDown;
+
 	// haven't implemented age functionality
 	public Mech(MechType type, int x, int y, int health, boolean pregnant, boolean isBaby, boolean isSterile) {
 		setWidth(Game.TILE_SIZE);
@@ -74,9 +77,11 @@ public class Mech extends Rectangle {
 		this.x = x;
 		this.y = y;
 		this.timeUntilAdult = 0;
+		this.breedingCoolDown = 0;
 		this.currentCords = new Pair(x, y);
 		this.currentDirection = Direction.RIGHT;
 		this.health = health;
+		this.pregnancyTimer = 0;
 		this.pregnant = pregnant;
 		this.img = isBaby ? new Image("file:res/Sprites/babyMech.png", 50, 50, false, false) : getImageForType(type);
 		this.isBaby = isBaby;
@@ -134,6 +139,24 @@ public class Mech extends Rectangle {
 		Mech myBaby = new Mech(babyType, this.x, this.y, 100, false, true, true);
 		myBaby.setCurrentDirection(babyDirection);
 		return myBaby;
+	}
+
+	public int getBreedingCoolDown() {
+		return this.breedingCoolDown;
+	}
+
+	public void setBreedingCoolDown(int newBreedingCoolDown) {
+		this.breedingCoolDown = newBreedingCoolDown;
+	}
+
+	public void resetBreedingCoolDown() {
+		this.breedingCoolDown = 0;
+	}
+
+	public void reduceBreedingCoolDown() {
+		if(this.breedingCoolDown > 0) {
+			this.breedingCoolDown--;
+		}
 	}
 
 	public boolean isBreeding() {
@@ -212,18 +235,27 @@ public class Mech extends Rectangle {
 			if((!onGrid.getTileAt(this.getNextPos(getTurnDirection("RIGHT",currentDirection))).isWalkable()) && (!onGrid.getTileAt(this.getNextPos(getTurnDirection("LEFT",currentDirection))).isWalkable())) {
 				this.turn("AROUND");
 				this.currentCords = this.currentCords.add(this.currentDirection.toPair());
+				if(this.isBaby) {
+					this.currentCords.add(new Pair(1,1));
+				}
 			} else {
 				turns.remove("FORWARD");
 				turns = new ArrayList<String>(turns.stream().filter(dirStr ->
 						(onGrid.getTileAt(this.getNextPos(getTurnDirection(dirStr, this.currentDirection)))).isWalkable()).collect(Collectors.toList()));
 				this.turn(turns.get(rand.nextInt(turns.size())));
 				this.currentCords = this.currentCords.add(this.currentDirection.toPair());
+				if(this.isBaby) {
+					this.currentCords.add(new Pair(1,1));
+				}
 			}
 		} else {
 			turns = new ArrayList<String>(turns.stream().filter(dirStr ->
 					(onGrid.getTileAt(this.getNextPos(getTurnDirection(dirStr, this.currentDirection)))).isWalkable()).collect(Collectors.toList()));
 			this.turn(turns.get(rand.nextInt(turns.size())));
 			this.currentCords = this.currentCords.add(this.currentDirection.toPair());
+			if(this.isBaby) {
+				this.currentCords.add(new Pair(1,1));
+			}
 		}
 //		this.currentCords = this.currentCords.add(this.currentDirection.toPair());
 		this.x = this.currentCords.x;
@@ -279,6 +311,23 @@ public class Mech extends Rectangle {
 
 	public boolean isPregnant() {
 		return this.pregnant;
+	}
+
+	public void reducePregnancyTimer() {
+		this.pregnancyTimer--;
+	}
+
+	public void makePregnant() {
+		this.setPregnant(true);
+		this.pregnancyTimer = 10;
+	}
+
+	public void setPregnancyTimer(int time) {
+		this.pregnancyTimer = 10;
+	}
+
+	public int getPregnancyTimer() {
+		return this.pregnancyTimer;
 	}
 
 	public void setPregnant(boolean isPregnant) {

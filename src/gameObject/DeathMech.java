@@ -38,6 +38,7 @@ public class DeathMech extends Mech{
 			killsLeft--;
 			super.health -= 20;
 			System.out.println("DEATH MECH HAS KILLED A MECH");
+			System.err.println("DEATH MECH NOW HAS HEALTH: " + super.getHealth());
 		}
 	}
 

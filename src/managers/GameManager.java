@@ -66,9 +66,7 @@ public class GameManager extends Application {
 
 		Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 		primaryStage.setTitle("Futuro");
-
 		audioPlayer.playMainMenu();
-
 		// Display the scene on the stage
 		primaryStage.setScene(scene);
 		GameManager.mainMenu = primaryStage;

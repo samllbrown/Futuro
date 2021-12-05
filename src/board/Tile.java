@@ -63,13 +63,23 @@ public class Tile extends Rectangle {
 		ArrayList<Mech> breedableMechs = new ArrayList<>();
 		if(this.currentMechs.contains(forMech)) {
 			for(Mech nm : currentMechs) {
-				if(nm.getType() != MechType.DEATH && (!nm.equals(forMech))) {
+				if((nm.getType() != forMech.getType()) && (!nm.isBreeding()) && (!nm.getIsBaby()) && (!nm.isSterile())
+					&& (!nm.isPregnant()) && (nm.getBreedingCoolDown() <= 0)) {
 					breedableMechs.add(nm);
 				}
 			}
 		}
-		return new ArrayList<Mech>(breedableMechs.stream().filter(normalMech ->
-				((!normalMech.isPregnant()) && (!normalMech.getIsBaby()) && (!normalMech.isSterile()) && (normalMech.getType() != forMech.getType()))).collect(Collectors.toList()));
+		return breedableMechs;
+//		if(this.currentMechs.contains(forMech)) {
+//			for(Mech nm : currentMechs) {
+//				if(nm.getType() != MechType.DEATH && (!nm.equals(forMech)) && (!nm.isBreeding()) && (!nm.getIsBaby()) &&
+//						(!nm.isSterile()) ) {
+//					breedableMechs.add(nm);
+//				}
+//			}
+//		}
+//		return new ArrayList<Mech>(breedableMechs.stream().filter(normalMech ->
+//				((!normalMech.isPregnant()) && (!normalMech.getIsBaby()) && (!normalMech.isSterile()) && (normalMech.getType() != forMech.getType()))).collect(Collectors.toList()));
 	}
 
 	/**

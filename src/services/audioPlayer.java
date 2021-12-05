@@ -18,6 +18,15 @@ public class audioPlayer {
         mediaPlayer.play();
         currentMusicList.add(mediaPlayer);
 	}
+
+	public static void playBreedSound() {
+        String bip = getCurrentWorkingDirectory() + "\\src\\music\\breed.mp3";
+        System.out.println(bip);
+        Media hit = new Media(new File(bip).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(hit);
+        mediaPlayer.play();
+        currentMusicList.add(mediaPlayer);
+    }
 	
 	public static void playDeathSound() {
 		String bip = getCurrentWorkingDirectory() + "\\src\\music\\mech_death.mp3";

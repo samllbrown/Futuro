@@ -104,6 +104,7 @@ public class Level {
 		this.currentScore += getPointsForKill(m);
 		this.getGrid().getTileAt(m.getGridX(), m.getGridY()).removeMech(m);
 		this.mechs.remove(m);
+		audioPlayer.playDeathSound();
 	}
 
 	/**
@@ -175,6 +176,8 @@ public class Level {
 					} else {
 						mech.reduceTimeUntilAdult();
 					}
+				} else {
+					mech.reduceBreedingCoolDown();
 				}
 			}
 		}
@@ -199,9 +202,11 @@ public class Level {
 		//MechManager.checkMechsForBreeding(this.mechs, this.grid);
 		this.mechs.forEach(m -> {
 			try {
-				this.getGrid().getTileAt(m.getGridX(), m.getGridY()).removeMech(m);
-				m.move(this.grid);
-				this.getGrid().getTileAt(m.getGridX(), m.getGridY()).addMech(m);
+				if(!m.isBreeding()) {
+					this.getGrid().getTileAt(m.getGridX(), m.getGridY()).removeMech(m);
+					m.move(this.grid);
+					this.getGrid().getTileAt(m.getGridX(), m.getGridY()).addMech(m);
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -241,8 +246,8 @@ public class Level {
 	public void update() throws Exception {
 		// this for loop should probs just go into an init method
 		this.updateItems();
-		this.updateMechs();
 		this.breeder.update(this.mechs, grid);
+		this.updateMechs();
 	}
 
 
