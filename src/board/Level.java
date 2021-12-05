@@ -15,6 +15,7 @@ import gameObject.Item;
 import gameObject.Mech;
 import gameObject.MechType;
 import inventory.Inventory;
+import javafx.scene.control.Button;
 import managers.Breeder;
 import managers.MechManager;
 import services.AudioPlayer;
@@ -46,6 +47,8 @@ public class Level {
 	private int itemRespawnRate;
 
 	private Breeder breeder;
+	
+	private Button label;
 
 	//private HashMap<Pair, Item> coordsToItems;
 	// probably can't have a hashmap of coordstomechs because collisions are possible :/
@@ -77,6 +80,7 @@ public class Level {
 		this.items = new ArrayList<>();
 		this.itemRespawnRate = itemRespawnRate;
 		this.breeder = new Breeder();
+		this.label = new Button(Integer.toString(this.currentScore));
 	}
 
 	@Override
@@ -153,6 +157,8 @@ public class Level {
 	 * @throws Exception
 	 */
 	private void updateMechs() throws Exception {
+		label.setText(Integer.toString(currentScore));
+		
 		MechManager.checkMechsForDeath(this.mechs, this.grid);
 		MechManager.checkMechsForDamageFromItems(this.mechs, this.grid);
 
@@ -381,5 +387,9 @@ public class Level {
 	 */
 	public void setItems(ArrayList<Item> items) {
 		this.items = items;
+	}
+	
+	public Button getButton() {
+		return this.label;
 	}
 }

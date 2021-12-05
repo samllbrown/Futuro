@@ -259,7 +259,9 @@ public class Game {
 		Button stopTickTimelineButton = new Button("Stop Ticks");
 		
 		Label messageOfDayLabel = new Label(this.messageOfTheDay);
-
+		
+		Button score = this.level.getButton();
+		
 		// Stop button is disabled by default
 		stopTickTimelineButton.setDisable(true);
 
@@ -285,14 +287,14 @@ public class Game {
 			GameManager.mainMenu.show();
 		});
 
-		topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton, exitGameButton, messageOfDayLabel);
+		topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton, exitGameButton, messageOfDayLabel, score);
 
 		// This code setup what happens when the dragging starts on the image.
 		for (var i : this.level.getInventory().getItems().entrySet()) {
 			InventoryItem iconItem = i.getValue();
 			iconItem.setImage(iconItem.getSprite());
 			sidebar.getChildren().addAll(iconItem, i.getValue().getLabel());
-
+			
 			iconItem.setOnDragDetected(new EventHandler<MouseEvent>() {
 				public void handle(MouseEvent event) {
 					if (iconItem.getRemainingUses() != 0) {
