@@ -13,7 +13,7 @@ import java.io.IOException;
 public class Network {
 	
 	/**
-	 * Connect to.
+	 * Connect to a URL.
 	 *
 	 * @param url the url
 	 * @return the http URL connection
