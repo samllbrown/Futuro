@@ -98,7 +98,6 @@ public class Game {
 		System.out.println(this.CURRENT_WIDTH);
 		System.out.println(this.CURRENT_HEIGHT);
 		this.messageOfTheDay = getMessageOfTheDay();
-		AudioPlayer.playInGameMusic();
 	}
 
 	// THIS ASSUMES THAT YOU WILL DEFINITELY
@@ -264,7 +263,7 @@ public class Game {
 		topbar.setSpacing(10);
 		topbar.setPadding(new Insets(10, 10, 10, 10));
 		root.setTop(topbar);
-
+		AudioPlayer.playInGameMusic();
 		VBox sidebar = new VBox();
 		root.setRight(sidebar);
 		Button exitGameButton = new Button("Exit Game");
