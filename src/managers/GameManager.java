@@ -566,13 +566,6 @@ public class GameManager extends Application {
                 if(this.currentPlayer != null) {
                     showAlert("INFORMATION", "Player found", "Player ID: " + playerIDGiven);
                     GameManager.choosePlayerMenu.close();
-                    Pane chooseLevelPane = buildChooseLevel();
-                    Scene chooseLevelScene = new Scene(chooseLevelPane, 300, 200);
-                    Stage chooseLevelStage = new Stage();
-                    chooseLevelStage.setScene(chooseLevelScene);
-                    chooseLevelStage.setTitle("Choose Level");
-                    GameManager.chooseLevelMenu = chooseLevelStage;
-                    GameManager.chooseLevelMenu.show();
                 } else {
                     showAlert("INFORMATION", "Could not find player", "Player ID: " + playerIDGiven);
                 }
