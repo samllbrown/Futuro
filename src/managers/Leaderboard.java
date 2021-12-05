@@ -17,12 +17,21 @@ public class Leaderboard {
     private int levelID;
     private HashMap<Integer, Integer> idsToScores;
 
+    /**
+     * Instantiates a Leaderboard
+     * @param levelId
+     * @param idsToScores
+     */
     public Leaderboard(int levelId, HashMap<Integer, Integer> idsToScores) {
         // needed?
         this.levelID = levelId;
         this.idsToScores = idsToScores;
     }
 
+    /**
+     * Displays leadboard in a readable way.
+     * @return String of leaderboard entries.
+     */
     public String toString() {
         String str = "";
         for(Integer id : idsToScores.keySet()) {
@@ -30,10 +39,20 @@ public class Leaderboard {
         }
         return str;
     }
+
+    /**
+     * Remove a player from the leaderboard.
+     * @param playerID id of player being removed
+     */
     public void removeFromLeaderBoard(int playerID) {
         this.idsToScores.remove(playerID);
     }
 
+    /**
+     * Add a player to the leaderboard.
+     * @param playerID id of player being added
+     * @param score score of that player
+     */
     public void addToLeaderBoard(int playerID, int score) {
         if(this.idsToScores.keySet().size() == MAX_PLAYERS_IN_LEADERBOARD) {
             if(idsToScores.containsKey(playerID)) {
@@ -52,10 +71,19 @@ public class Leaderboard {
         }
     }
 
+    /**
+     * Insert a player object into the leaderboard.
+     * @param player player being added
+     * @param score score of that player
+     */
     public void insertPlayer(Player player, int score) {
         addToLeaderBoard(player.getPlayerID(), score);
     }
 
+    /**
+     * Delete a Player object from the leaderboard.
+     * @param player player being deleted
+     */
     public void deletePlayer(Player player) {
         this.removeFromLeaderBoard(player.getPlayerID());
     }
