@@ -39,6 +39,8 @@ import javafx.util.Duration;
  */
 public class Game {
 
+    Stage stage = new Stage();
+
     /** The tick timeline. */
     private Timeline tickTimeline;
 
@@ -263,6 +265,7 @@ public class Game {
 
         exitGameButton.setOnAction(e -> {
             //Needs to be closed
+            closeGame();
             GameManager.mainMenu.show();
         });
 
@@ -450,6 +453,13 @@ public class Game {
         }
         return root;
     }
+
+    /**
+     * Closes game.
+     */
+    public void closeGame(){
+        stage.close();
+    }
     
     /**
      * Show the UI of the game.
@@ -459,7 +469,6 @@ public class Game {
     public void showGame() throws Exception {
 
         Pane root = buildGUI();
-        Stage stage = new Stage();
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 
         drawGame();
