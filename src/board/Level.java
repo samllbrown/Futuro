@@ -167,10 +167,12 @@ public class Level {
 				System.out.println("Update Mechs method has detected a mech with <= 0 hp, so it ded");
 			}
 		}
-
+		
 		for(Mech m : currentMechs) {
 			if(m.getType() != MechType.DEATH) {
-				if(((!m.getIsBaby()) && (!m.isSterile()) && (!m.isPregnant()) && (!m.isBreeding()))) {
+				boolean partenr = 0 != grid.getTileAt(m.getGridX(), m.getGridY()).getBreedableMechsOnTile(m).size();
+				if(((!m.getIsBaby()) && (!m.isSterile()) && (!m.isPregnant()) && (!m.isBreeding()) && partenr)) {
+					System.out.println("Eurika2");
 					ArrayList<Mech> availableMechs = new ArrayList<>();
 					availableMechs = (grid.getTileAt(m.getGridX(), m.getGridY()).getBreedableMechsOnTile(m));
 					Random rand = new Random();
@@ -183,7 +185,9 @@ public class Level {
 		//MechManager.checkMechsForBreeding(this.mechs, this.grid);
 		this.mechs.forEach(m -> {
 			try {
+				this.getGrid().getTileAt(m.getGridX(), m.getGridY()).removeMech(m);
 				m.move(this.grid);
+				this.getGrid().getTileAt(m.getGridX(), m.getGridY()).addMech(m);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
