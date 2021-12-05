@@ -22,7 +22,7 @@ public class LightningInventoryItem extends InventoryItem{
         /**
          * Instantiates a new lightning inventory item.
          *
-         * @param uses the uses
+         * @param uses - the amount of uses left
          */
         public LightningInventoryItem(int uses) {
             super(name, uses);

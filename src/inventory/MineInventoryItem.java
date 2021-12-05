@@ -2,7 +2,7 @@ package inventory;
 
 /**
  * MineInventoryItem.java
- * @author Sam R
+ * @author Sam R, Illia L.
  * @version 1
  * Last Mod Date: 27/11/2021
  * Description: handles the item mine inventory item
@@ -22,7 +22,7 @@ public class MineInventoryItem extends InventoryItem{
     /**
      * Instantiates a new mine inventory item.
      *
-     * @param uses the uses
+     * @param uses - the amount of uses left
      */
     public MineInventoryItem(int uses) {
         super(name, uses);

@@ -2,7 +2,7 @@ package inventory;
 
 /**
  * RemodelPInventoryItem.java
- * @author Sam R
+ * @author Sam R, Illia L.
  * @version 1
  * Last Mod Date: 27/11/2021
  * Description: handles the remodel item
@@ -22,7 +22,7 @@ public class RemodelPInventoryItem extends InventoryItem{
     /**
      * Instantiates a new remodel P inventory item.
      *
-     * @param uses the amount of uses left
+     * @param uses - the amount of uses left
      */
     public RemodelPInventoryItem(int uses) {
         super(name, uses);
