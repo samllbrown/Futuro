@@ -113,6 +113,7 @@ public class GameManager extends Application {
     
     /** The current player. */
     public Player currentPlayer;
+
     /** The canvas. */
     private Canvas canvas;
 
@@ -197,32 +198,36 @@ public class GameManager extends Application {
         });
 
         chooseLevel.setOnAction(e -> {
-            Level level = null;
-            try {
-            	Pane chooseLevelPane = buildChooseLevel();
+            if(this.currentPlayer != null) {
+                Pane chooseLevelPane = buildChooseLevel();
                 Scene chooseLevelScene = new Scene(chooseLevelPane, 300, 200);
                 Stage chooseLevelStage = new Stage();
                 chooseLevelStage.setScene(chooseLevelScene);
                 chooseLevelStage.setTitle("Choose Level");
                 chooseLevelStage.show();
-            } catch (Exception exception) {
-                exception.printStackTrace();
+            } else {
+                showAlert("INFORMATION", "No player has been selected", "Please select a player before starting the game");
             }
-            Game game = new Game(level);
-            mainMenu.close();
-            try {
-            	AudioPlayer.stopAllMusic();
-                game.showGame();
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
+
+//            Game game = new Game(level);
+//            mainMenu.close();
+//
+//            try {
+//            	AudioPlayer.stopAllMusic();
+//                game.showGame();
+//            } catch (Exception exception) {
+//                exception.printStackTrace();
+//            }
         });
+
         deletePlayer.setOnMouseEntered(e ->{
             deletePlayer.setStyle(HOVERED_BUTTON_STYLE);
         });
+
         deletePlayer.setOnMouseExited(e ->{
             deletePlayer.setStyle(BUTTON_STYLE);
         });
+
         deletePlayer.setOnAction(e -> {
         	Pane deletePlayerPane = buildDeletePlayer();
             Scene deletePlayerScene = new Scene(deletePlayerPane, 300, 200);
@@ -231,12 +236,15 @@ public class GameManager extends Application {
             deletePlayerStage.setTitle("New player");
             deletePlayerStage.show();
         });
+
         newPlayer.setOnMouseEntered(e ->{
             newPlayer.setStyle(HOVERED_BUTTON_STYLE);
         });
+
         newPlayer.setOnMouseExited(e ->{
             newPlayer.setStyle(BUTTON_STYLE);
         });
+
         // Create a new profile to play the game as
         newPlayer.setOnAction(e -> {
         	Pane newPlayerPane = buildNewPlayer();
@@ -246,22 +254,28 @@ public class GameManager extends Application {
             newPlayerStage.setTitle("New player");
             newPlayerStage.show();
         });
+
         exitMainMenu.setOnMouseEntered(e ->{
             exitMainMenu.setStyle(HOVERED_BUTTON_STYLE);
         });
+
         exitMainMenu.setOnMouseExited(e ->{
             exitMainMenu.setStyle(BUTTON_STYLE);
         });
+
         // Close the main menu
         exitMainMenu.setOnAction(e -> {
             GameManager.mainMenu.hide();
         });
+
         choosePlayer.setOnMouseEntered(e ->{
             choosePlayer.setStyle(HOVERED_BUTTON_STYLE);
         });
+
         choosePlayer.setOnMouseExited(e ->{
             choosePlayer.setStyle(BUTTON_STYLE);
         });
+
         choosePlayer.setOnAction(e -> {
         	Pane choosePlayerPane = buildChoosePlayer();
             Scene choosePlayerScene = new Scene(choosePlayerPane, 300, 200);
