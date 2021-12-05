@@ -122,17 +122,21 @@ public class GameManager extends Application {
      * @param primaryStage the primary stage
      */
     public void start(Stage primaryStage) {
-        // Build the GUI
+    	// Build the GUI
         Pane root = buildMainMenu();
-        
+        root.setStyle("-fx-background-color: transparent;");
         // Create a scene from the GUI
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+        scene.setFill(new ImagePattern(new Image("file:res/PIXEL_ART.jpg",  WINDOW_WIDTH, WINDOW_HEIGHT, false, false)));
         primaryStage.setTitle("Futuro");
-        
+
+
         //audioPlayer.playMainMenu();
         
         // Display the scene on the stage
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         mainMenu = primaryStage;
         mainMenu.show();
     }
