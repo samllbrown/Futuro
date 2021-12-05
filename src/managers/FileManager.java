@@ -274,24 +274,25 @@ public class FileManager {
 
 		Grid grid = level.getGrid();
 
-		String tiles = grid.getGridAsString();
+		String tiles = grid.toString();
 		String recentSaveFileName = String.format("Players/%d/lastSave.txt", forPlayer.getPlayerID());
 
 		BufferedWriter bw = null;
 		try {
 			bw = new BufferedWriter(new FileWriter(recentSaveFileName, false));
-			bw.write(level.getLevelID() + "\n");
-			bw.write(width + "\n");
-			bw.write(height + "\n");
-			bw.write(tiles + "\n");
-			bw.write(level.getMechs().size() + "\n");
-			for(Mech m : level.getMechs()) {
-				bw.write(m.toString() + "\n");
-			}
+			bw.write(level.toString());
 		} catch (Exception e){
 			e.printStackTrace();
+		} finally {
+			if(bw != null) {
+				try {
+					bw.flush();
+					bw.close();
+				} catch(Exception e) {
+					System.err.println("Error flushing and closing buffered writers");
+				}
+			}
 		}
-
 	}
 
 	/*

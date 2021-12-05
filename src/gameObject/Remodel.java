@@ -39,4 +39,9 @@ public class Remodel extends Item {
 	public Image getImage() {
 		return (isMaleRemodel ? ITEM_IMAGE_R_TO_P : ITEM_IMAGE_P_TO_R);
 	}
+
+	@Override
+	public String toString() {
+		return String.format("%s,%d,%d,%d", (isMaleRemodel ? "REMODEL_R_TO_P" : "REMODEL_P_TO_R"),this.getGridX(),this.getGridY(),this.uses);
+	}
 }

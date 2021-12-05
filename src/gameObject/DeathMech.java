@@ -14,6 +14,11 @@ public class DeathMech extends Mech{
 		super(MechType.DEATH,x,y,100,false,false,true);
 		Item deathMechItem = new Item(x,y,DAMAGE, USES) {
 			@Override
+			public String toString() {
+				return String.format("%s,%d,%d,%d", "DEATHMECH",this.getGridX(),this.getGridY(),this.uses);
+			}
+
+			@Override
 			public Image getImage() {
 				return ITEM_IMAGE;
 			}

@@ -280,7 +280,7 @@ public class Game {
         int width = level.getGrid().getWidth();
         int height = level.getGrid().getHeight();
         Grid grid = level.getGrid();
-        String tiles = grid.getGridAsString();
+        String tiles = grid.toString();
 
         try {
             PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8");

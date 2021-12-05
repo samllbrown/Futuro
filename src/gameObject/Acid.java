@@ -30,6 +30,11 @@ public class Acid extends Item {
 	}
 
 	@Override
+	public String toString() {
+		return String.format("%s,%d,%d,%d", "ACID",this.getGridX(),this.getGridY(),this.uses);
+	}
+
+	@Override
 	public Image getImage() { return ITEM_IMAGE_PUDDLE;}
 
 

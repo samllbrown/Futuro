@@ -35,6 +35,19 @@ public class Inventory {
 		}
 	}
 
+	@Override
+	public String toString() {
+		String asString = "";
+		for(String i : inventoryItems.keySet()) {
+			asString += (i + "," + inventoryItems.get(i).getRemainingUses() + "\n");
+		}
+		return asString;
+	}
+
+	public int size() {
+		return inventoryItems.keySet().size();
+	}
+
 	public void addItem(InventoryItem invItem) {
 		//this.inventoryItems.put(invItem.getName(), invItem);
 	}

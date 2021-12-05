@@ -23,6 +23,10 @@ public class Mine extends Item {
 	public Image getImage() {
 		return ITEM_IMAGE;
 	}
-	
+
+	@Override
+	public String toString() {
+		return String.format("%s,%d,%d,%d", "MINE",this.getGridX(),this.getGridY(),this.uses);
+	}
 
 }

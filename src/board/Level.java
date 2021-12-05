@@ -54,6 +54,43 @@ public class Level {
 		this.items = new ArrayList<>();
 	}
 
+	@Override
+	public String toString() {
+		String levelAsString = "";
+		levelAsString += this.levelID + "\n";
+		levelAsString += this.grid.getWidth() + "\n";
+		levelAsString += this.grid.getHeight() + "\n";
+		levelAsString += this.grid.toString();
+		levelAsString += this.mechs.size() + "\n";
+		levelAsString += this.getMechsAsString();
+		levelAsString += this.getItems().size() + "\n";
+		levelAsString += this.getItemsAsString();
+		levelAsString += this.inventory.size() + "\n";
+		levelAsString += this.inventory.toString();
+		levelAsString += this.currentScore + "\n";
+		levelAsString += this.elapsedTime + "\n";
+		levelAsString += this.expectedSecs + "\n";
+		levelAsString += this.numOfMechsToLose;
+		return levelAsString;
+	}
+
+	private String getItemsAsString() {
+		String itemsAsString = "";
+		for(Item i : this.items) {
+			itemsAsString += i.toString() + "\n";
+		}
+		return itemsAsString;
+	}
+
+	private String getMechsAsString() {
+		String mechsAsString = "";
+		for(Mech m : this.mechs) {
+			mechsAsString += m.toString();
+			mechsAsString += "\n";
+		}
+		return mechsAsString;
+	}
+
 	public void addItem(Item i) {
 		this.items.add(i);
 	}

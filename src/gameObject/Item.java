@@ -23,7 +23,10 @@ public abstract class Item extends Rectangle {
 		this.damage = damage;
 		this.uses = uses;
 	}
-	
+
+	@Override
+	public abstract String toString();
+
 	public void setXRange(int xRange) {
 		this.xRange = xRange;
 	}

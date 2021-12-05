@@ -66,7 +66,12 @@ public class Grid {
 		}
 	}
 
-	public String getGridAsString() {
+	@Override
+	public String toString() {
+		return this.getGridAsString();
+	}
+
+	private String getGridAsString() {
 		String tiles = "";
 		for(int i = 0; i < this.width; i++) {
 			for(int j = 0; j < this.height; j++) {
