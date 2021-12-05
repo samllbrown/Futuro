@@ -29,9 +29,8 @@ public class EMPInventoryItem extends InventoryItem{
     }
 
     /**
-     * Gets the name.
-     *
-     * @return the name
+     * Retrieve the EMPInventoryItem name.
+     * @return the EMPInventoryItem name
      */
     public String getName() {
         return EMPInventoryItem.name;

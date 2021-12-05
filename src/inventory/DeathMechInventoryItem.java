@@ -13,7 +13,7 @@ public class DeathMechInventoryItem extends InventoryItem {
     public static final String name = "DEATH_MECH";
 
     /**
-     * Instantiates a new death mech inventory item.
+     * Instantiates a new DeathMechInventory Item
      */
     public DeathMechInventoryItem() {
         super(name);
@@ -29,9 +29,9 @@ public class DeathMechInventoryItem extends InventoryItem {
     }
 
     /**
-     * Gets the name of the death mech item.
-     *
-     * @return the name
+     * Retrieve the dmInventoryItem name.
+	 *
+     * @return the dmInventoryItem name
      */
     public String getName() {
         return DeathMechInventoryItem.name;
