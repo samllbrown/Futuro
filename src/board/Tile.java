@@ -62,7 +62,6 @@ public class Tile extends Rectangle {
 	public ArrayList<Mech> getBreedableMechsOnTile(Mech forMech) {
 		ArrayList<Mech> breedableMechs = new ArrayList<>();
 		if(this.currentMechs.contains(forMech)) {
-			System.err.println("The for mech IS on this tile");
 			for(Mech nm : currentMechs) {
 				if(nm.getType() != MechType.DEATH && (!nm.equals(forMech))) {
 					breedableMechs.add(nm);
