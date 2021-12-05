@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import board.Level;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -91,9 +90,8 @@ public class GameManager extends Application {
         sidebar.setPadding(new Insets(10, 10, 10, 10));
         
         // Add the elements on the canvas onto the sidebar
-        root.setCenter(sidebar);
+        root.setLeft(sidebar);
         sidebar.getChildren().addAll(chooseLevel, choosePlayer, newPlayer, deletePlayer, exitMainMenu);
-        sidebar.setAlignment(Pos.CENTER);
 
         chooseLevel.setOnAction(e -> {
             Level level = null;
