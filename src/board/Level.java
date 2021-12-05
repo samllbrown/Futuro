@@ -15,6 +15,7 @@ import gameObject.Item;
 import gameObject.Mech;
 import gameObject.MechType;
 import inventory.Inventory;
+import managers.Breeder;
 import services.AudioPlayer;
 
 /**
@@ -42,6 +43,8 @@ public class Level {
 	private Grid grid;
 	
 	private int itemRespawnRate;
+
+	private Breeder breeder;
 
 	//private HashMap<Pair, Item> coordsToItems;
 	// probably can't have a hashmap of coordstomechs because collisions are possible :/
