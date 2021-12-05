@@ -265,7 +265,8 @@ public class GameManager extends Application {
             Stage choosePlayerStage = new Stage();
             choosePlayerStage.setScene(choosePlayerScene);
             choosePlayerStage.setTitle("Choose player");
-            choosePlayerStage.show();
+            this.choosePlayerMenu = choosePlayerStage;
+            this.choosePlayerMenu.show();
         });
         
         return root;
@@ -556,7 +557,15 @@ public class GameManager extends Application {
     				alert.showAndWait().ifPresent(rs -> {
     				    if (rs == ButtonType.OK) {
     				        System.out.println("Pressed OK.");
-    				        this.choosePlayerMenu.hide();
+    				        GameManager.choosePlayerMenu.hide();
+    				        Pane chooseLevelPane = buildChooseLevel();
+    		                Scene chooseLevelScene = new Scene(chooseLevelPane, 300, 200);
+    		                Stage chooseLevelStage = new Stage();
+    		                chooseLevelStage.setScene(chooseLevelScene);
+    		                chooseLevelStage.setTitle("Choose Level");
+    		                GameManager.chooseLevelMenu = chooseLevelStage;
+    		                GameManager.chooseLevelMenu.show();
+    		                System.out.println("gets to here");
     				    }
     				});
                 } catch (Exception exception) {
