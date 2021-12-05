@@ -527,14 +527,12 @@ public class GameManager extends Application {
         });
         return root; 
     }
-        
 
     /**
      * Builds the choose player UI.
      *
      * @return the pane
      */
-
     private Pane buildChoosePlayer() {
     	BorderPane root = new BorderPane();
     	VBox sidebar = new VBox();
@@ -548,31 +546,39 @@ public class GameManager extends Application {
         sidebar.getChildren().addAll(playerID, playerIDInput, choosePlayerButton);
         choosePlayerButton.setOnAction(e -> {
         	if(playerIDInput.getText() != null) {
-                try {
-                    this.currentPlayer = FileManager.getPlayer(Integer.valueOf(playerIDInput.getText()));
+        	    this.currentPlayer = FileManager.getPlayer(Integer.valueOf(playerIDInput.getText()));
+        	    if(this.currentPlayer == null) {
                     Alert alert = new Alert(AlertType.INFORMATION);
-    				alert.setTitle("INFORMATION");
-    				alert.setHeaderText("Player found");
-    				alert.setContentText("Player ID:" + Integer.valueOf(playerIDInput.getText()));
-    				alert.showAndWait().ifPresent(rs -> {
-    				    if (rs == ButtonType.OK) {
-    				        System.out.println("Pressed OK.");
-    				        this.choosePlayerMenu.hide();
-    				    }
-    				});
-                } catch (Exception exception) {
-                    Alert alert = new Alert(AlertType.INFORMATION);
-    				alert.setTitle("INFORMATION");
-    				alert.setHeaderText("No player found");
-    				alert.setContentText("Please try again");
-    				alert.showAndWait().ifPresent(rs -> {
-    				    if (rs == ButtonType.OK) {
-    				        System.out.println("Pressed OK.");
-    				    }
-    				});
+                    alert.setTitle("INFORMATION");
+                    alert.setHeaderText("No player found");
+                    alert.setContentText("Please try again");
+                    alert.showAndWait().ifPresent(rs -> {
+                        if (rs == ButtonType.OK) {
+
+                            System.out.println("Pressed OK.");
+                        }
+                    });
+                } else {
+        	        this.showAlert("INFORMATION", "Player founssssd", String.format("Player ID:", Integer.valueOf(playerIDInput.getText())));
                 }
+            } else {
+        	    this.showAlert("INFORMATION", "No player found", "Please try again");
             }
         });
     	return root;
     }
+
+    private void showAlert(String title, String header, String content) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait().ifPresent(rs -> {
+            if (rs == ButtonType.OK) {
+                System.out.println("Pressed OK.");
+            }
+        });
+    }
+
+
 }
