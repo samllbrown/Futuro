@@ -16,6 +16,7 @@ import gameObject.Mech;
 import gameObject.MechType;
 import inventory.Inventory;
 import managers.Breeder;
+import managers.MechManager;
 import services.AudioPlayer;
 
 /**
@@ -218,6 +219,7 @@ public class Level {
 	public void update() throws Exception {
 		// this for loop should probs just go into an init method
 		this.updateItems();
+		this.breeder.update(this.mechs, grid);
 		this.updateMechs();
 		this.updateInventoryItems();
 	}
@@ -237,6 +239,7 @@ public class Level {
 	 */
 	public void addMech(Mech m) {
 		this.mechs.add(m);
+		this.grid.getTileAt(m.getGridX(), m.getGridY()).addMech(m);
 	}
 
 	/**
@@ -254,114 +257,6 @@ public class Level {
 	public ArrayList<Mech> getMechs() {
 		return this.mechs;
 	}
-
-//	private void initItemsInPlay() {
-//		Tile[][] gridTiles = grid.getGrid();
-//		this.currentItemsInPlay.forEach(i -> gridTiles[i.getxPos()][i.getyPos()].addItemToTile(i));
-//		this.currentMechs.forEach(m -> gridTiles[m.getxPos()][m.getyPos()].addItemToTile(m));
-//	}
-//
-//	private void placeFromInventory(String name, int atX, int atY) {
-//		try {
-//			this.inventory.useItem(name, atX, atY);
-//		} catch(Exception e) {
-//			// somehow mention the fact that they're trying to use an item that they can't use
-//			System.err.println("Cannot use item. Used maximum amount of times already");
-//		}
-//	}
-//
-//	private void birthMechs(Mech fromMech) {
-//		for(int i = 0; i < 5; i++) {
-//			// need to update mech class to make sure that we can add baby mechs, etc
-//			// this code, obviously, is incomplete and serves only to show how the functionality
-//			// of the actual game *might* work.
-//			Random rand = new Random();
-//			// X DIR AND Y DIR NEEDS TO BE CHANGED;
-//			Mech babyMech = GameObjectFactory.makeMech(mechTypes[rand.nextInt(2)], fromMech.getCurrentXPos(), fromMech.getCurrentYPos(), 0, 1);
-//			this.addMech(babyMech);
-//		}
-//		// allow for a new pregnancy timer?
-//		fromMech.setPregnant(false);
-//	}
-//
-//	private void addItem(Item item) {
-//		Tile[][] gridTiles = grid.getGrid();
-//		gridTiles[item.getxPos()][item.getxPos()].addItemToTile(item);
-//	}
-//
-//	private void addMech(Mech mech) {
-//		this.currentMechs.add(mech);
-//	}
-//
-//	public boolean isCompleted() {
-//		return (this.currentMechs.size() == this.numOfMechsToLose || this.currentMechs.size() == this.WINNING_NUMBER_OF_MECHS);
-//	}
-//
-//	private void scoreKill(Mech mech) {
-//		this.currentScore += (mech.isPregnant() ? (MECH_KILL_SCORE * BABY_MECHS_FROM_MOTHER) : MECH_KILL_SCORE);
-//	}
-//
-//	private void processDeadMech(Mech deadMech) {
-//		this.scoreKill(deadMech);
-//		this.currentMechs.remove(deadMech);
-//	}
-//
-//	private void updateMech(Mech mech) {
-//		if(mech.getHealth() < 0) {
-//			this.processDeadMech(mech);
-//		} else if (mech.isPregnant() && mech.readyToBirth()) {
-//			this.birthMechs(mech);
-//		} else if(this.grid.getTileAt(mech.getCurrentXPos(), mech.getCurrentYPos()).hasMech()){
-//			// not efficient will be dealt with later cba
-//			ArrayList<Mech> occupyingMechs = this.grid.getTileAt(mech.getCurrentXPos(), mech.getCurrentYPos()).getCurrentMechs();
-//			for(Mech m : occupyingMechs) {
-//				mech.mate(m);
-//			}
-//		}
-//		mech.move(this.grid);
-//	}
-//
-//	private void updateItem(Item item) {
-//		// won't work for puddles so ye
-//		if(this.grid.getTileAt(item.getxPos(), item.getyPos()).hasMech()) {
-//			ArrayList<Mech> mechs = this.grid.getTileAt(item.getxPos(), item.getyPos()).getCurrentMechs();
-//			for(Mech m : mechs) {
-//				item.act(m);
-//			}
-//		}
-//		// if item.timer() == 0 then act?
-//		// if item.getClass == puddle and puddle.health == 0 then die?
-//		// if item is spreadable, spread?
-//		// if item is on the same tile as a mech, actOn the mech?
-//	}
-//
-//	private void updateMechs() {
-//		this.currentMechs.forEach(mech -> updateMech(mech));
-//	}
-//
-//	private void updateItems() {
-//		this.currentItemsInPlay.forEach(item -> updateItem(item));
-//	}
-//
-//	private void updateScene() {
-//		// ???
-//	}
-//
-//	public void update() {
-//		if(this.isCompleted()) {
-//			// end the level
-//		} else {
-//			updateItems();
-//			updateMechs();
-//			updateScene();
-//		}
-//		// performs a tick
-//		// every item should do "its thing" to whatever is on its tile
-//		// every mech should move to a new tile after items have done "their thing"
-//		// if a mech is ready to give birth, we should add new mechs accordingly and
-//		// set the pregnant mech's isPregnant var to false.
-//		// more is done
-//	}
 
 	/**
 	 * Retrieves losing number of Mechs for the Level.
