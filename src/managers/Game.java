@@ -219,6 +219,9 @@ public class Game {
 	 */
 	public void setLevel(Level level) {
 		this.level = level;
+		this.CURRENT_WIDTH = level.getGrid().getWidth();
+		this.CURRENT_HEIGHT = level.getGrid().getHeight();
+		this.messageOfTheDay = getMessageOfTheDay();
 	}
 
 	/**
