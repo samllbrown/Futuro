@@ -276,50 +276,8 @@ public class Game {
         return root;
     }
 
-    public static void saveLevel(Level level) {
-        int width = level.getGrid().getWidth();
-        int height = level.getGrid().getHeight();
-        Grid grid = level.getGrid();
-        String tiles = grid.toString();
-
-        try {
-            PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8");
-            writer.println(width);
-            writer.println(height);
-            writer.println(tiles);
-            for (Mech m: level.getMechs()) {
-                writer.println(m.toString());
-//                String mechString = "M";
-//                String mechX = Integer.toString(m.getGridX());
-//                String mechY = Integer.toString(m.getGridY());
-//                String mechHealth = Integer.toString(m.getHealth());
-//                String mechType = null;
-//                switch (m.getType()) {
-//                    case RESOURCE:
-//                        mechType = "R";
-//                        break;
-//                    case PRODUCTION:
-//                        mechType = "P";
-//                        break;
-//                    case DEATH:
-//                        mechType = "D";
-//                        break;
-//                    default:
-//                        System.err.println("error");
-//                        break;
-//                }
-
-//                boolean mechPregnantBool = m.isPregnant();
-//                int mechPregnant = (mechPregnantBool) ? 1 : 0;
-//                List<String> mechList = Arrays.asList(mechString,mechX,mechY,mechHealth,mechType,Integer.toString(mechPregnant));
-//                String mechListResult = String.join(",", mechList);
-//                writer.println(mechListResult);
-            }
-            writer.close();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
+    public void saveLevel(Level level) {
+        FileManager.writeLevel(level, this.currentPlayer);
     }
 
     // just testing the drag and drop from the starter kit
