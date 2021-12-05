@@ -58,18 +58,21 @@ public class Mech extends Rectangle {
 
 	private Direction currentDirection;
 	private Pair currentCords;
-
+	private int timeUntilAdult;
+	private int pregnancyTimer;
 	protected int health;
 	private boolean pregnant;
 	private int numOfBabies;
 
 	private int prevX, prevY;
 	private Image img;
-	
+
 	private boolean isBaby;
-	
+
 	private boolean isSterile;
 	private boolean isBreeding;
+
+	private int breedingCoolDown;
 
 	// haven't implemented age functionality
 
@@ -90,11 +93,14 @@ public class Mech extends Rectangle {
 		this.type = type;
 		this.x = x;
 		this.y = y;
+		this.timeUntilAdult = 0;
+		this.breedingCoolDown = 0;
 		this.currentCords = new Pair(x, y);
 		this.currentDirection = Direction.RIGHT;
 		this.health = health;
+		this.pregnancyTimer = 0;
 		this.pregnant = pregnant;
-		this.img = getImageForType(type);
+		this.img = isBaby ? new Image("file:res/Sprites/babyMech.png", 50, 50, false, false) : getImageForType(type);
 		this.isBaby = isBaby;
 		this.isSterile = isSterile;
 		setFill(new ImagePattern(this.img));
@@ -124,6 +130,29 @@ public class Mech extends Rectangle {
 		// breed
 	}
 
+	public void growIntoAdult() {
+		assert (this.isBaby);
+		assert (this.timeUntilAdult <= 0);
+		this.isBaby = false;
+		this.setImage(getImageForType(this.type));
+	}
+
+	public void setTimeUntilAdult(int time) {
+		this.timeUntilAdult = time;
+	}
+
+	public int getTimeUntilAdult() {
+		return this.timeUntilAdult;
+	}
+
+	public void setIsBreeding(boolean bool) {
+		this.isBreeding = bool;
+	}
+
+	public void reduceTimeUntilAdult() {
+		this.timeUntilAdult--;
+	}
+
 	/**
 	 * Giving birth to a Mech.
 	 * Given the mech is of the right type (production) it can give birth
@@ -138,6 +167,24 @@ public class Mech extends Rectangle {
 		Mech myBaby = new Mech(babyType, this.x, this.y, 100, false, true, true);
 		myBaby.setCurrentDirection(babyDirection);
 		return myBaby;
+	}
+
+	public int getBreedingCoolDown() {
+		return this.breedingCoolDown;
+	}
+
+	public void setBreedingCoolDown(int newBreedingCoolDown) {
+		this.breedingCoolDown = newBreedingCoolDown;
+	}
+
+	public void resetBreedingCoolDown() {
+		this.breedingCoolDown = 0;
+	}
+
+	public void reduceBreedingCoolDown() {
+		if(this.breedingCoolDown > 0) {
+			this.breedingCoolDown--;
+		}
 	}
 
 	/**
