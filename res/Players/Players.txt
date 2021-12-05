@@ -1,4 +1,4 @@
-5,sammmm,0
-23,Oswald,0
-3,4,0
-89,Name,0
+5,sammmm,1
+23,Oswald,2
+3,4,3
+89,Name,4

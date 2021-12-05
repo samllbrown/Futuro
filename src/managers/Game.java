@@ -61,10 +61,10 @@ public class Game {
 	private Group mechGroup = new Group();
 
 	/** The Constant WINDOW_WIDTH of the UI. */
-	private static final int WINDOW_WIDTH = 750;
+	private static final int WINDOW_WIDTH = 1050;
 
 	/** The Constant WINDOW_HEIGHT of the UI. */
-	private static final int WINDOW_HEIGHT = 725;
+	private static final int WINDOW_HEIGHT = 900;
 
 	/** The Constant CANVAS_WIDTH of the canvas */
 	private static final int CANVAS_WIDTH = 700;
@@ -348,6 +348,7 @@ public class Game {
 				event.consume();
 			}
 		});
+		root.setStyle("-fx-background-color: Gray");
 		return root;
 	}
 
