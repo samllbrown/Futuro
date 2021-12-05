@@ -288,32 +288,32 @@ public class Game {
             writer.println(height);
             writer.println(tiles);
             for (Mech m: level.getMechs()) {
-                String mechString = "M";
-                String mechX = Integer.toString(m.getGridX());
-                String mechY = Integer.toString(m.getGridY());
-                String mechHealth = Integer.toString(m.getHealth());
-                String mechType = null;
-                switch (m.getType()) {
-                    case RESOURCE:
-                        mechType = "R";
-                        break;
-                    case PRODUCTION:
-                        mechType = "P";
-                        break;
-                    case DEATH:
-                        mechType = "D";
-                        break;
-                    default:
-                        System.err.println("error");
-                        break;
-                }
+                writer.println(m.toString());
+//                String mechString = "M";
+//                String mechX = Integer.toString(m.getGridX());
+//                String mechY = Integer.toString(m.getGridY());
+//                String mechHealth = Integer.toString(m.getHealth());
+//                String mechType = null;
+//                switch (m.getType()) {
+//                    case RESOURCE:
+//                        mechType = "R";
+//                        break;
+//                    case PRODUCTION:
+//                        mechType = "P";
+//                        break;
+//                    case DEATH:
+//                        mechType = "D";
+//                        break;
+//                    default:
+//                        System.err.println("error");
+//                        break;
+//                }
 
-                boolean mechPregnantBool = m.isPregnant();
-                int mechPregnant = (mechPregnantBool) ? 1 : 0;
-
-                List<String> mechList = Arrays.asList(mechString,mechX,mechY,mechHealth,mechType,Integer.toString(mechPregnant));
-                String mechListResult = String.join(",", mechList);
-                writer.println(mechListResult);
+//                boolean mechPregnantBool = m.isPregnant();
+//                int mechPregnant = (mechPregnantBool) ? 1 : 0;
+//                List<String> mechList = Arrays.asList(mechString,mechX,mechY,mechHealth,mechType,Integer.toString(mechPregnant));
+//                String mechListResult = String.join(",", mechList);
+//                writer.println(mechListResult);
             }
             writer.close();
         } catch (Exception e){

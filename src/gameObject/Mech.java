@@ -64,6 +64,7 @@ public class Mech extends Rectangle {
 	
 	private boolean isSterile;
 	private boolean isBreeding;
+	private int secondsUntilAdult;
 
 	// haven't implemented age functionality
 	public Mech(MechType type, int x, int y, int health, boolean pregnant, boolean isBaby, boolean isSterile) {
@@ -80,6 +81,7 @@ public class Mech extends Rectangle {
 		this.img = getImageForType(type);
 		this.isBaby = isBaby;
 		this.isSterile = isSterile;
+		this.secondsUntilAdult = 0;
 		setFill(new ImagePattern(this.img));
 	}
 
@@ -95,6 +97,14 @@ public class Mech extends Rectangle {
 		boolean neitherPregnant = !(this.isPregnant() || otherMech.isPregnant());
 		boolean bothNotDeathMech = !((this.type != MechType.DEATH) && (otherMech.getType() != MechType.DEATH));
 		return bothOppositeTypes && neitherSterile && neitherCurrentlyBreeding && neitherPregnant && bothNotDeathMech;
+	}
+
+	public void setSecondsUntilAdult(int seconds) {
+		this.secondsUntilAdult = seconds;
+	}
+
+	public int getSecondsUntilAdult() {
+		return this.secondsUntilAdult;
 	}
 
 	public void actOn(Mech otherMech) {
@@ -243,6 +253,13 @@ public class Mech extends Rectangle {
 				break;
 		}
 		return img;
+	}
+
+	@Override
+	public String toString() {
+		char typeAsChar = this.type.toString().charAt(0);
+		return String.format("M,%d,%d,%d,%c,%d,%d", this.getGridX(), this.getGridY(), this.getHealth(),
+				typeAsChar,(this.isPregnant() ? 1 : 0), this.getSecondsUntilAdult());
 	}
 
 	public MechType getType() {

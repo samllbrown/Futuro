@@ -36,6 +36,12 @@ public class DeathMech extends Mech{
 		}
 	}
 
+	@Override
+	public String toString() {
+		return String.format("M,%d,%d,%d,%c,%d,%d", this.getGridX(), this.getGridY(), this.getHealth(),
+				'D',0,0);
+	}
+
 	public Image getImage() {
 		return ITEM_IMAGE;
 	}
