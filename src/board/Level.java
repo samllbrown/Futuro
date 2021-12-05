@@ -185,7 +185,6 @@ public class Level {
 			Random random = new Random();
 			if(random.nextInt(itemRespawnRate) == itemRespawnRate-1) {
 				i.getValue().regenUse();
-				System.out.println("True");
 				this.inventory.getLabel(i.getKey()).setText(Integer.toString(this.inventory.getItemUses(i.getKey())));
 			}
 			
