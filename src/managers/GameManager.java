@@ -56,6 +56,8 @@ public class GameManager extends Application {
     /** The main menu. */
     public static Stage mainMenu;
     
+    public static Stage chooseLevelMenu;
+    
     /** The current player. */
     public Player currentPlayer;
     /** The canvas. */
@@ -130,7 +132,8 @@ public class GameManager extends Application {
                 Stage chooseLevelStage = new Stage();
                 chooseLevelStage.setScene(chooseLevelScene);
                 chooseLevelStage.setTitle("Choose Level");
-                chooseLevelStage.show();
+                this.chooseLevelMenu = chooseLevelStage;
+                this.chooseLevelMenu.show();
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
@@ -315,9 +318,78 @@ public class GameManager extends Application {
         		level = FileManager.readLevel("res\\Levels\\LEVEL_1.txt"); 
         } catch (Exception exception) {
                 exception.printStackTrace();
+        }
+        Game game = new Game(level);
+        mainMenu.close();
+        try {
+        	AudioPlayer.stopAllMusic();
+            game.showGame();
+            chooseLevelMenu.close();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        	}
+        });
+        levelTwo.setOnAction(e -> {
+            Level level = null;
+            	try {
+            		level = FileManager.readLevel("res\\Levels\\LEVEL_2.txt"); 
+            } catch (Exception exception) {
+                    exception.printStackTrace();
             }
             Game game = new Game(level);
             mainMenu.close();
+            chooseLevelMenu.close();
+            try {
+            	AudioPlayer.stopAllMusic();
+                game.showGame();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
+        levelThree.setOnAction(e -> {
+            Level level = null;
+            	try {
+            		level = FileManager.readLevel("res\\Levels\\LEVEL_3.txt"); 
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            Game game = new Game(level);
+            mainMenu.close();
+            chooseLevelMenu.close();
+            try {
+            	AudioPlayer.stopAllMusic();
+                game.showGame();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+        	}
+        });
+        levelFour.setOnAction(e -> {
+            Level level = null;
+            	try {
+            		level = FileManager.readLevel("res\\Levels\\LEVEL_4.txt"); 
+            } catch (Exception exception) {
+                    exception.printStackTrace();
+            }
+            Game game = new Game(level);
+            mainMenu.close();
+            chooseLevelMenu.close();
+            try {
+            	AudioPlayer.stopAllMusic();
+                game.showGame();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
+        levelFive.setOnAction(e -> {
+            Level level = null;
+            	try {
+            		level = FileManager.readLevel("res\\Levels\\LEVEL_5.txt"); 
+            } catch (Exception exception) {
+                    exception.printStackTrace();
+            }
+            Game game = new Game(level);
+            mainMenu.close();
+            chooseLevelMenu.close();
             try {
             	AudioPlayer.stopAllMusic();
                 game.showGame();
