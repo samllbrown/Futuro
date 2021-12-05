@@ -395,8 +395,7 @@ public class Game {
                 int q = 0;
                 while (q < i.getXRange()) {
                     if (this.level.getGrid().getTileAt((i.getGridX() + q), i.getGridY())
-                        .getTileType() == TileType.PATH) {
-
+                        .getTileType() != TileType.WALL) {
                         gc.drawImage(i.getImage(), (i.getGridX() + q) * TILE_SIZE, i.getGridY() * TILE_SIZE);
                     } else {
                         q = 1000;
@@ -406,7 +405,7 @@ public class Game {
                 q = 0;
                 while (q < i.getXRange()) {
                     if (this.level.getGrid().getTileAt((i.getGridX() - q), i.getGridY())
-                        .getTileType() == TileType.PATH) {
+                        .getTileType() != TileType.WALL) {
                         gc.drawImage(i.getImage(), (i.getGridX() - q) * TILE_SIZE, i.getGridY() * TILE_SIZE);
                     } else {
                         q = 1000;
@@ -416,7 +415,7 @@ public class Game {
                 q = 0;
                 while (q < i.getYRange()) {
                     if (this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() + q)
-                        .getTileType() == TileType.PATH) {
+                        .getTileType() != TileType.WALL) {
                         gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, (i.getGridY() + q) * TILE_SIZE);
                     } else {
                         q = 1000;
@@ -426,7 +425,7 @@ public class Game {
                 q = 0;
                 while (q < i.getYRange()) {
                     if (this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() - q)
-                        .getTileType() == TileType.PATH) {
+                        .getTileType() != TileType.WALL) {
                         gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, (i.getGridY() - q) * TILE_SIZE);
                     } else {
                         q = 1000;

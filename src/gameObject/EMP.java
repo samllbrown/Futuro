@@ -10,8 +10,8 @@ import javafx.scene.image.Image;
  * Description: Emp Item, mimics the bomb weapon from the functional spec. Inherits from Item Class.
  */
 public class EMP extends Item {
-	private static final int X_RANGE = 4;
-	private static final int Y_RANGE = 4;
+	private static final int X_RANGE = 100;
+	private static final int Y_RANGE = 100;
 	private static final int USES = 1;
 
 	public static final Image ITEM_IMAGE = new Image("file:res/Sprites/emp.png",50, 50, false, false);

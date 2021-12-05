@@ -201,7 +201,7 @@ public class FileManager {
 	public static Level readLevel(String fileName) throws Exception {
 		BufferedReader br = new BufferedReader(new FileReader(new File(fileName)));
 		String currentLine;
-		int levelid, width, height, numberOfMechs, numberOfItemsInPlay, numberOfItemsInInventory, currentScore, elapsedTime, numberOfMechsToLose, expectedSecondsToComplete;
+		int levelid, width, height, numberOfMechs, numberOfItemsInPlay, numberOfItemsInInventory, currentScore, elapsedTime, numberOfMechsToLose, expectedSecondsToComplete, itemRespawn;
 		//ArrayList<String> rowsOfTiles = new ArrayList<>();
 		String tiles = "";
 		ArrayList<Mech> mechs = new ArrayList<>();
@@ -235,6 +235,7 @@ public class FileManager {
 		elapsedTime = Integer.valueOf(br.readLine());
 		expectedSecondsToComplete = Integer.valueOf(br.readLine());
 		numberOfMechsToLose = Integer.valueOf(br.readLine());
+		itemRespawn = Integer.valueOf(br.readLine());
 		grid.populateGrid(tiles);
 		br.close();
 		// null for inventory for now;

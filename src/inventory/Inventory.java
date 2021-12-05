@@ -2,8 +2,6 @@ package inventory;
 
 import java.util.HashMap;
 
-import gameObject.GameObjectFactory;
-import gameObject.Item;
 
 import javafx.scene.control.Label;
 
