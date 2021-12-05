@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2c5d8a34-dd84-46e8-910d-8e1df5abf2b3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/managers/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/managers/Game.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +38,7 @@
     <configuration name="Futuro" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="managers.GameManager" />
       <module name="Futuro" />
-      <option name="VM_PARAMETERS" value="--module-path C:\javafx-sdk-17.0.1\lib --add-modules javafx.controls,javafx.fxml --add-modules javafx.media" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-11.0.2\lib&quot; --add-modules javafx.controls,javafx.fxml --add-modules javafx.media" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
