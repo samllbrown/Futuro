@@ -18,7 +18,7 @@ import inventory.Inventory;
  */
 
 public class FileManager {
-	public static final File PLAYER_FILE = new File ( "res/Players.txt");
+	public static final File PLAYER_FILE = new File ( "res/Players/Players.txt");
 	public static final File LEADERBOARD_FILE = new File ("res/Leaderboard.txt");
 
 	// need to do leaderboard reading and writing or something

@@ -187,12 +187,15 @@ public class GameManager extends Application {
         // Add the elements on the canvas onto the sidebar
         root.setCenter(sidebar);
         sidebar.getChildren().addAll(chooseLevel, choosePlayer, newPlayer, deletePlayer, exitMainMenu);
+
         chooseLevel.setOnMouseEntered(e ->{
             chooseLevel.setStyle(HOVERED_BUTTON_STYLE);
         });
+
         chooseLevel.setOnMouseExited(e ->{
             chooseLevel.setStyle(BUTTON_STYLE);
         });
+
         chooseLevel.setOnAction(e -> {
             Level level = null;
             try {
@@ -382,42 +385,40 @@ public class GameManager extends Application {
     }
 
 
-    // SetOnAction needs to load a file (open file manager? input level id like choose player does?)
-//     private Pane loadNewGame() {
-//         BorderPane root = new BorderPane();
-//         VBox sidebar = new VBox();
-//         sidebar.setSpacing(10);
-//         sidebar.setPadding(new Insets(10, 10, 10, 10));
+     //SetOnAction needs to load a file (open file manager? input level id like choose player does?)
+     private Pane loadNewGame() {
+         BorderPane root = new BorderPane();
+         VBox sidebar = new VBox();
+         sidebar.setSpacing(10);
+         sidebar.setPadding(new Insets(10, 10, 10, 10));
 
-//         FileChooser selectLoadFile = new FileChooser();
-//         selectLoadFile.setTitle("Select game file");
+         FileChooser selectLoadFile = new FileChooser();
+         selectLoadFile.setTitle("Select game file");
 
-//         Button loadButton = new Button("Select game file");
+         Button loadButton = new Button("Select game file");
 
-//         root.setLeft(sidebar);
-//         sidebar.getChildren().add(loadButton);
-//         loadButton.setOnAction(e -> {
-//             File selectedFile = selectLoadFile.showOpenDialog(mainMenu);
-//             String selectedFilePath = selectedFile.getAbsolutePath();
-//             Level level = null;
-//             try {
-//                 level = FileManager.readLevel(selectedFilePath);
-//             } catch (Exception exception) {
-//                 exception.printStackTrace();
-//             }
-//             Game game = new Game(level);
+         root.setLeft(sidebar);
+         sidebar.getChildren().add(loadButton);
+         loadButton.setOnAction(e -> {
+             File selectedFile = selectLoadFile.showOpenDialog(mainMenu);
+             String selectedFilePath = selectedFile.getAbsolutePath();
+             Level level = null;
+             try {
+                 level = FileManager.readLevel(selectedFilePath);
+             } catch (Exception exception) {
+                 exception.printStackTrace();
+             }
+             Game game = new Game(level);
 
-//             mainMenu.close();
-//             try {
-//                 game.showGame();
-//             } catch (Exception ex) {
-//                 ex.printStackTrace();
-//             }
-//         });
-
-//         return root;
-
-//     }
+             mainMenu.close();
+             try {
+                 game.showGame();
+             } catch (Exception ex) {
+                 ex.printStackTrace();
+             }
+         });
+         return root;
+     }
 
 	/**
      * Builds the choose level UI.
