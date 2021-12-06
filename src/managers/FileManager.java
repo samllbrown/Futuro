@@ -22,6 +22,30 @@ public class FileManager {
 	public static final File LEADERBOARD_FILE = new File ("res/Leaderboard.txt");
 
 	// need to do leaderboard reading and writing or something
+	public Leaderboard readLeaderBoard(int levelId) {
+		HashMap<Integer, Integer> leaderBoardHashMap = new HashMap<>();
+		BufferedReader br = null;
+
+		try {
+			String levelFile = String.format("res/LeaderboardFiles/LEVEL_%dlb.txt", levelId);
+			br = new BufferedReader(new FileReader(new File(levelFile)));
+			String currentLine;
+			while((currentLine = br.readLine()) != null) {
+				int playerID = Integer.valueOf(currentLine.split(",")[0]);
+				int score = Integer.valueOf(currentLine.split(",")[1]);
+				leaderBoardHashMap.put(playerID, score);
+			}
+		} catch(IOException e) {
+			System.err.println("There was an error reading this file");
+		} finally {
+			try {
+				br.close();
+			} catch(IOException e) {
+				System.err.println("There was an error closing the BufferedReader whilst retrieving the leaderboard file");
+			}
+		}
+		return new Leaderboard(levelId, leaderBoardHashMap);
+	}
 
 	private static void writeRecordToFile(String record, File file) {
 		BufferedWriter bw = null;
