@@ -3,7 +3,8 @@ package inventory;
 /**
  * MineInventoryItem.java
  * @author Sam R, Illia L.
- * Last Mod Date: 02/12/2021
+ * @version 1
+ * Last Mod Date: 27/11/2021
  * Description: handles the item mine inventory item
  */
 public class MineInventoryItem extends InventoryItem{

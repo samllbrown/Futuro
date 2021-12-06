@@ -3,10 +3,11 @@ package inventory;
 /**
  * PuddleInventoryItem.java
  * @author Sam R, Illia L.
- * Last Mod Date: 02/12/2021
+ * @version 1
+ * Last Mod Date: 27/11/2021
  * Description: handles the puddle inventory item 
  */
-public class PuddleInventoryItem extends InventoryItem {
+public class PuddleInventoryItem extends InventoryItem{
 
     /** The Constant name. */
     public static final String name = "PUDDLE";
@@ -15,7 +16,7 @@ public class PuddleInventoryItem extends InventoryItem {
      * Instantiates a new puddle inventory item.
      */
     public PuddleInventoryItem() {
-	super(name);
+        super(name);
     }
 
     /**
@@ -24,7 +25,7 @@ public class PuddleInventoryItem extends InventoryItem {
      * @param uses - the amount of uses left
      */
     public PuddleInventoryItem(int uses) {
-	super(name, uses);
+        super(name, uses);
     }
 
     /**
@@ -33,6 +34,6 @@ public class PuddleInventoryItem extends InventoryItem {
      * @return the name
      */
     public String getName() {
-	return PuddleInventoryItem.name;
+        return PuddleInventoryItem.name;
     }
 }

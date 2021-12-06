@@ -3,10 +3,11 @@ package inventory;
 /**
  * RemodelPInventoryItem.java
  * @author Sam R, Illia L.
- * Last Mod Date: 02/12/2021
+ * @version 1
+ * Last Mod Date: 27/11/2021
  * Description: handles the remodel item
  */
-public class RemodelPInventoryItem extends InventoryItem {
+public class RemodelPInventoryItem extends InventoryItem{
 
     /** The Constant name. */
     public static final String name = "REMODEL_P_TO_R";
@@ -15,7 +16,7 @@ public class RemodelPInventoryItem extends InventoryItem {
      * Instantiates a new remodel P inventory item.
      */
     public RemodelPInventoryItem() {
-	super(name);
+        super(name);
     }
 
     /**
@@ -24,7 +25,7 @@ public class RemodelPInventoryItem extends InventoryItem {
      * @param uses - the amount of uses left
      */
     public RemodelPInventoryItem(int uses) {
-	super(name, uses);
+        super(name, uses);
     }
 
     /**
@@ -33,6 +34,6 @@ public class RemodelPInventoryItem extends InventoryItem {
      * @return the name
      */
     public String getName() {
-	return RemodelPInventoryItem.name;
+        return RemodelPInventoryItem.name;
     }
 }

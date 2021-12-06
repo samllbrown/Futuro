@@ -2,9 +2,9 @@ package inventory;
 
 /**
  * AcidInventoryItem.java
- * 
- * @author Sam R, Illia L. 
- * Last Mod Date: 02/12/2021 
+ * @author Sam R, Illia L.
+ * @version 1
+ * Last Mod Date: 27/11/2021
  * Description: handles the acid inventory item
  */
 public class AcidInventoryItem extends InventoryItem {
@@ -16,7 +16,7 @@ public class AcidInventoryItem extends InventoryItem {
      * Instantiates a new acid inventory item.
      */
     public AcidInventoryItem() {
-	super(name);
+        super(name);
     }
 
     /**
@@ -25,7 +25,7 @@ public class AcidInventoryItem extends InventoryItem {
      * @param uses - the amount of uses left
      */
     public AcidInventoryItem(int uses) {
-	super(name, uses);
+        super(name, uses);
     }
 
     /**
@@ -34,6 +34,6 @@ public class AcidInventoryItem extends InventoryItem {
      * @return the name
      */
     public String getName() {
-	return AcidInventoryItem.name;
+        return AcidInventoryItem.name;
     }
 }

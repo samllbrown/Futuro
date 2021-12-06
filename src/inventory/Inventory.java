@@ -2,19 +2,21 @@ package inventory;
 
 import java.util.HashMap;
 
+
 import javafx.scene.control.Label;
 
 /**
  * Inventory.java
  * @author Sam R, Illia L.
- * Last Mod Date: 02/12/2021
+ * @version 1
+ * Last Mod Date: 27/11/2021
  * Description: handles all items in inventory 
  */
 public class Inventory {
 
     /** The inventory items. */
     private HashMap<String, InventoryItem> inventoryItems;
-
+    
     /** The labels. */
     private HashMap<String, Label> labels;
 
@@ -22,15 +24,15 @@ public class Inventory {
      * Instantiates a new inventory.
      */
     public Inventory() {
-	HashMap<String, InventoryItem> inventoryItems = new HashMap<String, InventoryItem>();
-	HashMap<String, Label> labels = new HashMap<String, Label>();
-	this.inventoryItems = inventoryItems;
-	this.labels = labels;
+        HashMap<String, InventoryItem> inventoryItems = new HashMap<String, InventoryItem>();
+        HashMap<String, Label> labels = new HashMap<String, Label>();
+        this.inventoryItems = inventoryItems;
+        this.labels = labels;
     }
-
+    
     public Inventory(HashMap<String, InventoryItem> inventoryItems, HashMap<String, Label> labels) {
-	this.inventoryItems = inventoryItems;
-	this.labels = labels;
+    	this.inventoryItems = inventoryItems;
+    	this.labels = labels;
     }
 
     /**
@@ -39,48 +41,48 @@ public class Inventory {
      * @param ID the id
      */
     public Inventory(int ID) {
-	HashMap<String, InventoryItem> inventoryItems = new HashMap<String, InventoryItem>();
-	HashMap<String, Label> labels = new HashMap<String, Label>();
+        HashMap<String, InventoryItem> inventoryItems = new HashMap<String, InventoryItem>();
+        HashMap<String, Label> labels = new HashMap<String, Label>();
 
-	inventoryItems.put(DeathMechInventoryItem.name, new DeathMechInventoryItem());
-	inventoryItems.put(AcidInventoryItem.name, new AcidInventoryItem());
-	inventoryItems.put(EMPInventoryItem.name, new EMPInventoryItem());
-	inventoryItems.put(LightningInventoryItem.name, new LightningInventoryItem());
-	inventoryItems.put(EMPInventoryItem.name, new MineInventoryItem());
-	inventoryItems.put(PuddleInventoryItem.name, new PuddleInventoryItem());
-	inventoryItems.put(RemodelPInventoryItem.name, new RemodelPInventoryItem());
-	inventoryItems.put(RemodelRInventoryItem.name, new RemodelRInventoryItem());
+        inventoryItems.put(DeathMechInventoryItem.name, new DeathMechInventoryItem());
+        inventoryItems.put(AcidInventoryItem.name, new AcidInventoryItem());
+        inventoryItems.put(EMPInventoryItem.name, new EMPInventoryItem());
+        inventoryItems.put(LightningInventoryItem.name, new LightningInventoryItem());
+        inventoryItems.put(EMPInventoryItem.name, new MineInventoryItem());
+        inventoryItems.put(PuddleInventoryItem.name, new PuddleInventoryItem());
+        inventoryItems.put(RemodelPInventoryItem.name, new RemodelPInventoryItem());
+        inventoryItems.put(RemodelRInventoryItem.name, new RemodelRInventoryItem());
 
-	this.inventoryItems = inventoryItems;
-	for (var i : inventoryItems.entrySet()) {
-	    labels.put(i.getKey(), i.getValue().getLabel());
-	}
+        this.inventoryItems = inventoryItems;
+        for(var i: inventoryItems.entrySet()) {
+        	labels.put(i.getKey(), i.getValue().getLabel());
+        }
     }
-
+  
     @Override
-    public String toString() {
-	String asString = "";
-	for (String i : inventoryItems.keySet()) {
-	    asString += (i + "," + inventoryItems.get(i).getRemainingUses() + "\n");
-	}
-	return asString;
-    }
+	  public String toString() {
+		  String asString = "";
+		  for(String i : inventoryItems.keySet()) {
+			  asString += (i + "," + inventoryItems.get(i).getRemainingUses() + "\n");
+		  }
+		  return asString;
+	  }
+ 
+	  public int size() {
+		  return inventoryItems.keySet().size();
+	  }
+    	
+	    /**
+	     * Use item.
+	     *
+	     * @param name the item name
+	     */
+    public void useItem(String name){
+        if(inventoryItems.get(name).getRemainingUses() == 0) {
 
-    public int size() {
-	return inventoryItems.keySet().size();
-    }
-
-    /**
-     * Use item.
-     *
-     * @param name the item name
-     */
-    public void useItem(String name) {
-	if (inventoryItems.get(name).getRemainingUses() == 0) {
-
-	} else {
-	    inventoryItems.get(name).reduceUses();
-	}
+        } else {
+            inventoryItems.get(name).reduceUses();
+        }
     }
 
     /**
@@ -90,8 +92,8 @@ public class Inventory {
      */
     public void addItem(InventoryItem invItem) {
 
-	this.inventoryItems.put(invItem.itemName, invItem);
-	this.labels.put(invItem.itemName, invItem.getLabel());
+        this.inventoryItems.put(invItem.itemName, invItem);
+        this.labels.put(invItem.itemName, invItem.getLabel());
 
     }
 
@@ -102,7 +104,7 @@ public class Inventory {
      * @return the item uses
      */
     public int getItemUses(String name) {
-	return inventoryItems.get(name).getRemainingUses();
+        return inventoryItems.get(name).getRemainingUses();
     }
 
     /**
@@ -111,8 +113,8 @@ public class Inventory {
      * @param name the name
      * @return the label
      */
-    public Label getLabel(String name) {
-	return labels.get(name);
+    public Label getLabel(String name){
+        return labels.get(name);
     }
 
     /**
@@ -120,11 +122,11 @@ public class Inventory {
      *
      * @return the items
      */
-    public HashMap<String, InventoryItem> getItems() {
-	return this.inventoryItems;
+    public HashMap<String, InventoryItem> getItems(){
+        return this.inventoryItems;
     }
-
-    public HashMap<String, Label> getLabels() {
-	return this.labels;
+    
+    public HashMap<String, Label> getLabels(){
+        return this.labels;
     }
 }
