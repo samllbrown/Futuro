@@ -283,7 +283,7 @@ public class FileManager {
 		Grid grid = level.getGrid();
 
 		String tiles = grid.toString();
-		String recentSaveFileName = String.format("Players/%d/lastSave.txt", forPlayer.getPlayerID());
+		String recentSaveFileName = String.format("Players/%d_lastSave.txt", forPlayer.getPlayerID());
 
 		BufferedWriter bw = null;
 		try {
