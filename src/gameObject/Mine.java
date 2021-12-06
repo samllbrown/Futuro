@@ -4,9 +4,8 @@ import javafx.scene.image.Image;
 
 /**
  * Mine.java
- * @author Sam B, Debbie L, ...
- * @version
- * Last Mod Date:
+ * @author Sam B, Debbie L
+ * Last Mod Date: 02/12/2021
  * Description: Mine Item, mimics the poison weapon (instakill) from the functional spec. Inherits from Item Class.
  */
 public class Mine extends Item {
@@ -37,6 +36,11 @@ public class Mine extends Item {
 		return ITEM_IMAGE;
 	}
 
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	@Override
 	public String toString() {
 		return String.format("%s,%d,%d,%d", "MINE",this.getGridX(),this.getGridY(),this.uses);

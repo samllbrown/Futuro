@@ -1,13 +1,19 @@
 package gameObject;
 
+// TODO: Auto-generated Javadoc
 /**
  * MechType.java
- * @author
- * @version
- * Last Mod Date:
+ * @author Sam R
+ * Last Mod Date: 02/12/2021
  * Description: Enumerates through different Mech types.
  */
 
 public enum MechType {
-    DEATH, RESOURCE, PRODUCTION;
+    
+    /** The death. */
+    DEATH, 
+    /** The resource. */
+    RESOURCE, 
+    /** The production. */
+    PRODUCTION;
 }

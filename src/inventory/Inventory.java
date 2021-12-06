@@ -8,8 +8,7 @@ import javafx.scene.control.Label;
 /**
  * Inventory.java
  * @author Sam R, Illia L.
- * @version 1
- * Last Mod Date: 27/11/2021
+ * Last Mod Date: 02/12/2021
  * Description: handles all items in inventory 
  */
 public class Inventory {
@@ -72,11 +71,11 @@ public class Inventory {
 		  return inventoryItems.keySet().size();
 	  }
     	
-	    /**
-	     * Use item.
-	     *
-	     * @param name the item name
-	     */
+    /**
+     * Use item.
+     *
+     * @param name the item name
+     */
     public void useItem(String name){
         if(inventoryItems.get(name).getRemainingUses() == 0) {
 

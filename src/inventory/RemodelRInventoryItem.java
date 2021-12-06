@@ -3,8 +3,7 @@ package inventory;
 /**
  * RemodelRInventoryItem.java
  * @author Sam R, Illia L.
- * @version 1
- * Last Mod Date: 27/11/2021
+ * Last Mod Date: 02/12/2021
  * Description: handles the remodel item
  */
 public class RemodelRInventoryItem extends InventoryItem{

@@ -11,7 +11,7 @@ import java.util.Locale;
  * InventoryItem.java
  * @author Sam R, Illia L.
  * @version 1
- * Last Mod Date: 27/11/2021
+ * Last Mod Date: 02/12/2021
  * Description: the blueprint for a new item. 
  */
 
@@ -39,15 +39,10 @@ public abstract class InventoryItem extends ImageView {
      */
     public InventoryItem(String name) {
         this.itemName = name;
-        // this needs to be changed
         this.itemSprite = getImageForName(name);
         this.remainingUses = MAX_ITEM_USES;
         this.label =  new Label(Integer.toString(remainingUses));
         System.out.println(itemSprite);
-    }
-
-    public void setUses(int uses) {
-        this.remainingUses = remainingUses;
     }
 
     /**
@@ -58,9 +53,7 @@ public abstract class InventoryItem extends ImageView {
      */
     public InventoryItem(String name, int remainingUses) {
         this.itemName = name;
-        // this needs to be changed
         this.itemSprite = getImageForName(name);
-        // NEED TO CHECK IF GREATER THAN MAX, LESS THAN 0 FOR REMAINING USES
         this.label =  new Label(Integer.toString(remainingUses));
         this.remainingUses = remainingUses;
     }

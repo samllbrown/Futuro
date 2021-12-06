@@ -4,16 +4,22 @@ import javafx.scene.image.Image;
 
 /**
  * Remodel.java
- * @author Sam B, Debbie L, ...
- * @version
- * Last Mod Date:
+ * @author Sam B, Debbie L, Sam R
+ * Last Mod Date: 05/12/2021
  * Description: Model Item, mimics the male/female sex change item from the functional spec. Inherits from Item Class.
  */
 public class Remodel extends Item {
 	
+	/** The is male remodel. */
 	private boolean isMaleRemodel;
+	
+	/** The Constant USES. */
 	private static final int USES = 1;
+	
+	/** The Constant ITEM_IMAGE_R_TO_P. */
 	public static final Image ITEM_IMAGE_R_TO_P = new Image("file:res/Sprites/RtoP.png",50, 50, false, false);
+	
+	/** The Constant ITEM_IMAGE_P_TO_R. */
 	public static final Image ITEM_IMAGE_P_TO_R = new Image("file:res/Sprites/PtoR.png",50, 50, false, false);
 
 	/**
@@ -59,7 +65,8 @@ public class Remodel extends Item {
 	}
 
 	/**
-	 * Retrieve the image of the Remodel item for the GUI
+	 * Retrieve the image of the Remodel item for the GUI.
+	 *
 	 * @return the Remodel sprite image
 	 */
 	@Override
@@ -67,6 +74,11 @@ public class Remodel extends Item {
 		return (isMaleRemodel ? ITEM_IMAGE_R_TO_P : ITEM_IMAGE_P_TO_R);
 	}
 
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	@Override
 	public String toString() {
 		return String.format("%s,%d,%d,%d", (isMaleRemodel ? "REMODEL_R_TO_P" : "REMODEL_P_TO_R"),this.getGridX(),this.getGridY(),this.uses);
