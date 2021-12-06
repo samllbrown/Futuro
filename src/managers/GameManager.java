@@ -151,11 +151,13 @@ public class GameManager extends Application {
 
 	// Create the main buttons for navigating the main menu
 	Button startGame = new Button("START GAME");
+	Button loadGame = new Button("LOAD GAME");
 	Button choosePlayer = new Button("CHOOSE PLAYER");
 	Button newPlayer = new Button("CREATE PLAYER");
 	Button deletePlayer = new Button("DELETE PLAYER");
 	Button exitMainMenu = new Button("EXIT GAME");
 	startGame.setStyle(BUTTON_STYLE);
+	loadGame.setStyle(BUTTON_STYLE);
 	choosePlayer.setStyle(BUTTON_STYLE);
 	newPlayer.setStyle(BUTTON_STYLE);
 	deletePlayer.setStyle(BUTTON_STYLE);
@@ -169,7 +171,7 @@ public class GameManager extends Application {
 
 	// Add the elements on the canvas onto the sidebar
 	root.setCenter(sidebar);
-	sidebar.getChildren().addAll(startGame, choosePlayer, newPlayer, deletePlayer, exitMainMenu);
+	sidebar.getChildren().addAll(startGame,loadGame, choosePlayer, newPlayer, deletePlayer, exitMainMenu);
 
 	startGame.setOnMouseEntered(e -> {
 	    startGame.setStyle(HOVERED_BUTTON_STYLE);
@@ -192,6 +194,43 @@ public class GameManager extends Application {
 		showAlert("INFORMATION", "No player has been selected",
 			"Please select a player before starting the game");
 	    }
+	});
+
+	loadGame.setOnMouseEntered(e -> {
+		loadGame.setStyle(HOVERED_BUTTON_STYLE);
+	});
+
+	startGame.setOnMouseExited(e -> {
+		loadGame.setStyle(BUTTON_STYLE);
+	});
+
+	loadGame.setOnAction(e -> {
+
+		FileChooser selectLoadFile = new FileChooser();
+		selectLoadFile.setTitle("Select game file");
+
+		if (this.currentPlayer != null) {
+			File selectedFile = selectLoadFile.showOpenDialog(mainMenu);
+			String selectedFilePath = selectedFile.getAbsolutePath();
+			Game game = new Game();
+			try {
+				game.setLevel(FileManager.readLevel(selectedFilePath));
+				game.setCurrentPlayer(this.currentPlayer);
+				if (this.currentPlayer.getMaxLevelID() < game.getLevel().getLevelID()) {
+					showAlert("Information", "Level too high", "You can't play that level yet");
+				} else {
+					mainMenu.close();
+					AudioPlayer.stopAllMusic();
+					game.showGame();
+					chooseLevelMenu.close();
+				}
+			} catch (Exception exception) {
+				exception.printStackTrace();
+			}
+		} else {
+			showAlert("INFORMATION", "No player has been selected",
+				"Please select a player before starting the game");
+		}
 	});
 
 	deletePlayer.setOnMouseEntered(e -> {
