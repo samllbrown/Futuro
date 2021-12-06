@@ -329,11 +329,12 @@ public class Game {
 		});
 
 		exitGameButton.setOnAction(e -> {
-		    this.gameStage.hide();
-		    AudioPlayer.stopAllMusic();
-		    if (this.tickTimeline != null) {
-		        this.tickTimeline.pause(); 
-		    }
+			this.gameStage.hide();
+
+			AudioPlayer.stopAllMusic();
+
+			this.tickTimeline.pause();
+
 			GameManager.mainMenu.show();
 
 		});
