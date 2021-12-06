@@ -13,12 +13,10 @@ import java.util.Map;
  */
 public class Leaderboard {
     private final static int MAX_PLAYERS_IN_LEADERBOARD = 10;
-    // needed?
     private int levelID;
     private HashMap<Integer, Integer> idsToScores;
 
     public Leaderboard(int levelId, HashMap<Integer, Integer> idsToScores) {
-        // needed?
         this.levelID = levelId;
         this.idsToScores = idsToScores;
     }
@@ -26,7 +24,7 @@ public class Leaderboard {
     public String toString() {
         String str = "";
         for(Integer id : idsToScores.keySet()) {
-            str += id + "," + idsToScores.get(id) + "\n";
+            str += id +"," + idsToScores.get(id) + "\n";
         }
         return str;
     }
@@ -50,6 +48,10 @@ public class Leaderboard {
                 }
             }
         }
+    }
+
+    public HashMap<Integer, Integer> getIdsToScores() {
+        return idsToScores;
     }
 
     public void insertPlayer(Player player, int score) {

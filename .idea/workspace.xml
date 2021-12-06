@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="2c5d8a34-dd84-46e8-910d-8e1df5abf2b3" name="Changes" comment="">
+    <list default="true" id="2c5d8a34-dd84-46e8-910d-8e1df5abf2b3" name="Changes" comment="LOAD WORKS :)">
+      <change afterPath="$PROJECT_DIR$/res/LeaderboardFiles/LEVEL_1lb.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/LeaderboardFiles/LEVEL_2lb.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/LeaderboardFiles/LEVEL_3lb.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/LeaderboardFiles/LEVEL_4lb.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/LeaderboardFiles/LEVEL_5lb.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/managers/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/managers/GameManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/managers/Leaderboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/managers/Leaderboard.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,15 +41,16 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../../javafx-sdk-17.0.1/lib" />
     <property name="project.structure.last.edited" value="Libraries" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.pathVariables" />
   </component>
   <component name="RunManager">
     <configuration name="Futuro" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="11" />
       <option name="MAIN_CLASS_NAME" value="managers.GameManager" />
       <module name="Futuro" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-11.0.2\lib&quot; --add-modules javafx.controls,javafx.fxml --add-modules javafx.media" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\ultim\Downloads\openjfx-17.0.1_windows-x64_bin-sdk\javafx-sdk-17.0.1\lib&quot; --add-modules javafx.controls,javafx.fxml --add-modules javafx.media" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
