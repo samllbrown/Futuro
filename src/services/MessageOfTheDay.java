@@ -6,7 +6,6 @@ import java.util.HashMap;
 /**
  * MessageOfTheDay.java
  * @author Sam R
- * @version 1
  */
 
 public class MessageOfTheDay {

@@ -10,7 +10,6 @@ import javafx.scene.media.MediaPlayer;
 /**
  * audioPlayer.java
  * @author Sam B
- * @version 1.5
  * Last Mod Date: 27/11/2021
  */
 public class AudioPlayer {

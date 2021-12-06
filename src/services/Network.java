@@ -8,7 +8,6 @@ import java.io.IOException;
 /**
  * Network.java
  * @author David Terence-Abanulo, Sam R
- * @version 1.5
  * Last Mod Date: 27/11/2021
  */
 public class Network {
