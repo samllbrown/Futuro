@@ -423,45 +423,6 @@ public class GameManager extends Application {
     }
 
     /**
-     * Load new game.
-     *
-     * @return the pane
-     */
-    private Pane loadNewGame() {
-	BorderPane root = new BorderPane();
-	VBox sidebar = new VBox();
-	sidebar.setSpacing(10);
-	sidebar.setPadding(new Insets(10, 10, 10, 10));
-
-	FileChooser selectLoadFile = new FileChooser();
-	selectLoadFile.setTitle("Select game file");
-
-	Button loadButton = new Button("Select game file");
-
-	root.setLeft(sidebar);
-	sidebar.getChildren().add(loadButton);
-	loadButton.setOnAction(e -> {
-	    File selectedFile = selectLoadFile.showOpenDialog(mainMenu);
-	    String selectedFilePath = selectedFile.getAbsolutePath();
-	    Level level = null;
-	    try {
-		level = FileManager.readLevel(selectedFilePath);
-	    } catch (Exception exception) {
-		exception.printStackTrace();
-	    }
-	    Game game = new Game(this.currentPlayer, level);
-
-	    mainMenu.close();
-	    try {
-		game.showGame();
-	    } catch (Exception ex) {
-		ex.printStackTrace();
-	    }
-	});
-	return root;
-    }
-
-    /**
      * Builds the choose level UI.
      *
      * @return the pane
