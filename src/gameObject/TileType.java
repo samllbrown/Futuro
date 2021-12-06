@@ -4,7 +4,6 @@ package gameObject;
  * TileType.java
  * @author Sam R
  * Last Mod Date: 02/12/2021
- * Description: Enumerates through different Tile types based on their attributes (visible,placeable & walkable)
  */
 
 public enum TileType {

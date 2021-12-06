@@ -147,9 +147,8 @@ public class GameManager extends Application {
      * The main method.
      *
      * @param args the arguments
-     * @throws Exception 
+     * @throws Exception the exception
      */
-
     public static void main(String[] args) throws Exception {
 	System.out.println(javafx.scene.text.Font.getFamilies());
 	launch(args);

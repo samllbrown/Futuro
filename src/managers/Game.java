@@ -93,6 +93,7 @@ public class Game {
     /**
      * Instantiates a new game.
      *
+     * @param player the player
      * @param level the level
      */
     public Game(Player player, Level level) {
@@ -121,6 +122,7 @@ public class Game {
      * Instantiates a new game.
      *
      * @param levelFile the level file
+     * @param player the player
      * @throws Exception the exception
      */
     public Game(String levelFile, Player player) throws Exception {
@@ -552,7 +554,7 @@ public class Game {
     /**
      * Show the UI of the game.
      *
-     * @throws Exception
+     * @throws Exception the exception
      */
     public void showGame() throws Exception {
 

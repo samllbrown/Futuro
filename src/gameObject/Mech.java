@@ -527,7 +527,7 @@ public class Mech extends Rectangle {
 	    System.err.println("I have lived a good life. Now, I die.");
 	}
     }
-   
+
     /**
      * Checks sterile state of the mech (true if a mech has been sterilised).
      * @return sterile state of mech

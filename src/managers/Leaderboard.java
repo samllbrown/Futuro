@@ -7,9 +7,8 @@ import java.util.Map;
 
 /**
  * Leadboard.Java
- * @author
- * @version
- * Last Mod Date:
+ * @author Sam R, Illia, Mart
+ * Last Mod Date: 06/12/2021
  */
 public class Leaderboard {
     private final static int MAX_PLAYERS_IN_LEADERBOARD = 10;
@@ -56,17 +55,27 @@ public class Leaderboard {
     /**
      * adds a player to the leaderboard.
      *
-     * @param player player to be added
-     * @param score score of the player
+     * @return the ids to scores
      */
     public HashMap<Integer, Integer> getIdsToScores() {
 	return idsToScores;
     }
 
+    /**
+     * Insert player.
+     *
+     * @param player the player
+     * @param score the score
+     */
     public void insertPlayer(Player player, int score) {
 	addToLeaderBoard(player.getPlayerID(), score);
     }
 
+    /**
+     * Delete player.
+     *
+     * @param player the player
+     */
     public void deletePlayer(Player player) {
 	this.removeFromLeaderBoard(player.getPlayerID());
     }
