@@ -176,13 +176,13 @@ public class GameManager extends Application {
         root.setCenter(canvas);
         
         // Create the main buttons for navigating the main menu
-        Button chooseLevel = new Button("START GAME");
+        Button startGame = new Button("START GAME");
         Button choosePlayer = new Button("CHOOSE PLAYER");        
         Button newPlayer = new Button("CREATE PLAYER");
         Button deletePlayer = new Button("DELETE PLAYER");
         Button leaderboards = new Button("DISPLAY LEADERBOARD");
         Button exitMainMenu = new Button("EXIT GAME");
-        chooseLevel.setStyle(BUTTON_STYLE);
+        startGame.setStyle(BUTTON_STYLE);
         choosePlayer.setStyle(BUTTON_STYLE);
         newPlayer.setStyle(BUTTON_STYLE);
         deletePlayer.setStyle(BUTTON_STYLE);
@@ -197,33 +197,27 @@ public class GameManager extends Application {
         
         // Add the elements on the canvas onto the sidebar
         root.setCenter(sidebar);
-        sidebar.getChildren().addAll(chooseLevel, choosePlayer, newPlayer, deletePlayer,leaderboards, exitMainMenu);
-        chooseLevel.setOnMouseEntered(e ->{
-            chooseLevel.setStyle(HOVERED_BUTTON_STYLE);
+        sidebar.getChildren().addAll(startGame, choosePlayer, newPlayer, deletePlayer, exitMainMenu);
+
+        startGame.setOnMouseEntered(e ->{
+            startGame.setStyle(HOVERED_BUTTON_STYLE);
         });
-        chooseLevel.setOnMouseExited(e ->{
-            chooseLevel.setStyle(BUTTON_STYLE);
+
+        startGame.setOnMouseExited(e ->{
+            startGame.setStyle(BUTTON_STYLE);
         });
-        chooseLevel.setOnAction(e -> {
-            Level level = null;
-            try {
-            	Pane chooseLevelPane = buildChooseLevel();
-                Scene chooseLevelScene = new Scene(chooseLevelPane, 300, 200);
+
+        startGame.setOnAction(e -> {
+            if(this.currentPlayer != null) {
+                Pane chooseLevelPane = buildChooseLevel();
+                Scene chooseLevelScene = new Scene(chooseLevelPane, 300, 400);
                 Stage chooseLevelStage = new Stage();
                 chooseLevelStage.setScene(chooseLevelScene);
                 chooseLevelStage.setTitle("Choose Level");
-                chooseLevelStage.show();
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-            Game game = new Game(level);
-            mainMenu.close();
-            try {
-            	AudioPlayer.stopAllMusic();
-                game.showGame();
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
+                GameManager.chooseLevelMenu = chooseLevelStage;
+                GameManager.chooseLevelMenu.show();
+            } else
+		showAlert("INFORMATION", "No player has been selected", "Please select a player before starting the game");
         });
         deletePlayer.setOnMouseEntered(e ->{
             deletePlayer.setStyle(HOVERED_BUTTON_STYLE);
@@ -237,7 +231,8 @@ public class GameManager extends Application {
             Stage deletePlayerStage = new Stage();
             deletePlayerStage.setScene(deletePlayerScene);
             deletePlayerStage.setTitle("New player");
-            deletePlayerStage.show();
+            this.deletePlayerMenu = deletePlayerStage;
+            this.deletePlayerMenu.show();
         });
         newPlayer.setOnMouseEntered(e ->{
             newPlayer.setStyle(HOVERED_BUTTON_STYLE);
@@ -252,7 +247,8 @@ public class GameManager extends Application {
             Stage newPlayerStage = new Stage();
             newPlayerStage.setScene(newPlayerScene);
             newPlayerStage.setTitle("New player");
-            newPlayerStage.show();
+            this.newPlayerMenu = newPlayerStage;
+            this.newPlayerMenu.show();
         });
         exitMainMenu.setOnMouseEntered(e ->{
             exitMainMenu.setStyle(HOVERED_BUTTON_STYLE);
@@ -271,12 +267,13 @@ public class GameManager extends Application {
             choosePlayer.setStyle(BUTTON_STYLE);
         });
         choosePlayer.setOnAction(e -> {
-        	Pane choosePlayerPane = buildChoosePlayer();
+            Pane choosePlayerPane = buildChoosePlayer();
             Scene choosePlayerScene = new Scene(choosePlayerPane, 300, 200);
             Stage choosePlayerStage = new Stage();
             choosePlayerStage.setScene(choosePlayerScene);
             choosePlayerStage.setTitle("Choose player");
-            choosePlayerStage.show();
+            this.choosePlayerMenu = choosePlayerStage;
+            this.choosePlayerMenu.show();
         });
         leaderboards.setOnMouseEntered(e ->{
             leaderboards.setStyle(HOVERED_BUTTON_STYLE);
@@ -840,42 +837,41 @@ public class GameManager extends Application {
      * @return the pane
      */
     private Pane buildChoosePlayer() {
-	BorderPane root = new BorderPane();
-	VBox sidebar = new VBox();
-	sidebar.setSpacing(10);
-	sidebar.setAlignment(Pos.CENTER);
-	sidebar.setPadding(new Insets(10, 10, 10, 10));
-	Label playerID = new Label("ID of player: ");
-	playerID.setStyle("-fx-font-family: Impact;" + "-fx-font-size: 20");
-	TextField playerIDInput = new TextField();
-	Button choosePlayerButton = new Button("Choose player");
-	choosePlayerButton.setStyle(BUTTON_STYLE);
-	root.setCenter(sidebar);
-	root.setStyle("-fx-background-color: Gray");
-	sidebar.getChildren().addAll(playerID, playerIDInput, choosePlayerButton);
-	choosePlayerButton.setOnMouseEntered(e -> {
-	    choosePlayerButton.setStyle(HOVERED_BUTTON_STYLE);
-	});
+    	BorderPane root = new BorderPane();
+    	VBox sidebar = new VBox();
+        sidebar.setSpacing(10);
+        sidebar.setAlignment(Pos.CENTER);
+        sidebar.setPadding(new Insets(10, 10, 10, 10));
+        Label playerID = new Label("ID of player: ");
+        playerID.setStyle("-fx-font-family: Impact;" + "-fx-font-size: 20");
+        TextField playerIDInput = new TextField ();
+        Button choosePlayerButton = new Button("Choose player");
+        choosePlayerButton.setStyle(BUTTON_STYLE);
+        root.setCenter(sidebar);
+        root.setStyle("-fx-background-color: Gray");
+        sidebar.getChildren().addAll(playerID, playerIDInput, choosePlayerButton);
+        choosePlayerButton.setOnMouseEntered(e ->{
+            choosePlayerButton.setStyle(HOVERED_BUTTON_STYLE);
+        });
 
-	choosePlayerButton.setOnMouseExited(e -> {
-	    choosePlayerButton.setStyle(BUTTON_STYLE);
-	});
-	choosePlayerButton.setOnAction(e -> {
-	    if (playerIDInput.getText() != null) {
-		this.currentPlayer = FileManager.getPlayer(Integer.valueOf(playerIDInput.getText()));
-		String playerIDGiven = String.valueOf(currentPlayer.getPlayerID());
-		if (this.currentPlayer != null) {
-		    showAlert("INFORMATION", "Player found", "Player ID: " + playerIDGiven);
-		    GameManager.choosePlayerMenu.close();
-		} else {
-		    showAlert("INFORMATION", "Could not find player", "Player ID: " + playerIDGiven);
-		}
-	    } else {
-		showAlert("INFORMATION", "Invalid player ID given", "Please try again.");
-	    }
-	});
-
-	return root;
+        choosePlayerButton.setOnMouseExited(e ->{
+            choosePlayerButton.setStyle(BUTTON_STYLE);
+        });
+        choosePlayerButton.setOnAction(e -> {
+            if(playerIDInput.getText() != null) {
+                this.currentPlayer = FileManager.getPlayer(Integer.valueOf(playerIDInput.getText()));
+                String playerIDGiven = String.valueOf(currentPlayer.getPlayerID());
+                if(this.currentPlayer != null) {
+                    showAlert("INFORMATION", "Player found", "Player ID: " + playerIDGiven);
+                    this.choosePlayerMenu.close();
+                } else {
+                    showAlert("INFORMATION", "Could not find player", "Player ID: " + playerIDGiven);
+                }
+            } else {
+                showAlert("INFORMATION", "Invalid player ID given", "Please try again.");
+            }
+        });
+    	return root;
     }
 
     /**
