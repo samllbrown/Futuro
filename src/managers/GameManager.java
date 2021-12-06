@@ -528,6 +528,7 @@ public class GameManager extends Application {
 	    btn.setOnAction(e -> {
 		try {
 		    game.setLevel(FileManager.readLevel(buttonsToLevelFiles.get(btn)));
+			System.out.println(buttonsToLevelFiles.get(btn));
 		    game.setCurrentPlayer(this.currentPlayer);
 		    if (this.currentPlayer.getMaxLevelID() < game.getLevel().getLevelID()) {
 			showAlert("Information", "Level too high", "You can't play that level yet");

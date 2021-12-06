@@ -247,7 +247,7 @@ public class Game {
 	});
 
 	saveLevelButton.setOnAction(e -> {
-	    saveLevel(this.level, this.currentPlayer);
+	    saveLevel(this.getLevel(), this.currentPlayer);
 	});
 
 	stopTickTimelineButton.setOnAction(e -> {
