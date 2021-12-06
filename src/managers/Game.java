@@ -276,6 +276,10 @@ public class Game {
 		topbar.setSpacing(10);
 		topbar.setPadding(new Insets(10, 10, 10, 10));
 		root.setTop(topbar);
+		HBox motdbar = new HBox();
+		motdbar.setSpacing(10);
+		motdbar.setPadding(new Insets(10));
+		root.setBottom(motdbar);
 		root.setStyle(" -fx-background-image:" + "url("+"file:res/sprites/TileT.png"+ ")" + ";"
 				+ "-fx-background-size: 50 50;"
 				+ "-fx-background-position: center 105");
@@ -297,7 +301,7 @@ public class Game {
 		Label messageOfDayLabel = new Label(this.messageOfTheDay);
 		messageOfDayLabel.setStyle("-fx-text-fill: White;"
 				+ "-fx-font-family: Impact;"
-				+ "-fx-font-size: 13");
+				+ "-fx-font-size: 20");
 		Button score = this.level.getButton();
 		
 		// Stop button is disabled by default
@@ -326,11 +330,17 @@ public class Game {
 
 		exitGameButton.setOnAction(e -> {
 			this.gameStage.hide();
+
+			AudioPlayer.stopAllMusic();
+
+			this.tickTimeline.pause();
+
 			GameManager.mainMenu.show();
+
 		});
 
-		//topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton, exitGameButton, messageOfDayLabel, score);
-		topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton,saveLevelButton, exitGameButton, messageOfDayLabel, score);
+		motdbar.getChildren().addAll(messageOfDayLabel);
+		topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton,saveLevelButton, exitGameButton);
 
 		// This code setup what happens when the dragging starts on the image.
 		for (var i : this.level.getInventory().getItems().entrySet()) {
