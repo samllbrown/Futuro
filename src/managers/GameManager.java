@@ -462,13 +462,50 @@ public class GameManager extends Application {
         Button levelFour = new Button("Level Four");
         Button levelFive  = new Button("Level Five");
 
+        levelOne.setStyle(BUTTON_STYLE);
+        levelTwo.setStyle(BUTTON_STYLE);
+        levelThree.setStyle(BUTTON_STYLE);
+        levelFour.setStyle(BUTTON_STYLE);
+        levelFive.setStyle(BUTTON_STYLE);
+
+        levelOne.setOnMouseEntered(e ->{
+            levelOne.setStyle(HOVERED_BUTTON_STYLE);
+        });
+        levelOne.setOnMouseExited(e -> {
+                    levelOne.setStyle(BUTTON_STYLE);
+                });
+        levelTwo.setOnMouseEntered(e ->{
+            levelTwo.setStyle(HOVERED_BUTTON_STYLE);
+        });
+        levelTwo.setOnMouseExited(e -> {
+                    levelTwo.setStyle(BUTTON_STYLE);
+                });
+        levelThree.setOnMouseEntered(e ->{
+            levelThree.setStyle(HOVERED_BUTTON_STYLE);
+        });
+        levelThree.setOnMouseExited(e -> {
+            levelThree.setStyle(BUTTON_STYLE);
+        });
+        levelFour.setOnMouseEntered(e ->{
+            levelFour.setStyle(HOVERED_BUTTON_STYLE);
+        });
+        levelFour.setOnMouseExited(e -> {
+            levelFour.setStyle(BUTTON_STYLE);
+        });
+        levelFive.setOnMouseEntered(e ->{
+            levelFive.setStyle(HOVERED_BUTTON_STYLE);
+        });
+        levelFive.setOnMouseExited(e -> {
+            levelFive.setStyle(BUTTON_STYLE);
+        });
+
         root.setStyle("-fx-background-color: Gray");
 
         VBox sidebar = new VBox();
         sidebar.setSpacing(10);
         sidebar.setPadding(new Insets(10, 10, 10, 10));
 
-        root.setTop(sidebar);
+        root.setCenter(sidebar);
         sidebar.getChildren().addAll(levelOne, levelTwo, levelThree, levelFour, levelFive);
         sidebar.setAlignment(Pos.CENTER);
 
