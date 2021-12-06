@@ -5,7 +5,6 @@ import gameObject.Mech;
 /**
  * BreedingPair.java
  * @author  Sam R, Sam B
- * @version 1.5
  * Last Mod Date: 28/11/2021
  */
 
