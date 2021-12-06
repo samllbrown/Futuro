@@ -20,10 +20,10 @@ public class BreedingPair {
      * @param m2 second mech
      */
     public BreedingPair(Mech m1, Mech m2) {
-        this.m1 = m1;
-        this.m2 = m2;
-        // 5 seconds to breed
-        this.timeLeft = 5;
+	this.m1 = m1;
+	this.m2 = m2;
+	// 5 seconds to breed
+	this.timeLeft = 5;
     }
 
     /**
@@ -31,14 +31,14 @@ public class BreedingPair {
      * @return time left
      */
     public int getTimeLeft() {
-        return this.timeLeft;
+	return this.timeLeft;
     }
 
     /**
      * decreases the time left on breeding
      */
     public void decreaseTimeLeft() {
-        this.timeLeft--;
+	this.timeLeft--;
     }
-   
+
 }
