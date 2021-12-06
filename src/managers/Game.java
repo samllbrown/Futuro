@@ -332,9 +332,9 @@ public class Game {
 	double y = event.getY();
 	int xCoord = (int) Math.round(x) / TILE_SIZE;
 	int yCoord = (int) Math.round(y) / TILE_SIZE;
-
+	Item i = null;
 	if (db.hasString()) {
-	    Item i = InventoryItem.getItemForName(db.getString(), xCoord, yCoord);
+	    i = InventoryItem.getItemForName(db.getString(), xCoord, yCoord);
 	    level.getInventory().useItem(db.getString());
 
 	    Mech newMech = new DeathMech(xCoord, yCoord);
@@ -346,9 +346,6 @@ public class Game {
 	GraphicsContext gc = canvas.getGraphicsContext2D();
 
 	gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
-
-    }else {
-	System.out.println("This error should not exist (Game.java)");
     }
 
     /**

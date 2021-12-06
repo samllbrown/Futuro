@@ -35,22 +35,4 @@ public class RemodelRInventoryItem extends InventoryItem {
   public RemodelRInventoryItem() {
     super(name);
   }
-
-  /**
-   * Instantiates a new remodel R inventory item.
-   *
-   * @param uses - the amount of uses left
-   */
-  public RemodelRInventoryItem(int uses) {
-    super(name, uses);
-  }
-
-  /**
-   * Gets the name.
-   *
-   * @return the name of the item
-   */
-  public String getName() {
-    return RemodelRInventoryItem.name;
-  }
 }

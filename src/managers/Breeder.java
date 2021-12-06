@@ -13,7 +13,6 @@ import java.util.Random;
 /**
  * Breeder.Java
  * @author Sam R
- * @version
  * Last Mod Date: 05/12/2021
  */
 public class Breeder {
