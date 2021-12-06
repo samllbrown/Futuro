@@ -210,8 +210,9 @@ public class Game {
 	// }
 	private void tick() {
 		try {
-			if(this.level.getMechs().size() != this.level.getDeathMechs() && this.level.getMechs().size() != this.level.getLosingNumberOfMechs()) {
+			if(this.level.getMechs().size() != this.level.getDeathMechs() && !(this.level.getMechs().size() > this.level.getLosingNumberOfMechs())) {
 				this.level.update();
+				System.out.println(this.level.getMechs().size() + "AAAAAAAAAAA" + this.level.getLosingNumberOfMechs());
 				drawGame();
 			}
 			else {
@@ -344,7 +345,9 @@ public class Game {
 
 			AudioPlayer.stopAllMusic();
 
+			stopTickTimelineButton.setDisable(true);
 			this.tickTimeline.pause();
+			startTickTimelineButton.setDisable(false);
 
 			GameManager.mainMenu.show();
 
