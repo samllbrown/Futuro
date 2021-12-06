@@ -429,4 +429,15 @@ public class Level {
     public Button getButton() {
 	return this.label;
     }
+    
+    public int getDeathMechs() {
+		int total = 0;
+		for(Mech i : mechs) {
+			if(i.getType() == MechType.DEATH) {
+				total++;
+			}
+		}
+		return total;
+		
+	}
 }
