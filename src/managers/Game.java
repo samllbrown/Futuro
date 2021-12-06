@@ -80,13 +80,15 @@ public class Game {
 
 	/** The message of the day. */
 	private String messageOfTheDay;
+	private Player currentPlayer;
 
 	/**
 	 * Instantiates a new game.
 	 *
 	 * @param level the level
 	 */
-	public Game(Level level) {
+	public Game(Player player, Level level) {
+		this.currentPlayer = player;
 		this.level = level;
 		this.CURRENT_WIDTH = level.getGrid().getWidth();
 		this.CURRENT_HEIGHT = level.getGrid().getHeight();
@@ -99,7 +101,8 @@ public class Game {
 	 * @param levelFile the level file
 	 * @throws Exception the exception
 	 */
-	public Game(String levelFile) throws Exception {
+	public Game(Player player, String levelFile) throws Exception {
+		this.currentPlayer = player;
 		this.level = FileManager.readLevel(levelFile);
 		this.CURRENT_WIDTH = level.getGrid().getWidth();
 		this.CURRENT_HEIGHT = level.getGrid().getHeight();
@@ -251,6 +254,8 @@ public class Game {
 
 		Button startTickTimelineButton = new Button("Start Ticks");
 		Button stopTickTimelineButton = new Button("Stop Ticks");
+
+		Button saveLevelButton = new Button("Save Level");
 		
 		Label messageOfDayLabel = new Label(this.messageOfTheDay);
 
@@ -279,7 +284,11 @@ public class Game {
 			GameManager.mainMenu.show();
 		});
 
-		topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton, exitGameButton, messageOfDayLabel);
+		saveLevelButton.setOnAction(e ->{
+			saveLevel(this.level, this.currentPlayer);
+		});
+
+		topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton,saveLevelButton, exitGameButton, messageOfDayLabel);
 
 		// This code setup what happens when the dragging starts on the image.
 		for (var i : this.level.getInventory().getItems().entrySet()) {
@@ -456,6 +465,10 @@ public class Game {
 			}
 		}
 		return root;
+	}
+
+	public void saveLevel(Level level, Player player){
+		FileManager.writeLevel(level, player);
 	}
 
 	/**

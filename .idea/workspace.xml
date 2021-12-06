@@ -4,7 +4,11 @@
     <list default="true" id="2c5d8a34-dd84-46e8-910d-8e1df5abf2b3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/src/managers/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/managers/Game.java" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/res/Levels/LEVEL_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/res/Levels/LEVEL_1.txt" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +44,11 @@
     <configuration name="Futuro" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="managers.GameManager" />
       <module name="Futuro" />
+<<<<<<< Updated upstream
       <option name="VM_PARAMETERS" value="--module-path C:\javafx-sdk-17.0.1\lib --add-modules javafx.controls,javafx.fxml --add-modules javafx.media" />
+=======
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\javafx-sdk-17.0.1\lib&quot; --add-modules javafx.controls,javafx.fxml --add-modules javafx.media" />
+>>>>>>> Stashed changes
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -80,5 +88,15 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="LOAD WORKS :)" />
     <option name="LAST_COMMIT_MESSAGE" value="LOAD WORKS :)" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
