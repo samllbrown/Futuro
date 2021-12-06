@@ -10,73 +10,72 @@ import javafx.scene.media.MediaPlayer;
 /**
  * audioPlayer.java
  * @author Sam B
- * @version 1.5
  * Last Mod Date: 27/11/2021
  */
 public class AudioPlayer {
-	
-	/** The current music list. */
-	public static ArrayList<MediaPlayer> currentMusicList = new ArrayList<MediaPlayer>();
+
+    /** The current music list. */
+    public static ArrayList<MediaPlayer> currentMusicList = new ArrayList<MediaPlayer>();
 
     public static void playBreedSound() {
-        String bip = getCurrentWorkingDirectory() + "\\src\\music\\breed.mp3";
-        System.out.println(bip);
-        Media hit = new Media(new File(bip).toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(hit);
-        mediaPlayer.play();
-        currentMusicList.add(mediaPlayer);
-    }
-    
-    public static void playInGameMusic() {
-        String bip = getCurrentWorkingDirectory() + "\\src\\music\\ingamemusic.mp3";
-        System.out.println(bip);
-        Media hit = new Media(new File(bip).toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(hit);
-        mediaPlayer.play();
-        currentMusicList.add(mediaPlayer);
+	String bip = getCurrentWorkingDirectory() + "\\src\\music\\breed.mp3";
+	System.out.println(bip);
+	Media hit = new Media(new File(bip).toURI().toString());
+	MediaPlayer mediaPlayer = new MediaPlayer(hit);
+	mediaPlayer.play();
+	currentMusicList.add(mediaPlayer);
     }
 
-	/**
-	 * Play main menu sound.
-	 */
-	public static void playMainMenu() {
-        String bip = getCurrentWorkingDirectory() + "\\src\\music\\ratmusic.mp3";
-        System.out.println(bip);
-        Media hit = new Media(new File(bip).toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(hit);
-        mediaPlayer.play();
-        currentMusicList.add(mediaPlayer);
-	}
-	
-	/**
-	 * Play death sound of a mech.
-	 */
-	public static void playDeathSound() {
-		String bip = getCurrentWorkingDirectory() + "\\src\\music\\mech_death.mp3";
-        System.out.println(bip);
-        Media hit = new Media(new File(bip).toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(hit);
-        mediaPlayer.play();
-        currentMusicList.add(mediaPlayer);
-	}
-	
+    public static void playInGameMusic() {
+	String bip = getCurrentWorkingDirectory() + "\\src\\music\\ingamemusic.mp3";
+	System.out.println(bip);
+	Media hit = new Media(new File(bip).toURI().toString());
+	MediaPlayer mediaPlayer = new MediaPlayer(hit);
+	mediaPlayer.play();
+	currentMusicList.add(mediaPlayer);
+    }
+
+    /**
+     * Play main menu sound.
+     */
+    public static void playMainMenu() {
+	String bip = getCurrentWorkingDirectory() + "\\src\\music\\ratmusic.mp3";
+	System.out.println(bip);
+	Media hit = new Media(new File(bip).toURI().toString());
+	MediaPlayer mediaPlayer = new MediaPlayer(hit);
+	mediaPlayer.play();
+	currentMusicList.add(mediaPlayer);
+    }
+
+    /**
+     * Play death sound of a mech.
+     */
+    public static void playDeathSound() {
+	String bip = getCurrentWorkingDirectory() + "\\src\\music\\mech_death.mp3";
+	System.out.println(bip);
+	Media hit = new Media(new File(bip).toURI().toString());
+	MediaPlayer mediaPlayer = new MediaPlayer(hit);
+	mediaPlayer.play();
+	currentMusicList.add(mediaPlayer);
+    }
+
     /**
      * Gets the current working directory.
      *
      * @return the current working directory
      */
     private static String getCurrentWorkingDirectory() {
-        String userDirectory = System.getProperty("user.dir");
-        return userDirectory;
+	String userDirectory = System.getProperty("user.dir");
+	return userDirectory;
     }
-    
+
     /**
      * Stop all currently playing music.
      */
     public static void stopAllMusic() {
-    	for(MediaPlayer m : currentMusicList) {
-    		m.stop();
-    	}
-    	currentMusicList.clear();
+	for (MediaPlayer m : currentMusicList) {
+	    m.stop();
+	}
+	currentMusicList.clear();
     }
 }

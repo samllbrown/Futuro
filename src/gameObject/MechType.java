@@ -2,9 +2,8 @@ package gameObject;
 
 /**
  * MechType.java
- * @author
- * @version
- * Last Mod Date:
+ * @author Sam R
+ * Last Mod Date: 02/12/2021
  * Description: Enumerates through different Mech types.
  */
 

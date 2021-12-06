@@ -14,18 +14,18 @@ public class BreedingPair {
     private int timeLeft;
 
     public BreedingPair(Mech m1, Mech m2) {
-        this.m1 = m1;
-        this.m2 = m2;
-        // 5 seconds to breed
-        this.timeLeft = 5;
+	this.m1 = m1;
+	this.m2 = m2;
+	// 5 seconds to breed
+	this.timeLeft = 5;
     }
 
     public int getTimeLeft() {
-        return this.timeLeft;
+	return this.timeLeft;
     }
 
     public void decreaseTimeLeft() {
-        this.timeLeft--;
+	this.timeLeft--;
     }
-    //lol
+    // lol
 }
