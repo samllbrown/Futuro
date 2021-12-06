@@ -26,6 +26,12 @@ public class Breeder {
         this.pregnantMechs = new ArrayList<>();
     }
 
+    /**
+     * updates the mech that is breeding
+     * @param mechs arraylist of mechs
+     * @param grid the game grid
+     * @throws Exception
+     */
     public void update(ArrayList<Mech> mechs, Grid grid) throws Exception {
         ArrayList<BreedingPair> toRemove = new ArrayList<>();
         for(BreedingPair bp : this.breedingPairsQueue) {
@@ -73,10 +79,19 @@ public class Breeder {
         this.breedingPairsQueue.removeAll(toRemove);
     }
 
+    /**
+     * adds a breeding pair
+     * @param bp the breeding pair
+     */
     private void addBreedingPair(BreedingPair bp) {
         this.breedingPairsQueue.add(bp);
     }
 
+    /**
+     * method to breed mechs
+     * @param m1 first mech
+     * @param m2 second mech
+     */
     public void breed(Mech m1, Mech m2) {
         this.addBreedingPair(new BreedingPair(m1, m2));
         AudioPlayer.playBreedSound();

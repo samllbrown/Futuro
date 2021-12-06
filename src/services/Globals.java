@@ -3,6 +3,11 @@ package services;
 import gameObject.Direction;
 import gameObject.MechType;
 
+/**
+ * Globals.java
+ * @author Steven A-W, Sam R
+ * Last Mod date 03/12/2021
+ */
 public class Globals {
     public static final String PLAYER_FILE = "players.txt";
     public static final MechType[] NORMAL_MECH_TYPES = {MechType.PRODUCTION, MechType.RESOURCE};

@@ -66,20 +66,28 @@ import services.Globals;
  */
 
 public class GameManager extends Application {
-	  
-  	/** The Constant WINDOW_WIDTH. */
+
+    /**
+     * The Constant WINDOW_WIDTH.
+     */
     private static final int WINDOW_WIDTH = 600;
-    
-    /** The Constant WINDOW_HEIGHT. */
+
+    /**
+     * The Constant WINDOW_HEIGHT.
+     */
     private static final int WINDOW_HEIGHT = 400;
 
 
-    /** The Constant CANVAS_WIDTH. */
+    /**
+     * The Constant CANVAS_WIDTH.
+     */
     private static final int CANVAS_WIDTH = 400;
-    
-    /** The Constant CANVAS_HEIGHT. */
+
+    /**
+     * The Constant CANVAS_HEIGHT.
+     */
     private static final int CANVAS_HEIGHT = 400;
-	
+
     public static final String BUTTON_STYLE = "fx-background-color: \n" +
             "        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),\n" +
             "        #9d4024,\n" +
@@ -93,30 +101,38 @@ public class GameManager extends Application {
             "        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),\n" +
             "        #9d4024,\n" +
             "        #d86e3a,\n" +
-            "        radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c); " + 
+            "        radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c); " +
             "-fx-color: black; " +
             "-fx-font-family: Impact; " +
             "-fx-font-size: 20;" +
             "-fx-font-weight: bold;" +
             "-fx-opacity: 0.5";
-			
-	/** The Constant SHAPE_SIZE. */
+
+    /**
+     * The Constant SHAPE_SIZE.
+     */
     private static final int SHAPE_SIZE = 30;
 
-    /** The main menu. */
+    /**
+     * The main menu.
+     */
     public static Stage mainMenu;
-    
+
     public static Stage choosePlayerMenu;
-   
+
     public static Stage newPlayerMenu;
-    
+
     public static Stage deletePlayerMenu;
     public static Stage chooseLevelMenu;
-    
-    /** The current player. */
+
+    /**
+     * The current player.
+     */
     public Player currentPlayer;
 
-    /** The canvas. */
+    /**
+     * The canvas.
+     */
     private Canvas canvas;
 
     /**
@@ -125,18 +141,18 @@ public class GameManager extends Application {
      * @param primaryStage the primary stage
      */
     public void start(Stage primaryStage) {
-    	// Build the GUI
+        // Build the GUI
         Pane root = buildMainMenu();
         root.setStyle("-fx-background-color: transparent;");
         // Create a scene from the GUI
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-        scene.setFill(new ImagePattern(new Image("file:res/PIXEL_ART.jpg",  WINDOW_WIDTH, WINDOW_HEIGHT, false, false)));
+        scene.setFill(new ImagePattern(new Image("file:res/PIXEL_ART.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, false, false)));
         primaryStage.setTitle("Futuro");
 
 
         AudioPlayer.playMainMenu();
-        
+
         // Display the scene on the stage
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
@@ -148,30 +164,30 @@ public class GameManager extends Application {
      * The main method.
      *
      * @param args the arguments
-     * @throws Exception 
+     * @throws Exception
      */
 
     public static void main(String[] args) throws Exception {
         System.out.println(javafx.scene.text.Font.getFamilies());
         launch(args);
     }
-	
+
     /**
      * Create the GUI for main menu.
      *
      * @return the pane
      */
     private Pane buildMainMenu() {
-    	
-    	BorderPane root = new BorderPane();
+
+        BorderPane root = new BorderPane();
         Player player;
         // Create canvas
         canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         root.setCenter(canvas);
-        
+
         // Create the main buttons for navigating the main menu
         Button startGame = new Button("START GAME");
-        Button choosePlayer = new Button("CHOOSE PLAYER");        
+        Button choosePlayer = new Button("CHOOSE PLAYER");
         Button newPlayer = new Button("CREATE PLAYER");
         Button deletePlayer = new Button("DELETE PLAYER");
         Button exitMainMenu = new Button("EXIT GAME");
@@ -186,21 +202,21 @@ public class GameManager extends Application {
         sidebar.setSpacing(10);
         sidebar.setAlignment(Pos.CENTER);
         sidebar.setPadding(new Insets(10, 10, 10, 10));
-        
+
         // Add the elements on the canvas onto the sidebar
         root.setCenter(sidebar);
         sidebar.getChildren().addAll(startGame, choosePlayer, newPlayer, deletePlayer, exitMainMenu);
 
-        startGame.setOnMouseEntered(e ->{
+        startGame.setOnMouseEntered(e -> {
             startGame.setStyle(HOVERED_BUTTON_STYLE);
         });
 
-        startGame.setOnMouseExited(e ->{
+        startGame.setOnMouseExited(e -> {
             startGame.setStyle(BUTTON_STYLE);
         });
 
         startGame.setOnAction(e -> {
-            if(this.currentPlayer != null) {
+            if (this.currentPlayer != null) {
                 Pane chooseLevelPane = buildChooseLevel();
                 Scene chooseLevelScene = new Scene(chooseLevelPane, 300, 400);
                 Stage chooseLevelStage = new Stage();
@@ -212,28 +228,18 @@ public class GameManager extends Application {
             } else {
                 showAlert("INFORMATION", "No player has been selected", "Please select a player before starting the game");
             }
-
-//            Game game = new Game(level);
-//            mainMenu.close();
-//
-//            try {
-//            	AudioPlayer.stopAllMusic();
-//                game.showGame();
-//            } catch (Exception exception) {
-//                exception.printStackTrace();
-//            }
         });
 
-        deletePlayer.setOnMouseEntered(e ->{
+        deletePlayer.setOnMouseEntered(e -> {
             deletePlayer.setStyle(HOVERED_BUTTON_STYLE);
         });
 
-        deletePlayer.setOnMouseExited(e ->{
+        deletePlayer.setOnMouseExited(e -> {
             deletePlayer.setStyle(BUTTON_STYLE);
         });
 
         deletePlayer.setOnAction(e -> {
-        	Pane deletePlayerPane = buildDeletePlayer();
+            Pane deletePlayerPane = buildDeletePlayer();
             Scene deletePlayerScene = new Scene(deletePlayerPane, 300, 200);
             Stage deletePlayerStage = new Stage();
             deletePlayerStage.setScene(deletePlayerScene);
@@ -241,17 +247,16 @@ public class GameManager extends Application {
             deletePlayerStage.show();
         });
 
-        newPlayer.setOnMouseEntered(e ->{
+        newPlayer.setOnMouseEntered(e -> {
             newPlayer.setStyle(HOVERED_BUTTON_STYLE);
         });
 
-        newPlayer.setOnMouseExited(e ->{
+        newPlayer.setOnMouseExited(e -> {
             newPlayer.setStyle(BUTTON_STYLE);
         });
 
-        // Create a new profile to play the game as
         newPlayer.setOnAction(e -> {
-        	Pane newPlayerPane = buildNewPlayer();
+            Pane newPlayerPane = buildNewPlayer();
             Scene newPlayerScene = new Scene(newPlayerPane, 300, 200);
             Stage newPlayerStage = new Stage();
             newPlayerStage.setScene(newPlayerScene);
@@ -259,29 +264,29 @@ public class GameManager extends Application {
             newPlayerStage.show();
         });
 
-        exitMainMenu.setOnMouseEntered(e ->{
+        exitMainMenu.setOnMouseEntered(e -> {
             exitMainMenu.setStyle(HOVERED_BUTTON_STYLE);
         });
 
-        exitMainMenu.setOnMouseExited(e ->{
+        exitMainMenu.setOnMouseExited(e -> {
             exitMainMenu.setStyle(BUTTON_STYLE);
         });
 
-        // Close the main menu
+
         exitMainMenu.setOnAction(e -> {
             GameManager.mainMenu.hide();
         });
 
-        choosePlayer.setOnMouseEntered(e ->{
+        choosePlayer.setOnMouseEntered(e -> {
             choosePlayer.setStyle(HOVERED_BUTTON_STYLE);
         });
 
-        choosePlayer.setOnMouseExited(e ->{
+        choosePlayer.setOnMouseExited(e -> {
             choosePlayer.setStyle(BUTTON_STYLE);
         });
 
         choosePlayer.setOnAction(e -> {
-        	Pane choosePlayerPane = buildChoosePlayer();
+            Pane choosePlayerPane = buildChoosePlayer();
             Scene choosePlayerScene = new Scene(choosePlayerPane, 300, 200);
             Stage choosePlayerStage = new Stage();
             choosePlayerStage.setScene(choosePlayerScene);
@@ -289,22 +294,22 @@ public class GameManager extends Application {
             this.choosePlayerMenu = choosePlayerStage;
             this.choosePlayerMenu.show();
         });
-        
+
         return root;
     }
-    
+
     private Pane buildNewPlayer() {
-    	BorderPane root = new BorderPane();
-    	VBox sidebar = new VBox();
+        BorderPane root = new BorderPane();
+        VBox sidebar = new VBox();
         sidebar.setSpacing(10);
         sidebar.setPadding(new Insets(10, 10, 10, 10));
-		
+
         root.setStyle("-fx-background-color: Gray");
 
         Label playerID = new Label("ID of player: ");
-        TextField playerIDInput = new TextField ();
+        TextField playerIDInput = new TextField();
         Label playerName = new Label("Name of player: ");
-        TextField playerNameInput = new TextField ();
+        TextField playerNameInput = new TextField();
         Button newPlayerButton = new Button("CREATE PLAYER");
 
         newPlayerButton.setStyle(BUTTON_STYLE);
@@ -312,210 +317,206 @@ public class GameManager extends Application {
         root.setLeft(sidebar);
         sidebar.getChildren().addAll(playerID, playerIDInput, playerName, playerNameInput, newPlayerButton);
 
-        newPlayerButton.setOnMouseEntered(e ->{
+        newPlayerButton.setOnMouseEntered(e -> {
             newPlayerButton.setStyle(HOVERED_BUTTON_STYLE);
         });
-        newPlayerButton.setOnMouseExited(e ->{
+        newPlayerButton.setOnMouseExited(e -> {
             newPlayerButton.setStyle(BUTTON_STYLE);
         });
 
-        newPlayerButton.setOnAction(e -> { 
-    	try {
-        	boolean created = (FileManager.writeToPlayerFile(new Player(playerIDInput.getText() + "," + playerNameInput.getText())));
-        	Alert alert  = new Alert(AlertType.CONFIRMATION);
-        	if(created) {
-	        	alert.setTitle("SUCCESS");
-	        	alert.setHeaderText("Player created");
-	        	alert.setContentText("Huzzah! You have created a Player.");
-	            alert.showAndWait().ifPresent(rs -> {
-	                if (rs == ButtonType.OK) {
-	                    System.out.println("Pressed OK.");
-	                }
-	            });
-        	}
-        	else {
-        		alert.setTitle("FAILURE");
-        		alert.setHeaderText("Player not created");
-        		alert.setContentText("A player with that ID already exists");
-        		alert.showAndWait().ifPresent(rs -> {
-	                if (rs == ButtonType.OK) {
-	                    System.out.println("Pressed OK.");
-	                }
-	            });
-        	}
-		} catch (Exception exception) {
-            exception.printStackTrace();
-        }
-        	
-        	
+        newPlayerButton.setOnAction(e -> {
+            try {
+                boolean created = (FileManager.writeToPlayerFile(new Player(playerIDInput.getText() + "," + playerNameInput.getText())));
+                Alert alert = new Alert(AlertType.CONFIRMATION);
+                if (created) {
+                    alert.setTitle("SUCCESS");
+                    alert.setHeaderText("Player created");
+                    alert.setContentText("Huzzah! You have created a Player.");
+                    alert.showAndWait().ifPresent(rs -> {
+                        if (rs == ButtonType.OK) {
+                            System.out.println("Pressed OK.");
+                        }
+                    });
+                } else {
+                    alert.setTitle("FAILURE");
+                    alert.setHeaderText("Player not created");
+                    alert.setContentText("A player with that ID already exists");
+                    alert.showAndWait().ifPresent(rs -> {
+                        if (rs == ButtonType.OK) {
+                            System.out.println("Pressed OK.");
+                        }
+                    });
+                }
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+
+
         });
-    	return root;
+        return root;
     }
-   
+
     /**
      * Builds the delete player UI.
      *
      * @return the pane
      */
     private Pane buildDeletePlayer() {
-    	BorderPane root = new BorderPane();
+        BorderPane root = new BorderPane();
         root.setStyle("-fx-background-color: Gray");
-    	VBox sidebar = new VBox();
+        VBox sidebar = new VBox();
         sidebar.setSpacing(10);
         sidebar.setPadding(new Insets(10, 10, 10, 10));
-        
-        
+
+
         Label playerID = new Label("ID of player: ");
-        TextField playerIDInput = new TextField ();
+        TextField playerIDInput = new TextField();
         Button deletePlayerButton = new Button("Delete player");
         playerID.setStyle("-fx-font-family: Impact;" + "-fx-font-size: 20");
-        
+
         root.setCenter(sidebar);
         sidebar.getChildren().addAll(playerID, playerIDInput, deletePlayerButton);
         deletePlayerButton.setStyle(BUTTON_STYLE);
 
-        deletePlayerButton.setOnMouseEntered(e ->{
+        deletePlayerButton.setOnMouseEntered(e -> {
             deletePlayerButton.setStyle(HOVERED_BUTTON_STYLE);
         });
-        deletePlayerButton.setOnMouseExited(e ->{
+        deletePlayerButton.setOnMouseExited(e -> {
             deletePlayerButton.setStyle(BUTTON_STYLE);
         });
         deletePlayerButton.setOnAction(e -> {
-        	try {
-            	boolean deleted = (FileManager.deleteFromPlayerFile(new Player(Integer.valueOf(playerIDInput.getText()), "ass", 0)));
-            	Alert alert  = new Alert(AlertType.CONFIRMATION);
-            	if(deleted) {
-            		alert.setTitle("SUCCESS");
-    	        	alert.setContentText("Huzzah! You have deleted a Player.");
-    	            alert.showAndWait().ifPresent(rs -> {
-    	                if (rs == ButtonType.OK) {
-    	                    System.out.println("Pressed OK.");
-    	                    this.deletePlayerMenu.hide();
-    	                }
-    	            });
-            	}
-            	else {
-            		alert.setTitle("FAILURE");
-            		alert.setHeaderText("Player not deleted");
-            		alert.setContentText("A player with that ID can't be found");
-            		alert.showAndWait().ifPresent(rs -> {
-    	                if (rs == ButtonType.OK) {
-    	                    System.out.println("Pressed OK.");
-    	                }
-    	            });
-            	}
-        	} catch (Exception exception) {
+            try {
+                boolean deleted = (FileManager.deleteFromPlayerFile(new Player(Integer.valueOf(playerIDInput.getText()), "ass", 0)));
+                Alert alert = new Alert(AlertType.CONFIRMATION);
+                if (deleted) {
+                    alert.setTitle("SUCCESS");
+                    alert.setContentText("Huzzah! You have deleted a Player.");
+                    alert.showAndWait().ifPresent(rs -> {
+                        if (rs == ButtonType.OK) {
+                            System.out.println("Pressed OK.");
+                            this.deletePlayerMenu.hide();
+                        }
+                    });
+                } else {
+                    alert.setTitle("FAILURE");
+                    alert.setHeaderText("Player not deleted");
+                    alert.setContentText("A player with that ID can't be found");
+                    alert.showAndWait().ifPresent(rs -> {
+                        if (rs == ButtonType.OK) {
+                            System.out.println("Pressed OK.");
+                        }
+                    });
+                }
+            } catch (Exception exception) {
                 exception.printStackTrace();
             }
         });
-    	return root;
+        return root;
     }
 
+    private Pane loadNewGame() {
+        BorderPane root = new BorderPane();
+        VBox sidebar = new VBox();
+        sidebar.setSpacing(10);
+        sidebar.setPadding(new Insets(10, 10, 10, 10));
 
-     //SetOnAction needs to load a file (open file manager? input level id like choose player does?)
-     private Pane loadNewGame() {
-         BorderPane root = new BorderPane();
-         VBox sidebar = new VBox();
-         sidebar.setSpacing(10);
-         sidebar.setPadding(new Insets(10, 10, 10, 10));
+        FileChooser selectLoadFile = new FileChooser();
+        selectLoadFile.setTitle("Select game file");
 
-         FileChooser selectLoadFile = new FileChooser();
-         selectLoadFile.setTitle("Select game file");
+        Button loadButton = new Button("Select game file");
 
-         Button loadButton = new Button("Select game file");
+        root.setLeft(sidebar);
+        sidebar.getChildren().add(loadButton);
+        loadButton.setOnAction(e -> {
+            File selectedFile = selectLoadFile.showOpenDialog(mainMenu);
+            String selectedFilePath = selectedFile.getAbsolutePath();
+            Level level = null;
+            try {
+                level = FileManager.readLevel(selectedFilePath);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            Game game = new Game(this.currentPlayer, level);
 
-         root.setLeft(sidebar);
-         sidebar.getChildren().add(loadButton);
-         loadButton.setOnAction(e -> {
-             File selectedFile = selectLoadFile.showOpenDialog(mainMenu);
-             String selectedFilePath = selectedFile.getAbsolutePath();
-             Level level = null;
-             try {
-                 level = FileManager.readLevel(selectedFilePath);
-             } catch (Exception exception) {
-                 exception.printStackTrace();
-             }
-             Game game = new Game(this.currentPlayer, level);
+            mainMenu.close();
+            try {
+                game.showGame();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+        return root;
+    }
 
-             mainMenu.close();
-             try {
-                 game.showGame();
-             } catch (Exception ex) {
-                 ex.printStackTrace();
-             }
-         });
-         return root;
-     }
-
-	/**
+    /**
      * Builds the choose level UI.
      *
      * @return the pane
      */
     private Pane buildChooseLevel() {
         HashMap<Button, String> buttonsToLevelFiles = new HashMap<>();
-    	Button levelOne = new Button("Level One");
+        Button levelOne = new Button("Level One");
         levelOne.setStyle(BUTTON_STYLE);
-    	buttonsToLevelFiles.put(levelOne, Globals.LEVEL1);
-     	Button levelTwo = new Button("Level Two");
+        buttonsToLevelFiles.put(levelOne, Globals.LEVEL1);
+        Button levelTwo = new Button("Level Two");
         levelTwo.setStyle(BUTTON_STYLE);
         buttonsToLevelFiles.put(levelTwo, Globals.LEVEL2);
-     	Button levelThree = new Button("Level Three");
+        Button levelThree = new Button("Level Three");
         levelThree.setStyle(BUTTON_STYLE);
         buttonsToLevelFiles.put(levelThree, Globals.LEVEL3);
-     	Button levelFour = new Button("Level Four");
+        Button levelFour = new Button("Level Four");
         levelFour.setStyle(BUTTON_STYLE);
         buttonsToLevelFiles.put(levelFour, Globals.LEVEL4);
-     	Button levelFive  = new Button("Level Five");
+        Button levelFive = new Button("Level Five");
         levelFive.setStyle(BUTTON_STYLE);
         buttonsToLevelFiles.put(levelFive, Globals.LEVEL5);
-     	
-    	BorderPane root = new BorderPane();
+
+        BorderPane root = new BorderPane();
         root.setStyle("-fx-background-color: Gray");
-    	VBox sidebar = new VBox();
+        VBox sidebar = new VBox();
         sidebar.setSpacing(10);
         sidebar.setPadding(new Insets(10, 10, 10, 10));
         sidebar.setAlignment(Pos.CENTER);
         root.setCenter(sidebar);
         sidebar.getChildren().addAll(levelOne, levelTwo, levelThree, levelFour, levelFive);
-        levelOne.setOnMouseEntered(e ->{
+        levelOne.setOnMouseEntered(e -> {
             levelOne.setStyle(HOVERED_BUTTON_STYLE);
         });
-        levelOne.setOnMouseExited(e ->{
+        levelOne.setOnMouseExited(e -> {
             levelOne.setStyle(BUTTON_STYLE);
         });
-        levelTwo.setOnMouseExited(e ->{
+        levelTwo.setOnMouseExited(e -> {
             levelTwo.setStyle(BUTTON_STYLE);
         });
-        levelTwo.setOnMouseEntered(e ->{
+        levelTwo.setOnMouseEntered(e -> {
             levelTwo.setStyle(HOVERED_BUTTON_STYLE);
         });
-        levelThree.setOnMouseExited(e ->{
+        levelThree.setOnMouseExited(e -> {
             levelThree.setStyle(BUTTON_STYLE);
         });
-        levelThree.setOnMouseEntered(e ->{
+        levelThree.setOnMouseEntered(e -> {
             levelThree.setStyle(HOVERED_BUTTON_STYLE);
         });
-        levelFour.setOnMouseExited(e ->{
+        levelFour.setOnMouseExited(e -> {
             levelFour.setStyle(BUTTON_STYLE);
         });
-        levelFour.setOnMouseEntered(e ->{
+        levelFour.setOnMouseEntered(e -> {
             levelFour.setStyle(HOVERED_BUTTON_STYLE);
         });
-        levelFive.setOnMouseEntered(e ->{
+        levelFive.setOnMouseEntered(e -> {
             levelFive.setStyle(HOVERED_BUTTON_STYLE);
         });
-        levelFive.setOnMouseExited(e ->{
+        levelFive.setOnMouseExited(e -> {
             levelFive.setStyle(BUTTON_STYLE);
         });
         Game game = new Game();
 
-        for(Button btn : buttonsToLevelFiles.keySet()) {
+        for (Button btn : buttonsToLevelFiles.keySet()) {
             btn.setOnAction(e -> {
                 try {
                     game.setLevel(FileManager.readLevel(buttonsToLevelFiles.get(btn)));
                     game.setCurrentPlayer(this.currentPlayer);
-                    if(this.currentPlayer.getMaxLevelID() < game.getLevel().getLevelID()) {
+                    if (this.currentPlayer.getMaxLevelID() < game.getLevel().getLevelID()) {
                         showAlert("Information", "Level too high", "You can't play that level yet");
                     } else {
                         mainMenu.close();
@@ -530,91 +531,6 @@ public class GameManager extends Application {
         }
         return root;
     }
-//        levelOne.setOnAction(e -> {
-//        Level level = null;
-//		try {
-//			level = FileManager.readLevel("res\\Levels\\LEVEL_1.txt");
-//        } catch (Exception exception) {
-//			exception.printStackTrace();
-//        }
-//        Game game = new Game(level);
-//        mainMenu.close();
-//        try {
-//        	AudioPlayer.stopAllMusic();
-//            game.showGame();
-//            chooseLevelMenu.close();
-//        } catch (Exception exception) {
-//            exception.printStackTrace();
-//        	}
-//        });
-//        levelTwo.setOnAction(e -> {
-//            Level level = null;
-//            	try {
-//            		level = FileManager.readLevel("res\\Levels\\LEVEL_2.txt");
-//            } catch (Exception exception) {
-//                    exception.printStackTrace();
-//            }
-//            Game game = new Game(level);
-//            mainMenu.close();
-//            chooseLevelMenu.close();
-//            try {
-//            	AudioPlayer.stopAllMusic();
-//                game.showGame();
-//            } catch (Exception exception) {
-//                exception.printStackTrace();
-//            }
-//        });
-//        levelThree.setOnAction(e -> {
-//            Level level = null;
-//			try {
-//				level = FileManager.readLevel("res\\Levels\\LEVEL_3.txt");
-//			} catch (Exception exception) {
-//				exception.printStackTrace();
-//			}
-//            Game game = new Game(level);
-//            mainMenu.close();
-//            chooseLevelMenu.close();
-//            try {
-//            	AudioPlayer.stopAllMusic();
-//                game.showGame();
-//            } catch (Exception exception) {
-//                exception.printStackTrace();
-//        	}
-//        });
-//        levelFour.setOnAction(e -> {
-//            Level level = null;
-//            	try {
-//            		level = FileManager.readLevel("res\\Levels\\LEVEL_4.txt");
-//            } catch (Exception exception) {
-//                    exception.printStackTrace();
-//            }
-//            Game game = new Game(level);
-//            mainMenu.close();
-//            chooseLevelMenu.close();
-//            try {
-//            	AudioPlayer.stopAllMusic();
-//                game.showGame();
-//            } catch (Exception exception) {
-//                exception.printStackTrace();
-//            }
-//        });
-//        levelFive.setOnAction(e -> {
-//            Level level = null;
-//            	try {
-//            		level = FileManager.readLevel("res\\Levels\\LEVEL_5.txt");
-//            } catch (Exception exception) {
-//                    exception.printStackTrace();
-//            }
-//            Game game = new Game(level);
-//            mainMenu.close();
-//            chooseLevelMenu.close();
-//            try {
-//            	AudioPlayer.stopAllMusic();
-//                game.showGame();
-//            } catch (Exception exception) {
-//                exception.printStackTrace();
-//            }
-//        });
 
     /**
      * Builds the choose player UI.
@@ -622,31 +538,31 @@ public class GameManager extends Application {
      * @return the pane
      */
     private Pane buildChoosePlayer() {
-    	BorderPane root = new BorderPane();
-    	VBox sidebar = new VBox();
+        BorderPane root = new BorderPane();
+        VBox sidebar = new VBox();
         sidebar.setSpacing(10);
         sidebar.setAlignment(Pos.CENTER);
         sidebar.setPadding(new Insets(10, 10, 10, 10));
         Label playerID = new Label("ID of player: ");
         playerID.setStyle("-fx-font-family: Impact;" + "-fx-font-size: 20");
-        TextField playerIDInput = new TextField ();
+        TextField playerIDInput = new TextField();
         Button choosePlayerButton = new Button("Choose player");
         choosePlayerButton.setStyle(BUTTON_STYLE);
         root.setCenter(sidebar);
         root.setStyle("-fx-background-color: Gray");
         sidebar.getChildren().addAll(playerID, playerIDInput, choosePlayerButton);
-        choosePlayerButton.setOnMouseEntered(e ->{
+        choosePlayerButton.setOnMouseEntered(e -> {
             choosePlayerButton.setStyle(HOVERED_BUTTON_STYLE);
         });
 
-        choosePlayerButton.setOnMouseExited(e ->{
+        choosePlayerButton.setOnMouseExited(e -> {
             choosePlayerButton.setStyle(BUTTON_STYLE);
         });
         choosePlayerButton.setOnAction(e -> {
-            if(playerIDInput.getText() != null) {
+            if (playerIDInput.getText() != null) {
                 this.currentPlayer = FileManager.getPlayer(Integer.valueOf(playerIDInput.getText()));
                 String playerIDGiven = String.valueOf(currentPlayer.getPlayerID());
-                if(this.currentPlayer != null) {
+                if (this.currentPlayer != null) {
                     showAlert("INFORMATION", "Player found", "Player ID: " + playerIDGiven);
                     GameManager.choosePlayerMenu.close();
                 } else {
@@ -656,8 +572,8 @@ public class GameManager extends Application {
                 showAlert("INFORMATION", "Invalid player ID given", "Please try again.");
             }
         });
-        
-    	return root;
+
+        return root;
     }
 
     private void showAlert(String title, String header, String content) {
@@ -671,6 +587,4 @@ public class GameManager extends Application {
             }
         });
     }
-
-
 }

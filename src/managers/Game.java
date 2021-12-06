@@ -40,6 +40,8 @@ import javafx.util.Duration;
  * Game.java
  * 
  * @author Debbie, Illia, Sam B
+ * @version 3
+ * last mod date: 4/12/2021
  */
 public class Game {
 
@@ -145,76 +147,10 @@ public class Game {
 		this.currentPlayer = currentPlayer;
 	}
 
-	// private void updateMechs() throws Exception {
-	// int points;
-	// for(Mech m : this.level.getMechs()) {
-	// if(this.level.getGrid().getTileAt(m.getGridX(),
-	// m.getGridY()).getCurrentItem() != null) {
-	// this.level.getGrid().getTileAt(m.getGridX(),
-	// m.getGridY()).getCurrentItem().act(m);
-	// }
-	// if(m.getHealth() <= 0) {
-	// points = this.level.getCurrentScore() + (m.isPregnant() ? (SCORE_PER_KILL *
-	// (Mech.NUM_OF_BABIES_IF_BIRTHING + 1)) : SCORE_PER_KILL);
-	// this.level.setCurrentScore(points);
-	// // concurrent modification exception happening here probably.
-	// this.level.removeMech(m);
-	// System.err.println("A MECH HAS DIED");
-	// } else {
-	// for(Mech mechIShareMyTileWith : this.level.getGrid().getTileAt(m.getGridX(),
-	// m.getGridY()).getMechs()) {
-	// if(!(mechIShareMyTileWith.isPregnant() || mechIShareMyTileWith.getType() ==
-	// m.getType() || mechIShareMyTileWith.isSterile() || m.isBreeding() ||
-	// mechIShareMyTileWith.isBreeding())) {
-	// if (mechIShareMyTileWith.getType() == MechType.PRODUCTION) {
-	// // need to add the isBreeding and other validation before doing this
-	// for(int i = 0; i < 5; i++) {
-	// this.level.addMech(m.birthMech());
-	// }
-	// }
-	// }
-	// }
-	// // this is being accessed when it's being removed or something
-	// m.move(this.level.getGrid());
-	// }
-	// }
-	// }
 
-	// private void update() throws Exception {
-	// // this for loop should probs just go into an init method
-	// for(Item i : this.level.getItems()) {
-	// this.level.getGrid().getTileAt(i.getGridX(), i.getGridY()).setCurrentItem(i);
-	// }
-	// this.updateMechs();
-	// }
-
-	// private void updateScore(int currentScore) {
-	// /*
-	// * while game is running so every tick, get mechs health, if mechs health is 0
-	// * add 10 points to current score and set that value as the currentscore of
-	// the
-	// * level assuming all mechs start with full health...
-	// */
-	// // if this.level.getNumberofmechsleftingame <= this.level.getlosingmechs then
-	// // game finished so
-	// // don't do for loop i guess else...
-	// for (Mech m : this.level.getMechs()) {
-	// if (m.getHealth() == 0 && m.getType() == MechType.PRODUCTION &&
-	// m.isPregnant()) { // assuming they have 5
-	// // babies idk how we're
-	// // checking that - David
-	// currentScore = currentScore + 10 * (m.getNumOfBabies() + 1); // score is 10
-	// times number of babies plus
-	// // the female mech
-	// } else if (m.getHealth() == 0) {
-	// currentScore = currentScore + 10;
-	// }
-	// }
-	// this.level.setCurrentScore(currentScore);
 	/**
 	 * Tick.
 	 */
-	// }
 	private void tick() {
 		try {
 			this.level.update();
@@ -311,12 +247,12 @@ public class Game {
 				+ "-fx-font-size: 20");
 		Button score = this.level.getButton();
 		
-		// Stop button is disabled by default
+
 		stopTickTimelineButton.setDisable(true);
 
-		// Setup the behaviour of the buttons.
+
 		startTickTimelineButton.setOnAction(e -> {
-			// Start the tick timeline and enable/disable buttons as appropriate.
+
 			startTickTimelineButton.setDisable(true);
 			tickTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> tick()));
 			tickTimeline.setCycleCount(Animation.INDEFINITE);
@@ -329,7 +265,7 @@ public class Game {
 		});
 
 		stopTickTimelineButton.setOnAction(e -> {
-			// Stop the tick timeline and enable/disable buttons as appropriate.
+
 			stopTickTimelineButton.setDisable(true);
 			this.tickTimeline.pause();
 			startTickTimelineButton.setDisable(false);
@@ -349,7 +285,6 @@ public class Game {
 		motdbar.getChildren().addAll(messageOfDayLabel);
 		topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton,saveLevelButton, exitGameButton);
 
-		// This code setup what happens when the dragging starts on the image.
 		for (var i : this.level.getInventory().getItems().entrySet()) {
 			InventoryItem iconItem = i.getValue();
 			iconItem.setImage(iconItem.getSprite());
@@ -373,7 +308,7 @@ public class Game {
 
 		canvas.setOnDragDropped(new EventHandler<DragEvent>() {
 			public void handle(DragEvent event) {
-				// We call this method which is where the bulk of the behaviour takes place.
+
 				Dragboard db = event.getDragboard();
 
 				canvasDragDroppedOccured(event);
@@ -381,18 +316,16 @@ public class Game {
 				level.getInventory().getLabel(db.getString())
 						.setText(Integer.toString(level.getInventory().getItemUses(db.getString())));
 
-				// Consume the event. This means we mark it as dealt with.
+
 				event.consume();
 			}
 		});
 
 		canvas.setOnDragOver(new EventHandler<DragEvent>() {
 			public void handle(DragEvent event) {
-				// Mark the drag as acceptable if the source was the draggable image.
-				// (for example, we don't want to allow the user to drag things or files into
-				// our application)
+
 				event.acceptTransferModes(TransferMode.ANY);
-				// Consume the event. This means we mark it as dealt with.
+
 				event.consume();
 			}
 		});
@@ -424,13 +357,11 @@ public class Game {
 			} else {
 				this.level.addItem(i);
 			}
-			// Draw an icon at the dropped location.
+
 			GraphicsContext gc = canvas.getGraphicsContext2D();
-			// Draw the the image so the top-left corner is where we dropped.
+
 			gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
-			// Draw the the image so the center is where we dropped.
-			// gc.drawImage(iconImage, x - iconImage.getWidth() / 2.0, y -
-			// iconImage.getHeight() / 2.0);
+
 		} else {
 			System.out.println("This error should not exist (Game.java)");
 		}

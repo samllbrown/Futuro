@@ -14,10 +14,16 @@ import javafx.scene.media.MediaPlayer;
  * Last Mod Date: 27/11/2021
  */
 public class AudioPlayer {
-	
-	/** The current music list. */
+
+
+    /**
+     * creates an array list for current music
+     */
 	public static ArrayList<MediaPlayer> currentMusicList = new ArrayList<MediaPlayer>();
 
+    /**
+     * instantiates the breed sound
+     */
     public static void playBreedSound() {
         String bip = getCurrentWorkingDirectory() + "\\src\\music\\breed.mp3";
         System.out.println(bip);
@@ -26,7 +32,10 @@ public class AudioPlayer {
         mediaPlayer.play();
         currentMusicList.add(mediaPlayer);
     }
-    
+
+    /**
+     * instantiates the ingame music
+     */
     public static void playInGameMusic() {
         String bip = getCurrentWorkingDirectory() + "\\src\\music\\ingamemusic.mp3";
         System.out.println(bip);

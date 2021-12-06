@@ -9,8 +9,22 @@ import gameObject.MechType;
 
 import java.util.ArrayList;
 
+/**
+ * MechManager.java
+ *
+ * @author Sam R, Illia
+ * @version 2
+ * Last mod Date 29/11/2021
+ */
 public class MechManager {
 
+    /**
+     * checks mechs for damage
+     *
+     * @param mechs array list of mechs to be checked
+     * @param grid the game grid
+     * @throws Exception
+     */
     public static void checkMechsForDamageFromItems(ArrayList<Mech> mechs, Grid grid) throws Exception {
         ArrayList<Mech> normalMechs = new ArrayList<>();
         for(Mech m : mechs) {
@@ -28,6 +42,14 @@ public class MechManager {
             }
         }
     }
+
+    /**
+     * checks mech to see if its dead
+     *
+     * @param mechs array list of mechs to be checked
+     * @param grid the game grid
+     * @throws Exception
+     */
     public static void checkMechsForDeath(ArrayList<Mech> mechs, Grid grid) throws Exception {
         ArrayList<DeathMech> deathMechs = new ArrayList<>();
 
@@ -46,7 +68,4 @@ public class MechManager {
             }
         }
     }
-
-
-    //lol
 }

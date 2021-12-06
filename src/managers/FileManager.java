@@ -18,10 +18,15 @@ import inventory.Inventory;
  */
 
 public class FileManager {
-	public static final File PLAYER_FILE = new File ( "res/Players/Players.txt");
-	public static final File LEADERBOARD_FILE = new File ("res/Leaderboard.txt");
+	public static final File PLAYER_FILE = new File("res/Players/Players.txt");
+	public static final File LEADERBOARD_FILE = new File("res/Leaderboard.txt");
 
-	// need to do leaderboard reading and writing or something
+
+	/**
+	 * reads leaderboard
+	 * @param levelId level ID to read
+	 * @return leaderboard
+	 */
 	public Leaderboard readLeaderBoard(int levelId) {
 		HashMap<Integer, Integer> leaderBoardHashMap = new HashMap<>();
 		BufferedReader br = null;
@@ -30,42 +35,53 @@ public class FileManager {
 			String levelFile = String.format("res/LeaderboardFiles/LEVEL_%dlb.txt", levelId);
 			br = new BufferedReader(new FileReader(new File(levelFile)));
 			String currentLine;
-			while((currentLine = br.readLine()) != null) {
+			while ((currentLine = br.readLine()) != null) {
 				int playerID = Integer.valueOf(currentLine.split(",")[0]);
 				int score = Integer.valueOf(currentLine.split(",")[1]);
 				leaderBoardHashMap.put(playerID, score);
 			}
-		} catch(IOException e) {
+		} catch (IOException e) {
 			System.err.println("There was an error reading this file");
 		} finally {
 			try {
 				br.close();
-			} catch(IOException e) {
+			} catch (IOException e) {
 				System.err.println("There was an error closing the BufferedReader whilst retrieving the leaderboard file");
 			}
 		}
 		return new Leaderboard(levelId, leaderBoardHashMap);
 	}
 
+	/**
+	 * writes a record to the file
+	 * @param record to write
+	 * @param file to write to
+	 */
 	private static void writeRecordToFile(String record, File file) {
 		BufferedWriter bw = null;
 		try {
 			bw = new BufferedWriter(new FileWriter(file, true));
 			bw.write(record + "\n");
-		} catch(IOException e) {
+		} catch (IOException e) {
 			System.err.println(String.format("Could not write record: %s to file: %s", record, file.getName()));
 		} finally {
-			if(bw != null ) {
+			if (bw != null) {
 				try {
 					bw.flush();
 					bw.close();
-				} catch(IOException e) {
+				} catch (IOException e) {
 					System.err.println("Error flushing and closing BufferedWriter");
 				}
 			}
 		}
 	}
 
+	/**
+	 * reads record with an id
+	 * @param id to look at
+	 * @param file to look at
+	 * @return the reocrd with the ID
+	 */
 	public static String getRecordWithID(int id, File file) {
 		BufferedReader br = null;
 		String returnLine = null;
@@ -74,19 +90,19 @@ public class FileManager {
 			br = new BufferedReader(new FileReader(file));
 			String currentLine;
 			String[] currentLineSplit;
-			while((currentLine = br.readLine()) != null && !found) {
+			while ((currentLine = br.readLine()) != null && !found) {
 				currentLineSplit = currentLine.split(",");
-				if(Integer.valueOf(currentLineSplit[0]) == id) {
+				if (Integer.valueOf(currentLineSplit[0]) == id) {
 					found = true;
 					returnLine = currentLine;
 				}
 			}
-		} catch(IOException e) {
+		} catch (IOException e) {
 			System.err.println("");
 		} finally {
 			try {
 				br.close();
-			} catch(IOException e) {
+			} catch (IOException e) {
 				System.err.println("There was an error closing the BufferedReader whilst retrieving a record");
 			}
 		}
@@ -94,6 +110,11 @@ public class FileManager {
 		return returnLine;
 	}
 
+	/**
+	 * deletes record with ID
+	 * @param id id to look at
+	 * @param file file to look at
+	 */
 	public static void deleteRecordWithID(int id, File file) {
 		BufferedReader br = null;
 		BufferedWriter wr = null;
@@ -102,13 +123,13 @@ public class FileManager {
 			br = new BufferedReader(new FileReader(file));
 			wr = new BufferedWriter(new FileWriter(newFile));
 			String currentLine;
-			while((currentLine = br.readLine()) != null) {
+			while ((currentLine = br.readLine()) != null) {
 				int currentID = Integer.valueOf(currentLine.split(",")[0]);
-				if(!(id == currentID)) {
+				if (!(id == currentID)) {
 					wr.write(currentLine + "\n");
 				}
 			}
-		} catch(IOException e) {
+		} catch (IOException e) {
 			System.err.println(String.format("Error deleting record with id: %d in file: %s", id, file.getName()));
 			System.err.println(e.toString());
 		} finally {
@@ -116,37 +137,24 @@ public class FileManager {
 				br.close();
 				wr.flush();
 				wr.close();
-				if(file.delete()) {
+				if (file.delete()) {
 					newFile.renameTo(file);
 				} else {
 					throw new IOException("Could not delete original file");
 				}
 
-			} catch(IOException e) {
+			} catch (IOException e) {
 				System.err.println("Error flushing and closing readers and/or writers whilst deleting record");
 			}
-		  }
-		
+		}
+
 	}
 
-	// no need!
-//	private static boolean recordRepeatedInFile(int record, File file) {
-//		Scanner sc = null;
-//		boolean recorded = false;
-//		try {
-//			 sc = new Scanner(PLAYER_FILE);
-//			 while (sc.hasNextLine() && recorded == false) {
-//				 String[] line = (sc.nextLine()).split(",");
-//				 recorded = (Integer.valueOf(line[0]) == record);
-//			 }
-//
-//		   	 sc.close();
-//		} catch(IOException e) {
-//			System.err.println(String.format("Could not write record: %s to file: %s", record, file.getName()));
-//		}
-//		return recorded;
-//	}
-	// could do something liek this instead? idk, you decide but lmk what you think
+	/**
+	 * gets all ids from file
+	 * @param file file to be looked at
+	 * @return all ids
+	 */
 	public static HashSet<Integer> getAllIdsInFile(File file) {
 		HashSet<Integer> ids = new HashSet<>();
 		BufferedReader br = null;
@@ -154,87 +162,92 @@ public class FileManager {
 			br = new BufferedReader(new FileReader(file));
 			String currentLine;
 			String[] currentLineSplit;
-			while((currentLine = br.readLine()) != null) {
+			while ((currentLine = br.readLine()) != null) {
 				currentLineSplit = currentLine.split(",");
 				ids.add(Integer.valueOf(currentLineSplit[0]));
 			}
-		} catch(IOException e) {
+		} catch (IOException e) {
 			System.err.println("");
 		} finally {
 			try {
 				br.close();
-			} catch(IOException e) {
+			} catch (IOException e) {
 				System.err.println("There was an error closing the BufferedReader");
 			}
 		}
 		return ids;
 	}
 
+	/**
+	 * writes player to file
+	 * @param player player to be written
+	 * @return boolean
+	 */
 	// good idea
 	public static boolean writeToPlayerFile(Player player) {
 		boolean written = false;
 		HashSet<Integer> playerids = getAllIdsInFile(PLAYER_FILE);
-		if(!(playerids.contains(player.getPlayerID()))) {
+		if (!(playerids.contains(player.getPlayerID()))) {
 			writeRecordToFile(player.toString(), PLAYER_FILE);
 			written = true;
 		}
 		return written;
 	}
-	
+
+	/**
+	 * deletes player from file
+	 * @param player player to be deleted
+	 * @return boolean
+	 */
 	public static boolean deleteFromPlayerFile(Player player) {
 		boolean deleted = false;
 		HashSet<Integer> playerids = getAllIdsInFile(PLAYER_FILE);
 		System.out.println(playerids.contains(player.getPlayerID()));
-		if((playerids.contains(player.getPlayerID()))) {
+		if ((playerids.contains(player.getPlayerID()))) {
 			deleteRecordWithID(player.getPlayerID(), PLAYER_FILE);
 			deleted = true;
 		}
 		return deleted;
 	}
 
-	// probably needs validation
+
+	/**
+	 * gets all info of player
+	 * @param playerID id of player
+	 * @return players info
+	 */
 	public static String getPlayerInfo(int playerID) {
 		String playerInfo = getRecordWithID(playerID, PLAYER_FILE);
 		return playerInfo;
-		//return getRecordWithID(playerID, PLAYER_FILE);
+
 	}
 
+	/**
+	 * gets player
+	 * @param playerID id of player
+	 * @return player
+	 */
 	public static Player getPlayer(int playerID) {
 		String playerInfo = getPlayerInfo(playerID);
-		if(playerInfo == null) {
+		if (playerInfo == null) {
 			return null;
 		} else {
 			return new Player(playerInfo);
 		}
 	}
 
-//	public static void writeToLeaderboardFile(Player player, int playerScore, int rank) throws IOException {
-//		// put this into a method plz
-//		String record = player.getPlayerID() + "," + playerScore + "," + rank;
-//		writeRecordToFile(record, LEADERBOARD_FILE);
-//	}
-	
-//	/**
-//	 * Given a playerID checks if that player exists within the player file, if so then returns that player
-//	 * @param playerID
-//	 * @return
-//	 * @throws FileNotFoundException
-//	 */
-//	public static Player checkIfPlayerExists (int playerID) throws Exception {
-//		String playerRecord = getPlayerInfoFromFile(playerID, PLAYER_FILE);
-//		if(playerRecord == null) {
-//			throw new Exception("Could not find PlayerID: " + playerID);
-//		} else {
-//			return new Player(playerRecord);
-//		}
-//	}
 
-
+	/**
+	 * reads a level from a file
+	 * @param fileName name of file
+	 * @return the level in an object
+	 * @throws Exception
+	 */
 	public static Level readLevel(String fileName) throws Exception {
 		BufferedReader br = new BufferedReader(new FileReader(new File(fileName)));
 		String currentLine;
 		int levelid, width, height, numberOfMechs, numberOfItemsInPlay, numberOfItemsInInventory, currentScore, elapsedTime, numberOfMechsToLose, expectedSecondsToComplete, itemRespawn;
-		//ArrayList<String> rowsOfTiles = new ArrayList<>();
+
 		String tiles = "";
 		ArrayList<Mech> mechs = new ArrayList<>();
 		ArrayList<Item> itemsInPlay = new ArrayList<>();
@@ -243,25 +256,25 @@ public class FileManager {
 		width = Integer.valueOf(br.readLine());
 		height = Integer.valueOf(br.readLine());
 		Grid grid = new Grid(width, height);
-		for(int i = 0; i < height; i++) {
+		for (int i = 0; i < height; i++) {
 			tiles += br.readLine() + "\n";
-			//rowsOfTiles.add(br.readLine());
+
 		}
 
 		numberOfMechs = Integer.valueOf(br.readLine());
 
-		for(int i = 0; i < numberOfMechs; i++) {
+		for (int i = 0; i < numberOfMechs; i++) {
 			mechs.add(GameObjectFactory.readMech(br.readLine()));
 		}
 
 		numberOfItemsInPlay = Integer.valueOf(br.readLine());
-		for(int i = 0; i < numberOfItemsInPlay; i++) {
+		for (int i = 0; i < numberOfItemsInPlay; i++) {
 			itemsInPlay.add(GameObjectFactory.readItem(br.readLine()));
 		}
 
 		numberOfItemsInInventory = Integer.valueOf(br.readLine());
 		System.out.println(numberOfItemsInInventory);
-		for(int i = 0; i < numberOfItemsInInventory; i++) {
+		for (int i = 0; i < numberOfItemsInInventory; i++) {
 			inventory.addItem(GameObjectFactory.readInventoryItem(br.readLine()));
 		}
 		currentScore = Integer.valueOf(br.readLine());
@@ -271,11 +284,15 @@ public class FileManager {
 		itemRespawn = Integer.valueOf(br.readLine());
 		grid.populateGrid(tiles);
 		br.close();
-		// null for inventory for now;
-		//return new Level(levelid, height, width, null, numberOfMechsToLose, currentScore, expectedSecondsToComplete, elapsedTime, grid);
+
 		return new Level(levelid, inventory, numberOfMechsToLose, currentScore, expectedSecondsToComplete, elapsedTime, mechs, grid, itemRespawn);
 	}
 
+	/**
+	 * writes to a level file when saving
+	 * @param level the level that will be saved
+	 * @param forPlayer the player that saved the level
+	 */
 	public static void writeLevel(Level level, Player forPlayer) {
 		int width = level.getGrid().getWidth();
 		int height = level.getGrid().getHeight();
@@ -289,171 +306,17 @@ public class FileManager {
 		try {
 			bw = new BufferedWriter(new FileWriter(new File(recentSaveFileName), false));
 			bw.write(level.toString());
-		} catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if(bw != null) {
+			if (bw != null) {
 				try {
 					bw.flush();
 					bw.close();
-				} catch(Exception e) {
+				} catch (Exception e) {
 					System.err.println("Error flushing and closing buffered writers");
 				}
 			}
 		}
 	}
-
-	/*
-	* LEVEL FILE FORMAT ONCE AND FOR ALL:
-	* LEVELID
-	* WIDTH
-	* HEIGHT
-	* TILEROW_1
-	* TILEROW_2
-	* ........
-	* TILEROW_HEIGHT
-	* NUMBEROFMECHS
-	* MECHID_1
-	* MECHID_2
-	* ......
-	* MECHID_NUMBEROFMECHS
-	* NUMBEROFITEMSINPLAY
-	* ITEMID_1
-	* ITEMID_2
-	* .....
-	* ITEMID_NUMBEROFITEMSINPLAY
-	* NUMBEROFITEMSININVENTORY
-	* INV_ITEM_1
-	* INV_ITEM_2
-	* .......
-	* CURRENTSCORE
-	* ELAPSEDTIME
-	* EXPECTEDTIME
-	* NUMBEROFMECHSTOLOSE
-	* */
-	// need to do try-catches in here
-//	public static Level readLevel(String fileName) throws Exception {
-//		BufferedReader br = new BufferedReader(new FileReader(new File(fileName)));
-//		String currentLine;
-//		int levelid, width, height, numberOfMechs, numberOfItemsInPlay, numberOfItemsInInventory, currentScore, elapsedTime, numberOfMechsToLose, expectedSecondsToComplete;
-//		//ArrayList<String> rowsOfTiles = new ArrayList<>();
-//		String tiles = "";
-//		ArrayList<Mech> mechs = new ArrayList<>();
-//		ArrayList<Item> itemsInPlay = new ArrayList<>();
-//		Inventory inventory = new Inventory();
-//		levelid = Integer.valueOf(br.readLine());
-//		width = Integer.valueOf(br.readLine());
-//		height = Integer.valueOf(br.readLine());
-//		Grid grid = new Grid(width, height);
-//		for(int i = 0; i < height; i++) {
-//			tiles += br.readLine() + "\n";
-//			//rowsOfTiles.add(br.readLine());
-//		}
-//
-//		numberOfMechs = Integer.valueOf(br.readLine());
-//
-//		for(int i = 0; i < numberOfMechs; i++) {
-//			mechs.add(GameObjectFactory.readMech(br.readLine()));
-//		}
-//
-//		numberOfItemsInPlay = Integer.valueOf(br.readLine());
-//		for(int i = 0; i < numberOfItemsInPlay; i++) {
-//			itemsInPlay.add(GameObjectFactory.readItem(br.readLine()));
-//		}
-//
-//		numberOfItemsInInventory = Integer.valueOf(br.readLine());
-//		for(int i = 0; i < numberOfItemsInInventory; i++) {
-//			inventory.addItem(GameObjectFactory.readInventoryItem(br.readLine()));
-//		}
-//		currentScore = Integer.valueOf(br.readLine());
-//		elapsedTime = Integer.valueOf(br.readLine());
-//		expectedSecondsToComplete = Integer.valueOf(br.readLine());
-//		numberOfMechsToLose = Integer.valueOf(br.readLine());
-//		grid.populateGrid(tiles);
-//		br.close();
-//		return new Level(levelid, height, width, inventory, numberOfMechsToLose, currentScore, expectedSecondsToComplete, elapsedTime, mechs, grid);
-//	}
-
-
-
-	// HELLO DAVID THIS IS SAM
-	// I DIDN'T KNOW WHETHER OR NOT YOU NEEDED HELP WITH THIS
-	// SO I HAVE MADE A NEW METHOD FOR IT ABOVE
-	// PLEASE REFER TO THE METHOD AND SEE WHAT IT IS DOING
-	// DECIDE WHICH ONE YOU'D PREFER TO KEEP
-	// PLEASE NOTE THAT THE ABOVE METHOD SHOULD WORK.
-	// MANY THANKS
-	// SAM
-	// IGNORE THE MESS BELOW USING IT LATER - DAVID
-//	public static void readLevelFile(String filename) throws FileNotFoundException {
-//		String levelID;
-//		int score;
-//		int width;
-//		int height;
-//		int timeElasped;
-//		int completionTime;
-//		int respawnRate;
-//		int mechsToLose;
-//		String inventory;
-//		/*boardlayout, mech spawn, items in play - not sure how they're being stored but basically
-//		 create a temp variable for it to be stored in e.g an Array thats
-//		 passed into Board b = new Board (BoardArray) or something like that maybe*/
-//
-//		File levelFile = new File (filename);
-//		Scanner in = new Scanner (levelFile);
-//		while (in.hasNextLine()){
-//			String curLine = in.nextLine();
-//			Scanner line = new Scanner(curLine).useDelimiter(",/n,"); //depends on what delimiter we use for now leaving it as ",/n,"
-//			levelID = line.next();
-//			score = line.nextInt();
-//			width = line.nextInt();
-//			height = line.nextInt();
-//			//board layout = ....
-//			//mech spawn = ....
-//			//items in play =....
-//			timeElasped = line.nextInt();
-//			completionTime = line.nextInt();
-//			respawnRate = line.nextInt();
-//			mechsToLose = line.nextInt();
-//			inventory = line.next();
-//			/*or for items like respawnRate, board etc, could make a method e.g getRespawnRateFromFile(Scanner in)
-//			where Scanner in would be in, then do the String curLine thing where line = new Scanner(curLine).useDelimiter(",")
-//			cos respawnRate = 20,25,15,15,15,5,5
-//			 */
-//		}
-//	}
 }
-	
-	/*Additional code for making an instance of a level from this file and Items in the inventory
-	Level l1 = new Level (LevelID)
-	  ArrayList<String> itemsFromFile = inventory.split(" ")
-	  ArrayList<Items> itemsList;
-	  for (String item:itemFromFile){
-	  	new Item (item);
-	  	itemsList.add(item)
-	  	}
-	  Inventory I1 = new Inventory()
-	  for(Item i: itemsList){
-	  	I1.items.add(i)
-	  	}*/
-
-//	/**
-//	 *
-//	 * @param levelName
-//	 * @return
-//	 */
-//	public static Level readLevel(String levelName) {
-//		String out = null;
-//		try {
-//			File level = new File(levelName);
-//			Scanner reader = new Scanner(level);
-//			while (reader.hasNextLine()) {
-//				out = out + reader.nextLine();
-//			}
-//			reader.close();
-//		} catch (FileNotFoundException e) {
-//			System.out.println("An error occurred.");
-//			e.printStackTrace();
-//		}
-//		return new Level(10, 10, 10, null, 0, 10, 0, 0, null, null);
-//	}

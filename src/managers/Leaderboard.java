@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Leadboard.Java
+ * Leaderboard.Java
  * @author
- * @version
- * Last Mod Date:
+ * @version 2
+ * Last mod Date 29/11/2021
  */
 public class Leaderboard {
     private final static int MAX_PLAYERS_IN_LEADERBOARD = 10;
@@ -17,12 +17,21 @@ public class Leaderboard {
     private int levelID;
     private HashMap<Integer, Integer> idsToScores;
 
+    /**
+     * creates the leaderboard
+     * @param levelId id of the level
+     * @param idsToScores puts ids to scores
+     */
     public Leaderboard(int levelId, HashMap<Integer, Integer> idsToScores) {
-        // needed?
         this.levelID = levelId;
         this.idsToScores = idsToScores;
     }
 
+    /**
+     * To string
+     *
+     * @return leaderboard to a string
+     */
     public String toString() {
         String str = "";
         for(Integer id : idsToScores.keySet()) {
@@ -30,10 +39,22 @@ public class Leaderboard {
         }
         return str;
     }
+
+    /**
+     * removes a player from the leaderboard
+     *
+     * @param playerID player to be removed
+     */
     public void removeFromLeaderBoard(int playerID) {
         this.idsToScores.remove(playerID);
     }
 
+    /**
+     * adds a player to the leaderboard
+     *
+     * @param playerID player to be added
+     * @param score score of the player
+     */
     public void addToLeaderBoard(int playerID, int score) {
         if(this.idsToScores.keySet().size() == MAX_PLAYERS_IN_LEADERBOARD) {
             if(idsToScores.containsKey(playerID)) {
@@ -52,10 +73,21 @@ public class Leaderboard {
         }
     }
 
+    /**
+     * adds a player to the leaderboard
+     *
+     * @param player player to be added
+     * @param score score of the player
+     */
     public void insertPlayer(Player player, int score) {
         addToLeaderBoard(player.getPlayerID(), score);
     }
 
+    /**
+     * removes a player from the leaderboard
+     *
+     * @param player player to be removed
+     */
     public void deletePlayer(Player player) {
         this.removeFromLeaderBoard(player.getPlayerID());
     }
