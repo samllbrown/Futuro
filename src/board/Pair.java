@@ -1,16 +1,15 @@
 package board;
 
-import gameObject.Direction;
-
-
 /**
  * Pair.java
- * @author
+ * @author Sam R, Illia
  * @version
- * Last Mod Date:
+ * Last Mod Date: 06/12/2021
  */
 public class Pair {
-    public int x,y;
+
+    /** The x and y */
+    public int x, y;
 
     /**
      * Instantiates a Pair of coords (x,y).
@@ -18,8 +17,8 @@ public class Pair {
      * @param y y val
      */
     public Pair(int x, int y) {
-        this.x = x;
-        this.y = y;
+	this.x = x;
+	this.y = y;
     }
 
     /**
@@ -28,7 +27,7 @@ public class Pair {
      * @return the new Pair of coord values
      */
     public Pair add(Pair p) {
-        return new Pair(this.x + p.x, this.y + p.y);
+	return new Pair(this.x + p.x, this.y + p.y);
     }
 
     /**
@@ -37,7 +36,7 @@ public class Pair {
      * @return the new Pair of coord values
      */
     public Pair sub(Pair p) {
-        return new Pair(this.x - p.x, this.y - p.y);
+	return new Pair(this.x - p.x, this.y - p.y);
     }
 
     /**
@@ -46,7 +45,7 @@ public class Pair {
      * @return the new Pair of coord values
      */
     public Pair mult(Pair p) {
-        return new Pair(this.x*p.x, this.y*p.y);
+	return new Pair(this.x * p.x, this.y * p.y);
     }
 
     /**
@@ -55,10 +54,6 @@ public class Pair {
      * @return the new Pair of coord values
      */
     public Pair div(Pair p) {
-        return new Pair(this.x/p.x, this.y/p.y);
+	return new Pair(this.x / p.x, this.y / p.y);
     }
-
-//    public Pair toPair(Direction direction) {
-//        return new Pair(direction.getXDir(), direction.getYDir());
-//    }
 }

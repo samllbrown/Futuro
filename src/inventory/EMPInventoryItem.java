@@ -3,8 +3,7 @@ package inventory;
 /**
  * EMPInventoryItem.java
  * @author Sam R, Illia L.
- * @version 1
- * Last Mod Date: 27/11/2021
+ * Last Mod Date: 02/12/2021
  * Description: handles the EMP inventory item
  */
 public class EMPInventoryItem extends InventoryItem{
