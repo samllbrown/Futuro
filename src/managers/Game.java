@@ -236,7 +236,7 @@ public class Game {
 	exitGameButton.setStyle(GameManager.BUTTON_STYLE);
 
 	Button score = this.level.getButton();
-	
+
 	Label messageOfDayLabel = new Label(this.messageOfTheDay);
 	messageOfDayLabel.setStyle("-fx-text-fill: White;" + "-fx-font-family: Impact;" + "-fx-font-size: 20");
 
@@ -274,7 +274,8 @@ public class Game {
 	});
 
 	motdbar.getChildren().addAll(messageOfDayLabel);
-	topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton, saveLevelButton, exitGameButton, score);
+	topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton, saveLevelButton, exitGameButton,
+		score);
 
 	for (var i : this.level.getInventory().getItems().entrySet()) {
 	    InventoryItem iconItem = i.getValue();
@@ -309,14 +310,14 @@ public class Game {
 		event.consume();
 	    }
 	});
-	
+
 	canvas.setOnDragOver(new EventHandler<DragEvent>() {
 	    public void handle(DragEvent event) {
 
-	        event.acceptTransferModes(TransferMode.ANY);
+		event.acceptTransferModes(TransferMode.ANY);
 
-	        event.consume();
-	        }
+		event.consume();
+	    }
 	});
 	return root;
     }
@@ -336,25 +337,25 @@ public class Game {
 	int yCoord = (int) Math.round(y) / TILE_SIZE;
 
 	if (db.hasString()) {
-		Item i = InventoryItem.getItemForName(db.getString(), xCoord, yCoord);
-		level.getInventory().useItem(db.getString());
+	    Item i = InventoryItem.getItemForName(db.getString(), xCoord, yCoord);
+	    level.getInventory().useItem(db.getString());
 
-		if (db.getString() == "DEATH_MECH") {
+	    if (db.getString() == "DEATH_MECH") {
 
-			Mech newMech = new DeathMech(xCoord, yCoord);
-			this.level.addMech(newMech);
-		} else {
-			this.level.addItem(i);
-		}
-		// Draw an icon at the dropped location.
-		GraphicsContext gc = canvas.getGraphicsContext2D();
-		// Draw the the image so the top-left corner is where we dropped.
-		gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
-		// Draw the the image so the center is where we dropped.
-		// gc.drawImage(iconImage, x - iconImage.getWidth() / 2.0, y -
-		// iconImage.getHeight() / 2.0);
+		Mech newMech = new DeathMech(xCoord, yCoord);
+		this.level.addMech(newMech);
+	    } else {
+		this.level.addItem(i);
+	    }
+	    // Draw an icon at the dropped location.
+	    GraphicsContext gc = canvas.getGraphicsContext2D();
+	    // Draw the the image so the top-left corner is where we dropped.
+	    gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
+	    // Draw the the image so the center is where we dropped.
+	    // gc.drawImage(iconImage, x - iconImage.getWidth() / 2.0, y -
+	    // iconImage.getHeight() / 2.0);
 	} else {
-		System.out.println("This error should not exist (Game.java)");
+	    System.out.println("This error should not exist (Game.java)");
 	}
     }
 
@@ -362,95 +363,96 @@ public class Game {
      * Draw game (Ran every tick).
      */
     public void drawGame() {
-		GraphicsContext gc = canvas.getGraphicsContext2D();
-		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		gc.setFill(Color.GRAY);
-		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		for (int i = 0; i < this.CURRENT_WIDTH; i++) {
-		    for (int j = 0; j < this.CURRENT_HEIGHT; j++) {
-			gc.drawImage(this.level.getGrid().getTileAt(i, j).getImage(), i * TILE_SIZE, j * TILE_SIZE);
-		    }
-		}
-		for (Mech m : this.level.getMechs()) {
-		    if (this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).isVisibleTile()) {
-			gc.drawImage(m.getImage(), m.getGridX() * TILE_SIZE, m.getGridY() * TILE_SIZE);
-		    }
-		}
-	
-		for (Item i : this.level.getItems()) {
-		    if (i.getXRange() > 0) {
-			int q = 0;
-			while (q < i.getXRange()) {
-			    if (this.level.getGrid().getTileAt((i.getGridX() + q), i.getGridY())
-				    .getTileType() != TileType.WALL) {
-				gc.drawImage(i.getImage(), (i.getGridX() + q) * TILE_SIZE, i.getGridY() * TILE_SIZE);
-			    } else {
-				q = 1000;
-			    }
-			    q++;
-			}
-			q = 0;
-			while (q < i.getXRange()) {
-			    if (this.level.getGrid().getTileAt((i.getGridX() - q), i.getGridY())
-				    .getTileType() != TileType.WALL) {
-				gc.drawImage(i.getImage(), (i.getGridX() - q) * TILE_SIZE, i.getGridY() * TILE_SIZE);
-			    } else {
-				q = 1000;
-			    }
-			    q++;
-			}
-			q = 0;
-			while (q < i.getYRange()) {
-			    if (this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() + q)
-				    .getTileType() != TileType.WALL) {
-				gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, (i.getGridY() + q) * TILE_SIZE);
-			    } else {
-				q = 1000;
-			    }
-			    q++;
-			}
-			q = 0;
-			while (q < i.getYRange()) {
-			    if (this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() - q)
-				    .getTileType() != TileType.WALL) {
-				gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, (i.getGridY() - q) * TILE_SIZE);
-			    } else {
-				q = 1000;
-			    }
-			    q++;
-			}
-		    } else {
-			gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
-		    }
-		}
-    }
-    private void endGame(boolean win) {
-		this.gameStage.hide();
-
-		AudioPlayer.stopAllMusic();
-
-		GameManager.mainMenu.show();
-		
-		if(win) {
-			Alert alert  = new Alert(AlertType.CONFIRMATION);
-	        	alert.setTitle("SUCCESS");
-	        	alert.setHeaderText("You win");
-	        	alert.setContentText("Good job loser");
-	            alert.showAndWait().ifPresent(rs -> {
-	                if (rs == ButtonType.OK) {
-	                }
-	            });
-		} else {
-			Alert alert  = new Alert(AlertType.CONFIRMATION);
-	        	alert.setTitle("FAILURE");
-	        	alert.setHeaderText("You are a failure");
-	        	alert.setContentText("Only people like you would lose");
-	            alert.showAndWait().ifPresent(rs -> {
-	                if (rs == ButtonType.OK) {
-	                }
-	            });
-		}
+	GraphicsContext gc = canvas.getGraphicsContext2D();
+	gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+	gc.setFill(Color.GRAY);
+	gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+	for (int i = 0; i < this.CURRENT_WIDTH; i++) {
+	    for (int j = 0; j < this.CURRENT_HEIGHT; j++) {
+		gc.drawImage(this.level.getGrid().getTileAt(i, j).getImage(), i * TILE_SIZE, j * TILE_SIZE);
+	    }
 	}
+	for (Mech m : this.level.getMechs()) {
+	    if (this.level.getGrid().getTileAt(m.getGridX(), m.getGridY()).isVisibleTile()) {
+		gc.drawImage(m.getImage(), m.getGridX() * TILE_SIZE, m.getGridY() * TILE_SIZE);
+	    }
+	}
+
+	for (Item i : this.level.getItems()) {
+	    if (i.getXRange() > 0) {
+		int q = 0;
+		while (q < i.getXRange()) {
+		    if (this.level.getGrid().getTileAt((i.getGridX() + q), i.getGridY())
+			    .getTileType() != TileType.WALL) {
+			gc.drawImage(i.getImage(), (i.getGridX() + q) * TILE_SIZE, i.getGridY() * TILE_SIZE);
+		    } else {
+			q = 1000;
+		    }
+		    q++;
+		}
+		q = 0;
+		while (q < i.getXRange()) {
+		    if (this.level.getGrid().getTileAt((i.getGridX() - q), i.getGridY())
+			    .getTileType() != TileType.WALL) {
+			gc.drawImage(i.getImage(), (i.getGridX() - q) * TILE_SIZE, i.getGridY() * TILE_SIZE);
+		    } else {
+			q = 1000;
+		    }
+		    q++;
+		}
+		q = 0;
+		while (q < i.getYRange()) {
+		    if (this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() + q)
+			    .getTileType() != TileType.WALL) {
+			gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, (i.getGridY() + q) * TILE_SIZE);
+		    } else {
+			q = 1000;
+		    }
+		    q++;
+		}
+		q = 0;
+		while (q < i.getYRange()) {
+		    if (this.level.getGrid().getTileAt((i.getGridX()), i.getGridY() - q)
+			    .getTileType() != TileType.WALL) {
+			gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, (i.getGridY() - q) * TILE_SIZE);
+		    } else {
+			q = 1000;
+		    }
+		    q++;
+		}
+	    } else {
+		gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
+	    }
+	}
+    }
+
+    private void endGame(boolean win) {
+	this.gameStage.hide();
+
+	AudioPlayer.stopAllMusic();
+
+	GameManager.mainMenu.show();
+
+	if (win) {
+	    Alert alert = new Alert(AlertType.CONFIRMATION);
+	    alert.setTitle("SUCCESS");
+	    alert.setHeaderText("You win");
+	    alert.setContentText("Good job loser");
+	    alert.showAndWait().ifPresent(rs -> {
+		if (rs == ButtonType.OK) {
+		}
+	    });
+	} else {
+	    Alert alert = new Alert(AlertType.CONFIRMATION);
+	    alert.setTitle("FAILURE");
+	    alert.setHeaderText("You are a failure");
+	    alert.setContentText("Only people like you would lose");
+	    alert.showAndWait().ifPresent(rs -> {
+		if (rs == ButtonType.OK) {
+		}
+	    });
+	}
+    }
 
     /**
      * Show the UI of the game.
