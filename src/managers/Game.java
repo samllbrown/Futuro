@@ -103,8 +103,9 @@ public class Game {
 		this.messageOfTheDay = getMessageOfTheDay();
 	}
 
-	// THIS ASSUMES THAT YOU WILL DEFINITELY
-	// IPSO-FACTO 100 PERCFENT SET THE ATTRIBUTES MANUALLY AFTERWARDS.
+	/**
+	 * Instantiates a new empty game.
+	 */
 	public Game() {
 		this.level = null;
 		this.currentPlayer = null;
@@ -126,10 +127,20 @@ public class Game {
 		this.CURRENT_HEIGHT = level.getGrid().getHeight();
 	}
 
+	/**
+	 * Gets the current player.
+	 *
+	 * @return the current player
+	 */
 	public Player getCurrentPlayer() {
 		return this.currentPlayer;
 	}
 
+	/**
+	 * Sets the current player.
+	 *
+	 * @param currentPlayer the new current player
+	 */
 	public void setCurrentPlayer(Player currentPlayer) {
 		this.currentPlayer = currentPlayer;
 	}
@@ -208,11 +219,7 @@ public class Game {
 		try {
 			this.level.update();
 			drawGame();
-			// updateMechs();
-			// moveMechs();
-			// updateScore(this.level.getCurrentScore());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -430,7 +437,7 @@ public class Game {
 	}
 
 	/**
-	 * Draw game.
+	 * Draw game (Ran every tick).
 	 */
 	public void drawGame() {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -537,6 +544,12 @@ public class Game {
 		gameStage.show();
 	}
 
+	/**
+	 * Save level.
+	 *
+	 * @param level the level
+	 * @param player the player
+	 */
 	public void saveLevel(Level level, Player player){
 		FileManager.writeLevel(level, player);
 	}

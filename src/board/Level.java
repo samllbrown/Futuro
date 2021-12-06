@@ -22,42 +22,56 @@ import services.AudioPlayer;
 
 /**
  * Level.java
- * @author
- * @version
- * Last Mod Date:
+ * @author Sam R, Sam B, Mart
+ * Last Mod Date: 06/12/2021
  */
 public class Level {
+	
+	/** The Constant WINNING_NUMBER_OF_MECHS. */
 	private static final int WINNING_NUMBER_OF_MECHS = 0;
+	
+	/** The Constant SCORE_PER_KILL. */
 	private static final int SCORE_PER_KILL = 10;
 
+	/** The level ID. */
 	private int levelID;
+	
+	/** The num of mechs to lose. */
 	private int numOfMechsToLose;
+	
+	/** The current score. */
 	private int currentScore;
 
+	/** The expected secs. */
 	private int expectedSecs;
+	
+	/** The elapsed time. */
 	private int elapsedTime;
 
+	/** The inventory. */
 	private Inventory inventory;
 	
+	/** The items. */
 	private ArrayList<Item> items;
+	
+	/** The mechs. */
 	private ArrayList<Mech> mechs;
 
+	/** The grid. */
 	private Grid grid;
 	
+	/** The item respawn rate. */
 	private int itemRespawnRate;
 
+	/** The breeder. */
 	private Breeder breeder;
 	
+	/** The label. */
 	private Button label;
-
-	//private HashMap<Pair, Item> coordsToItems;
-	// probably can't have a hashmap of coordstomechs because collisions are possible :/
-	//private HashMap<Pair, Mech> ccordsToMechs;
-	//private final int MECH_KILL_SCORE = 5;
-	//private final int BABY_MECHS_FROM_MOTHER = 5;
 
 	/**
 	 * Instantiates a new Level.
+	 *
 	 * @param levelID the level ID
 	 * @param inventory the inventory for the level
 	 * @param numberOfMechsToLose number of mechs for that level to count as a loss for the player
@@ -66,6 +80,7 @@ public class Level {
 	 * @param elapsedTime elapsed time player spent on level in seconds
 	 * @param mechs list of mechs in level
 	 * @param grid the grid format of the level
+	 * @param itemRespawnRate the item respawn rate
 	 */
 	public Level(int levelID, Inventory inventory, int numberOfMechsToLose, int currentScore, int expectedSeconds,
 				 int elapsedTime, ArrayList<Mech> mechs, Grid grid, int itemRespawnRate) {
@@ -83,6 +98,11 @@ public class Level {
 		this.label = new Button(Integer.toString(this.currentScore));
 	}
 
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	@Override
 	public String toString() {
 		String levelAsString = "";
@@ -103,6 +123,11 @@ public class Level {
 		return levelAsString;
 	}
 
+	/**
+	 * Gets the items as string.
+	 *
+	 * @return the items as string
+	 */
 	private String getItemsAsString() {
 		String itemsAsString = "";
 		for(Item i : this.items) {
@@ -111,6 +136,11 @@ public class Level {
 		return itemsAsString;
 	}
 
+	/**
+	 * Gets the mechs as string.
+	 *
+	 * @return the mechs as string
+	 */
 	private String getMechsAsString() {
 		String mechsAsString = "";
 		for(Mech m : this.mechs) {
@@ -130,7 +160,8 @@ public class Level {
 	}
 
 	/**
-	 * Calculate points for a mech kill (used for updating a player's score), considers if a mech is pregnant or not
+	 * Calculate points for a mech kill (used for updating a player's score), considers if a mech is pregnant or not.
+	 *
 	 * @param m mech that has been killed
 	 * @return the points for killing that mech
 	 */
@@ -152,9 +183,10 @@ public class Level {
 	}
 
 	/**
-	 *Updating game interactions for Mechs.
-	 *e.g. Checking whether any mechs are dead, if they're interacting with an item
-	 * @throws Exception
+	 * Updating game interactions for Mechs.
+	 * e.g. Checking whether any mechs are dead, if they're interacting with an item
+	 *
+	 * @throws Exception the exception
 	 */
 	private void updateMechs() throws Exception {
 		label.setText("Score: " +  Integer.toString(currentScore));
@@ -166,12 +198,11 @@ public class Level {
 		for(Mech mech : currentMechs) {
 			if(mech.getHealth() <= 0) {
 				this.killMech(mech);
-				//audioPlayer.playDeathSound();
+				AudioPlayer.playDeathSound();
 				System.out.println("Update Mechs method has detected a mech with <= 0 hp, so it ded");
 			} else {
 				if(mech.getIsBaby()) {
 					if(mech.getTimeUntilAdult() == 0) {
-						//mech.growUp();
 						System.err.println("Should now be an adult tbh");
 						mech.growIntoAdult();
 					} else {
@@ -216,8 +247,9 @@ public class Level {
 
 	/**
 	 * Update game interaction with Items
-	 * Placing items on the grid, if an item has been used it then gets destroyed and removed from list of current items in level
-	 * @throws Exception
+	 * Placing items on the grid, if an item has been used it then gets destroyed and removed from list of current items in level.
+	 *
+	 * @throws Exception the exception
 	 */
 	public void updateItems() throws Exception {
 		ArrayList<Item> currentItemCopy = new ArrayList<>(this.items);
@@ -240,6 +272,9 @@ public class Level {
 		this.getGrid().getTileAt(i.getGridX(), i.getGridY()).setCurrentItem(null);
 	}
 	
+	/**
+	 * Update inventory items.
+	 */
 	private void updateInventoryItems() {
 		//Inventory currentInventoryCopy = new Inventory(this.inventory.getItems(), this.inventory.getLabels());
 		//System.out.println(currentInventoryCopy);
@@ -256,7 +291,8 @@ public class Level {
 
 	/**
 	 * Update the whole Level by updating the items and the mechs in the Level.
-	 * @throws Exception
+	 *
+	 * @throws Exception the exception
 	 */
 	public void update() throws Exception {
 		// this for loop should probs just go into an init method
@@ -286,7 +322,8 @@ public class Level {
 	}
 
 	/**
-	 * Retrieve the grid layout of the Level
+	 * Retrieve the grid layout of the Level.
+	 *
 	 * @return the grid for the Level
 	 */
 	public Grid getGrid() {
@@ -310,7 +347,8 @@ public class Level {
 	}
 
 	/**
-	 * Retrieve current score of Level
+	 * Retrieve current score of Level.
+	 *
 	 * @return current score
 	 */
 	public int getCurrentScore() {
@@ -342,7 +380,8 @@ public class Level {
 	}
 
 	/**
-	 * Sets the time elapsed on Level
+	 * Sets the time elapsed on Level.
+	 *
 	 * @param timeElapsed time in seconds
 	 */
 	public void setTimeElapsed(int timeElapsed) {
@@ -350,7 +389,8 @@ public class Level {
 	}
 
 	/**
-	 * Retrieves the inventory for the Level
+	 * Retrieves the inventory for the Level.
+	 *
 	 * @return the inventory for Level
 	 */
 	public Inventory getInventory() {
@@ -366,7 +406,8 @@ public class Level {
 	}
 
 	/**
-	 * Sets the inventory for the Level
+	 * Sets the inventory for the Level.
+	 *
 	 * @param inventory Inventory object for the Level
 	 */
 	public void setInventory(Inventory inventory) {
@@ -374,7 +415,8 @@ public class Level {
 	}
 
 	/**
-	 * Retrieves the list of items in the Level
+	 * Retrieves the list of items in the Level.
+	 *
 	 * @return items
 	 */
 	public ArrayList<Item> getItems() {
@@ -389,6 +431,11 @@ public class Level {
 		this.items = items;
 	}
 	
+	/**
+	 * Gets the button.
+	 *
+	 * @return the button
+	 */
 	public Button getButton() {
 		return this.label;
 	}

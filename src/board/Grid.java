@@ -10,20 +10,19 @@ import gameObject.TileType;
 
 /**
  * Grid.java
- * @author
- * @version
- * Last Mod Date:
+ * @author Sam R
+ * Last Mod Date: 06/12/2021
  */
 public class Grid {
+	
+	/** The width. */
 	private final int width;
+	
+	/** The height. */
 	private final int height;
 	
+	/** The grid. */
 	private Tile[][] grid;
-	//private ArrayList<Tile> allTiles;
-	/*
-	* PLEASE BE AWARE THAT THIS READS IN THE TILES AND CONSTRUCTS THE ARRAY TOP TO BOTTOM
-	* I.E. THE ORIGIN OF X,Y IS TOP LEFT, NOT BOTTOM LEFT
-	* */
 
 	/**
 	 * Instantiate a new Grid, with a 2d array of Tiles
@@ -78,10 +77,6 @@ public class Grid {
 	public Tile[][] getGrid() {
 		return this.grid;
 	}
-	
-	// tiles will be read from a file
-	// each grid in a file is represented row by row
-	// each row is separated by a newline
 
 	/**
 	 * Tiles read from a file and grid populated accordingly.
@@ -96,16 +91,25 @@ public class Grid {
 			for(int j = 0; j < rowTiles.length; j++) {
 				Tile t = GameObjectFactory.makeTile(rowTiles[j].charAt(0), j, i);
 				this.grid[j][i] = t;
-				//allTiles.add(t);
 			}
 		}
 	}
 
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	@Override
 	public String toString() {
 		return this.getGridAsString();
 	}
   
+	/**
+	 * Gets the grid as string.
+	 *
+	 * @return the grid as string
+	 */
 	private String getGridAsString() {
 		String tiles = "";
 		for(int i = 0; i < this.width; i++) {
