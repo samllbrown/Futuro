@@ -134,76 +134,6 @@ public class Game {
 		this.currentPlayer = currentPlayer;
 	}
 
-	// private void updateMechs() throws Exception {
-	// int points;
-	// for(Mech m : this.level.getMechs()) {
-	// if(this.level.getGrid().getTileAt(m.getGridX(),
-	// m.getGridY()).getCurrentItem() != null) {
-	// this.level.getGrid().getTileAt(m.getGridX(),
-	// m.getGridY()).getCurrentItem().act(m);
-	// }
-	// if(m.getHealth() <= 0) {
-	// points = this.level.getCurrentScore() + (m.isPregnant() ? (SCORE_PER_KILL *
-	// (Mech.NUM_OF_BABIES_IF_BIRTHING + 1)) : SCORE_PER_KILL);
-	// this.level.setCurrentScore(points);
-	// // concurrent modification exception happening here probably.
-	// this.level.removeMech(m);
-	// System.err.println("A MECH HAS DIED");
-	// } else {
-	// for(Mech mechIShareMyTileWith : this.level.getGrid().getTileAt(m.getGridX(),
-	// m.getGridY()).getMechs()) {
-	// if(!(mechIShareMyTileWith.isPregnant() || mechIShareMyTileWith.getType() ==
-	// m.getType() || mechIShareMyTileWith.isSterile() || m.isBreeding() ||
-	// mechIShareMyTileWith.isBreeding())) {
-	// if (mechIShareMyTileWith.getType() == MechType.PRODUCTION) {
-	// // need to add the isBreeding and other validation before doing this
-	// for(int i = 0; i < 5; i++) {
-	// this.level.addMech(m.birthMech());
-	// }
-	// }
-	// }
-	// }
-	// // this is being accessed when it's being removed or something
-	// m.move(this.level.getGrid());
-	// }
-	// }
-	// }
-
-	// private void update() throws Exception {
-	// // this for loop should probs just go into an init method
-	// for(Item i : this.level.getItems()) {
-	// this.level.getGrid().getTileAt(i.getGridX(), i.getGridY()).setCurrentItem(i);
-	// }
-	// this.updateMechs();
-	// }
-
-	// private void updateScore(int currentScore) {
-	// /*
-	// * while game is running so every tick, get mechs health, if mechs health is 0
-	// * add 10 points to current score and set that value as the currentscore of
-	// the
-	// * level assuming all mechs start with full health...
-	// */
-	// // if this.level.getNumberofmechsleftingame <= this.level.getlosingmechs then
-	// // game finished so
-	// // don't do for loop i guess else...
-	// for (Mech m : this.level.getMechs()) {
-	// if (m.getHealth() == 0 && m.getType() == MechType.PRODUCTION &&
-	// m.isPregnant()) { // assuming they have 5
-	// // babies idk how we're
-	// // checking that - David
-	// currentScore = currentScore + 10 * (m.getNumOfBabies() + 1); // score is 10
-	// times number of babies plus
-	// // the female mech
-	// } else if (m.getHealth() == 0) {
-	// currentScore = currentScore + 10;
-	// }
-	// }
-	// this.level.setCurrentScore(currentScore);
-	/**
-	 * Tick.
-	 */
-	// }
 	private void tick() {
 		try {
 			this.level.update();
@@ -329,13 +259,12 @@ public class Game {
 		});
 
 		exitGameButton.setOnAction(e -> {
-			this.gameStage.hide();
-
-			AudioPlayer.stopAllMusic();
-
-			this.tickTimeline.pause();
-
-			GameManager.mainMenu.show();
+		    this.gameStage.hide();
+		    AudioPlayer.stopAllMusic();
+		    if (this.tickTimeline != null) {
+		        this.tickTimeline.pause(); 
+		    }
+		    GameManager.mainMenu.show();
 
 		});
 
