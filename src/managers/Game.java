@@ -326,6 +326,7 @@ public class Game {
 
 		exitGameButton.setOnAction(e -> {
 			this.gameStage.hide();
+			AudioPlayer.stopAllMusic();
 			GameManager.mainMenu.show();
 		});
 
