@@ -287,7 +287,7 @@ public class FileManager {
 
 		BufferedWriter bw = null;
 		try {
-			bw = new BufferedWriter(new FileWriter(recentSaveFileName, false));
+			bw = new BufferedWriter(new FileWriter(new File(recentSaveFileName), false));
 			bw.write(level.toString());
 		} catch (Exception e){
 			e.printStackTrace();
