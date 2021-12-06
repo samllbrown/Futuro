@@ -298,10 +298,7 @@ public class Game {
 	}
 
 	canvas.setOnDragDropped(new EventHandler<DragEvent>() {
-
-    public void handle(DragEvent event) {
-
-
+	    public void handle(DragEvent event) {
 		Dragboard db = event.getDragboard();
 
 		canvasDragDroppedOccured(event);
@@ -312,14 +309,14 @@ public class Game {
 		event.consume();
 	    }
 	});
-
+	
 	canvas.setOnDragOver(new EventHandler<DragEvent>() {
 	    public void handle(DragEvent event) {
 
-		event.acceptTransferModes(TransferMode.ANY);
+	        event.acceptTransferModes(TransferMode.ANY);
 
-		event.consume();
-	    }
+	        event.consume();
+	        }
 	});
 	return root;
     }
@@ -337,20 +334,28 @@ public class Game {
 	double y = event.getY();
 	int xCoord = (int) Math.round(x) / TILE_SIZE;
 	int yCoord = (int) Math.round(y) / TILE_SIZE;
-	Item i = null;
+
 	if (db.hasString()) {
-	    i = InventoryItem.getItemForName(db.getString(), xCoord, yCoord);
-	    level.getInventory().useItem(db.getString());
+		Item i = InventoryItem.getItemForName(db.getString(), xCoord, yCoord);
+		level.getInventory().useItem(db.getString());
 
-	    Mech newMech = new DeathMech(xCoord, yCoord);
-	    this.level.addMech(newMech);
+		if (db.getString() == "DEATH_MECH") {
+
+			Mech newMech = new DeathMech(xCoord, yCoord);
+			this.level.addMech(newMech);
+		} else {
+			this.level.addItem(i);
+		}
+		// Draw an icon at the dropped location.
+		GraphicsContext gc = canvas.getGraphicsContext2D();
+		// Draw the the image so the top-left corner is where we dropped.
+		gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
+		// Draw the the image so the center is where we dropped.
+		// gc.drawImage(iconImage, x - iconImage.getWidth() / 2.0, y -
+		// iconImage.getHeight() / 2.0);
 	} else {
-	    this.level.addItem(i);
+		System.out.println("This error should not exist (Game.java)");
 	}
-
-	GraphicsContext gc = canvas.getGraphicsContext2D();
-
-	gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
     }
 
     /**
