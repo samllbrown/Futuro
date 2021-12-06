@@ -4,15 +4,18 @@ import board.Pair;
 
 /**
  * Direction.java
- * @author
- * @version
- * Last Mod Date:
+ * @author Sam R
+ * Last Mod Date: 01/12/2021
  */
 public enum Direction {
 
-    RIGHT(1,0), LEFT(-1,0), UP(0,1), DOWN(0,-1), STAT(0,0);
+    /** The direction enums. */
+    RIGHT(1, 0), LEFT(-1, 0), UP(0, 1), DOWN(0, -1), STAT(0, 0);
 
+    /** The x dir. */
     private final int xDir;
+
+    /** The y dir. */
     private final int yDir;
 
     /**
@@ -21,8 +24,8 @@ public enum Direction {
      * @param yDir direction in y plane
      */
     Direction(int xDir, int yDir) {
-        this.xDir = xDir;
-        this.yDir = yDir;
+	this.xDir = xDir;
+	this.yDir = yDir;
     }
 
     /**
@@ -33,12 +36,12 @@ public enum Direction {
      * @throws Exception Invalid Pair of coords given.
      */
     public static Direction fromPair(Pair p) throws Exception {
-        for(Direction dir : Direction.values()) {
-            if(dir.xDir == p.x && dir.yDir == p.y) {
-                return dir;
-            }
-        }
-        throw new Exception("Invalid p");
+	for (Direction dir : Direction.values()) {
+	    if (dir.xDir == p.x && dir.yDir == p.y) {
+		return dir;
+	    }
+	}
+	throw new Exception("Invalid p");
     }
 
     /**
@@ -46,7 +49,7 @@ public enum Direction {
      * @return x-plane direction
      */
     public int getXDir() {
-        return this.xDir;
+	return this.xDir;
     }
 
     /**
@@ -54,7 +57,7 @@ public enum Direction {
      * @return y-plane direction
      */
     public int getYDir() {
-        return this.yDir;
+	return this.yDir;
     }
 
     /**
@@ -62,7 +65,7 @@ public enum Direction {
      * @return a Pair (xDir, yDir).
      */
     public Pair toPair() {
-        return new Pair(this.xDir, this.yDir);
+	return new Pair(this.xDir, this.yDir);
     }
 
 }

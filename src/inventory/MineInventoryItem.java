@@ -7,7 +7,7 @@ package inventory;
  * Last Mod Date: 27/11/2021
  * Description: handles the item mine inventory item
  */
-public class MineInventoryItem extends InventoryItem{
+public class MineInventoryItem extends InventoryItem {
 
     /** The Constant name. */
     public static final String name = "MINE";
@@ -16,7 +16,7 @@ public class MineInventoryItem extends InventoryItem{
      * Instantiates a new mine inventory item.
      */
     public MineInventoryItem() {
-        super(name);
+	super(name);
     }
 
     /**
@@ -25,7 +25,7 @@ public class MineInventoryItem extends InventoryItem{
      * @param uses - the amount of uses left
      */
     public MineInventoryItem(int uses) {
-        super(name, uses);
+	super(name, uses);
     }
 
     /**
@@ -34,6 +34,6 @@ public class MineInventoryItem extends InventoryItem{
      * @return the name
      */
     public String getName() {
-        return MineInventoryItem.name;
+	return MineInventoryItem.name;
     }
 }

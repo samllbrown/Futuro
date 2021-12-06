@@ -16,7 +16,7 @@ public class AcidInventoryItem extends InventoryItem {
      * Instantiates a new acid inventory item.
      */
     public AcidInventoryItem() {
-        super(name);
+	super(name);
     }
 
     /**
@@ -25,7 +25,7 @@ public class AcidInventoryItem extends InventoryItem {
      * @param uses - the amount of uses left
      */
     public AcidInventoryItem(int uses) {
-        super(name, uses);
+	super(name, uses);
     }
 
     /**
@@ -34,6 +34,6 @@ public class AcidInventoryItem extends InventoryItem {
      * @return the name
      */
     public String getName() {
-        return AcidInventoryItem.name;
+	return AcidInventoryItem.name;
     }
 }
