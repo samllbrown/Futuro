@@ -8,9 +8,8 @@ import inventory.*;
 
 /**
  * GameObjectFactory.java
- * @author
- * @version
- * Last Mod Date:
+ * @author Sam R
+ * Last Mod Date: 05/12/2021
  */
 public class GameObjectFactory {
 
@@ -70,6 +69,12 @@ public class GameObjectFactory {
 		return new Tile(tileType, x, y);
 	}
 
+	/**
+	 * Read item.
+	 *
+	 * @param id the id
+	 * @return the item
+	 */
 	public static Item readItem(String id) {
 		String[] idComp = id.split(",");
 		int atX = Integer.valueOf(idComp[1]);

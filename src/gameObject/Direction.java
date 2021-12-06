@@ -4,14 +4,14 @@ import board.Pair;
 
 /**
  * Direction.java
- * @author
- * @version
- * Last Mod Date:
+ * @author Sam R
+ * Last Mod Date: 06/12/2021
  */
 public enum Direction {
 
     RIGHT(1,0), LEFT(-1,0), UP(0,1), DOWN(0,-1), STAT(0,0);
 
+    /** The x dir. */
     private final int xDir;
     private final int yDir;
 

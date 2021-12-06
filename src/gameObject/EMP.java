@@ -4,18 +4,25 @@ import javafx.scene.image.Image;
 
 /**
  * EMP.java
- * @author Sam B, Debbie L, ...
- * @version
- * Last Mod Date:
+ * @author Sam B, Debbie L
+ * Last Mod Date: 06/12/2021
  * Description: Emp Item, mimics the bomb weapon from the functional spec. Inherits from Item Class.
  */
 public class EMP extends Item {
+	
+	/** The Constant X_RANGE. */
 	private static final int X_RANGE = 100;
+	
+	/** The Constant Y_RANGE. */
 	private static final int Y_RANGE = 100;
+	
+	/** The Constant USES. */
 	private static final int USES = 1;
 
+	/** The Constant ITEM_IMAGE. */
 	public static final Image ITEM_IMAGE = new Image("file:res/Sprites/emp.png",50, 50, false, false);
 
+	/** The Constant DAMAGE. */
 	private static final int DAMAGE = 100;
 
 	/**
@@ -39,6 +46,11 @@ public class EMP extends Item {
 		return ITEM_IMAGE;
 	}
 
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	@Override
 	public String toString() {
 		return String.format("%s,%d,%d,%d", "EMP",this.getGridX(),this.getGridY(),this.uses);

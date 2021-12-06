@@ -17,65 +17,58 @@ import java.util.stream.Collectors;
 
 /**
  * Mech.java
- * @author
- * @version
- * Last Mod Date:
+ * @author Sam R, Illia, Sam B
+ * Last Mod Date: 06/12/2021
  */
 public class Mech extends Rectangle {
-	// X_RANGE AND Y_RANGE should define where this item
-	// acts relative to its current x and y co-ord
-//	private static final int X_RANGE = 0;
-//	private static final int Y_RANGE = 0;
-//
-//	// could be an int instead
-//	private char type;
-//	private char age;
-//
-//	private boolean isPregnant;
-//
-//	private int health;
-//	private int secondsUntilAdult;
-//
-//	private int currentXPos;
-//	private int xDir;
-//	private int currentYPos;
-//	private int yDir;
-//
-//	private int speed = 1;
-//
-//
-//	private Tile[] neighbourTiles;
-	/*
-	* for the movement:
-	* Illia's suggestion:
-	* for every move, get the neighbour tiles and check them
-	* */
+	
+	/** The type. */
 	private MechType type;
 
+	/** The y. */
 	private int x, y;
 
+	/** The Constant NUM_OF_BABIES_IF_BIRTHING. */
 	public static final int NUM_OF_BABIES_IF_BIRTHING = 5;
 
+	/** The current direction. */
 	private Direction currentDirection;
+	
+	/** The current cords. */
 	private Pair currentCords;
+	
+	/** The time until adult. */
 	private int timeUntilAdult;
+	
+	/** The pregnancy timer. */
 	private int pregnancyTimer;
+	
+	/** The health. */
 	protected int health;
+	
+	/** The pregnant. */
 	private boolean pregnant;
+	
+	/** The num of babies. */
 	private int numOfBabies;
-
-	private int prevX, prevY;
+	
+	/** The img. */
 	private Image img;
 
+	/** The is baby. */
 	private boolean isBaby;
 
+	/** The is sterile. */
 	private boolean isSterile;
+	
+	/** The is breeding. */
 	private boolean isBreeding;
+	
+	/** The seconds until adult. */
 	private int secondsUntilAdult;
 
+	/** The breeding cool down. */
 	private int breedingCoolDown;
-
-	// haven't implemented age functionality
 
 	/**
 	 * Instantiates a Mech
@@ -127,10 +120,16 @@ public class Mech extends Rectangle {
 		return bothOppositeTypes && neitherSterile && neitherCurrentlyBreeding && neitherPregnant && bothNotDeathMech;
 	}
 
-	public void actOn(Mech otherMech) {
-		// breed
-	}
+	/**
+	 * Act on.
+	 *
+	 * @param otherMech the other mech
+	 */
+	public void actOn(Mech otherMech) {}
 
+	/**
+	 * Grow into adult.
+	 */
 	public void growIntoAdult() {
 		assert (this.isBaby);
 		assert (this.timeUntilAdult <= 0);
@@ -138,18 +137,36 @@ public class Mech extends Rectangle {
 		this.setImage(getImageForType(this.type));
 	}
 
+	/**
+	 * Sets the time until adult.
+	 *
+	 * @param time the new time until adult
+	 */
 	public void setTimeUntilAdult(int time) {
 		this.timeUntilAdult = time;
 	}
 
+	/**
+	 * Gets the time until adult.
+	 *
+	 * @return the time until adult
+	 */
 	public int getTimeUntilAdult() {
 		return this.timeUntilAdult;
 	}
 
+	/**
+	 * Sets the checks if is breeding.
+	 *
+	 * @param bool the new checks if is breeding
+	 */
 	public void setIsBreeding(boolean bool) {
 		this.isBreeding = bool;
 	}
 
+	/**
+	 * Reduce time until adult.
+	 */
 	public void reduceTimeUntilAdult() {
 		this.timeUntilAdult--;
 	}
@@ -170,18 +187,34 @@ public class Mech extends Rectangle {
 		return myBaby;
 	}
 
+	/**
+	 * Gets the breeding cool down.
+	 *
+	 * @return the breeding cool down
+	 */
 	public int getBreedingCoolDown() {
 		return this.breedingCoolDown;
 	}
 
+	/**
+	 * Sets the breeding cool down.
+	 *
+	 * @param newBreedingCoolDown the new breeding cool down
+	 */
 	public void setBreedingCoolDown(int newBreedingCoolDown) {
 		this.breedingCoolDown = newBreedingCoolDown;
 	}
 
+	/**
+	 * Reset breeding cool down.
+	 */
 	public void resetBreedingCoolDown() {
 		this.breedingCoolDown = 0;
 	}
 
+	/**
+	 * Reduce breeding cool down.
+	 */
 	public void reduceBreedingCoolDown() {
 		if(this.breedingCoolDown > 0) {
 			this.breedingCoolDown--;
@@ -217,11 +250,8 @@ public class Mech extends Rectangle {
 					return Direction.fromPair(currentDirection.toPair().mult(new Pair(-1, -1)));
 				case "RIGHT":
 					return Direction.fromPair(new Pair(currentDirection.getYDir(), (-1 * currentDirection.getXDir())));
-//				this.currentDirection = new Pair(this.currentDirection.getYDir(), (-1 * this.currentDirection.getXDir()));
 				case "LEFT":
 					return Direction.fromPair(new Pair((-1 * currentDirection.getYDir()), currentDirection.getXDir()));
-//			case "FORWARD":
-//				this.currentDirection = this.currentDirection;
 				default:
 					return currentDirection;
 			}
@@ -244,12 +274,9 @@ public class Mech extends Rectangle {
 			case "RIGHT":
 				this.currentDirection = Direction.fromPair(new Pair(this.currentDirection.getYDir(), (-1 * this.currentDirection.getXDir())));
 				break;
-//				this.currentDirection = new Pair(this.currentDirection.getYDir(), (-1 * this.currentDirection.getXDir()));
 			case "LEFT":
 				this.currentDirection = Direction.fromPair(new Pair((-1 * this.currentDirection.getYDir()), this.currentDirection.getXDir()));
 				break;
-//			case "FORWARD":
-//				this.currentDirection = this.currentDirection;
 			default:
 				this.currentDirection = this.currentDirection;
 		}
@@ -293,13 +320,8 @@ public class Mech extends Rectangle {
 		turns.add("FORWARD");
 		turns.add("LEFT");
 		turns.add("RIGHT");
-		//turns.add("AROUND");
 		Random rand = new Random();
-		// if the next tile in the current direction isn't walkable (i.e. if it's a wall)
-
 		if (!(onGrid.getTileAt(possibleNextCoords).isWalkable())) {
-			// if the
-			//if((!(onGrid.getTileAt(this.getNextPos(Direction.RIGHT)).isWalkable())) && (!(onGrid.getTileAt(this.getNextPos(Direction.LEFT)).isWalkable()))) {
 			if((!onGrid.getTileAt(this.getNextPos(getTurnDirection("RIGHT",currentDirection))).isWalkable()) && (!onGrid.getTileAt(this.getNextPos(getTurnDirection("LEFT",currentDirection))).isWalkable())) {
 				this.turn("AROUND");
 				this.currentCords = this.currentCords.add(this.currentDirection.toPair());
@@ -325,7 +347,6 @@ public class Mech extends Rectangle {
 				this.currentCords.add(new Pair(1,1));
 			}
 		}
-//		this.currentCords = this.currentCords.add(this.currentDirection.toPair());
 		this.x = this.currentCords.x;
 		this.y = this.currentCords.y;
 	}
@@ -393,6 +414,11 @@ public class Mech extends Rectangle {
 		return img;
 	}
 
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	@Override
 	public String toString() {
 		char typeAsChar = this.type.toString().charAt(0);
@@ -408,19 +434,35 @@ public class Mech extends Rectangle {
 		return this.type;
 	}
 
+	/**
+	 * Reduce pregnancy timer.
+	 */
 	public void reducePregnancyTimer() {
 		this.pregnancyTimer--;
 	}
 
+	/**
+	 * Make pregnant.
+	 */
 	public void makePregnant() {
 		this.setPregnant(true);
 		this.pregnancyTimer = 10;
 	}
 
+	/**
+	 * Sets the pregnancy timer.
+	 *
+	 * @param time the new pregnancy timer
+	 */
 	public void setPregnancyTimer(int time) {
 		this.pregnancyTimer = 10;
 	}
 
+	/**
+	 * Gets the pregnancy timer.
+	 *
+	 * @return the pregnancy timer
+	 */
 	public int getPregnancyTimer() {
 		return this.pregnancyTimer;
 	}
@@ -467,151 +509,6 @@ public class Mech extends Rectangle {
 			System.err.println("I have lived a good life. Now, I die.");
 		}
 	}
-	// should itemId be a thing in the constructor for item?
-	// need to update this constructor
-//	public Mech(char type, int xPos, int yPos, int xDir, int yDir) {
-//		super(xPos, yPos);
-//		this.currentXPos = xPos;
-//		this.currentYPos = yPos;
-//		this.xDir = xDir;
-//		this.yDir = yDir;
-//	}
-//
-//	@Override
-//	public String toString() {
-//		return String.format("\nMech x pos: %d\nMech Y pos: %d", this.currentXPos, this.currentYPos);
-//	}
-//
-//	private void switchDirection(Grid grid) {
-//		Pair[] pairs = {new Pair(this.currentXPos, this.currentYPos+1), new Pair(this.currentXPos+1, this.currentYPos),
-//	new Pair(this.currentXPos, this.currentYPos-1), new Pair(this.currentXPos-1, this.currentYPos)};
-//		Random rand = new Random();
-//		int choice = rand.nextInt(4);
-//		while(!grid.getTileAt(pairs[choice].x, pairs[choice].y).isWalkable()) {
-//			choice = rand.nextInt(4);
-//			System.out.println(choice);
-//		}
-//		System.out.println("Found x and y: " + pairs[choice].x + "," + pairs[choice].y);
-//		setXAndY(pairs[choice]);
-//	}
-//
-//	public void setXAndY(Pair pair) {
-//		this.currentXPos = pair.x;
-//		this.currentYPos = pair.y;
-//	}
-//
-//	public void move(Grid grid) {
-//		int nextXPos = (this.currentXPos + (this.xDir * speed));
-//		int nextYPos = (this.currentYPos + (this.yDir * speed));
-//		System.out.println("Next x pos : " + nextXPos);
-//		System.out.println("Next y pos : " + nextYPos);
-//		if(!grid.getTileAt(nextXPos, nextYPos).isWalkable()) {
-//			switchDirection(grid);
-//		} else {
-//			this.currentXPos = nextXPos;
-//			this.currentYPos = nextYPos;
-//		}
-//	}
-//
-//
-//	public boolean readyToBirth() {
-//		// ???
-//		return true;
-//	}
-//
-//	// check validity somewhere else
-//	public void mate(Mech otherMech) {
-//		if(this.type != otherMech.getType() && (!otherMech.isPregnant())) {
-//			switch (otherMech.getType()) {
-//				case 'R':
-//					this.isPregnant = true;
-//				default:
-//					otherMech.setPregnant(true);
-//			}
-//		} else {
-//
-//		}
-//		// what happens when they mate?
-//		// they both stay on the same tile for a few moments
-//		// one of them becomes pregnant
-//		// once they're done, they both leave
-//	}
-//
-//	public void dealWithPuddle(Puddle puddle) {
-//
-//	}
-//
-//	@Override
-//	public void act(Mech someMech) {
-//		this.mate(someMech);
-//	}
-//
-//
-//	public char getType() {
-//		return type;
-//	}
-//
-//	public void setType(char type) {
-//		this.type = type;
-//	}
-//
-//	public char getAge() {
-//		return age;
-//	}
-//
-//	public void setAge(char age) {
-//		this.age = age;
-//	}
-//
-//
-//
-//	public int getHealth() {
-//		return health;
-//	}
-//
-//	public void setHealth(int health) {
-//		this.health = health;
-//	}
-//
-//	public int getSecondsUntilAdult() {
-//		return secondsUntilAdult;
-//	}
-//
-//	public void setSecondsUntilAdult(int secondsUntilAdult) {
-//		this.secondsUntilAdult = secondsUntilAdult;
-//	}
-//
-//	public int getCurrentXPos() {
-//		return this.currentXPos;
-//	}
-//
-//	public void setCurrentXPos(int currentXPos) {
-//		this.currentXPos = currentXPos;
-//	}
-//
-//	public int getxDir() {
-//		return xDir;
-//	}
-//
-//	public void setxDir(int xDir) {
-//		this.xDir = xDir;
-//	}
-//
-//	public int getCurrentYPos() {
-//		return this.currentYPos;
-//	}
-//
-//	public void setCurrentYPos(int currentYPos) {
-//		this.currentYPos = currentYPos;
-//	}
-//
-//	public int getyDir() {
-//		return this.yDir;
-//	}
-//
-//	public void setyDir(int yDir) {
-//		this.yDir = yDir;
-//	}	
 
 	/**
 	 * Checks sterile state of the mech (true if a mech has been sterilised).

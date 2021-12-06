@@ -4,9 +4,8 @@ import javafx.scene.image.Image;
 
 /**
  * Lightning.java
- * @author Sam B, Debbie L, ...
- * @version
- * Last Mod Date:
+ * @author Sam B, Debbie L.
+ * Last Mod Date: 03/12/2021
  * Description: Lightning Item, mimics the sterilisation weapon from the functional spec. Inherits from Item Class.
  */
 public class Lightning extends Item {
@@ -51,6 +50,11 @@ public class Lightning extends Item {
 		return ITEM_IMAGE;
 	}
 
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	@Override
 	public String toString() {
 		return String.format("%s,%d,%d,%d", "LIGHTNING",this.getGridX(),this.getGridY(),this.uses);

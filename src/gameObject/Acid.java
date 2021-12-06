@@ -4,21 +4,34 @@ import javafx.scene.image.Image;
 
 /**
  * Acid.java
- * @author Sam B, Debbie L, ...
- * @version
- * Last Mod Date:
+ * @author Sam B, Debbie L
+ * Last Mod Date: 06/12/2021
  * Description: Acid Item, mimics the gas weapon from the functional spec. Inherits from Item Class.
  */
 public class Acid extends Item {
 
+	/** The Constant X_RANGE. */
 	private static final int X_RANGE = 3;
+	
+	/** The Constant Y_RANGE. */
 	private static final int Y_RANGE = 3;
+	
+	/** The Constant ITEM_IMAGE. */
 	public static final Image ITEM_IMAGE = new Image("file:res/Sprites/acid.png",50, 50, false, false);
+	
+	/** The Constant ITEM_IMAGE_PUDDLE. */
 	public static final Image ITEM_IMAGE_PUDDLE = new Image("file:res/Sprites/acidPuddle.png",50, 50, false, false);
+	
+	/** The Constant USES. */
 	private static final int USES = 4;
+	
+	/** The duration. */
 	private int DURATION = 5; //5 ticks or seconds
 	
+	/** The damage over time adult. */
 	private static int DAMAGE_OVER_TIME_ADULT = 25; //25 Damage per tick
+	
+	/** The damage over time baby. */
 	private static int DAMAGE_OVER_TIME_BABY = 10; //25 Damage per tick
 
 	/**
@@ -48,7 +61,8 @@ public class Acid extends Item {
 	}
 
 	/**
-	 * Retrieve the image of the Acid for the GUI
+	 * Retrieve the image of the Acid for the GUI.
+	 *
 	 * @return the Acid sprite image
 	 */
 	@Override
@@ -56,6 +70,11 @@ public class Acid extends Item {
 		return String.format("%s,%d,%d,%d", "ACID",this.getGridX(),this.getGridY(),this.uses);
 	}
 
+	/**
+	 * Gets the image.
+	 *
+	 * @return the image
+	 */
 	@Override
 	public Image getImage() { return ITEM_IMAGE_PUDDLE;}
 }

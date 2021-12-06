@@ -4,9 +4,10 @@ import javafx.scene.image.Image;
 import java.awt.*;
 
 /**
- * The Class Item serves as a base for all items .
  * Item.java
- * @author Sam B, ...
+ * @author Sam R, Sam B
+ * Description:The Class Item serves as a base for all items.
+ * Last Mod Date: 04/12/2021
  */
 public abstract class Item extends Rectangle {
 
@@ -43,14 +44,29 @@ public abstract class Item extends Rectangle {
 		this.uses = uses;
 	}
 
+	/**
+	 * Gets the uses.
+	 *
+	 * @return the uses
+	 */
 	public int getUses() {
 		return this.uses;
 	}
 
+	/**
+	 * Sets the uses.
+	 *
+	 * @param uses the new uses
+	 */
 	public void setUses(int uses) {
 		this.uses = uses;
 	}
 
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	@Override
 	public abstract String toString();
   

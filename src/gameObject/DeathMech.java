@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 /**
  * DeathMech.java
- * @author Sam B, David Terence-Abanulo
+ * @author Sam B, David Terence-Abanulo, Sam R
  * Description: The death mech class (Not item, extends Mech) 
  * Last Mod Date: 27/11/2021
  */
