@@ -204,7 +204,7 @@ public class Game {
      *
      * @return the pane
      */
-    private Pane buildGUI() {
+    private Pane buildMainMenu() {
 	BorderPane root = new BorderPane();
 	canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
 	root.setCenter(canvas);
@@ -293,7 +293,8 @@ public class Game {
 	}
 
 	canvas.setOnDragDropped(new EventHandler<DragEvent>() {
-	    public void handle(DragEvent event) {
+
+    public void handle(DragEvent event) {
 
 
 		Dragboard db = event.getDragboard();
@@ -336,146 +337,18 @@ public class Game {
 	    Item i = InventoryItem.getItemForName(db.getString(), xCoord, yCoord);
 	    level.getInventory().useItem(db.getString());
 
-		Mech newMech = new DeathMech(xCoord, yCoord);
-		this.level.addMech(newMech);
-	    } else {
-		this.level.addItem(i);
-	    }
-
-	    GraphicsContext gc = canvas.getGraphicsContext2D();
-
-	    gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
-
+	    Mech newMech = new DeathMech(xCoord, yCoord);
+	    this.level.addMech(newMech);
 	} else {
-	    System.out.println("This error should not exist (Game.java)");
+	    this.level.addItem(i);
 	}
 
-	/**
-	 * Builds the GUI of the game.
-	 *
-	 * @return the pane
-	 */
-	private Pane buildGUI() {
-		BorderPane root = new BorderPane();
-		canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-		root.setCenter(canvas);
-		HBox topbar = new HBox();
-		topbar.setSpacing(10);
-		topbar.setPadding(new Insets(10, 10, 10, 10));
-		root.setTop(topbar);
-		HBox motdbar = new HBox();
-		motdbar.setSpacing(10);
-		motdbar.setPadding(new Insets(10));
-		root.setBottom(motdbar);
-		root.setStyle(" -fx-background-image:" + "url("+"file:res/sprites/TileT.png"+ ")" + ";"
-				+ "-fx-background-size: 50 50;"
-				+ "-fx-background-position: center 105");
-		AudioPlayer.playInGameMusic();
-		VBox sidebar = new VBox();
+	GraphicsContext gc = canvas.getGraphicsContext2D();
 
-		root.setRight(sidebar);
+	gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
 
-
-		Button startTickTimelineButton = new Button("Play");
-		startTickTimelineButton.setStyle(GameManager.BUTTON_STYLE);
-		Button stopTickTimelineButton = new Button("Pause");
-		stopTickTimelineButton.setStyle(GameManager.BUTTON_STYLE);
-		Button saveLevelButton = new Button("Save Level");
-		saveLevelButton.setStyle(GameManager.BUTTON_STYLE);
-		Button exitGameButton = new Button("Exit Game");
-		exitGameButton.setStyle(GameManager.BUTTON_STYLE);
-
-		Label messageOfDayLabel = new Label(this.messageOfTheDay);
-		messageOfDayLabel.setStyle("-fx-text-fill: White;"
-				+ "-fx-font-family: Impact;"
-				+ "-fx-font-size: 20");
-		Button score = this.level.getButton();
-		
-		// Stop button is disabled by default
-		stopTickTimelineButton.setDisable(true);
-
-		// Setup the behaviour of the buttons.
-		startTickTimelineButton.setOnAction(e -> {
-			// Start the tick timeline and enable/disable buttons as appropriate.
-			startTickTimelineButton.setDisable(true);
-			tickTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> tick()));
-			tickTimeline.setCycleCount(Animation.INDEFINITE);
-			this.tickTimeline.play();
-			stopTickTimelineButton.setDisable(false);
-		});
-
-		saveLevelButton.setOnAction(e ->{
-			saveLevel(this.level, this.currentPlayer);
-		});
-
-		stopTickTimelineButton.setOnAction(e -> {
-			// Stop the tick timeline and enable/disable buttons as appropriate.
-			stopTickTimelineButton.setDisable(true);
-			this.tickTimeline.pause();
-			startTickTimelineButton.setDisable(false);
-		});
-
-		exitGameButton.setOnAction(e -> {
-		    this.gameStage.hide();
-		    AudioPlayer.stopAllMusic();
-		    if (this.tickTimeline != null) {
-		        this.tickTimeline.pause(); 
-		    }
-		    GameManager.mainMenu.show();
-
-		});
-
-		motdbar.getChildren().addAll(messageOfDayLabel);
-		topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton,saveLevelButton, exitGameButton, score);
-
-		// This code setup what happens when the dragging starts on the image.
-		for (var i : this.level.getInventory().getItems().entrySet()) {
-			InventoryItem iconItem = i.getValue();
-			iconItem.setImage(iconItem.getSprite());
-			sidebar.getChildren().addAll(iconItem, i.getValue().getLabel());
-			
-			iconItem.setOnDragDetected(new EventHandler<MouseEvent>() {
-				public void handle(MouseEvent event) {
-					if (iconItem.getRemainingUses() != 0) {
-						Dragboard db = iconItem.startDragAndDrop(TransferMode.ANY);
-						System.out.println(iconItem.getRemainingUses());
-
-						ClipboardContent itemName = new ClipboardContent();
-						itemName.putString(iconItem.itemName);
-						db.setContent(itemName);
-
-						event.consume();
-					}
-				}
-			});
-		}
-
-		canvas.setOnDragDropped(new EventHandler<DragEvent>() {
-			public void handle(DragEvent event) {
-				// We call this method which is where the bulk of the behaviour takes place.
-				Dragboard db = event.getDragboard();
-
-				canvasDragDroppedOccured(event);
-
-				level.getInventory().getLabel(db.getString())
-						.setText(Integer.toString(level.getInventory().getItemUses(db.getString())));
-
-				// Consume the event. This means we mark it as dealt with.
-				event.consume();
-			}
-		});
-
-		canvas.setOnDragOver(new EventHandler<DragEvent>() {
-			public void handle(DragEvent event) {
-				// Mark the drag as acceptable if the source was the draggable image.
-				// (for example, we don't want to allow the user to drag things or files into
-				// our application)
-				event.acceptTransferModes(TransferMode.ANY);
-				// Consume the event. This means we mark it as dealt with.
-				event.consume();
-			}
-		});
-		return root;
+    }else {
+	System.out.println("This error should not exist (Game.java)");
     }
 
     /**
@@ -552,7 +425,7 @@ public class Game {
      */
     public void showGame() throws Exception {
 
-	Pane root = buildGUI();
+	Pane root = buildMainMenu();
 	Stage stage = new Stage();
 	Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 
