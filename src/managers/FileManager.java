@@ -211,14 +211,14 @@ public class FileManager {
 		width = Integer.valueOf(br.readLine());
 		height = Integer.valueOf(br.readLine());
 		Grid grid = new Grid(width, height);
-		for(int i = 0; i < height; i++) {
+		for(int i = 0; i < height+1; i++) {
 			tiles += br.readLine() + "\n";
 			//rowsOfTiles.add(br.readLine());
 		}
 
 		numberOfMechs = Integer.valueOf(br.readLine());
 
-		for(int i = 0; i < numberOfMechs; i++) {
+		for(int i = 0; i < numberOfMechs+1; i++) {
 			mechs.add(GameObjectFactory.readMech(br.readLine()));
 		}
 
@@ -228,6 +228,8 @@ public class FileManager {
 		}
 
 		numberOfItemsInInventory = Integer.valueOf(br.readLine());
+
+//		System.out.println(numberOfItemsInInventory);
 		for(int i = 0; i < numberOfItemsInInventory; i++) {
 			inventory.addItem(GameObjectFactory.readInventoryItem(br.readLine()));
 		}

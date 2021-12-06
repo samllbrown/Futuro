@@ -158,12 +158,19 @@ public class GameManager extends Application {
         
         // Create a new profile to play the game as
         newPlayer.setOnAction(e -> {
-        	Pane newPlayerPane = buildNewPlayer();
-            Scene newPlayerScene = new Scene(newPlayerPane, 300, 200);
-            Stage newPlayerStage = new Stage();
-            newPlayerStage.setScene(newPlayerScene);
-            newPlayerStage.setTitle("New player");
-            newPlayerStage.show();
+//        	Pane newPlayerPane = buildNewPlayer();
+//            Scene newPlayerScene = new Scene(newPlayerPane, 300, 200);
+//            Stage newPlayerStage = new Stage();
+//            newPlayerStage.setScene(newPlayerScene);
+//            newPlayerStage.setTitle("New player");
+//            newPlayerStage.show();
+            Pane loadGame = loadNewGame();
+            Scene loadGameScene = new Scene(loadGame, 300, 200);
+            Stage loadGameStage = new Stage();
+
+            loadGameStage.setScene(loadGameScene);
+            loadGameStage.setTitle("Load new game");
+            loadGameStage.show();
         });
 
 
@@ -312,6 +319,7 @@ public class GameManager extends Application {
     	return root;
     }
 
+<<<<<<< Updated upstream
     // SetOnAction needs to load a file (open file manager? input level id like choose player does?)
 //     private Pane loadNewGame() {
 //         BorderPane root = new BorderPane();
@@ -348,6 +356,51 @@ public class GameManager extends Application {
 //         return root;
 
 //     }
+=======
+
+     //SetOnAction needs to load a file (open file manager? input level id like choose player does?)
+     private Pane loadNewGame() {
+         BorderPane root = new BorderPane();
+         VBox sidebar = new VBox();
+         sidebar.setSpacing(10);
+         sidebar.setPadding(new Insets(10, 10, 10, 10));
+
+         FileChooser selectLoadFile = new FileChooser();
+         selectLoadFile.setTitle("Select game file");
+
+         Button loadButton = new Button("Select game file");
+
+         root.setLeft(sidebar);
+         sidebar.getChildren().add(loadButton);
+
+         loadButton.setOnAction(e -> {
+             File selectedFile = selectLoadFile.showOpenDialog(mainMenu);
+             String selectedFilePath = selectedFile.getAbsolutePath();
+
+             Level level = null;
+             Game game = new Game();
+             try {
+                 level = FileManager.readLevel(selectedFilePath);
+             } catch (Exception ex) {
+                 ex.printStackTrace();
+             }
+             try {
+                 game.setLevel(FileManager.readLevel(selectedFilePath));
+                 game.setCurrentPlayer(this.currentPlayer);
+                 if(this.currentPlayer.getMaxLevelID() < game.getLevel().getLevelID()) {
+                    showAlert("Information", "Level too high", "You can't play that level yet");
+                 } else {
+                    mainMenu.close();
+                    AudioPlayer.stopAllMusic();
+                    game.showGame();
+                    chooseLevelMenu.close();
+                 }
+             } catch (Exception exception) {
+                         exception.printStackTrace();
+             }
+         });
+         return root;
+    }
 
 	/**
      * Builds the choose level UI.

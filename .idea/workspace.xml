@@ -5,9 +5,15 @@
       <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/src/managers/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/managers/Game.java" afterDir="false" />
 =======
       <change beforePath="$PROJECT_DIR$/res/Levels/LEVEL_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/res/Levels/LEVEL_1.txt" afterDir="false" />
+>>>>>>> Stashed changes
+=======
+      <change beforePath="$PROJECT_DIR$/res/Players/89_lastSave.txt" beforeDir="false" afterPath="$PROJECT_DIR$/res/Players/89_lastSave.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/managers/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/managers/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/managers/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/managers/GameManager.java" afterDir="false" />
 >>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -36,18 +42,22 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../../javafx-sdk-17.0.1/lib" />
     <property name="project.structure.last.edited" value="Libraries" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pathVariables" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
   </component>
   <component name="RunManager">
     <configuration name="Futuro" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="managers.GameManager" />
       <module name="Futuro" />
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       <option name="VM_PARAMETERS" value="--module-path C:\javafx-sdk-17.0.1\lib --add-modules javafx.controls,javafx.fxml --add-modules javafx.media" />
 =======
       <option name="VM_PARAMETERS" value="--module-path &quot;C:\javafx-sdk-17.0.1\lib&quot; --add-modules javafx.controls,javafx.fxml --add-modules javafx.media" />
+>>>>>>> Stashed changes
+=======
+      <option name="VM_PARAMETERS" value="--module-path C:\javafx-sdk-17.0.1\lib --add-modules javafx.controls,javafx.fxml --add-modules javafx.media" />
 >>>>>>> Stashed changes
       <method v="2">
         <option name="Make" enabled="true" />
