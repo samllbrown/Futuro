@@ -1,15 +1,13 @@
 package board;
 
-import gameObject.Direction;
-
-
 /**
  * Pair.java
- * @author
- * @version
- * Last Mod Date:
+ * @author Sam R
+ * Last Mod Date: 02/12/2021
  */
 public class Pair {
+    
+    /** The x and y. */
     public int x,y;
 
     /**
@@ -57,8 +55,4 @@ public class Pair {
     public Pair div(Pair p) {
         return new Pair(this.x/p.x, this.y/p.y);
     }
-
-//    public Pair toPair(Direction direction) {
-//        return new Pair(direction.getXDir(), direction.getYDir());
-//    }
 }
