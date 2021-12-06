@@ -519,19 +519,13 @@ public class Game {
 	        	alert.setTitle("SUCCESS");
 	        	alert.setHeaderText("You win");
 	        	alert.setContentText("Good job loser");
-	            alert.showAndWait().ifPresent(rs -> {
-	                if (rs == ButtonType.OK) {
-	                }
-	            });
+	            alert.show();
 		} else {
 			Alert alert  = new Alert(AlertType.CONFIRMATION);
 	        	alert.setTitle("FAILURE");
 	        	alert.setHeaderText("You are a failure");
 	        	alert.setContentText("Only people like you would lose");
-	            alert.showAndWait().ifPresent(rs -> {
-	                if (rs == ButtonType.OK) {
-	                }
-	            });
+	            alert.show();
 		}
 	}
 
