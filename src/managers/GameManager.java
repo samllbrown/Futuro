@@ -321,7 +321,7 @@ public class GameManager extends Application {
 
         newPlayerButton.setOnAction(e -> { 
     	try {
-        	boolean created = (FileManager.writeToPlayerFile(new Player(playerIDInput.getText() + "," + playerNameInput.getText())));
+        	boolean created = (FileManager.writeToPlayerFile(new Player(playerIDInput.getText() + "," + playerNameInput.getText()+ "," + "0")));
         	Alert alert  = new Alert(AlertType.CONFIRMATION);
         	if(created) {
 	        	alert.setTitle("SUCCESS");
