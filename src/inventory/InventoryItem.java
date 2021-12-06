@@ -1,4 +1,5 @@
 package inventory;
+
 import gameObject.*;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -61,8 +62,6 @@ public abstract class InventoryItem extends ImageView {
         this.itemSprite = getImageForName(name);
         // NEED TO CHECK IF GREATER THAN MAX, LESS THAN 0 FOR REMAINING USES
         this.label =  new Label(Integer.toString(remainingUses));
-        label.setStyle("-fx-text-fill: White");
-
         this.remainingUses = remainingUses;
     }
 
