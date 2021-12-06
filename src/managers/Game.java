@@ -65,7 +65,7 @@ public class Game {
 	private static final int WINDOW_WIDTH = 1050;
 
 	/** The Constant WINDOW_HEIGHT of the UI. */
-	private static final int WINDOW_HEIGHT = 900;
+	private static final int WINDOW_HEIGHT = 800;
 
 	/** The Constant CANVAS_WIDTH of the canvas */
 	private static final int CANVAS_WIDTH = 700;
@@ -340,7 +340,7 @@ public class Game {
 		});
 
 		motdbar.getChildren().addAll(messageOfDayLabel);
-		topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton,saveLevelButton, exitGameButton);
+		topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton,saveLevelButton, exitGameButton, score);
 
 		// This code setup what happens when the dragging starts on the image.
 		for (var i : this.level.getInventory().getItems().entrySet()) {
