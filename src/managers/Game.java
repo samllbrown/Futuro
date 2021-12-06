@@ -279,11 +279,14 @@ public class Game {
 		AudioPlayer.playInGameMusic();
 		VBox sidebar = new VBox();
 		root.setRight(sidebar);
-		Button exitGameButton = new Button("Exit Game");
+
 
 		Button startTickTimelineButton = new Button("Start Ticks");
 		Button stopTickTimelineButton = new Button("Stop Ticks");
-		
+		Button saveLevelButton = new Button("Save Level");
+		Button exitGameButton = new Button("Exit Game");
+
+
 		Label messageOfDayLabel = new Label(this.messageOfTheDay);
 		
 		Button score = this.level.getButton();
@@ -301,6 +304,10 @@ public class Game {
 			stopTickTimelineButton.setDisable(false);
 		});
 
+		saveLevelButton.setOnAction(e ->{
+			saveLevel(this.level, this.currentPlayer);
+		});
+
 		stopTickTimelineButton.setOnAction(e -> {
 			// Stop the tick timeline and enable/disable buttons as appropriate.
 			stopTickTimelineButton.setDisable(true);
@@ -313,7 +320,8 @@ public class Game {
 			GameManager.mainMenu.show();
 		});
 
-		topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton, exitGameButton, messageOfDayLabel, score);
+		//topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton, exitGameButton, messageOfDayLabel, score);
+		topbar.getChildren().addAll(startTickTimelineButton, stopTickTimelineButton,saveLevelButton, exitGameButton, messageOfDayLabel);
 
 		// This code setup what happens when the dragging starts on the image.
 		for (var i : this.level.getInventory().getItems().entrySet()) {
@@ -508,5 +516,9 @@ public class Game {
 		stage.setScene(scene);
 		gameStage = stage;
 		gameStage.show();
+	}
+
+	public void saveLevel(Level level, Player player){
+		FileManager.writeLevel(level, player);
 	}
 }
