@@ -49,6 +49,8 @@ public class Leaderboard {
                     }
                 }
             }
+        } else {
+        	this.idsToScores.put(playerID, score);
         }
     }
 
