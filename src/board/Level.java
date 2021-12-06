@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-import board.Path;
 import board.Tile;
-import board.Tunnel;
-import board.Wall;
 
 import board.Grid;
 import gameObject.GameObjectFactory;
@@ -231,7 +228,6 @@ public class Level {
 			}
 		}
 
-		//MechManager.checkMechsForBreeding(this.mechs, this.grid);
 		this.mechs.forEach(m -> {
 			try {
 				if(!m.isBreeding()) {
@@ -258,7 +254,6 @@ public class Level {
 			if(i.isReadyForDestroy()) {
 				System.err.println("Gets destroyed");
 				this.removeItem(i);
-				//this.getGrid().getTileAt(i.getGridX(), i.getGridY()).setCurrentItem(null);
 			}
 		}
 	}
@@ -276,9 +271,6 @@ public class Level {
 	 * Update inventory items.
 	 */
 	private void updateInventoryItems() {
-		//Inventory currentInventoryCopy = new Inventory(this.inventory.getItems(), this.inventory.getLabels());
-		//System.out.println(currentInventoryCopy);
-		//System.out.println(this.inventory);
 		for(var i : this.inventory.getItems().entrySet()){
 			Random random = new Random();
 			if(random.nextInt(itemRespawnRate) == itemRespawnRate-1) {
@@ -295,7 +287,6 @@ public class Level {
 	 * @throws Exception the exception
 	 */
 	public void update() throws Exception {
-		// this for loop should probs just go into an init method
 		this.updateItems();
 		this.breeder.update(this.mechs, grid);
 		this.updateMechs();

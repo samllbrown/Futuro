@@ -12,21 +12,24 @@ import managers.Game;
 
 /**
  * Tile.java
- * @author
- * @version
- * Last Mod Date:
- */
-
-/**
- * The Tile class represents a tile on the game canvas.
+ * @author Sam R
+ * Last Mod Date: 06/12/2021
  */
 public class Tile extends Rectangle {
+	
+	/** The current mechs. */
 	private ArrayList<Mech> currentMechs;
 
+	/** The current item. */
 	private Item currentItem;
 
+	/** The img. */
 	private Image img;
+	
+	/** The tile type. */
 	private TileType tileType;
+	
+	/** The visible tile. */
 	private boolean visibleTile;
 
 	/**
@@ -47,6 +50,13 @@ public class Tile extends Rectangle {
 		this.currentItem = null;
 	}
 
+	/**
+	 * Gets the other mechs on tile.
+	 *
+	 * @param differentToMech the different to mech
+	 * @return the other mechs on tile
+	 * @throws Exception the exception
+	 */
 	public ArrayList<Mech> getOtherMechsOnTile(Mech differentToMech) throws Exception {
 		if(this.currentMechs.contains(differentToMech)) {
 			ArrayList<Mech> otherMechsOnTile = new ArrayList<>(currentMechs);
@@ -57,6 +67,12 @@ public class Tile extends Rectangle {
 		}
 	}
 
+	/**
+	 * Gets the breedable mechs on tile.
+	 *
+	 * @param forMech the for mech
+	 * @return the breedable mechs on tile
+	 */
 	public ArrayList<Mech> getBreedableMechsOnTile(Mech forMech) {
 		ArrayList<Mech> breedableMechs = new ArrayList<>();
 		if(this.currentMechs.contains(forMech)) {
