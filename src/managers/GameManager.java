@@ -80,7 +80,7 @@ public class GameManager extends Application {
     /** The Constant CANVAS_HEIGHT. */
     private static final int CANVAS_HEIGHT = 400;
 	
-    private static final String BUTTON_STYLE = "fx-background-color: \n" +
+    public static final String BUTTON_STYLE = "fx-background-color: \n" +
             "        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),\n" +
             "        #9d4024,\n" +
             "        #d86e3a,\n" +
@@ -89,7 +89,7 @@ public class GameManager extends Application {
             "-fx-font-family: Impact; " +
             "-fx-font-size: 20;" +
             "-fx-font-weight: bold;";
-    private static final String HOVERED_BUTTON_STYLE = "fx-background-color: \n" +
+    public static final String HOVERED_BUTTON_STYLE = "fx-background-color: \n" +
             "        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),\n" +
             "        #9d4024,\n" +
             "        #d86e3a,\n" +
@@ -202,7 +202,7 @@ public class GameManager extends Application {
         startGame.setOnAction(e -> {
             if(this.currentPlayer != null) {
                 Pane chooseLevelPane = buildChooseLevel();
-                Scene chooseLevelScene = new Scene(chooseLevelPane, 300, 200);
+                Scene chooseLevelScene = new Scene(chooseLevelPane, 300, 400);
                 Stage chooseLevelStage = new Stage();
                 chooseLevelStage.setScene(chooseLevelScene);
                 chooseLevelStage.setTitle("Choose Level");
@@ -359,6 +359,7 @@ public class GameManager extends Application {
      */
     private Pane buildDeletePlayer() {
     	BorderPane root = new BorderPane();
+        root.setStyle("-fx-background-color: Gray");
     	VBox sidebar = new VBox();
         sidebar.setSpacing(10);
         sidebar.setPadding(new Insets(10, 10, 10, 10));
@@ -367,11 +368,18 @@ public class GameManager extends Application {
         Label playerID = new Label("ID of player: ");
         TextField playerIDInput = new TextField ();
         Button deletePlayerButton = new Button("Delete player");
+        playerID.setStyle("-fx-font-family: Impact;" + "-fx-font-size: 20");
         
-        root.setLeft(sidebar);
+        root.setCenter(sidebar);
         sidebar.getChildren().addAll(playerID, playerIDInput, deletePlayerButton);
+        deletePlayerButton.setStyle(BUTTON_STYLE);
 
-
+        deletePlayerButton.setOnMouseEntered(e ->{
+            deletePlayerButton.setStyle(HOVERED_BUTTON_STYLE);
+        });
+        deletePlayerButton.setOnMouseExited(e ->{
+            deletePlayerButton.setStyle(BUTTON_STYLE);
+        });
         deletePlayerButton.setOnAction(e -> {
         	try {
             	boolean deleted = (FileManager.deleteFromPlayerFile(new Player(Integer.valueOf(playerIDInput.getText()), "ass", 0)));
@@ -447,24 +455,59 @@ public class GameManager extends Application {
     private Pane buildChooseLevel() {
         HashMap<Button, String> buttonsToLevelFiles = new HashMap<>();
     	Button levelOne = new Button("Level One");
+        levelOne.setStyle(BUTTON_STYLE);
     	buttonsToLevelFiles.put(levelOne, Globals.LEVEL1);
      	Button levelTwo = new Button("Level Two");
+        levelTwo.setStyle(BUTTON_STYLE);
         buttonsToLevelFiles.put(levelTwo, Globals.LEVEL2);
      	Button levelThree = new Button("Level Three");
+        levelThree.setStyle(BUTTON_STYLE);
         buttonsToLevelFiles.put(levelThree, Globals.LEVEL3);
      	Button levelFour = new Button("Level Four");
+        levelFour.setStyle(BUTTON_STYLE);
         buttonsToLevelFiles.put(levelFour, Globals.LEVEL4);
      	Button levelFive  = new Button("Level Five");
+        levelFive.setStyle(BUTTON_STYLE);
         buttonsToLevelFiles.put(levelFive, Globals.LEVEL5);
      	
     	BorderPane root = new BorderPane();
+        root.setStyle("-fx-background-color: Gray");
     	VBox sidebar = new VBox();
         sidebar.setSpacing(10);
         sidebar.setPadding(new Insets(10, 10, 10, 10));
-        
-        root.setLeft(sidebar);
+        sidebar.setAlignment(Pos.CENTER);
+        root.setCenter(sidebar);
         sidebar.getChildren().addAll(levelOne, levelTwo, levelThree, levelFour, levelFive);
-
+        levelOne.setOnMouseEntered(e ->{
+            levelOne.setStyle(HOVERED_BUTTON_STYLE);
+        });
+        levelOne.setOnMouseExited(e ->{
+            levelOne.setStyle(BUTTON_STYLE);
+        });
+        levelTwo.setOnMouseExited(e ->{
+            levelTwo.setStyle(BUTTON_STYLE);
+        });
+        levelTwo.setOnMouseEntered(e ->{
+            levelTwo.setStyle(HOVERED_BUTTON_STYLE);
+        });
+        levelThree.setOnMouseExited(e ->{
+            levelThree.setStyle(BUTTON_STYLE);
+        });
+        levelThree.setOnMouseEntered(e ->{
+            levelThree.setStyle(HOVERED_BUTTON_STYLE);
+        });
+        levelFour.setOnMouseExited(e ->{
+            levelFour.setStyle(BUTTON_STYLE);
+        });
+        levelFour.setOnMouseEntered(e ->{
+            levelFour.setStyle(HOVERED_BUTTON_STYLE);
+        });
+        levelFive.setOnMouseEntered(e ->{
+            levelFive.setStyle(HOVERED_BUTTON_STYLE);
+        });
+        levelFive.setOnMouseExited(e ->{
+            levelFive.setStyle(BUTTON_STYLE);
+        });
         Game game = new Game();
 
         for(Button btn : buttonsToLevelFiles.keySet()) {
@@ -585,10 +628,20 @@ public class GameManager extends Application {
         sidebar.setAlignment(Pos.CENTER);
         sidebar.setPadding(new Insets(10, 10, 10, 10));
         Label playerID = new Label("ID of player: ");
+        playerID.setStyle("-fx-font-family: Impact;" + "-fx-font-size: 20");
         TextField playerIDInput = new TextField ();
         Button choosePlayerButton = new Button("Choose player");
+        choosePlayerButton.setStyle(BUTTON_STYLE);
         root.setCenter(sidebar);
+        root.setStyle("-fx-background-color: Gray");
         sidebar.getChildren().addAll(playerID, playerIDInput, choosePlayerButton);
+        choosePlayerButton.setOnMouseEntered(e ->{
+            choosePlayerButton.setStyle(HOVERED_BUTTON_STYLE);
+        });
+
+        choosePlayerButton.setOnMouseExited(e ->{
+            choosePlayerButton.setStyle(BUTTON_STYLE);
+        });
         choosePlayerButton.setOnAction(e -> {
             if(playerIDInput.getText() != null) {
                 this.currentPlayer = FileManager.getPlayer(Integer.valueOf(playerIDInput.getText()));

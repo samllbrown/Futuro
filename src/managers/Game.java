@@ -276,19 +276,28 @@ public class Game {
 		topbar.setSpacing(10);
 		topbar.setPadding(new Insets(10, 10, 10, 10));
 		root.setTop(topbar);
+		root.setStyle(" -fx-background-image:" + "url("+"file:res/sprites/TileT.png"+ ")" + ";"
+				+ "-fx-background-size: 50 50;"
+				+ "-fx-background-position: center 105");
 		AudioPlayer.playInGameMusic();
 		VBox sidebar = new VBox();
+
 		root.setRight(sidebar);
 
 
-		Button startTickTimelineButton = new Button("Start Ticks");
-		Button stopTickTimelineButton = new Button("Stop Ticks");
+		Button startTickTimelineButton = new Button("Play");
+		startTickTimelineButton.setStyle(GameManager.BUTTON_STYLE);
+		Button stopTickTimelineButton = new Button("Pause");
+		stopTickTimelineButton.setStyle(GameManager.BUTTON_STYLE);
 		Button saveLevelButton = new Button("Save Level");
+		saveLevelButton.setStyle(GameManager.BUTTON_STYLE);
 		Button exitGameButton = new Button("Exit Game");
-
+		exitGameButton.setStyle(GameManager.BUTTON_STYLE);
 
 		Label messageOfDayLabel = new Label(this.messageOfTheDay);
-		
+		messageOfDayLabel.setStyle("-fx-text-fill: White;"
+				+ "-fx-font-family: Impact;"
+				+ "-fx-font-size: 13");
 		Button score = this.level.getButton();
 		
 		// Stop button is disabled by default
@@ -370,7 +379,6 @@ public class Game {
 				event.consume();
 			}
 		});
-		root.setStyle("-fx-background-color: Gray");
 		return root;
 	}
 
@@ -514,6 +522,7 @@ public class Game {
 
 		drawGame();
 		stage.setScene(scene);
+		stage.setResizable(false);
 		gameStage = stage;
 		gameStage.show();
 	}
