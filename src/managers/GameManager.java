@@ -427,7 +427,7 @@ public class GameManager extends Application {
              } catch (Exception exception) {
                  exception.printStackTrace();
              }
-             Game game = new Game(level);
+             Game game = new Game(this.currentPlayer, level);
 
              mainMenu.close();
              try {
@@ -471,6 +471,7 @@ public class GameManager extends Application {
             btn.setOnAction(e -> {
                 try {
                     game.setLevel(FileManager.readLevel(buttonsToLevelFiles.get(btn)));
+                    game.setCurrentPlayer(this.currentPlayer);
                     if(this.currentPlayer.getMaxLevelID() < game.getLevel().getLevelID()) {
                         showAlert("Information", "Level too high", "You can't play that level yet");
                     } else {

@@ -84,13 +84,16 @@ public class Game {
 	/** The message of the day. */
 	private String messageOfTheDay;
 
+	private Player currentPlayer;
+
 	/**
 	 * Instantiates a new game.
 	 *
 	 * @param level the level
 	 */
-	public Game(Level level) {
+	public Game(Player player, Level level) {
 		this.level = level;
+		this.currentPlayer = player;
 		System.out.println(this.CURRENT_WIDTH);
 		System.out.println(this.CURRENT_HEIGHT);
 		this.CURRENT_WIDTH = level.getGrid().getWidth();
@@ -104,6 +107,7 @@ public class Game {
 	// IPSO-FACTO 100 PERCFENT SET THE ATTRIBUTES MANUALLY AFTERWARDS.
 	public Game() {
 		this.level = null;
+		this.currentPlayer = null;
 		this.CURRENT_WIDTH = 0;
 		this.CURRENT_HEIGHT = 0;
 		this.messageOfTheDay = getMessageOfTheDay();
@@ -115,10 +119,19 @@ public class Game {
 	 * @param levelFile the level file
 	 * @throws Exception the exception
 	 */
-	public Game(String levelFile) throws Exception {
+	public Game(String levelFile, Player player) throws Exception {
 		this.level = FileManager.readLevel(levelFile);
+		this.currentPlayer = player;
 		this.CURRENT_WIDTH = level.getGrid().getWidth();
 		this.CURRENT_HEIGHT = level.getGrid().getHeight();
+	}
+
+	public Player getCurrentPlayer() {
+		return this.currentPlayer;
+	}
+
+	public void setCurrentPlayer(Player currentPlayer) {
+		this.currentPlayer = currentPlayer;
 	}
 
 	// private void updateMechs() throws Exception {
