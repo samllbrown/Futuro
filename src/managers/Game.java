@@ -19,8 +19,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.DragEvent;
@@ -206,8 +209,15 @@ public class Game {
 	// }
 	private void tick() {
 		try {
-			this.level.update();
-			drawGame();
+			if(this.level.getMechs().size() != this.level.getDeathMechs() && this.level.getMechs().size() != this.level.getLosingNumberOfMechs()) {
+				this.level.update();
+				drawGame();
+			}
+			else {
+				this.tickTimeline.pause();
+				boolean win = (this.level.getMechs().size() == this.level.getDeathMechs());
+				endGame(win);
+			}
 			// updateMechs();
 			// moveMechs();
 			// updateScore(this.level.getCurrentScore());
@@ -493,6 +503,34 @@ public class Game {
 			} else {
 				gc.drawImage(i.getImage(), i.getGridX() * TILE_SIZE, i.getGridY() * TILE_SIZE);
 			}
+		}
+	}
+	
+	private void endGame(boolean win) {
+		this.gameStage.hide();
+
+		AudioPlayer.stopAllMusic();
+
+		GameManager.mainMenu.show();
+		
+		if(win) {
+			Alert alert  = new Alert(AlertType.CONFIRMATION);
+	        	alert.setTitle("SUCCESS");
+	        	alert.setHeaderText("You win");
+	        	alert.setContentText("Good job loser");
+	            alert.showAndWait().ifPresent(rs -> {
+	                if (rs == ButtonType.OK) {
+	                }
+	            });
+		} else {
+			Alert alert  = new Alert(AlertType.CONFIRMATION);
+	        	alert.setTitle("FAILURE");
+	        	alert.setHeaderText("You are a failure");
+	        	alert.setContentText("Only people like you would lose");
+	            alert.showAndWait().ifPresent(rs -> {
+	                if (rs == ButtonType.OK) {
+	                }
+	            });
 		}
 	}
 
