@@ -15,7 +15,7 @@ public class Leaderboard {
     
     /** The Constant MAX_PLAYERS_IN_LEADERBOARD. */
     private final static int MAX_PLAYERS_IN_LEADERBOARD = 10;
-    
+	
     /** The level ID. */
     private int levelID;
     
@@ -29,8 +29,8 @@ public class Leaderboard {
      * @param idsToScores puts ids to scores
      */
     public Leaderboard(int levelId, HashMap<Integer, Integer> idsToScores) {
-	this.levelID = levelId;
-	this.idsToScores = idsToScores;
+        this.levelID = levelId;
+        this.idsToScores = idsToScores;
     }
 
     /**
@@ -39,11 +39,11 @@ public class Leaderboard {
      * @return leaderboard to a string
      */
     public String toString() {
-	String str = "";
-	for (Integer id : idsToScores.keySet()) {
-	    str += id + "," + idsToScores.get(id) + "\n";
-	}
-	return str;
+        String str = "";
+        for(Integer id : idsToScores.keySet()) {
+            str += id +"," + idsToScores.get(id) + "\n";
+        }
+        return str;
     }
 
     /**
@@ -85,6 +85,10 @@ public class Leaderboard {
      * @param player player to be added
      * @param score score of the player
      */
+    public HashMap<Integer, Integer> getIdsToScores() {
+        return idsToScores;
+    }
+
     public void insertPlayer(Player player, int score) {
 	addToLeaderBoard(player.getPlayerID(), score);
     }
