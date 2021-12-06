@@ -8,21 +8,20 @@ package gameObject;
  */
 
 public enum TileType {
-    
+
     /** The path. */
-    PATH(1, 1, 1), 
-	/** The tunnel. */
-	TUNNEL(0, 0, 1), 
-	/** The wall. */
-	WALL(1, 0, 0);
+    PATH(1, 1, 1),
+    /** The tunnel. */
+    TUNNEL(0, 0, 1),
+    /** The wall. */
+    WALL(1, 0, 0);
 
+    /** The visible. */
+    public final int visible;
 
-	/** The visible. */
-	public final int visible;
-    
     /** The placeable. */
     public final int placeable;
-    
+
     /** The walkable. */
     public final int walkable;
 
@@ -34,8 +33,8 @@ public enum TileType {
      * @param walkable walkable attribute (can a mech walk on the tile) of a tile type, val = 1 if "true" and 0 if "false".
      */
     TileType(int visible, int placeable, int walkable) {
-        this.visible = visible;
-        this.placeable = placeable;
-        this.walkable = walkable;
+	this.visible = visible;
+	this.placeable = placeable;
+	this.walkable = walkable;
     }
 }
