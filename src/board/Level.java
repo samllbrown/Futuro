@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-import board.Path;
 import board.Tile;
-import board.Tunnel;
-import board.Wall;
 
 import board.Grid;
 import gameObject.GameObjectFactory;

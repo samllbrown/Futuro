@@ -36,10 +36,4 @@ public class RemodelRInventoryItem extends InventoryItem{
     public String getName() {
         return RemodelRInventoryItem.name;
     }
-  /**
-   * Instantiates a new remodel R inventory item.
-   */
-  public RemodelRInventoryItem() {
-    super(name);
-  }
 }
