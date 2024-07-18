@@ -1,5 +1,5 @@
 <h1> Futuro </h1>
-250 Coursework - Group 11
+Coursework for university, worked with a team of people also on the computer science course
 
 Java version: 
 
@@ -15,4 +15,3 @@ Linux/Mac: --module-path /path/to/javafx-sdk-15.0.1/lib --add-modules javafx.con
 If you don't currently have JavaFX installed then follow this youtube tutorial
 https://www.youtube.com/watch?v=9XJicRt_FaI
 
-If your using GitHub desktop, then clone the repo
